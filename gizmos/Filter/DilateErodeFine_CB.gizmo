@@ -1,0 +1,236 @@
+#! C:/Program Files/Nuke8.0v5/nuke-8.0.v5.dll -nx
+version 8.0 v5
+Gizmo {
+ inputs 2
+ help "select between the 3 erode/dilate filters.  This gizmo allows you to get finner adjustments."
+ tile_color 0x75002bff
+ note_font Verdana
+ note_font_color 0xffffffff
+ mapsize {0.15 0.15}
+ addUserKnob {20 Buehler l Dilate/ErodeFine_CB}
+ addUserKnob {41 channels T Dilate1.channels}
+ addUserKnob {26 ""}
+ addUserKnob {6 round l "round box filter" t "Gives the box filter a more round shape" +STARTLINE}
+ addUserKnob {14 DEsize l size R 0 100}
+ DEsize 0.5
+ addUserKnob {7 AR l "aspect ratio" t "Relationship between x and y size"}
+ AR 1
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannel l "mask channel" T Keymix.maskChannel}
+ addUserKnob {41 invertMask l invert -STARTLINE T Keymix.invertMask}
+ addUserKnob {41 mix T Keymix.mix}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos -223
+  ypos 385
+  number 1
+ }
+ Shuffle {
+  alpha white
+  name Shuffle1
+  xpos -113
+  ypos 385
+  disable {{"max(\[exists parent.input1],!clamp(Keymix.maskChannel))" i}}
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos -7
+  ypos -330
+ }
+set N2f7f65d0 [stack 0]
+push $N2f7f65d0
+ Dilate {
+  channels {{{parent.Dilate1.channels}}}
+  size {{"((abs(Dilate1.Amount.x)+0.5)/3 - int(abs(Dilate1.Amount.x)/3)) >= 0.66666666 ? (ceil((abs(Dilate1.xHalf)+0.5)/3))*Dilate1.pn.x : (floor((abs(Dilate1.xHalf)+0.5)/3))*Dilate1.pn.x"} {"((abs(Dilate1.Amount.y)+0.5)/3 - int(abs(Dilate1.Amount.y)/3)) >= 0.66666666 ? (ceil((abs(Dilate1.yHalf)+0.5)/3))*Dilate1.pn.y : (floor((abs(Dilate1.yHalf)+0.5)/3))*Dilate1.pn.y"}}
+  name Dilate2
+  xpos 207
+  ypos -213
+  disable {{!round}}
+ }
+ TransformMasked {
+  channels {{{parent.Dilate1.channels}}}
+  rotate 22.5
+  black_outside false
+  name Transform1
+  xpos 207
+  ypos -167
+  disable {{!round}}
+ }
+ Dilate {
+  channels {{{parent.Dilate1.channels}}}
+  size {{"parent.round > 0 ? (floor((abs(Dilate1.xHalf)+0.5)/3))*Dilate1.pn.x : (floor((abs(Dilate1.xHalf)+0.5)))*Dilate1.pn.x"} {"parent.round > 0 ? (floor((abs(Dilate1.yHalf)+0.5)/3))*Dilate1.pn.y : (floor((abs(Dilate1.yHalf)+0.5)))*Dilate1.pn.y"}}
+  name Dilate3
+  xpos 207
+  ypos -121
+ }
+ TransformMasked {
+  channels {{{parent.Dilate1.channels}}}
+  rotate 22.5
+  black_outside false
+  name Transform2
+  xpos 207
+  ypos -75
+  disable {{!round}}
+ }
+ Dilate {
+  channels rgba
+  size {{"parent.round > 0 ? ((abs(Dilate1.Amount.x)+0.5)/3 - int(abs(Dilate1.Amount.x)/3)) >= 0.33333333 ? (ceil((abs(Dilate1.xHalf)+0.5)/3))*Dilate1.pn.x : (floor((abs(Dilate1.xHalf)+0.5)/3))*Dilate1.pn.x : Dilate1.xHalf" i} {"parent.round > 0 ? ((abs(Dilate1.Amount.y)+0.5)/3 - int(abs(Dilate1.Amount.y)/3)) >= 0.33333333 ? (ceil((abs(Dilate1.yHalf)+0.5)/3))*Dilate1.pn.y : (floor((abs(Dilate1.yHalf)+0.5)/3))*Dilate1.pn.y : Dilate1.yHalf" i}}
+  name Dilate1
+  xpos 207
+  ypos -29
+  disable {{!round i}}
+  addUserKnob {20 User l INVISIBLE +INVISIBLE}
+  addUserKnob {12 Amount l INVISIBLE +INVISIBLE}
+  Amount {{DEsize*AR i} {DEsize i}}
+  addUserKnob {12 pn l INVISIBLE +INVISIBLE}
+  pn {{"Amount.x >= 0 ? 1 : -1" i} {"Amount.y >= 0 ? 1 : -1" i}}
+  addUserKnob {7 xInt l INVISIBLE +INVISIBLE R -10 10}
+  xInt {{(int(abs(Amount.x)))*Dilate1.pn.x i}}
+  addUserKnob {7 yInt l INVISIBLE +INVISIBLE R -10 10}
+  yInt {{(int(abs(Amount.y)))*Dilate1.pn.y i}}
+  addUserKnob {12 traw l INVISIBLE +INVISIBLE}
+  traw {{"(abs(Dilate1.Amount.x) > 0.5001 ? abs(Dilate1.Amount.x) + 0.5 : (abs(Dilate1.Amount.x)*Dilate1.double.x)) * Dilate1.pn.x" i} {"(abs(Dilate1.Amount.y) > 0.5001 ? abs(Dilate1.Amount.y) + 0.5 : (abs(Dilate1.Amount.y)*Dilate1.double.y)) * Dilate1.pn.y" i}}
+  addUserKnob {12 tf l INVISIBLE +INVISIBLE}
+  tf {{"(parent.round > 0 ? (abs(Dilate1.size.w)+abs(Dilate2.size.w)+abs(Dilate3.size.w)) : abs(Dilate3.size.w)) > abs(traw.x) ? 0 : (abs(traw.x) - (parent.round > 0 ? (abs(Dilate1.size.w)+abs(Dilate2.size.w)+abs(Dilate3.size.w)) : abs(Dilate3.size.w))) * Dilate1.pn.x" i} {"(parent.round > 0 ? (abs(Dilate1.size.h)+abs(Dilate2.size.h)+abs(Dilate3.size.h)) : abs(Dilate3.size.h)) > abs(traw.y) ? 0 : (abs(traw.y) - (parent.round > 0 ? (abs(Dilate1.size.h)+abs(Dilate2.size.h)+abs(Dilate3.size.h)) : abs(Dilate3.size.h))) * Dilate1.pn.y" i}}
+  addUserKnob {7 xHalf l INVISIBLE +INVISIBLE R -10 10}
+  xHalf {{"(int(Amount.x*2))/2 == xInt && Amount.x > 0.5 ? (int(Amount.x*2))/2 - 0.5 : (int(Amount.x*2))/2 == xInt && Amount.x < -0.5 ? (int(Amount.x*2))/2 + 0.5 : (int(Amount.x*2))/2" i}}
+  addUserKnob {7 yHalf l INVISIBLE +INVISIBLE R -10 10}
+  yHalf {{"(int(Amount.y*2))/2 == yInt && Amount.y > 0.5 ? (int(Amount.y*2))/2 - 0.5 : (int(Amount.y*2))/2 == yInt && Amount.y < -0.5 ? (int(Amount.y*2))/2 + 0.5 : (int(Amount.y*2))/2" i}}
+  addUserKnob {12 double l INVISIBLE +INVISIBLE}
+  double {{"(Amount.x <= 0.5 && Amount.x >= -0.5 ? 2 : 1)" i} {"(Amount.y <= 0.5 && Amount.y >= -0.5 ? 2 : 1)" i}}
+  addUserKnob {12 Mer l INVISIBLE +INVISIBLE}
+  Mer {{"Dilate1.Amount.x>0 ?17:18" i} {"Dilate1.Amount.y>0 ?17:18" i}}
+ }
+ TransformMasked {
+  channels {{{parent.Dilate1.channels}}}
+  rotate -45
+  black_outside false
+  name Transform3
+  xpos 207
+  ypos 17
+  disable {{!round}}
+ }
+set N2f7f7a70 [stack 0]
+ TransformMasked {
+  channels {{{parent.Dilate1.channels}}}
+  translate {0 {Dilate1.tf.y}}
+  black_outside false
+  name TransyPos
+  xpos 317
+  ypos 263
+ }
+push $N2f7f7a70
+ TransformMasked {
+  channels {{{parent.Dilate1.channels}}}
+  translate {0 {-(Dilate1.tf.y)}}
+  black_outside false
+  name TransyNeg
+  xpos 317
+  ypos 192
+ }
+push $N2f7f7a70
+ TransformMasked {
+  channels {{{parent.Dilate1.channels}}}
+  translate {{Dilate1.tf.x} 0}
+  black_outside false
+  name TransxPos
+  xpos 318
+  ypos 126
+ }
+push $N2f7f7a70
+ TransformMasked {
+  channels {{{parent.Dilate1.channels}}}
+  translate {{-(Dilate1.tf.x)} 0}
+  black_outside false
+  name TransxNeg
+  xpos 321
+  ypos 60
+ }
+push $N2f7f7a70
+ Merge2 {
+  inputs 2
+  operation {{Dilate1.Mer.x}}
+  bbox B
+  Achannels {{{Dilate1.channels}}}
+  Bchannels {{{Dilate1.channels}}}
+  output {{{Dilate1.channels}}}
+  also_merge all
+  name Merge1
+  xpos 207
+  ypos 86
+  disable {{"Dilate1.Amount.x==Dilate1.xHalf ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation {{Dilate1.Mer.x}}
+  bbox B
+  Achannels {{{Dilate1.channels}}}
+  Bchannels {{{Dilate1.channels}}}
+  output {{{Dilate1.channels}}}
+  also_merge all
+  name Merge2
+  xpos 207
+  ypos 146
+  disable {{"Dilate1.Amount.x==Dilate1.xHalf ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation {{Dilate1.Mer.y i}}
+  bbox B
+  Achannels {{{Dilate1.channels}}}
+  Bchannels {{{Dilate1.channels}}}
+  output {{{Dilate1.channels}}}
+  also_merge all
+  name Merge3
+  xpos 207
+  ypos 221
+  disable {{"Dilate1.Amount.x==Dilate1.xHalf ? 1 : 0" i}}
+ }
+ Merge2 {
+  inputs 2
+  operation {{Dilate1.Mer.y}}
+  bbox B
+  Achannels {{{Dilate1.channels}}}
+  Bchannels {{{Dilate1.channels}}}
+  output {{{Dilate1.channels}}}
+  also_merge all
+  name Merge4
+  xpos 207
+  ypos 292
+  disable {{"Dilate1.Amount.x==Dilate1.xHalf ? 1 : 0"}}
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 140
+  ypos 344
+ }
+set N2fa20470 [stack 0]
+push $N2f7f65d0
+ Keymix {
+  inputs 3
+  channels {{{parent.Dilate1.channels}}}
+  bbox B
+  name Keymix
+  xpos -7
+  ypos 385
+  disable {{"(Keymix.mix) != 1 ? 0 : max(!\[exists parent.input1],!clamp(Keymix.maskChannel))" i}}
+ }
+push $N2fa20470
+ Switch {
+  inputs 2
+  which 1
+  name Switch1
+  xpos -7
+  ypos 430
+  disable {{"(Keymix.mix) != 1 ? 0 : max(!\[exists parent.input1],!clamp(Keymix.maskChannel))" i}}
+ }
+ Output {
+  name Output
+  xpos -7
+  ypos 504
+ }
+end_group

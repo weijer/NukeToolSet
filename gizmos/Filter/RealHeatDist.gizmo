@@ -1,0 +1,818 @@
+#! /Applications/Nuke9.0v1/Nuke9.0v1.app/Contents/MacOS//libnuke-9.0.1.dylib -nx
+version 9.0 v1
+Gizmo {
+ inputs 3
+ knobChanged "\nif nuke.thisNode()\['disttype'].getValue() == 3:\n    nuke.thisNode()\['Vel'].setEnabled(False)\n    nuke.thisNode()\['DistortionScale'].setEnabled(False)\n    nuke.thisNode()\['HeatBlurScale'].setEnabled(False)\n    nuke.thisNode()\['windx'].setEnabled(False)\n    nuke.thisNode()\['windy'].setEnabled(False)\n    nuke.thisNode()\['tracktranslate'].setEnabled(False)\nelse:\n    nuke.thisNode()\['Vel'].setEnabled(True)\n    nuke.thisNode()\['DistortionScale'].setEnabled(True)\n    nuke.thisNode()\['HeatBlurScale'].setEnabled(True)\n    nuke.thisNode()\['windx'].setEnabled(True)\n    nuke.thisNode()\['windy'].setEnabled(True)\n    nuke.thisNode()\['tracktranslate'].setEnabled(True)\n"
+ tile_color 0x141414ff
+ note_font Verdana
+ note_font_color 0xff5242ff
+ addUserKnob {20 RealHeatDistortion t "Created by Damian Binder."}
+ addUserKnob {26 Version l "" t "Created by Damian Binder." +STARTLINE T "<font size=\"5\"><div><span style=\"color:#ff4d27;\">R</span><span style=\"color:#ff522a;\">e</span><span style=\"color:#ff572d;\">a</span><span style=\"color:#fe5d30;\">l</span><span style=\"color:#fe6233;\">H</span><span style=\"color:#fe6737;\">e</span><span style=\"color:#fe6c3a;\">a</span><span style=\"color:#fd723d;\">t</span><span style=\"color:#fd7740;\">D</span><span style=\"color:#fd7c43;\">i</span><span style=\"color:#fd7640;\">s</span><span style=\"color:#fe703c;\">t</span><span style=\"color:#fe6a39;\">o</span><span style=\"color:#fe6535;\">r</span><span style=\"color:#fe5f32;\">t</span><span style=\"color:#ff592e;\">i</span><span style=\"color:#ff532b;\">o</span><span style=\"color:#ff4d27;\">n</span></div><font size=\"2\"></span><span style=\"color:#fd7740;\"> </span><span style=\"color:#fd7740;\">v2.1"}
+ addUserKnob {26 bydamianbinder l "" +STARTLINE T "<font size=\"2\"><span style=\"color:#fd7740\">             By Damian Binder"}
+ addUserKnob {26 Track l "<b><span style=\"color:#fe6c3a;\"> Tracking Data"}
+ addUserKnob {12 tracktranslate l Translate}
+ tracktranslate {0 0}
+ addUserKnob {26 distortionheat l "<b><span style=\"color:#fe6c3a;\">Dist & Heat"}
+ addUserKnob {68 disttype l "Distortion Types" M {Classic "Agressive " "Jet Engine " "Custom Noise " "" "" "" "" "" "" ""}}
+ disttype "Agressive "
+ addUserKnob {7 Vel l "Distortion Velocity"}
+ Vel {0.15}
+ addUserKnob {6 affectalpha l "Affect Alpha" +STARTLINE}
+ addUserKnob {20 DistortionGroup l Distortion n 1}
+ addUserKnob {7 distortion_amount l "Distortion Amount" R 0 100}
+ distortion_amount {25}
+ addUserKnob {7 DistortionScale l "Distortion Scale" R 0 200}
+ DistortionScale {15}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 HeatBlurGroup l "Heat Blur" n 1}
+ addUserKnob {7 HeatBlurAmount l "Heat Blur Amount" R 0 25}
+ HeatBlurAmount {15}
+ addUserKnob {7 HeatBlurScale l "Heat Blur Scale" R 0 100}
+ HeatBlurScale {30}
+ addUserKnob {7 overallblur l "Overall Blur" R 0 20}
+ overallblur {0}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 secondaryeffects l "Secondary Effects" n 1}
+ addUserKnob {7 gain l Gain R 0 2}
+ gain {1}
+ addUserKnob {7 chromatic l "Chromatic Ab" R 0 10}
+ chromatic {0}
+ addUserKnob {20 freezegroup l Freeze n 1}
+ freezegroup 0
+ addUserKnob {6 velocityoff l Freeze +STARTLINE}
+ addUserKnob {3 freezeframe l "Freeze Frame"}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {26 windtitle l "<b><span style=\"color:#fe6c3a;\">Wind"}
+ addUserKnob {7 windx l "Wind Direction X" R -10 10}
+ windx {0}
+ addUserKnob {7 windy l "Wind Direction Y" R -10 10}
+ windy {10}
+ addUserKnob {52 pythonscript l "Python Script" T "nuke.thisNode()\['knobChanged'].setValue('''\nif nuke.thisNode()\['disttype'].getValue() == 3:\n    nuke.thisNode()\['Vel'].setEnabled(False)\n    nuke.thisNode()\['DistortionScale'].setEnabled(False)\n    nuke.thisNode()\['HeatBlurScale'].setEnabled(False)\n    nuke.thisNode()\['windx'].setEnabled(False)\n    nuke.thisNode()\['windy'].setEnabled(False)\n    nuke.thisNode()\['tracktranslate'].setEnabled(False)\nelse:\n    nuke.thisNode()\['Vel'].setEnabled(True)\n    nuke.thisNode()\['DistortionScale'].setEnabled(True)\n    nuke.thisNode()\['HeatBlurScale'].setEnabled(True)\n    nuke.thisNode()\['windx'].setEnabled(True)\n    nuke.thisNode()\['windy'].setEnabled(True)\n    nuke.thisNode()\['tracktranslate'].setEnabled(True)\n''')" +STARTLINE}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0xc68484ff
+  note_font_size 42
+  xpos 204
+  ypos 326
+  bdwidth 505
+  bdheight 249
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0xd29e8eff
+  note_font_size 42
+  xpos 761
+  ypos 289
+  bdwidth 494
+  bdheight 461
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x9ac69aff
+  note_font_size 42
+  xpos 1319
+  ypos 295
+  bdwidth 457
+  bdheight 345
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0xcc9ec9ff
+  note_font_size 42
+  xpos 1838
+  ypos 365
+  bdwidth 222
+  bdheight 220
+ }
+ Viewer {
+  inputs 0
+  frame 33
+  frame_range 1-100
+  colour_sample_bbox {0.03229166567 0.21875 0.03333333507 0.2197916657}
+  samplepoints {{0.03229166567 0.21875}
+    }
+  input_process false
+  name Viewer1
+  xpos -194
+  ypos 2103
+ }
+ Input {
+  inputs 0
+  name Source
+  xpos -195
+  ypos -45
+ }
+ Dot {
+  name Dot29
+  xpos -160
+  ypos 877
+ }
+set N1bb2dbc0 [stack 0]
+ Dot {
+  name Dot30
+  xpos -404
+  ypos 877
+ }
+ Dot {
+  name Dot28
+  xpos -403
+  ypos 1859
+ }
+ Input {
+  inputs 0
+  name Mask
+  xpos 346
+  ypos -40
+  number 1
+ }
+ Dot {
+  name Dot4
+  xpos 380
+  ypos 139
+ }
+set N8fb2ffe0 [stack 0]
+ Dot {
+  name Dot24
+  xpos 127
+  ypos 139
+ }
+ Dot {
+  name Dot25
+  xpos 128
+  ypos 1458
+ }
+push $N8fb2ffe0
+ Dot {
+  name Dot3
+  xpos 605
+  ypos 139
+ }
+set N8fb36fd0 [stack 0]
+ Dot {
+  name Dot5
+  xpos 796
+  ypos 139
+ }
+set N8fb39520 [stack 0]
+ Dot {
+  name Dot6
+  xpos 908
+  ypos 139
+ }
+set N8fb3ba70 [stack 0]
+ Dot {
+  name Dot12
+  xpos 1087
+  ypos 139
+ }
+set N8fb3dfc0 [stack 0]
+ Dot {
+  name Dot14
+  xpos 1199
+  ypos 139
+ }
+set N8fb40510 [stack 0]
+ Dot {
+  name Dot8
+  xpos 1329
+  ypos 139
+ }
+set N8fb42a70 [stack 0]
+ Dot {
+  name Dot10
+  xpos 1441
+  ypos 139
+ }
+set N8fb44fc0 [stack 0]
+ Dot {
+  name Dot15
+  xpos 1567
+  ypos 139
+ }
+set N8fb47510 [stack 0]
+ Dot {
+  name Dot17
+  xpos 1679
+  ypos 139
+ }
+set N8fb49a60 [stack 0]
+ Dot {
+  name Dot18
+  xpos 1847
+  ypos 139
+ }
+ Dot {
+  name Dot23
+  xpos 1848
+  ypos 449
+ }
+ Input {
+  inputs 0
+  name Custom
+  xpos 1969
+  ypos -67
+  number 2
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge1
+  xpos 1970
+  ypos 445
+  disable {{"! \[exists parent.input1]"}}
+ }
+set N8fb52fa0 [stack 0]
+ FrameHold {
+  first_frame {{parent.freezeframe}}
+  name FrameHold5
+  xpos 1869
+  ypos 503
+ }
+push $N8fb52fa0
+ Switch {
+  inputs 2
+  which {{parent.velocityoff}}
+  name Switch9
+  xpos 1970
+  ypos 555
+ }
+ Dot {
+  name Dot11
+  xpos 2004
+  ypos 927
+ }
+set N8fb60f70 [stack 0]
+ Grade {
+  channels alpha
+  blackpoint 0.095
+  whitepoint 0.88
+  white 4
+  black_clamp false
+  name Grade2
+  xpos 1970
+  ypos 1205
+ }
+ Dot {
+  name Dot36
+  xpos 677
+  ypos 1212
+ }
+push $N8fb47510
+ Dot {
+  name Dot16
+  xpos 1567
+  ypos 440
+ }
+push $N8fb49a60
+push 0
+ Noise {
+  inputs 1+1
+  cliptype none
+  type turbulence
+  size {{parent.HeatBlurScale-2}}
+  zoffset {{parent.Vel*frame}}
+  lacunarity 1.16
+  gain 0.8
+  gamma 0.355
+  translate {{parent.windx*frame+tracktranslate} {parent.windy*frame+tracktranslate}}
+  center {960 540}
+  name Noise9
+  xpos 1645
+  ypos 375
+ }
+ Noise {
+  inputs 1+1
+  cliptype none
+  size {{parent.HeatBlurScale+36}}
+  zoffset {{parent.Vel*frame}}
+  lacunarity 1
+  gain 0.336
+  gamma 0.285
+  translate {{parent.windx*frame+tracktranslate} {parent.windy*frame+tracktranslate}}
+  center {960 540}
+  name Noise10
+  xpos 1645
+  ypos 436
+ }
+set N8fb72c00 [stack 0]
+ FrameHold {
+  first_frame {{parent.freezeframe}}
+  name FrameHold9
+  xpos 1562
+  ypos 512
+ }
+push $N8fb72c00
+ Switch {
+  inputs 2
+  which {{parent.velocityoff}}
+  name Switch8
+  xpos 1646
+  ypos 582
+ }
+ Dot {
+  name Dot21
+  xpos 1680
+  ypos 1191
+ }
+ Dot {
+  name Dot35
+  xpos 679
+  ypos 1191
+ }
+push $N8fb3dfc0
+ Dot {
+  name Dot13
+  xpos 1087
+  ypos 436
+ }
+push $N8fb40510
+push 0
+ Noise {
+  inputs 1+1
+  cliptype none
+  size {{parent.HeatBlurScale-2}}
+  zoffset {{parent.Vel*frame}}
+  lacunarity 1.34
+  gain 0.695
+  gamma 0.42
+  translate {{parent.windx*frame+tracktranslate} {parent.windy*frame+tracktranslate}}
+  center {960 540}
+  name Noise7
+  xpos 1165
+  ypos 370
+ }
+ Noise {
+  inputs 1+1
+  cliptype none
+  type turbulence
+  size {{parent.HeatBlurScale+90}}
+  zoffset {{parent.Vel*frame}}
+  lacunarity 1
+  gain 0.256
+  gamma 0.89
+  translate {{parent.windx*frame+tracktranslate} {parent.windy*frame+tracktranslate}}
+  center {960 540}
+  name Noise8
+  xpos 1165
+  ypos 432
+ }
+ IDistort {
+  uv alpha
+  uv_scale 32.5
+  blur_scale 0
+  name IDistort3
+  xpos 1165
+  ypos 512
+ }
+set N8fb95a70 [stack 0]
+ FrameHold {
+  first_frame {{parent.freezeframe}}
+  name FrameHold3
+  xpos 1062
+  ypos 555
+ }
+push $N8fb95a70
+ Switch {
+  inputs 2
+  which {{parent.velocityoff}}
+  name Switch6
+  xpos 1165
+  ypos 605
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.095
+  whitepoint 0.88
+  white 4
+  black_clamp false
+  name Grade1
+  xpos 1165
+  ypos 708
+ }
+ Dot {
+  name Dot22
+  xpos 1199
+  ypos 1169
+ }
+ Dot {
+  name Dot34
+  xpos 677
+  ypos 1169
+ }
+push $N8fb36fd0
+push 0
+ Noise {
+  inputs 1+1
+  size {{parent.HeatBlurScale+20}}
+  zoffset {{parent.Vel*frame}}
+  lacunarity 1
+  gain 0.694
+  gamma 0.227
+  translate {{parent.windx*frame+tracktranslate} {parent.windy*frame+tracktranslate}}
+  center {960 540}
+  name Noise2
+  xpos 571
+  ypos 402
+ }
+set N8fbaaa30 [stack 0]
+ FrameHold {
+  first_frame {{parent.freezeframe}}
+  name FrameHold8
+  xpos 474
+  ypos 435
+ }
+push $N8fbaaa30
+ Switch {
+  inputs 2
+  which {{parent.velocityoff}}
+  name Switch2
+  xpos 571
+  ypos 478
+ }
+ Switch {
+  inputs 4
+  which {{parent.disttype}}
+  name Switch4
+  xpos 572
+  ypos 1188
+ }
+ Dot {
+  name Dot1
+  xpos 606
+  ypos 1272
+ }
+set N8fbbdd20 [stack 0]
+ Dot {
+  name Dot40
+  xpos 606
+  ypos 1298
+ }
+set N92dae250 [stack 0]
+ Dot {
+  name Dot38
+  xpos -142
+  ypos 1298
+ }
+push $N8fb60f70
+ Dot {
+  name Dot33
+  xpos 450
+  ypos 927
+ }
+push $N8fb42a70
+ Dot {
+  name Dot9
+  xpos 1329
+  ypos 440
+ }
+push $N8fb44fc0
+push 0
+ Noise {
+  inputs 1+1
+  cliptype none
+  type turbulence
+  size {{parent.DistortionScale+13}}
+  zoffset {{parent.Vel*frame}}
+  lacunarity 1.16
+  gain 0.8
+  gamma 0.355
+  translate {{parent.windx*frame+tracktranslate} {parent.windy*frame+tracktranslate}}
+  center {960 540}
+  name Noise5
+  xpos 1407
+  ypos 375
+ }
+ Noise {
+  inputs 1+1
+  cliptype none
+  size {{parent.DistortionScale+51}}
+  zoffset {{parent.Vel*frame}}
+  lacunarity 1
+  gain 0.336
+  gamma 0.285
+  translate {{parent.windx*frame+tracktranslate} {parent.windy*frame+tracktranslate}}
+  center {960 540}
+  name Noise6
+  xpos 1407
+  ypos 436
+ }
+set N8fbc9f00 [stack 0]
+ FrameHold {
+  first_frame {{parent.freezeframe}}
+  name FrameHold4
+  xpos 1332
+  ypos 508
+ }
+push $N8fbc9f00
+ Switch {
+  inputs 2
+  which {{parent.velocityoff}}
+  name Switch7
+  xpos 1407
+  ypos 588
+ }
+ Dot {
+  name Dot20
+  xpos 1441
+  ypos 905
+ }
+ Dot {
+  name Dot32
+  xpos 452
+  ypos 905
+ }
+push $N8fb39520
+ Dot {
+  name Dot7
+  xpos 796
+  ypos 436
+ }
+push $N8fb3ba70
+push 0
+ Noise {
+  inputs 1+1
+  cliptype none
+  size {{parent.DistortionScale+13}}
+  zoffset {{parent.Vel*frame}}
+  lacunarity 1.34
+  gain 0.695
+  gamma 0.42
+  translate {{parent.windx*frame+tracktranslate} {parent.windy*frame+tracktranslate}}
+  center {960 540}
+  name Noise4
+  xpos 874
+  ypos 367
+ }
+ Noise {
+  inputs 1+1
+  cliptype none
+  type turbulence
+  size {{parent.DistortionScale+105}}
+  zoffset {{parent.Vel*frame}}
+  lacunarity 1
+  gain 0.256
+  gamma 0.89
+  translate {{parent.windx*frame+tracktranslate} {parent.windy*frame+tracktranslate}}
+  center {960 540}
+  name Noise3
+  xpos 874
+  ypos 432
+ }
+ IDistort {
+  uv alpha
+  uv_scale 32.5
+  blur_scale 0
+  name IDistort2
+  xpos 874
+  ypos 512
+ }
+set N8fbecc90 [stack 0]
+ FrameHold {
+  first_frame {{parent.freezeframe}}
+  name FrameHold2
+  xpos 771
+  ypos 555
+ }
+push $N8fbecc90
+ Switch {
+  inputs 2
+  which {{parent.velocityoff}}
+  name Switch5
+  xpos 874
+  ypos 605
+ }
+ Dot {
+  name Dot19
+  xpos 908
+  ypos 883
+ }
+ Dot {
+  name Dot31
+  xpos 449
+  ypos 883
+ }
+push $N8fb2ffe0
+push 0
+ Noise {
+  inputs 1+1
+  size {{parent.DistortionScale+6}}
+  zoffset {{parent.Vel*frame}}
+  lacunarity 1.335
+  gain 0.333
+  gamma 0.34
+  translate {{parent.windx*frame+tracktranslate} {parent.windy*frame+tracktranslate}}
+  center {960 540}
+  name Noise1
+  xpos 346
+  ypos 403
+ }
+set N8fbf9770 [stack 0]
+ FrameHold {
+  first_frame {{parent.freezeframe}}
+  name FrameHold1
+  xpos 231
+  ypos 434
+ }
+push $N8fbf9770
+ Switch {
+  inputs 2
+  which {{parent.velocityoff}}
+  name Switch1
+  xpos 346
+  ypos 477
+ }
+ Switch {
+  inputs 4
+  which {{parent.disttype}}
+  name Switch3
+  xpos 347
+  ypos 902
+ }
+ Dot {
+  name Dot2
+  xpos 381
+  ypos 974
+ }
+set N92d12e10 [stack 0]
+ Dot {
+  name Dot27
+  xpos 381
+  ypos 1082
+ }
+push $N92d12e10
+push $N1bb2dbc0
+add_layer {idistort idistort.x idistort.y}
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 idistort.x
+  from1 rgba.alpha
+  to1 idistort.y
+  name Copy1
+  xpos -194
+  ypos 962
+ }
+ Grade {
+  inputs 1+1
+  white {{parent.gain}}
+  black_clamp false
+  name Grade3
+  knobChanged "\nif nuke.thisNode()\['white'].getValue() == 1:\n    nuke.thisNode()\['disable'].getValue() == 1\nelse:\n    nuke.thisNode()\['disable'].getValue() == 0\n"
+  xpos -194
+  ypos 1078
+ }
+ Dot {
+  name Dot26
+  xpos -160
+  ypos 1155
+ }
+set N92d24f00 [stack 0]
+ Remove {
+  channels {rgba.red -rgba.green rgba.blue none}
+  name Remove4
+  xpos -194
+  ypos 1224
+ }
+ Blur {
+  inputs 1+1
+  size {{parent.HeatBlurAmount+(chromatic*1.3)}}
+  name Blur4
+  xpos -194
+  ypos 1316
+ }
+push 0
+push $N8fbbdd20
+ Dot {
+  name Dot39
+  xpos -268
+  ypos 1272
+ }
+push $N92d24f00
+ Remove {
+  channels {-rgba.red rgba.green rgba.blue none}
+  name Remove6
+  xpos -328
+  ypos 1227
+ }
+ Blur {
+  inputs 1+1
+  size {{parent.HeatBlurAmount+(chromatic*1.2)}}
+  name Blur3
+  xpos -328
+  ypos 1316
+ }
+push $N92dae250
+ Dot {
+  name Dot37
+  xpos 606
+  ypos 1323
+ }
+push $N92d24f00
+ Remove {
+  channels {rgba.red rgba.green -rgba.blue none}
+  name Remove5
+  xpos -74
+  ypos 1232
+ }
+ Blur {
+  inputs 1+1
+  size {{parent.HeatBlurAmount+(chromatic*1.4)}}
+  name Blur5
+  xpos -74
+  ypos 1316
+ }
+ Merge2 {
+  inputs 3+1
+  operation max
+  name Merge3
+  xpos -194
+  ypos 1382
+ }
+ Blur {
+  inputs 1+1
+  size {{parent.overallblur}}
+  name Blur2
+  xpos -194
+  ypos 1451
+ }
+set N92d49750 [stack 0]
+ Remove {
+  channels {rgba.red -rgba.green rgba.blue none}
+  name Remove3
+  xpos -194
+  ypos 1565
+ }
+ IDistort {
+  uv idistort
+  uv_scale {{parent.distortion_amount+(chromatic*3) 0}}
+  blur_scale 3
+  name IDistort7
+  xpos -194
+  ypos 1637
+ }
+push 0
+push $N92d49750
+ Remove {
+  channels {-rgba.red rgba.green rgba.blue none}
+  name Remove1
+  xpos -318
+  ypos 1563
+ }
+ IDistort {
+  uv idistort
+  uv_scale {{parent.distortion_amount+(chromatic*2) 0}}
+  blur_scale 3
+  name IDistort9
+  xpos -318
+  ypos 1637
+ }
+push $N92d49750
+ Remove {
+  channels {rgba.red rgba.green -rgba.blue none}
+  name Remove2
+  xpos -77
+  ypos 1563
+ }
+ IDistort {
+  uv idistort
+  uv_scale {{parent.distortion_amount+(chromatic*4) 0}}
+  blur_scale 3
+  name IDistort8
+  xpos -77
+  ypos 1637
+ }
+ Merge2 {
+  inputs 3+1
+  operation max
+  name Merge2
+  xpos -194
+  ypos 1753
+ }
+ ShuffleCopy {
+  inputs 2
+  in alpha
+  red red
+  out alpha
+  name ShuffleCopy1
+  xpos -194
+  ypos 1856
+  disable {{parent.affectalpha}}
+ }
+ Remove {
+  channels idistort
+  name Remove7
+  xpos -194
+  ypos 1946
+ }
+ Output {
+  name Output1
+  xpos -194
+  ypos 2028
+ }
+end_group

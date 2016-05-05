@@ -1,0 +1,184 @@
+#! C:/Program Files/Nuke7.0v8/Nuke7.0.exe -nx
+version 7.0 v8
+Gizmo {
+ addUserKnob {20 User}
+ addUserKnob {41 distortion1 l "Inner RED" T LensDistortion_RED.distortion1}
+ addUserKnob {41 distortion2 l "Outter RED" T LensDistortion_RED.distortion2}
+ addUserKnob {26 ""}
+ addUserKnob {41 distortion1_2 l "Inner GREEN" T LensDistortion_GREEN.distortion1}
+ addUserKnob {41 distortion2_2 l "Outter GREEN" T LensDistortion_GREEN.distortion2}
+ addUserKnob {26 ""}
+ addUserKnob {41 distortion1_1 l "Inner BLUE" T LensDistortion_BLUE.distortion1}
+ addUserKnob {41 distortion2_1 l "Outter BLUE" T LensDistortion_BLUE.distortion2}
+ addUserKnob {26 ""}
+ addUserKnob {41 operation T Merge7.operation}
+ addUserKnob {41 mix l Mix T Merge7.mix}
+ addUserKnob {41 saturation T ColorCorrect1.saturation}
+ addUserKnob {26 ""}
+ addUserKnob {41 distortion1_3 l "Radial Distortion 1" T LensDistortion1.distortion1}
+ addUserKnob {41 distortion2_3 l "Radial Distortion 2" T LensDistortion1.distortion2}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 txtFr l "" +STARTLINE T "Chromatic aberration gizmo by Fury"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 492
+  ypos 29
+ }
+set N2e575040 [stack 0]
+ Dot {
+  name Dot1
+  xpos 382
+  ypos 227
+ }
+ Shuffle {
+  green black
+  blue black
+  alpha black
+  name RED
+  xpos 348
+  ypos 347
+ }
+ LensDistortion {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
+  distortionCenter {-0.3 -0.5}
+  filter Simon
+  name LensDistortion_RED
+  xpos 348
+  ypos 445
+ }
+ Dot {
+  name Dot5
+  xpos 382
+  ypos 547
+ }
+push $N2e575040
+ Shuffle {
+  red black
+  blue black
+  alpha black
+  name GREEN
+  xpos 492
+  ypos 349
+ }
+ LensDistortion {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
+  name LensDistortion_GREEN
+  xpos 492
+  ypos 444
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge3
+  xpos 492
+  ypos 544
+ }
+push $N2e575040
+ Dot {
+  name Dot2
+  xpos 667
+  ypos 234
+ }
+ Shuffle {
+  red black
+  green black
+  alpha black
+  name BLUE
+  xpos 633
+  ypos 351
+ }
+ LensDistortion {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
+  name LensDistortion_BLUE
+  xpos 633
+  ypos 443
+ }
+ Dot {
+  name Dot6
+  xpos 667
+  ypos 758
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge4
+  xpos 492
+  ypos 755
+ }
+ Dot {
+  name Dot4
+  xpos 526
+  ypos 970
+ }
+push $N2e575040
+ Dot {
+  name Dot3
+  xpos 110
+  ypos 32
+ }
+set N2e65d720 [stack 0]
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge6
+  xpos 76
+  ypos 967
+ }
+set N2e65da90 [stack 0]
+ Expression {
+  channel3 alpha
+  expr3 r+g+b
+  name Expression1
+  xpos 229
+  ypos 1077
+ }
+push $N2e65da90
+ LensDistortion {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
+  name LensDistortion1
+  xpos 76
+  ypos 1196
+ }
+ Dot {
+  name Dot7
+  xpos 110
+  ypos 1280
+ }
+ ColorCorrect {
+  name ColorCorrect1
+  xpos -76
+  ypos 1277
+ }
+push $N2e65d720
+ Dot {
+  name Dot8
+  xpos -210
+  ypos 32
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Bchannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge7
+  xpos -244
+  ypos 1277
+ }
+ Output {
+  name Output1
+  xpos -244
+  ypos 1424
+ }
+ Viewer {
+  input_process false
+  name Viewer1
+  selected true
+  xpos -491
+  ypos 1520
+ }
+end_group

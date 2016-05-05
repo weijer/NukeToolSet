@@ -1,0 +1,81 @@
+#! C:/Program Files/Nuke8.0v4/nuke-8.0.v4.dll -nx
+version 8.0 v4
+Gizmo {
+ note_font Verdana
+ mapsize {0.15 0.15}
+ addUserKnob {20 settings}
+ addUserKnob {7 InnerBlur l "Inner Blur" R 0 50}
+ addUserKnob {7 InnerWhitePoint l "Inner Gain"}
+ addUserKnob {26 ""}
+ addUserKnob {7 OuterBlur l "Outer Blur" R 0 50}
+ addUserKnob {7 OuterWhitePoint l "Outer Gain"}
+ addUserKnob {26 ""}
+ addUserKnob {7 OverallBlur l "Overall Blur" R 0 50}
+ addUserKnob {7 OverallWhitePoint l "Overall Gain"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -251
+  ypos 542
+ }
+set N254cf940 [stack 0]
+ Blur {
+  channels alpha
+  size {{parent.OuterBlur i}}
+  name BlurOuter
+  xpos -302
+  ypos 600
+ }
+ Grade {
+  channels alpha
+  whitepoint {1 1 1 {1-(parent.OuterWhitePoint*.99) i}}
+  white_clamp true
+  name GradeOut
+  xpos -302
+  ypos 639
+ }
+push $N254cf940
+ Blur {
+  channels alpha
+  size {{parent.InnerBlur i}}
+  name BlurInner
+  xpos -199
+  ypos 597
+ }
+ Grade {
+  channels alpha
+  blackpoint {0 0 0 {parent.InnerWhitePoint*0.99 i}}
+  white_clamp true
+  name Grade3In
+  xpos -199
+  ypos 636
+ }
+ Merge2 {
+  inputs 2
+  operation out
+  name Out2
+  xpos -245
+  ypos 687
+ }
+ Blur {
+  channels alpha
+  size {{parent.OverallBlur i}}
+  name BlurAll
+  xpos -245
+  ypos 714
+ }
+ Grade {
+  channels alpha
+  whitepoint {1 1 1 {1-(parent.OverallWhitePoint*.99) i}}
+  white_clamp true
+  name GradeAll
+  xpos -245
+  ypos 753
+ }
+ Output {
+  name Output1
+  xpos -245
+  ypos 792
+ }
+end_group

@@ -1,0 +1,47 @@
+#! C:/Program Files/Nuke8.0v5/nuke-8.0.v5.dll -nx
+version 8.0 v5
+Gizmo {
+ tile_color 0x55bfffff
+ addUserKnob {20 pixelate l Pixelate}
+ addUserKnob {7 amount l Amount R 1 50}
+ amount 14.8
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -62
+  ypos -176
+ }
+ Reformat {
+  type "to box"
+  box_width {{format.w/amount}}
+  box_height {{format.h/amount}}
+  box_fixed true
+  name Reformat2
+  selected true
+  xpos -62
+  ypos -121
+ }
+ Crop {
+  box {0 0 {"int (parent.Reformat2.box_width)"} {"int (parent.Reformat2.box_height)"}}
+  name Crop1
+  xpos -62
+  ypos -75
+ }
+ Reformat {
+  type "to box"
+  box_width {{Input1.format.w}}
+  box_height {{Input1.format.h}}
+  box_fixed true
+  filter Impulse
+  name Reformat1
+  xpos -62
+  ypos -30
+ }
+ Output {
+  name Output1
+  xpos -62
+  ypos 36
+ }
+end_group
+

@@ -1,0 +1,231 @@
+#! C:/Program Files/Nuke6.1v1/Nuke6.1.exe -nx
+version 6.1 v1
+Gizmo {
+ inputs 3
+ help "Connect an attenuation map (i.e. map showing Viewing vector,or  normalized -I, like a light shining down the cam +Z axis) and a normal map. The order of the two inputs  is irrelevant. The result is similar to a rim lighting shader, with controls for the width and intensity of the effect."
+ tile_color 0x85ff7fff
+ addUserKnob {20 "" l User}
+ addUserKnob {7 RimLighting_UserEdgeWidth l "Edge Width"}
+ RimLighting_UserEdgeWidth 0.145
+ addUserKnob {7 RimLighting_UserEdgeAmount l "Edge Amount"}
+ RimLighting_UserEdgeAmount 2
+ addUserKnob {12 rim_light_pos l "Rim Light Position"}
+ rim_light_pos {{curve x40 537 x66 892 x80 551} {curve x40 558 x66 346 x80 420}}
+ addUserKnob {7 rim_depth l "Distance from Camera" R 0 5000}
+ addUserKnob {26 ""}
+ addUserKnob {6 nn l "Normalize the Normals?" -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {18 gamma_cc l "Gamma CC" R 0 5}
+ gamma_cc {1 1 1}
+ addUserKnob {18 gain_cc l "Gain CC" R 0 5}
+ gain_cc 5
+ addUserKnob {7 cc_mix l "CC Mix"}
+ cc_mix 1
+}
+ Input {
+  inputs 0
+  name P
+  xpos -531
+  ypos -126
+  number 2
+ }
+add_layer {o_Pobj o_Pobj.red o_Pobj.green o_Pobj.blue}
+ Shuffle {
+  in o_Pobj
+  out rgb
+  name Shuffle1
+  xpos -381
+  ypos -126
+ }
+ Unpremult {
+  name Unpremult2
+  xpos -239
+  ypos -126
+ }
+set N781ed20 [stack 0]
+ Input {
+  inputs 0
+  name N
+  xpos -228
+  ypos -399
+  number 1
+ }
+ Input {
+  inputs 0
+  name ALPHA
+  xpos -16
+  ypos -380
+ }
+ ShuffleCopy {
+  inputs 2
+  in rgb
+  red red
+  green green
+  blue blue
+  alpha alpha2
+  name ShuffleCopy1
+  tile_color 0x9e3c6300
+  xpos -130
+  ypos -324
+ }
+ Unpremult {
+  name Unpremult1
+  xpos -130
+  ypos -297
+ }
+ Multiply {
+  channels {-rgba.red -rgba.green rgba.blue -rgba.alpha}
+  value -1
+  name __SWITCH_HANDEDNESS__
+  xpos -130
+  ypos -270
+  disable true
+ }
+ Matrix {
+  channels rgb
+  matrix {
+      {1 2 1}
+      {2 4 2}
+      {1 2 1}
+    }
+  normalize true
+  name AA
+  xpos -130
+  ypos -225
+ }
+ Expression {
+  temp_name0 length
+  temp_expr0 sqrt(pow2(Bg)+pow2(Br)+pow2(Bb))
+  expr0 Br/(length+0.00001)
+  expr1 Bg/(length+0.00001)
+  expr2 Bb/(length+0.00001)
+  expr3 Ba
+  name Nn
+  xpos -130
+  ypos -182
+  disable {{nn.0==0 i}}
+ }
+set N7866950 [stack 0]
+ MergeExpression {
+  inputs 2
+  temp_name0 Lr
+  temp_expr0 "(parent.rim_light_pos.x - input.width/2)  - Ar"
+  temp_name1 Lg
+  temp_expr1 "(parent.rim_light_pos.y - input.height/2) - Ag"
+  temp_name2 Lb
+  temp_expr2 "parent.rim_depth  - Ab"
+  temp_name3 Llength
+  temp_expr3 sqrt(pow2(Lr)+pow2(Lg)+pow2(Lb))+0.00001
+  expr0 (Lr/Llength)*Br+(Lg/Llength)*Bg+(Lb/Llength)*Bb
+  expr1 (Lr/Llength)*Br+(Lg/Llength)*Bg+(Lb/Llength)*Bb
+  expr2 (Lr/Llength)*Br+(Lg/Llength)*Bg+(Lb/Llength)*Bb
+  expr3 Ba
+  name LdotN
+  xpos -239
+  ypos -28
+  addUserKnob {20 "" l User}
+ }
+push $N781ed20
+ Dot {
+  name Dot1
+  xpos -205
+  ypos -203
+ }
+ Dot {
+  name Dot2
+  xpos 21
+  ypos -203
+ }
+ Expression {
+  temp_name0 Plength
+  temp_expr0 sqrt(pow2(Br)+pow2(Bg)+pow2(Bb))+0.00001
+  expr0 Br/Plength
+  expr1 Bg/Plength
+  expr2 Bb/Plength
+  name I_normalized
+  xpos -13
+  ypos -130
+ }
+set N7867310 [stack 0]
+ Multiply {
+  channels rgb
+  value -1
+  name V
+  xpos -13
+  ypos -76
+ }
+push $N7866950
+ MergeExpression {
+  inputs 2
+  temp_name0 VdotNf
+  temp_expr0 "(Ar*Br) + (Ag*Bg) + (Ab*Bb)"
+  temp_name1 edgeWidth
+  temp_expr1 parent.RimLighting_UserEdgeWidth
+  temp_name2 edgeScale
+  temp_expr2 edgeWidth>0?pow(1-VdotNf,log(edgeWidth)/log(0.5)):0
+  temp_name3 edgeAmt
+  temp_expr3 parent.RimLighting_UserEdgeAmount
+  expr0 smoothstep(0,1,edgeAmt*edgeScale)
+  expr1 smoothstep(0,1,edgeAmt*edgeScale)
+  expr2 smoothstep(0,1,edgeAmt*edgeScale)
+  name RimLighting
+  xpos -13
+  ypos -33
+  addUserKnob {20 "" l User}
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Multiply
+  xpos -127
+  ypos 16
+ }
+ CCorrect {
+  gamma {{gamma_cc.r i} {gamma_cc.g i} {gamma_cc.b i} 1}
+  gain {{gain_cc.r i} {gain_cc.g i} {gain_cc.b i} 1}
+  mix {{cc_mix}}
+  name CCorrect1
+  tile_color 0x7aa9ff00
+  xpos -127
+  ypos 72
+ }
+ Premult {
+  name Premult1
+  xpos -127
+  ypos 141
+ }
+ Clamp {
+  name Clamp1
+  selected true
+  xpos -127
+  ypos 165
+ }
+set N78d4da0 [stack 0]
+ Output {
+  name Output1
+  xpos -127
+  ypos 243
+ }
+push $N7867310
+push $N7866950
+ MergeExpression {
+  inputs 2
+  temp_name0 IdotN
+  temp_expr0 Ar*Br+Ag*Bg+Ab*Bb
+  expr0 IdotN>0?Br:-Br
+  channel1 rgb
+  expr1 IdotN>0?Bg:-Bg
+  expr2 IdotN>0?Bb:-Bb
+  expr3 Ba
+  name FACEFORWARD
+  xpos -130
+  ypos -130
+  disable true
+ }
+push $N78d4da0
+ Viewer {
+  name Viewer1
+  xpos 90
+  ypos -225
+ }
+end_group

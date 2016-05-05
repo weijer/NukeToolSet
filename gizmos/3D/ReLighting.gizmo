@@ -1,0 +1,191 @@
+#! C:/Program Files/Nuke5.2v1/Nuke5.2.exe -nx
+version 5.2100
+add_layer {NORMAL_normal_final NORMAL_normal_final.X NORMAL_normal_final.Y NORMAL_normal_final.Z NORMAL_normal_final.red NORMAL_normal_final.green NORMAL_normal_final.blue NORMAL_normal_final.alpha}
+Gizmo {
+ tile_color 0xff590000
+ addUserKnob {20 "" l ReLighting}
+ addUserKnob {41 normals l "          normals" T Shuffle1.in}
+ addUserKnob {6 normalize -STARTLINE}
+ normalize true
+ addUserKnob {26 "" l "@b Light Pos"}
+ addUserKnob {12 light_position l "     XY position"}
+ addUserKnob {16 z_light_position l "Z position" R -1 1}
+ addUserKnob {12 light_pivot l "XY pivot"}
+ light_pivot {320 240}
+ addUserKnob {16 sensitivity l "XY sensitivity" R 1 10}
+ sensitivity 1
+ addUserKnob {26 "" l "@b Shading"}
+ addUserKnob {7 intensity R 0 10}
+ intensity 1
+ addUserKnob {18 diffuse_color l "diffuse color" R 0 2}
+ diffuse_color 1
+ addUserKnob {18 ambient_color l "ambient color"}
+ ambient_color {0 0 0}
+ addUserKnob {7 gamma R 0 2}
+ gamma 0.5
+ addUserKnob {26 "" l " " T ""}
+ addUserKnob {41 black_clamp l "black clamp" T Diff_Grade.black_clamp}
+ addUserKnob {41 white_clamp l "white clamp" T Diff_Grade.white_clamp}
+ addUserKnob {26 "" l "@b Filtering"}
+ addUserKnob {41 size l "     dilate size" T Dilate1.size}
+ addUserKnob {41 size_1 l "blur size" T Blur1.size}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 operation l merge T Merge1.operation}
+ addUserKnob {6 Merge1_disable l enable -STARTLINE}
+ addUserKnob {26 "" l " " T ""}
+ addUserKnob {41 mask T Dissolve1.mask}
+ addUserKnob {41 invert_mask l invert T Dissolve1.invert_mask}
+ addUserKnob {41 fringe T Dissolve1.fringe}
+ addUserKnob {41 premult l "(un)premult by" T Premult1.alpha}
+ addUserKnob {41 invert T Premult1.invert}
+ addUserKnob {41 which l mix T Dissolve1.which}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -277
+  ypos -394
+ }
+ Dot {
+  name Dot2
+  tile_color 0x9597bf00
+  xpos -243
+  ypos -328
+ }
+set N123c4cd8 [stack 0]
+ Dot {
+  name Dot1
+  tile_color 0x9597bf00
+  xpos -116
+  ypos -328
+ }
+ Dot {
+  name Dot3
+  tile_color 0x9597bf00
+  xpos -116
+  ypos 14
+ }
+set N128dce88 [stack 0]
+push $N123c4cd8
+ Shuffle {
+  in NORMAL_normal_final
+  in2 alpha
+  alpha red2
+  black red
+  white green
+  red2 blue
+  name Shuffle1
+  xpos -277
+  ypos -298
+ }
+ Expression {
+  temp_name0 MOD
+  temp_expr0 "sqrt( pow2(r) +pow2(g) + pow2(b) )*2"
+  expr0 0.5+r/MOD
+  expr1 0.5+g/MOD
+  expr2 0.5+b/MOD
+  channel3 none
+  name Normalize
+  xpos -277
+  ypos -272
+  disable {{!parent.normalize}}
+ }
+ Expression {
+  temp_name0 LX
+  temp_expr0 lights.light.x
+  temp_name1 LY
+  temp_expr1 lights.light.y
+  temp_name2 LZ
+  temp_expr2 lights.light.z
+  channel0 rgb
+  expr0 "sqrt( pow2(LX-r) + pow2(LY-g) + pow2(LZ-b) )"
+  channel1 none
+  channel2 none
+  channel3 none
+  name Expression1
+  xpos -277
+  ypos -246
+ }
+ Invert {
+  channels rgb
+  name Invert1
+  xpos -277
+  ypos -220
+ }
+ Grade {
+  white {{parent.intensity}}
+  multiply {{parent.diffuse_color.r i} {parent.diffuse_color.g i} {parent.diffuse_color.b i} 0}
+  add {{parent.ambient_color.r i} {parent.ambient_color.g i} {parent.ambient_color.b i} 0}
+  gamma {{parent.gamma i}}
+  white_clamp true
+  name Diff_Grade
+  xpos -277
+  ypos -194
+ }
+ Dilate {
+  channels rgb
+  name Dilate1
+  xpos -277
+  ypos -168
+  disable {{!size i}}
+ }
+ Blur {
+  channels rgb
+  name Blur1
+  xpos -277
+  ypos -142
+  disable {{!size}}
+ }
+ Crop {
+  box {0 0 {width i} {height}}
+  reformat true
+  crop false
+  name Crop1
+  xpos -277
+  ypos -16
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Bchannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge1
+  xpos -277
+  ypos 10
+  disable {{!parent.Merge1_disable i}}
+ }
+push $N128dce88
+ Dot {
+  name Dot4
+  tile_color 0x9597bf00
+  xpos -116
+  ypos 52
+ }
+ Dissolve {
+  inputs 2
+  which 1
+  name Dissolve1
+  xpos -277
+  ypos 41
+ }
+ Premult {
+  name Premult1
+  xpos -277
+  ypos 86
+ }
+ Output {
+  name Output1
+  xpos -277
+  ypos 129
+ }
+ NoOp {
+  inputs 0
+  name lights
+  xpos -492
+  ypos -154
+  addUserKnob {20 "" l User}
+  addUserKnob {13 light}
+  light {{"parent.sensitivity*( 0.5 + parent.light_position.x/width - parent.light_pivot.x/width ) - ( parent.sensitivity-1 )/2" i} {"parent.sensitivity*( 0.5 + parent.light_position.y/height - parent.light_pivot.y/height ) - ( parent.sensitivity-1 )/2" i} {parent.z_light_position}}
+ }
+end_group
+

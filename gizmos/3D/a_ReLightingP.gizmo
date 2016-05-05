@@ -1,0 +1,110 @@
+#! C:/tools/Nuke9.0v3/nuke-9.0.3.dll -nx
+version 9.0 v3
+Gizmo {
+ label "</font> <font color = red>\[value picSwitch]</font>"
+ postage_stamp true
+ addUserKnob {20 User}
+ addUserKnob {52 switch +STARTLINE}
+ addUserKnob {6 picSwitch l picColorSwitch +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {6 pos_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {18 pos l Position}
+ addUserKnob {6 pos_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 pickPoint_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {12 pickPosition l pickPoint}
+ addUserKnob {26 ""}
+ addUserKnob {13 rad l Radius}
+ addUserKnob {7 fall l "Falloff Exponent" R 1 10}
+ addUserKnob {7 gain l Hardness}
+}
+ Input {
+  inputs 0
+  name posIn
+  xpos 105
+  ypos 473
+ }
+set N2e7fe400 [stack 0]
+ Expression {
+  temp_name0 distR
+  temp_expr0 (Br-Br(pickPosition.x,pickPosition.y))/rad.x
+  temp_name1 distG
+  temp_expr1 (Bg-Bg(pickPosition.x,pickPosition.y))/rad.y
+  temp_name2 distB
+  temp_expr2 (Bb-Bb(pickPosition.x,pickPosition.y))/rad.z
+  temp_name3 len
+  temp_expr3 sqrt((distR*distR)+(distG*distG)+(distB*distB))
+  expr0 pow(1-len,fall)
+  expr1 pow(1-len,fall)
+  expr2 pow(1-len,fall)
+  expr3 pow(1-len,fall)
+  name __POSITION_KEY__
+  xpos 33
+  ypos 542
+ }
+push $N2e7fe400
+ Expression {
+  temp_name0 distR
+  temp_expr0 (Br-parent.pos.r)/rad.x
+  temp_name1 distG
+  temp_expr1 (Bg-parent.pos.g)/rad.y
+  temp_name2 distB
+  temp_expr2 (Bb-parent.pos.b)/rad.z
+  temp_name3 len
+  temp_expr3 sqrt((distR*distR)+(distG*distG)+(distB*distB))
+  expr0 pow(1-len,fall)
+  expr1 pow(1-len,fall)
+  expr2 pow(1-len,fall)
+  expr3 pow(1-len,fall)
+  name __POSITION_KEY__1
+  xpos 188
+  ypos 543
+ }
+ Switch {
+  inputs 2
+  which {{1-picSwitch}}
+  name Switch1
+  xpos 95
+  ypos 623
+ }
+set Nd2c3f400 [stack 0]
+ Expression {
+  temp_name0 gain
+  temp_expr0 parent.gain
+  temp_name1 lum
+  temp_expr1 "0.2125*Br + 0.7154*Bg + 0.0721*Bb"
+  temp_name2 val
+  temp_expr2 .5*((lum<.5)?((1-gain)>0?pow(2*lum,log(1-gain)/log(0.5)):0):2-((1-gain)>0?pow(2-2*lum,log(1-gain)/log(0.5)):0))
+  expr0 r>1?r:r*(val/(lum+0.00001))
+  expr1 g>1?g:g*(val/(lum+0.00001))
+  expr2 b>1?b:b*(val/(lum+0.00001))
+  name KPGain
+  tile_color 0xd47f3b00
+  label "TRUE GAIN\nFUNCTION"
+  xpos 95
+  ypos 683
+  addUserKnob {20 "" l User}
+ }
+ Expression {
+  expr0 r>10?0:isnan(Br)?0:Br
+  expr1 g>10?0:isnan(Bg)?0:Bg
+  expr2 b>10?0:isnan(Bb)?0:Bb
+  expr3 b>10?0:isnan(Bb)?0:Bb
+  name normalize
+  xpos 95
+  ypos 763
+ }
+ Output {
+  name Output1
+  xpos 95
+  ypos 839
+ }
+push $Nd2c3f400
+ Viewer {
+  frame_range 1001-1158
+  input_process false
+  name Viewer1
+  selected true
+  xpos 433
+  ypos 813
+ }
+end_group

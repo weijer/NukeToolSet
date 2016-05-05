@@ -1,0 +1,71 @@
+set cut_paste_input [stack 0]
+version 8.0 v4
+push 0
+push $cut_paste_input
+Group {
+ inputs 2
+ name CameraProjection2
+ knobChanged "\nk = nuke.thisKnob()\nn = nuke.thisNode()\nn.begin()\nif k.name() == 'inputChange':\n    nCheck = nuke.toNode('Card3D1')\n    if not nCheck.canSetInput(2,n.input(1)):\n        n.setInput(1,None)\nif k.name() == 'projFrm':\n    card = nuke.toNode(\"Card3D1\")\n    cam  = n.input(1)\n    frm  = n\['projFrm'].value()\n    print cam.name(), cam\['translate'].valueAt(frm)\n    print \"cam proj freeze frame: \" + str(frm)\n    card\['lens_in_focal'].setValue(cam\['focal'].valueAt(frm))\n    card\['lens_in_haperture'].setValue(cam\['haperture'].valueAt(frm))\nif k.name() == 'projType':\n    val = int(k.getValue())\n    card = nuke.toNode(\"Card3D1\")\n    iList = \[nuke.toNode(\"FrameHold\"),nuke.toNode(\"cam\")]\n    card.setInput(1,iList\[not val])\n    card.setInput(2,iList\[val])\nn.end()\n\n"
+ tile_color 0x9b0000ff
+ note_font "Bitstream Vera Sans Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font_color 0xffffffff
+ selected true
+ xpos -163
+ ypos -30
+ addUserKnob {20 camProjectTab l "Camera Project"}
+ addUserKnob {4 projType l Mode: t "You can use \"stabilize\" mode to generate an on-the-fly stabilize of your plate at a specific depth. Great!" M {Matchmove Stabilize}}
+ addUserKnob {26 ""}
+ addUserKnob {3 projFrm l "Projection Frame:"}
+ projFrm 1001
+ addUserKnob {22 thisFrmKnob l "this frame" -STARTLINE T "nuke.thisNode()\['projFrm'].setValue(nuke.frame())"}
+ addUserKnob {7 cardDepth l Depth: R 1 5000}
+ cardDepth 20
+ addUserKnob {20 camDetailsTab l Render}
+ addUserKnob {41 format l "output format" T Card3D1.format}
+ addUserKnob {41 filter T Card3D1.filter}
+ addUserKnob {41 clamp -STARTLINE T Card3D1.clamp}
+ addUserKnob {41 black_outside l "black outside" -STARTLINE T Card3D1.black_outside}
+ addUserKnob {41 motionblur T Card3D1.motionblur}
+ addUserKnob {41 shutter T Card3D1.shutter}
+ addUserKnob {41 shutteroffset l "shutter offset" T Card3D1.shutteroffset}
+ addUserKnob {41 shuttercustomoffset l "" -STARTLINE T Card3D1.shuttercustomoffset}
+}
+ Input {
+  inputs 0
+  name cam
+  selected true
+  xpos 271
+  ypos -159
+  number 1
+ }
+set N19699c90 [stack 0]
+ FrameHold {
+  first_frame {{parent.projFrm}}
+  name FrameHold
+  xpos 113
+  ypos -248
+ }
+push $N19699c90
+ Input {
+  inputs 0
+  name img
+  xpos -138
+  ypos -311
+ }
+ Card3D {
+  inputs 3
+  translate {0 0 {-parent.cardDepth}}
+  uniform_scale {{parent.cardDepth}}
+  lens_in_focal 19.42200089
+  lens_in_haperture 23.759161
+  name Card3D1
+  label "\n\n\n\n"
+  xpos -138
+  ypos -159
+ }
+ Output {
+  name Output1
+  xpos -138
+  ypos -1
+ }
+end_group

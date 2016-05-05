@@ -1,0 +1,64 @@
+#! C:/Program Files/Nuke8.0v5/nuke-8.0.v5.dll -nx
+version 8.0 v5
+Gizmo {
+inputs 2
+addUserKnob {20 RemoveSkyEdge}
+addUserKnob {41 channels T Dilate3.channels}
+addUserKnob {41 intensity l Intensity T Dilate3.size}
+addUserKnob {41 Blur l EdgeBlur T EdgeBlur8.size}
+addUserKnob {26 "" l mask}
+addUserKnob {41 maskChannelMask l "" -STARTLINE T Dilate3.maskChannelMask}
+addUserKnob {26 Tips l Tips: T "Before using this tool,you should make a distinction between foreground and background.\n用这个工具的时候请把前后景分开处理"}
+}
+Input {
+inputs 0
+name mask
+xpos -427
+ypos -183
+number 1
+}
+Input {
+inputs 0
+name Input1
+xpos -537
+ypos -259
+}
+Invert {
+channels rgb
+name Invert1
+xpos -537
+ypos -207
+}
+Dilate {
+inputs 1+1
+channels rgb
+size {2}
+maskChannelMask -rgba.alpha
+name Dilate3
+xpos -537
+ypos -183
+}
+Invert {
+channels rgb
+name Invert3
+xpos -537
+ypos -159
+}
+Premult {
+name Premult5
+xpos -537
+ypos -135
+}
+EdgeBlur {
+channels rgba
+size {2}
+name EdgeBlur8
+xpos -537
+ypos -111
+}
+Output {
+name Output1
+xpos -537
+ypos -42
+}
+end_group

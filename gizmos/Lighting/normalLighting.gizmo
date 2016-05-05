@@ -1,0 +1,79 @@
+#! D:/Program Files/Nuke4.6/Nuke.exe -nx
+version 4.6000
+Gizmo {
+ inputs 1
+ label v01
+ addUserKnob {20 "" l NormalLighting.V01}
+ addUserKnob {41 hue_rotation l Direction T HueShift1.hue_rotation}
+ addUserKnob {41 weight0 l RPass T Blend1.weight0}
+ addUserKnob {41 weight1 l GPass T Blend1.weight1}
+ addUserKnob {41 weight2 l BPass T Blend1.weight2}
+ addUserKnob {41 in l Soft_Hard T Histogram1.in}
+ addUserKnob {41 unpremult l "(un)premult by" T Histogram1.unpremult}
+ addUserKnob {26 "" "NormalLighting Based RGBPass By ShawnKim" } 
+
+ name NormalLighting.v01
+ label v01
+ indicators 2
+}
+ Input {
+  inputs 0
+  name Input1
+  selected true
+  xpos -210
+  ypos -232
+ }
+ HueShift {
+  color {1 0 0}
+  name HueShift1
+  xpos -210
+  ypos -192
+ }
+ NoOp {
+  name NoOp1
+  xpos -210
+  ypos -140
+ }
+set N9d4c880 [stack 0]
+ Shuffle {
+  red blue
+  green blue
+  name Shuffle3
+  xpos -28
+  ypos -57
+ }
+push $N9d4c880
+ Shuffle {
+  red green
+  blue green
+  name Shuffle2
+  xpos -210
+  ypos -56
+ }
+push $N9d4c880
+ Shuffle {
+  green red
+  blue red
+  name Shuffle1
+  xpos -369
+  ypos -51
+ }
+ Blend {
+  inputs 3
+  name Blend1
+  xpos -210
+  ypos 54
+ }
+ Histogram {
+  in {0 1 1}
+  out {0 1}
+  name Histogram1
+  xpos -210
+  ypos 114
+ }
+ Output {
+  name Output1
+  xpos -210
+  ypos 214
+ }
+end_group

@@ -1,0 +1,194 @@
+#! C:/Program Files/Nuke8.0v4/nuke-8.0.v4.dll -nx
+version 8.0 v4
+Gizmo {
+ inputs 2
+ addUserKnob {20 treat l EdgeTreat}
+ addUserKnob {14 erode l "Erode Intensity" t "used to control the intensity of erode.\n控制边缘侵蚀的强度." R 0 100}
+ erode 1
+ addUserKnob {14 uvscale l "UV Scale" t "used to control the range of erode.\n控制边缘侵蚀的深度。" R 0 100}
+ uvscale 1
+ addUserKnob {14 uvslope l "UV Slope" t "used to restrict Erode Intensity.\n限制Erode Intensity参数的强度." R 0 100}
+ addUserKnob {14 range l Range t "control the range of effect.\n控制影响范围." R 0 100}
+ addUserKnob {14 soft l Soft t "soft the edge of effect.\n软化效果边缘." R 0 100}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 text l Attention: T "please make sure there is a alpha channel\nin source input stream.\n\n请确保在source输入箭头上游有alpha通道."}
+}
+ Input {
+  inputs 0
+  name Mask
+  xpos 225
+  ypos 627
+ }
+ Input {
+  inputs 0
+  name Source
+  xpos -179
+  ypos 139
+  number 1
+ }
+ Dot {
+  name Dot3
+  xpos -145
+  ypos 252
+ }
+set N7c65d230 [stack 0]
+ Blur {
+  channels rgba
+  size {{parent.uvslope}}
+  name Blur1
+  xpos -290
+  ypos 249
+ }
+ Dot {
+  name Dot6
+  xpos -256
+  ypos 308
+ }
+set N7c65d910 [stack 0]
+ Dot {
+  name Dot5
+  xpos -483
+  ypos 308
+ }
+set N7c65dc80 [stack 0]
+ Dot {
+  name Dot4
+  xpos -592
+  ypos 308
+ }
+ Transform {
+  translate {{uvscale.w} 0}
+  center {320 240}
+  name Transform1
+  label X1
+  xpos -626
+  ypos 386
+ }
+push $N7c65dc80
+ Transform {
+  translate {{-uvscale.w} 0}
+  center {320 240}
+  name Transform2
+  label X-1
+  selected true
+  xpos -516
+  ypos 354
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge1
+  xpos -516
+  ypos 392
+ }
+ Dot {
+  name Dot9
+  xpos -482
+  ypos 440
+ }
+push $N7c65d910
+ Dot {
+  name Dot7
+  xpos -256
+  ypos 326
+ }
+set N7c6d7900 [stack 0]
+ Dot {
+  name Dot8
+  xpos -365
+  ypos 326
+ }
+ Transform {
+  translate {0 {uvscale.h}}
+  center {320 240}
+  name Transform3
+  label Y1
+  xpos -399
+  ypos 404
+ }
+push $N7c6d7900
+ Transform {
+  translate {0 {-uvscale.h}}
+  center {320 240}
+  name Transform4
+  label "Y-1\n"
+  xpos -289
+  ypos 372
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge2
+  xpos -289
+  ypos 410
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  alpha blue2
+  name ShuffleCopy1
+  xpos -289
+  ypos 436
+ }
+push $N7c65d230
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 forward.u
+  from1 rgba.green
+  to1 forward.v
+  name Copy2
+  xpos -179
+  ypos 423
+ }
+ IDistort {
+  uv forward
+  uv_scale {{parent.erode}}
+  blur_scale 0
+  name IDistort1
+  xpos -179
+  ypos 475
+ }
+ FilterErode {
+  channels alpha
+  size {{parent.range}}
+  name FilterErode1
+  xpos -179
+  ypos 513
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  xpos -179
+  ypos 551
+ }
+ Blur {
+  size {{parent.soft}}
+  name Blur2
+  xpos -179
+  ypos 589
+ }
+ Premult {
+  name Premult1
+  xpos -179
+  ypos 627
+ }
+push $N7c65d230
+ Dot {
+  name Dot10
+  xpos 97
+  ypos 252
+ }
+ Merge2 {
+  inputs 2+1
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge3
+  xpos 63
+  ypos 627
+ }
+ Output {
+  name Output1
+  xpos 63
+  ypos 727
+ }
+end_group

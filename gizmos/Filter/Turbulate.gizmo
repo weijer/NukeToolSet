@@ -1,0 +1,96 @@
+#! /Applications/Nuke5.0v2/Nuke5.0v2.app/Contents/MacOS/Nuke5.0 -nx
+version 5.0200
+Gizmo {
+ help "displacement based on noise\nv1.0 - 090321 - fs\n"
+ addUserKnob {20 Settings}
+ addUserKnob {7 amount R 0 200}
+ amount 50
+ addUserKnob {7 size R 0 200}
+ size 100
+ addUserKnob {7 detail R 0 5}
+ detail 2
+ addUserKnob {26 "" l ""}
+ addUserKnob {7 seed R 0 10}
+ seed 0
+}
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant1
+  xpos -184
+  ypos -224
+ }
+ Reformat {
+  type "to box"
+  box_width {{Dot1.width}}
+  box_height {{Dot1.height}}
+  box_fixed true
+  name Reformat1
+  xpos -184
+  ypos -150
+ }
+ Noise {
+  size {{parent.size i}}
+  zoffset {{parent.seed i}}
+  lacunarity {{parent.detail i}}
+  center {960 540}
+  name Noise3
+  xpos -184
+  ypos -105
+ }
+ Grade {
+  white 2
+  add -0.5
+  black_clamp false
+  name Grade31
+  xpos -184
+  ypos -78
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -60
+  ypos -213
+ }
+ Dot {
+  name Dot1
+  xpos -26
+  ypos -143
+ }
+add_layer {displ displ.red displ.green}
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 displ.red
+  from1 rgba.green
+  to1 displ.green
+  name Copy6
+  xpos -60
+  ypos -39
+ }
+ IDistort {
+  uv {displ.red -displ.green}
+  uv_scale {{parent.amount i}}
+  name IDistort1
+  xpos -60
+ }
+ IDistort {
+  uv {-displ.red displ.green}
+  uv_scale {{parent.amount i}}
+  name IDistort2
+  xpos -60
+  ypos 39
+ }
+set N1ed84630 [stack 0]
+ Output {
+  name Output1
+  xpos -60
+  ypos 125
+ }
+push $N1ed84630
+ Viewer {
+  name Viewer1
+  xpos -208
+  ypos 91
+ }
+end_group

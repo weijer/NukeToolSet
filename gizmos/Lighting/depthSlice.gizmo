@@ -1,0 +1,154 @@
+#! /Applications/Nuke5.0v1/Nuke5.0v1.app/Contents/MacOS/Nuke5.0 -nx
+version 5.0100
+Gizmo {
+ help "==========================================\nShake DepthSlice for Nuke\n==========================================\n\nFUNCTION\n\nCreates a slice in the alpha channel based on Z, as defined by a center point, and a drop-off range.\n\n\nCenter\nThe center z depth from which the slice is measured.\n\nLo, Hi\nThe distance included in the slice away from the center. lo adds distance towards the camera, hi add thickness away from the camera.\n\nGrad\t\nWhen this is turned on, there is a gradation from hi to lo. Beyond the slice is still black.\n\nMirror\nWhen this is on, the effect is mirrored in z.\n\nMatteMult\t\nWhen this is on, the rgb channels are pre-multiplied by the new mask.\n\n\n==========================================\nCuco Burés - 2008   ||   cucobures@gmail.com\n=========================================="
+ lock_connections true
+ addUserKnob {20 "" Controls}
+ addUserKnob {7 Center}
+ Center 0
+ addUserKnob {7 Lo}
+ Lo 0
+ addUserKnob {7 Hi}
+ Hi 1
+ addUserKnob {26 "" l "  " T "  "}
+ addUserKnob {6 Grad}
+ Grad true
+ addUserKnob {26 "" l "  " T "  "}
+ addUserKnob {6 Mirror}
+ addUserKnob {26 "" l "  " T "  "}
+ addUserKnob {6 MatteMult}
+ MatteMult true
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 293
+  ypos -113
+ }
+set N19baf190 [stack 0]
+ Colorspace {
+  layer depth
+  illuminant_in D75
+  colorspace_out sRGB
+  illuminant_out C
+  name Colorspace1
+  xpos 120
+  ypos -52
+ }
+ Shuffle {
+  in depth
+  in2 alpha
+  out alpha
+  name Shuffle2
+  xpos 120
+  ypos 2
+ }
+set N19d0dfa0 [stack 0]
+ Grade {
+  channels {-rgba.alpha none none rgba.alpha}
+  blackpoint {{parent.Center-parent.Lo i x1 0.1}}
+  whitepoint {{parent.Center-parent.Hi i x1 0.3}}
+  black_clamp false
+  maskChannel -rgba.alpha
+  name Grade2
+  xpos 214
+  ypos 121
+ }
+push $N19baf190
+ Colorspace {
+  layer depth
+  colorspace_out sRGB
+  name Colorspace2
+  xpos -27
+  ypos -49
+ }
+ Shuffle {
+  in depth
+  in2 alpha
+  out alpha
+  name Shuffle1
+  xpos -27
+  ypos 5
+ }
+set N187d09e0 [stack 0]
+ Expression {
+  temp_name0 na
+  temp_expr0 "(a>=(parent.Center-max(parent.Lo,parent.Hi)) && a<=(parent.Center-min(parent.Lo,parent.Hi)))?1:0"
+  channel0 alpha
+  expr0 na
+  channel1 none
+  channel2 none
+  channel3 {none none none -rgba.alpha}
+  name Expression1
+  xpos 91
+  ypos 129
+ }
+ Merge2 {
+  inputs 2
+  operation min
+  name Min1
+  xpos 152
+  ypos 265
+  disable {{1-parent.Grad i}}
+ }
+push $N19d0dfa0
+ Grade {
+  channels {-rgba.alpha none none rgba.alpha}
+  blackpoint {{parent.Lo+parent.Center i x1 0.2}}
+  whitepoint {{parent.Hi+parent.Center i x1 1}}
+  black_clamp false
+  maskChannel -rgba.alpha
+  name Grade1
+  xpos -40
+  ypos 120
+ }
+push $N187d09e0
+ Expression {
+  temp_name0 na
+  temp_expr0 "(a>=(min(parent.Lo,parent.Hi) + parent.Center) && a<=(max(parent.Lo,parent.Hi) + parent.Center))? 1 : 0"
+  channel0 alpha
+  expr0 na
+  channel1 none
+  channel2 none
+  channel3 {none none none -rgba.alpha}
+  name Expression2
+  xpos -156
+  ypos 128
+ }
+ Merge2 {
+  inputs 2
+  operation min
+  name Min
+  xpos -98
+  ypos 270
+  disable {{1-parent.Grad i}}
+ }
+ Merge2 {
+  inputs 2
+  operation max
+  name Max
+  xpos 26
+  ypos 393
+  disable {{1-parent.Mirror i}}
+ }
+push $N19baf190
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 293
+  ypos 522
+ }
+ Premult {
+  name Premult1
+  xpos 293
+  ypos 591
+  disable {{1-parent.MatteMult i}}
+ }
+ Output {
+  name Output1
+  xpos 293
+  ypos 668
+ }
+end_group

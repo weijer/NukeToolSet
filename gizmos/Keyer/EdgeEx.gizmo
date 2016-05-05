@@ -1,0 +1,127 @@
+#! /usr/local/Nuke6.1v1/Nuke6.1 -nx
+version 6.1 v1
+Gizmo {
+ inputs 2
+ lock_connections {{curve x1250 0}}
+ addUserKnob {20 EdgeEx}
+ addUserKnob {7 extend R 1 10}
+ addUserKnob {7 intensity R 1 10}
+ intensity 1
+ addUserKnob {26 ""}
+ addUserKnob {41 which T control.which}
+ addUserKnob {26 ""}
+ addUserKnob {41 size T bothside.size}
+ addUserKnob {41 value T intencity.value}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 451
+  ypos 171
+ }
+set Ncee5c960 [stack 0]
+push $Ncee5c960
+ Merge2 {
+  inputs 2
+  operation xor
+  name Merge23
+  xpos 287
+  ypos 259
+ }
+ Blur {
+  size {{parent.extend i}}
+  name wide
+  xpos 287
+  ypos 287
+ }
+ Multiply {
+  value {{parent.intensity i}}
+  name lightness
+  xpos 287
+  ypos 329
+ }
+ Clamp {
+  name Clamp1
+  xpos 287
+  ypos 371
+ }
+set Ncd444a50 [stack 0]
+push $Ncee5c960
+ Merge2 {
+  inputs 2
+  operation out
+  name Out
+  xpos 371
+  ypos 466
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos 643
+  ypos 289
+  number 1
+ }
+set Nfad268e0 [stack 0]
+ Merge2 {
+  inputs 2
+  operation in
+  name In1
+  xpos 389
+  ypos 544
+ }
+push $Ncd444a50
+push $Ncee5c960
+ Merge2 {
+  inputs 2
+  operation in
+  name In
+  selected true
+  xpos 474
+  ypos 439
+ }
+push $Nfad268e0
+ Merge2 {
+  inputs 2
+  operation in
+  name In2
+  xpos 474
+  ypos 533
+ }
+ Switch {
+  inputs 2
+  which 1
+  name control
+  xpos 442
+  ypos 632
+ }
+ Blur {
+  size 10
+  name bothside
+  xpos 442
+  ypos 660
+ }
+ Multiply {
+  name intencity
+  xpos 442
+  ypos 702
+ }
+ Clamp {
+  name Clamp2
+  xpos 448
+  ypos 760
+ }
+set Nbe334250 [stack 0]
+ Viewer {
+  viewerProcess rec709
+  input_process false
+  name Viewer1
+  xpos 592
+  ypos 472
+ }
+push $Nbe334250
+ Output {
+  name Output1
+  xpos 448
+  ypos 825
+ }
+end_group

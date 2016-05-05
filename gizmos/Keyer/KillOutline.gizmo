@@ -1,0 +1,706 @@
+#! C:/Program Files/Nuke6.0v6/Nuke6.0.exe -nx
+version 6.0 v6
+Gizmo {
+ inputs 2
+ help "KillOutline reduces unwanted outlines from keyed footage.\n\nerode controls: erode the alpha in for the amount of the visible outline.\n\nexpand controls: expand outer pixels of eroded image out again until it reaches the edge of the original alpha.\n\ntransition treatment: if needed, blur the transition between original image and extension."
+ addUserKnob {20 Settings}
+ addUserKnob {26 title l "" +STARTLINE T "KillOutline by Andreas Frickinger"}
+ addUserKnob {26 expectation l "" +STARTLINE T "expects premultiplied input."}
+ addUserKnob {26 ""}
+ addUserKnob {20 erodeControls l "erode controls" n 1}
+ addUserKnob {41 erodeSize l "erode size" t "alpha gets eroded in by this amount." T GizmoControl.erodeSize}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 extendControls l "expand controls" n 1}
+ addUserKnob {41 slices T EdgeExtend2.slices}
+ addUserKnob {41 slice_width l "slice width" T EdgeExtend2.slice_width}
+ addUserKnob {41 expandSize l "expand size" t "outer pixels of eroded image gets dilated out by this amount. " T EdgeExtend2.blurResult}
+ addUserKnob {26 ""}
+ addUserKnob {20 transitionTreatment l "transition treatment" n 1}
+ addUserKnob {41 transitionTreatmentSwitch l on/off T GizmoControl.transitionTreatmentSwitch}
+ addUserKnob {41 edgeSize l "edge size" t "size of transition edge." T GizmoControl.edgeSize}
+ addUserKnob {41 edgeBlur l "edge blur" t "blur size of transition edge." T GizmoControl.edgeBlur}
+ addUserKnob {41 size l "image blur" t "blur size of image, masked out by transition edge." T TransitionBlur.size}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos 1465
+  ypos 803
+  number 1
+ }
+ Invert {
+  name Invert1
+  xpos 1465
+  ypos 829
+ }
+ Input {
+  inputs 0
+  name img
+  xpos 833
+  ypos -395
+ }
+ Dot {
+  name Dot5
+  xpos 867
+  ypos -311
+ }
+set N6fcbc48 [stack 0]
+ Dot {
+  name Dot6
+  xpos 585
+  ypos -311
+ }
+ Dot {
+  name Dot7
+  xpos 585
+  ypos 839
+ }
+ Dot {
+  name Dot8
+  xpos 1057
+  ypos 839
+ }
+push $N6fcbc48
+ Unpremult {
+  name UnpremultInput
+  xpos 833
+  ypos -241
+ }
+ Dot {
+  name Dot3
+  xpos 867
+  ypos -144
+ }
+set N6fcc3f0 [stack 0]
+ Dot {
+  name Dot4
+  xpos 867
+  ypos 434
+ }
+ Dot {
+  name Dot1
+  xpos 1054
+  ypos 434
+ }
+set N6fcc700 [stack 0]
+ Dot {
+  name Dot2
+  xpos 1054
+  ypos 672
+ }
+ Expression {
+  expr3 a==0?0:a
+  name Expression1
+  xpos 1118
+  ypos 668
+ }
+push $N6fcc3f0
+ Shuffle {
+  red black
+  green black
+  blue black
+  name AlphaOnly
+  xpos 1250
+  ypos -148
+ }
+ Erode {
+  size {{GizmoControl.erodeSize i}}
+  name ErodeShrink
+  xpos 1250
+  ypos 37
+ }
+set N6fccea8 [stack 0]
+ Dot {
+  name Dot10
+  xpos 1657
+  ypos 47
+ }
+ EdgeDetectWrapper {
+  channels alpha
+  erodesize {{GizmoControl.edgeSize*-1 i}}
+  name EdgeDetectWrapper1
+  xpos 1623
+  ypos 252
+ }
+ Blur {
+  size {{GizmoControl.edgeBlur i}}
+  name EdgeBlur
+  xpos 1623
+  ypos 290
+ }
+ Dot {
+  name Dot9
+  xpos 1657
+  ypos 605
+ }
+push $N6fccea8
+push $N6fcc700
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 1250
+  ypos 424
+ }
+ Premult {
+  name Premult2
+  xpos 1250
+  ypos 462
+ }
+set N72b86a8 [stack 0]
+push $N72b86a8
+ Group {
+  inputs 2
+  name EdgeExtend2
+  help "EdgeExtend repeatedly blurs and unpremuliplies the image to extend edges outward while trying to preserve the original source colour"
+  selected true
+  xpos 1250
+  ypos 533
+  addUserKnob {20 "" l User}
+  addUserKnob {4 premult l "input is" M {premultiplied unpremultiplied}}
+  addUserKnob {3 slices t "How many times the edges are blurred and unpremuliplied.\nThis is the fine control for slightly better quality. The current maximum is 10."}
+  slices 4
+  addUserKnob {3 slice_width l "slice width" t "Blur amount that is applied before unpremultiplying the result per slice.\nThis is the brute force control and should be kept at 1 if possible.\nOnly increase this if the maximum amount of slices (10) doesn't cover the area you need."}
+  slice_width 1
+  addUserKnob {7 blurResult l "blur slices" R 0 10}
+  blurResult 5
+ }
+  Input {
+   inputs 0
+   name img
+   xpos -590
+   ypos -509
+  }
+set N72b8830 [stack 0]
+  Dot {
+   name Dot1
+   xpos -556
+   ypos 978
+  }
+  Input {
+   inputs 0
+   name matte
+   xpos -358
+   ypos -653
+   number 1
+  }
+push $N72b8830
+  Unpremult {
+   name Unpremult11
+   xpos -468
+   ypos -509
+   disable {{parent.premult}}
+  }
+  Copy {
+   inputs 2
+   from0 -rgba.alpha
+   to0 -rgba.alpha
+   channels alpha
+   name Copy2
+   xpos -358
+   ypos -516
+  }
+  Premult {
+   name Premult1
+   xpos -358
+   ypos -450
+  }
+  Shuffle {
+   black alpha
+   out2 depth
+   name Shuffle1
+   label alpha>depth
+   xpos -223
+   ypos -413
+  }
+  Unpremult {
+   channels {rgba.red rgba.green rgba.blue depth.Z}
+   name Unpremult1
+   xpos -223
+   ypos -373
+  }
+set N72b9470 [stack 0]
+  Dot {
+   name Dot2
+   xpos -189
+   ypos -214
+  }
+set N72efd40 [stack 0]
+push $N72b9470
+  Blur {
+   channels {rgba.red rgba.green rgba.blue depth.Z}
+   size {{parent.slice_width}}
+   name Blur1
+   xpos -25
+   ypos -373
+  }
+  Shuffle {
+   in2 depth
+   alpha red2
+   out2 depth
+   name Shuffle3
+   label depth>alpha
+   xpos -25
+   ypos -333
+  }
+  Unpremult {
+   channels rgba
+   alpha depth.Z
+   name Unpremult3
+   xpos -25
+   ypos -293
+  }
+  Blur {
+   channels rgba
+   size {{parent.blurResult}}
+   name Blur10
+   xpos -25
+   ypos -241
+  }
+  set C72f04e8 [stack 0]
+  Merge2 {
+   inputs 2
+   Achannels {rgba.red rgba.green rgba.blue depth.Z}
+   name Merge1
+   xpos -25
+   ypos -218
+  }
+set N72f07f8 [stack 0]
+  Dot {
+   name Dot3
+   xpos 9
+   ypos -73
+  }
+set N72f0c90 [stack 0]
+push $N72f07f8
+  Blur {
+   channels {rgba.red rgba.green rgba.blue rgba.alpha}
+   size {{parent.slice_width}}
+   name Blur2
+   xpos 159
+   ypos -218
+  }
+  Shuffle {
+   in2 depth
+   black alpha
+   out2 depth
+   name Shuffle5
+   label alpha>depth
+   xpos 159
+   ypos -180
+  }
+  Unpremult {
+   channels {rgba.red rgba.green rgba.blue depth.Z}
+   name Unpremult2
+   xpos 159
+   ypos -140
+  }
+  Blur {
+   channels {rgba.red rgba.green rgba.blue depth.Z}
+   size {{parent.blurResult}}
+   name Blur3
+   xpos 159
+   ypos -101
+  }
+  set C72f1438 [stack 0]
+  Merge2 {
+   inputs 2
+   name Merge2
+   xpos 159
+   ypos -73
+  }
+set N72f1748 [stack 0]
+  Dot {
+   name Dot4
+   xpos 193
+   ypos 103
+  }
+set N72f1be0 [stack 0]
+push $N72f1748
+  Shuffle {
+   in2 depth
+   alpha red2
+   out2 depth
+   name Shuffle2
+   label depth>alpha
+   xpos 342
+   ypos -24
+  }
+  Unpremult {
+   channels rgba
+   alpha depth.Z
+   name Unpremult4
+   xpos 342
+   ypos 16
+  }
+set N72f1ef0 [stack 0]
+clone $C72f04e8 {
+   xpos 342
+   ypos 68
+   selected false
+  }
+  Merge2 {
+   inputs 2
+   Achannels {rgba.red rgba.green rgba.blue depth.Z}
+   name Merge3
+   xpos 342
+   ypos 103
+  }
+  Dot {
+   name Dot5
+   xpos 373
+   ypos 226
+  }
+set N72f2820 [stack 0]
+push $N72f1ef0
+  Blur {
+   channels {rgba.red rgba.green rgba.blue rgba.alpha}
+   size {{parent.slice_width}}
+   name Blur4
+   xpos 503
+   ypos 23
+  }
+  Shuffle {
+   in2 depth
+   black alpha
+   out2 depth
+   name Shuffle4
+   label alpha>depth
+   xpos 503
+   ypos 65
+  }
+  Unpremult {
+   channels {rgba.red rgba.green rgba.blue depth.Z}
+   name Unpremult5
+   xpos 503
+   ypos 105
+  }
+set N72f2e40 [stack 0]
+clone $C72f1438 {
+   xpos 503
+   ypos 174
+   selected false
+  }
+  Merge2 {
+   inputs 2
+   name Merge4
+   xpos 503
+   ypos 226
+  }
+  Dot {
+   name Dot6
+   xpos 537
+   ypos 321
+  }
+set N72f3770 [stack 0]
+push $N72f2e40
+  Blur {
+   channels {rgba.red rgba.green rgba.blue depth.Z}
+   size {{parent.slice_width}}
+   name Blur5
+   xpos 689
+   ypos 105
+  }
+  Shuffle {
+   in2 depth
+   alpha red2
+   out2 depth
+   name Shuffle6
+   label depth>alpha
+   xpos 689
+   ypos 145
+  }
+  Unpremult {
+   channels rgba
+   alpha depth.Z
+   name Unpremult6
+   xpos 689
+   ypos 185
+  }
+set N735eec8 [stack 0]
+clone $C72f04e8 {
+   xpos 684
+   ypos 272
+   selected false
+  }
+  Merge2 {
+   inputs 2
+   Achannels {rgba.red rgba.green rgba.blue depth.Z}
+   name Merge5
+   xpos 689
+   ypos 321
+  }
+  Dot {
+   name Dot7
+   xpos 723
+   ypos 448
+  }
+set N735f7f8 [stack 0]
+push $N735eec8
+  Blur {
+   channels {rgba.red rgba.green rgba.blue rgba.alpha}
+   size {{parent.slice_width}}
+   name Blur6
+   xpos 856
+   ypos 200
+  }
+  Shuffle {
+   in2 depth
+   black alpha
+   out2 depth
+   name Shuffle7
+   label alpha>depth
+   xpos 856
+   ypos 280
+  }
+  Unpremult {
+   channels {rgba.red rgba.green rgba.blue depth.Z}
+   name Unpremult7
+   xpos 856
+   ypos 320
+  }
+set N735fe18 [stack 0]
+clone $C72f1438 {
+   xpos 852
+   ypos 405
+   selected false
+  }
+  Merge2 {
+   inputs 2
+   name Merge6
+   xpos 856
+   ypos 448
+  }
+  Dot {
+   name Dot8
+   xpos 890
+   ypos 514
+  }
+set N7360748 [stack 0]
+push $N735fe18
+  Blur {
+   channels {rgba.red rgba.green rgba.blue depth.Z}
+   size {{parent.slice_width}}
+   name Blur7
+   xpos 1042
+   ypos 320
+  }
+  Shuffle {
+   in2 depth
+   alpha red2
+   out2 depth
+   name Shuffle8
+   label depth>alpha
+   xpos 1042
+   ypos 393
+  }
+  Unpremult {
+   channels rgba
+   alpha depth.Z
+   name Unpremult8
+   xpos 1042
+   ypos 433
+  }
+set N7360d68 [stack 0]
+clone $C72f04e8 {
+   xpos 1046
+   ypos 484
+   selected false
+  }
+  Merge2 {
+   inputs 2
+   Achannels {rgba.red rgba.green rgba.blue depth.Z}
+   name Merge7
+   xpos 1042
+   ypos 514
+  }
+  Dot {
+   name Dot9
+   xpos 1076
+   ypos 579
+  }
+set N7361698 [stack 0]
+push $N7360d68
+  Blur {
+   channels {rgba.red rgba.green rgba.blue rgba.alpha}
+   size {{parent.slice_width}}
+   name Blur8
+   xpos 1205
+   ypos 440
+  }
+  Shuffle {
+   in2 depth
+   black alpha
+   out2 depth
+   name Shuffle9
+   label alpha>depth
+   xpos 1205
+   ypos 466
+  }
+  Unpremult {
+   channels {rgba.red rgba.green rgba.blue depth.Z}
+   name Unpremult9
+   xpos 1205
+   ypos 506
+  }
+set N7361cb8 [stack 0]
+clone $C72f1438 {
+   xpos 1206
+   ypos 551
+   selected false
+  }
+  Merge2 {
+   inputs 2
+   name Merge8
+   xpos 1205
+   ypos 579
+  }
+  Dot {
+   name Dot10
+   xpos 1239
+   ypos 664
+  }
+set N73625e8 [stack 0]
+push $N7361cb8
+  Blur {
+   channels {rgba.red rgba.green rgba.blue depth.Z}
+   size {{parent.slice_width}}
+   name Blur9
+   xpos 1421
+   ypos 506
+  }
+  Shuffle {
+   in2 depth
+   alpha red2
+   out2 depth
+   name Shuffle11
+   label depth>alpha
+   xpos 1421
+   ypos 546
+  }
+  Unpremult {
+   channels rgba
+   alpha depth.Z
+   name Unpremult10
+   xpos 1421
+   ypos 586
+  }
+clone $C72f04e8 {
+   xpos 1421
+   ypos 638
+   selected true
+  }
+  Merge2 {
+   inputs 2
+   Achannels {rgba.red rgba.green rgba.blue depth.Z}
+   name Merge9
+   xpos 1421
+   ypos 664
+  }
+push $N73625e8
+push $N7361698
+push $N7360748
+push $N735f7f8
+push $N72f3770
+push $N72f2820
+push $N72f1be0
+push $N72f0c90
+push $N72efd40
+push $N72b8830
+  Switch {
+   inputs 11
+   which {{parent.slices}}
+   name Switch1
+   xpos 689
+   ypos 827
+  }
+  Shuffle {
+   in2 depth
+   alpha red2
+   out2 depth
+   name Shuffle10
+   label depth>alpha
+   xpos 689
+   ypos 865
+  }
+  Remove {
+   channels depth
+   name Remove1
+   xpos 689
+   ypos 905
+  }
+  Copy {
+   inputs 2
+   from0 -rgba.alpha
+   to0 -rgba.alpha
+   channels depth
+   name Copy1
+   xpos 689
+   ypos 960
+  }
+  Output {
+   name Output1
+   xpos 689
+   ypos 1290
+  }
+  Blur {
+   inputs 0
+   channels {rgba.red rgba.green rgba.blue depth.Z}
+   size 8.5
+   name Blur11
+   xpos 299
+   ypos -61
+  }
+ end_group
+ Blur {
+  inputs 1+1
+  size 3
+  name TransitionBlur
+  xpos 1250
+  ypos 595
+  disable {{(GizmoControl.transitionTreatmentSwitch-1)*-1 i}}
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos 1250
+  ypos 662
+ }
+ Premult {
+  name Premult3
+  xpos 1250
+  ypos 777
+ }
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 1250
+  ypos 829
+ }
+ Output {
+  name Output1
+  xpos 1250
+  ypos 915
+ }
+ NoOp {
+  inputs 0
+  name GizmoControl
+  xpos 1428
+  ypos 254
+  addUserKnob {20 User}
+  addUserKnob {6 transitionTreatmentSwitch l on/off +STARTLINE}
+  transitionTreatmentSwitch true
+  addUserKnob {7 edgeBlur l "edge blur" R 0 100}
+  edgeBlur 3
+  addUserKnob {7 edgeSize l "edge size" R -1 10}
+  edgeSize 1
+  addUserKnob {7 erodeSize l "erode size" R 0 10}
+  erodeSize 5
+ }
+end_group

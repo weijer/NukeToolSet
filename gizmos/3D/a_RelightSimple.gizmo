@@ -1,0 +1,435 @@
+#! C:/tools/Nuke9.0v3/nuke-9.0.3.dll -nx
+version 9.0 v3
+Gizmo {
+ tile_color 0x2bffc5ff
+ addUserKnob {20 Light}
+ addUserKnob {41 in l "Norm Channel" T Shuf_inputNorm.in}
+ addUserKnob {6 spreview l "sphere preview" -STARTLINE}
+ addUserKnob {7 xangle l "X angle" R -180 180}
+ addUserKnob {7 yangle l "Y angle" R -180 180}
+ addUserKnob {26 ""}
+ addUserKnob {6 bckl_switch l "Back Light . (light only the edges)" +STARTLINE}
+ addUserKnob {7 bkl_erode l "BackL Size" R 0 20}
+ addUserKnob {41 blur l "BackL Blur" T Bckl_Blur.size}
+ addUserKnob {26 ""}
+ addUserKnob {4 out l Out M {Mask Relight "" "" ""}}
+ addUserKnob {41 offset l "Reflex (offset)" T G_Offset.add}
+ addUserKnob {41 gain l "Diffuse (Gain)" T G_Gain.white}
+ addUserKnob {26 ""}
+ addUserKnob {26 version l :: T "Relight Simple v.03 update Negishi ::"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x7171c600
+  label BackLight
+  note_font_size 42
+  xpos 201
+  ypos 404
+  bdwidth 466
+  bdheight 285
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x7171c600
+  label ColorCorrect
+  note_font_size 42
+  xpos 91
+  ypos 742
+  bdwidth 290
+  bdheight 388
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x7171c600
+  label Sphere
+  note_font_size 42
+  xpos 960
+  ypos -482
+  bdwidth 266
+  bdheight 707
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0x8e8e3800
+  label relightMask
+  note_font_size 42
+  xpos 532
+  ypos 121
+  bdwidth 354
+  bdheight 245
+ }
+ Camera2 {
+  inputs 0
+  translate {0 0 4.3}
+  name Camera3
+  xpos 970
+  ypos -139
+ }
+set N8d232400 [stack 0]
+ Constant {
+  inputs 0
+  channels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  format "256 256 0 0 256 256 1 square_256"
+  name Const_256px
+  xpos 1070
+  ypos -401
+ }
+ Dot {
+  name Dot18
+  note_font "bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  xpos 1104
+  ypos -292
+ }
+set N8d232000 [stack 0]
+ Shuffle {
+  alpha white
+  name Shuffle1
+  xpos 1070
+  ypos -238
+ }
+ Grade {
+  add 0.02
+  name G_Sphere_color
+  xpos 1070
+  ypos -209
+ }
+ Sphere {
+  name Sphere3
+  xpos 1070
+  ypos -183
+ }
+push $N8d232400
+ Scene {
+  inputs 2
+  name Scene3
+  xpos 1080
+  ypos -139
+ }
+push $N8d232000
+ Dot {
+  name Dot19
+  note_font "bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  xpos 1204
+  ypos -292
+ }
+ Dot {
+  name Dot1
+  xpos 1204
+  ypos -30
+ }
+add_layer {normalCam normalCam.NX normalCam.NY normalCam.NZ}
+ ScanlineRender {
+  inputs 3
+  antialiasing low
+  motion_vectors_type off
+  output_shader_vectors true
+  N_channel normalCam
+  name ScanlineRender3
+  xpos 1070
+  ypos -34
+ }
+ Transform {
+  translate {{parent.width-256 i x17 0} 0}
+  center {128 128}
+  name Transform9
+  xpos 1070
+  ypos 57
+ }
+set N8d8e9000 [stack 0]
+ Input {
+  inputs 0
+  name Input1
+  xpos 579
+  ypos -340
+ }
+ Dot {
+  name Dot3
+  xpos 613
+  ypos -210
+ }
+set Nd0c12c00 [stack 0]
+ Dot {
+  name Dot5
+  xpos 280
+  ypos -210
+ }
+ Dot {
+  name Dot7
+  xpos 280
+  ypos 61
+ }
+set Nd0c13400 [stack 0]
+ Merge2 {
+  inputs 2
+  name M_Sphere
+  xpos 351
+  ypos 57
+ }
+ Dot {
+  name Dot17
+  note_font "bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  xpos 385
+  ypos 127
+ }
+push $Nd0c13400
+ Switch {
+  inputs 2
+  which {{parent.spreview.main i}}
+  name Switch_Sphere1
+  xpos 246
+  ypos 123
+ }
+ Dot {
+  name Dot16
+  note_font "bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  xpos 280
+  ypos 488
+ }
+set N7eda6800 [stack 0]
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuff_AAAA_
+  xpos 333
+  ypos 484
+ }
+ Erode {
+  channels rgba
+  size {{parent.bkl_erode.main i}}
+  quality 5
+  name Bckl_Erode_Blur
+  label "\[value size]"
+  xpos 333
+  ypos 510
+ }
+ Blur {
+  channels rgba
+  name Bckl_Blur
+  label "\[value size]"
+  xpos 333
+  ypos 548
+ }
+ Invert {
+  channels rgba
+  name Invert_0
+  xpos 333
+  ypos 586
+ }
+ Crop {
+  box {0 0 {input.width i} {input.height i}}
+  crop false
+  name Crop_Auto
+  xpos 333
+  ypos 621
+ }
+ Dot {
+  name Dot4
+  xpos 367
+  ypos 663
+ }
+push $N8d8e9000
+ Shuffle {
+  in normalCam
+  in2 alpha
+  alpha red2
+  name Shuf_Norm2Rgb
+  label "\[value in]"
+  xpos 1070
+  ypos 110
+ }
+ Dot {
+  name Dot15
+  note_font "bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  xpos 1104
+  ypos 204
+ }
+ Dot {
+  name Dot8
+  note_font "bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  xpos 840
+  ypos 204
+ }
+set N8d1cb800 [stack 0]
+ Dot {
+  name Dot9
+  note_font "bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  xpos 840
+  ypos 250
+ }
+push $N8d1cb800
+ Expression {
+  temp_name0 dirX
+  temp_expr0 "cos((-parent.xangle+90)*PI/180) *\r\nsin((-parent.yangle+90)*PI/180)"
+  temp_name1 dirY
+  temp_expr1 cos((-parent.yangle+90)*PI/180)
+  temp_name2 dirZ
+  temp_expr2 "sin((-parent.xangle+90)*PI/180) *\r\nsin((-parent.yangle+90)*PI/180)"
+  temp_name3 res
+  temp_expr3 clamp(dirX*(r)+dirY*g+dirZ*b,0,1)
+  expr0 res
+  expr1 res
+  expr2 res
+  expr3 res
+  name Rim_Dot1
+  xpos 710
+  ypos 200
+  addUserKnob {20 User}
+ }
+push $Nd0c12c00
+ Shuffle {
+  name Shuf_inputNorm
+  label "\[value in]"
+  xpos 579
+  ypos -74
+ }
+ Expression {
+  temp_name0 dirX
+  temp_expr0 "cos((-parent.xangle+90)*PI/180) *\r\nsin((-parent.yangle+90)*PI/180)"
+  temp_name1 dirY
+  temp_expr1 cos((-parent.yangle+90)*PI/180)
+  temp_name2 dirZ
+  temp_expr2 "sin((-parent.xangle+90)*PI/180) *\r\nsin((-parent.yangle+90)*PI/180)"
+  temp_name3 res
+  temp_expr3 clamp(dirX*(r)+dirY*g+dirZ*b,0,1)
+  expr0 res
+  expr1 res
+  expr2 res
+  expr3 res
+  name Rim_Dot
+  xpos 579
+  ypos 201
+  addUserKnob {20 User}
+ }
+ Dot {
+  name Dot2
+  xpos 613
+  ypos 250
+ }
+set Nd0de6400 [stack 0]
+ Keymix {
+  inputs 3
+  channels rgb
+  name Keymix2
+  xpos 710
+  ypos 246
+ }
+ Dot {
+  name Dot14
+  note_font "bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  xpos 744
+  ypos 316
+ }
+push $Nd0de6400
+ Switch {
+  inputs 2
+  which {{parent.spreview.main i}}
+  name Switch_Sphere
+  xpos 579
+  ypos 312
+ }
+ Dot {
+  name Dot12
+  note_font "bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  xpos 613
+  ypos 570
+ }
+set Nd0dc1c00 [stack 0]
+ Dot {
+  name Dot13
+  note_font "bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  xpos 472
+  ypos 570
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Mult
+  xpos 438
+  ypos 659
+ }
+push $Nd0dc1c00
+ Switch {
+  inputs 2
+  which {{parent.bckl_switch i}}
+  name Switch_BackLight
+  xpos 579
+  ypos 659
+ }
+ Dot {
+  name Dot10
+  note_font "bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  xpos 613
+  ypos 949
+ }
+set N9869a000 [stack 0]
+push $N7eda6800
+ Unpremult {
+  name Unpremult1
+  xpos 246
+  ypos 822
+ }
+ Dot {
+  name Dot11
+  note_font "bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  xpos 280
+  ypos 892
+ }
+set N9869a400 [stack 0]
+ Grade {
+  name G_Offset
+  xpos 101
+  ypos 888
+ }
+ Grade {
+  name G_Gain
+  xpos 101
+  ypos 945
+ }
+push $N9869a400
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 246
+  ypos 939
+ }
+ Premult {
+  name Premult1
+  xpos 246
+  ypos 1020
+ }
+ Dot {
+  name Dot6
+  xpos 280
+  ypos 1083
+ }
+push $N9869a000
+ Switch {
+  inputs 2
+  which {{parent.out i}}
+  name Switch_Out
+  xpos 579
+  ypos 1079
+ }
+ Output {
+  name Output1
+  xpos 579
+  ypos 1196
+ }
+end_group

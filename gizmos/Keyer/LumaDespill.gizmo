@@ -1,0 +1,202 @@
+#! /usr/local/Nuke6.0v3/Nuke6.0 -nx
+version 6.0 v3
+Gizmo {
+ inputs 2
+ help "The LumaDespill performs a spill suppress and can use the background as the replaced color."
+ addUserKnob {20 LumaDespill}
+ addUserKnob {4 ScreenColor l "Screen Color" M {Green Red Blue ""}}
+ addUserKnob {26 ""}
+ addUserKnob {7 RedShift l "Red Shift" R -200 200}
+ addUserKnob {7 GreenShift l "Green Shift" R -200 200}
+ addUserKnob {7 BlueShift l "Blue Shift" R -200 200}
+ addUserKnob {26 ""}
+ addUserKnob {7 BGwhitepoint l "BG Whitepoint"}
+ BGwhitepoint 0.5
+ addUserKnob {7 BGblackpoint l "BG Blackpoint"}
+ BGblackpoint 0.18
+ addUserKnob {7 BGgamma l "BG Gamma" R 0 3}
+ BGgamma 1
+ addUserKnob {7 BGsaturation l "BG Saturation" R 0 2}
+ BGsaturation 0.8
+ addUserKnob {26 ""}
+ addUserKnob {7 ballance}
+ ballance 0.5
+ addUserKnob {7 AddBackground l "Add Background" R 0 2}
+ AddBackground 1
+ addUserKnob {4 InputColorSpace l "Input Color Space" M {Log Lin "" "" "" ""}}
+}
+ Input {
+  inputs 0
+  name BG
+  xpos 490
+  ypos -53
+  number 1
+ }
+set N5b44180 [stack 0]
+ Log2Lin {
+  operation lin2log
+  ignore_black {{curve i x1 0}}
+  mix {{InputColorSpace i}}
+  name Log2Lin1
+  xpos 490
+  ypos 66
+ }
+ set C5b46c30 [stack 0]
+ Grade {
+  gamma {{BGgamma i}}
+  black_clamp false
+  name Grade_Gamma
+  xpos 490
+  ypos 95
+ }
+ Grade {
+  blackpoint {{BGblackpoint i}}
+  whitepoint {{BGwhitepoint i}}
+  black_clamp false
+  name Grade_Expand
+  xpos 490
+  ypos 129
+ }
+ Saturation {
+  saturation {{BGsaturation i}}
+  name Saturation1
+  xpos 490
+  ypos 153
+ }
+ Input {
+  inputs 0
+  name FG
+  xpos 224
+  ypos -44
+ }
+clone $C5b46c30 {
+  xpos 224
+  ypos 72
+  selected false
+ }
+ Expression {
+  expr0 "ScreenColor==1? g : r"
+  channel1 {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  expr1 "ScreenColor==1 ? r : ScreenColor==0?g:b"
+  expr2 "ScreenColor==2? g : b"
+  expr3 .5
+  name Swaparoonie
+  xpos 224
+  ypos 110
+ }
+set N5b6d310 [stack 0]
+ Expression {
+  temp_name0 AvgCalc
+  temp_expr0 "(ScreenColor==2 ? ((r * ((1- parent.ballance) * 2))  +  (b * parent.ballance *2) )/2 : ((r * parent.ballance * 2)  +  (b *(1- parent.ballance) *2) )/2)"
+  channel0 none
+  channel1 {rgba.red rgba.green rgba.blue rgba.alpha}
+  expr1 clamp(g-AvgCalc,0,1)
+  channel2 none
+  name SpillMatteGreen
+  xpos 349
+  ypos 166
+ }
+set N5b740b0 [stack 0]
+ Merge2 {
+  inputs 2
+  operation multiply
+  name BG_Times_SpillMatte
+  xpos 490
+  ypos 182
+ }
+ Multiply {
+  value {{AddBackground}}
+  name ControlBGAdd
+  xpos 490
+  ypos 212
+ }
+push $N5b6d310
+ Expression {
+  temp_name0 rShift
+  temp_expr0 "ScreenColor==1?GreenShift * 0.01:RedShift * 0.01"
+  temp_name1 gShift
+  temp_expr1 "ScreenColor==0?(GreenShift * -0.01) + 1:ScreenColor==1?(RedShift * -0.01)+1:(BlueShift * -0.01)+1"
+  temp_name2 bShift
+  temp_expr2 "ScreenColor==2?GreenShift * 0.01:BlueShift * 0.01"
+  temp_name3 spMatte
+  temp_expr3 "clamp(g-(ScreenColor==2 ? ((r * ((1- parent.ballance) * 2))  +  (b * parent.ballance *2) )/2 : ((r * parent.ballance * 2)  +  (b *(1- parent.ballance) *2) )/2),0,1)"
+  channel0 {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr0 "r + (spMatte * rShift)"
+  channel1 {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  expr1 "g - (spMatte * gShift)"
+  channel2 {-rgba.red -rgba.green rgba.blue -rgba.alpha}
+  expr2 "b + (spMatte * bShift)"
+  channel3 {none none none -rgba.alpha}
+  name DespilledGreen
+  selected true
+  xpos 140
+  ypos 180
+ }
+set N5b89550 [stack 0]
+ Expression {
+  expr0 "ScreenColor==1? g : r"
+  channel1 {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  expr1 "ScreenColor==1 ? r : ScreenColor==0?g:b"
+  expr2 "ScreenColor==2? g : b"
+  expr3 .5
+  name Swaparoonie_Back
+  xpos 140
+  ypos 254
+ }
+push $N5b740b0
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  alpha alpha2
+  name Shuffle_Spillmatte_to_Alpha
+  xpos 349
+  ypos 254
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Respill_BG
+  xpos 490
+  ypos 254
+ }
+ Log2Lin {
+  ignore_black {{curve i}}
+  mix {{InputColorSpace i}}
+  name Log2Lin2
+  xpos 492
+  ypos 285
+ }
+push $N5b44180
+ Dot {
+  name Dot3
+  xpos 689
+  ypos -49
+ }
+ Dot {
+  name Dot2
+  xpos 689
+  ypos 344
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  name ChannelsPassThrough
+  xpos 492
+  ypos 342
+ }
+ Output {
+  name Output1
+  xpos 492
+  ypos 422
+ }
+push $N5b89550
+ Viewer {
+  name Viewer1
+  xpos 732
+  ypos 454
+ }
+end_group

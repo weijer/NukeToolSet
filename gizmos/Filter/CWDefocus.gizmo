@@ -1,0 +1,221 @@
+#! C:/Program Files/Nuke8.0v1/nuke-8.0.v1.dll -nx
+version 8.0 v1
+Gizmo {
+ inputs 3
+ addUserKnob {20 UserDefocus l CWDefocus}
+ addUserKnob {41 useGPUIfAvailable l "Use GPU if available" T Convolve.useGPUIfAvailable}
+ addUserKnob {26 ""}
+ addUserKnob {14 size l filter_size R 0 100}
+ size 76.5
+ addUserKnob {41 value l light_amount T Multiply4.value}
+ addUserKnob {41 saturation l light_saturation T Saturation4.saturation}
+ addUserKnob {26 ""}
+ addUserKnob {6 user_filter l "use filter image" +STARTLINE}
+ addUserKnob {14 userfiltersize l "user filter size" R 0 100}
+ userfiltersize 50
+ addUserKnob {26 ""}
+ addUserKnob {6 show_highlight l highlight +STARTLINE}
+ addUserKnob {26 notice l "" +STARTLINE T "Enable highlight,The use of highlight can be adjusted to highlight areas."}
+ addUserKnob {26 ""}
+ addUserKnob {41 range T Keyer4.range}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos 143
+  ypos -499
+  number 2
+ }
+set Na94841a0 [stack 0]
+ Input {
+  inputs 0
+  name src
+  xpos -323
+  ypos -760
+ }
+ Dot {
+  name Dot25
+  xpos -289
+  ypos -653
+ }
+set Na9484bf0 [stack 0]
+ Dot {
+  name Dot26
+  xpos -85
+  ypos -653
+ }
+ Keyer {
+  operation "luminance key"
+  range {0.01642003989 1 1 1}
+  name Keyer4
+  xpos -119
+  ypos -601
+ }
+ ChannelMerge {
+  inputs 2
+  operation multiply
+  name ChannelMerge1
+  xpos -119
+  ypos -511
+ }
+ Dot {
+  name Dot27
+  xpos -85
+  ypos -431
+ }
+set Na9483ac0 [stack 0]
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Highlights
+  xpos -119
+  ypos -271
+ }
+ Dot {
+  name Dot1
+  xpos -85
+  ypos -143
+ }
+set Nbe68d580 [stack 0]
+push $Na94841a0
+ Dot {
+  name Dot2
+  xpos 177
+  ypos -361
+ }
+ Input {
+  inputs 0
+  name filter
+  xpos -990
+  ypos -526
+  number 1
+ }
+ Shuffle {
+  green red
+  blue red
+  alpha black
+  name Shuffle1
+  xpos -990
+  ypos -384
+ }
+ Reformat {
+  type "to box"
+  box_width {{parent.userfiltersize}}
+  name Reformat1
+  xpos -990
+  ypos -270
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  format "255 255 0 0 255 255 1 256x256"
+  name Constant3
+  label "512x512 Constant"
+  xpos -780
+  ypos -537
+  postage_stamp false
+ }
+ Flare {
+  position {{(width+1)/2} {(height+1)/2}}
+  offset 3.55
+  radius {{(radius.2*0.96)*parent.innersize x60 0 x70 0 x71 108} 490 500}
+  size_mult {{width/radius.2/2}}
+  inner_color {{parent.innerBrightness}}
+  outer_falloff 2
+  inner_falloff {{parent.innerfalloff*10}}
+  vis_out 1
+  corners {{parent.blades}}
+  flattening {{clamp(1-parent.rounded)}}
+  sharpness {{parent.sharpness_1}}
+  corners_angle {{parent.rotate}}
+  asym_repeat 0
+  name Flare3
+  xpos -780
+  ypos -457
+ }
+ Shuffle {
+  alpha black
+  name Shuffle5
+  xpos -780
+  ypos -392
+ }
+ Reformat {
+  type "to box"
+  box_width {{parent.size}}
+  name Reformat4
+  xpos -780
+  ypos -326
+ }
+ Switch {
+  inputs 2
+  which {{parent.user_filter}}
+  name Switch2
+  xpos -780
+  ypos -270
+ }
+push $Na9483ac0
+push $Na9484bf0
+ Dot {
+  name Dot28
+  xpos -417
+  ypos -653
+ }
+ Multiply {
+  channels rgb
+  value 0.74
+  name Multiply4
+  xpos -451
+  ypos -592
+ }
+ Saturation {
+  saturation 2.4
+  mode Average
+  name Saturation4
+  xpos -451
+  ypos -505
+ }
+ Dot {
+  name Dot29
+  xpos -417
+  ypos -431
+ }
+push $Na9484bf0
+ Merge2 {
+  inputs 2+1
+  operation screen
+  Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  Bchannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge3
+  xpos -323
+  ypos -434
+ }
+ Convolve2 {
+  inputs 2+1
+  channels rgba
+  filter_channel rgba.red
+  name Convolve
+  xpos -323
+  ypos -270
+ }
+ Switch {
+  inputs 2
+  which {{parent.show_highlight}}
+  name Switch1
+  xpos -323
+  ypos -146
+ }
+ Output {
+  name Output1
+  xpos -323
+  ypos 7
+ }
+push $Nbe68d580
+ Viewer {
+  input_process false
+  name Viewer1
+  xpos -190
+  ypos 1
+ }
+end_group

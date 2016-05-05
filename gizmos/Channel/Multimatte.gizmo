@@ -1,0 +1,394 @@
+#! C:/Program Files/Nuke6.3v4/Nuke6.3.exe -nx
+version 6.3 v4
+Gizmo {
+ inputs 2
+ note_font Verdana
+ mapsize {0.15 0.15}
+ addUserKnob {20 Multimatte}
+ addUserKnob {4 channel l Channel_select M {Red Green Blue Cyan Magenta Yellow White Alpha}}
+ addUserKnob {26 ""}
+ addUserKnob {41 size l Matte_Erode T Erode1.size}
+ addUserKnob {41 blur l Matte_Blur T Erode1.blur}
+ addUserKnob {41 mix l Matte_mix T Erode1.mix}
+ addUserKnob {6 premultiply l Premultiply +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {6 invert l Matteinvert +STARTLINE}
+ addUserKnob {6 invertmatte l Invertmask -STARTLINE}
+}
+ Input {
+  inputs 0
+  name Matte
+  xpos -438
+  ypos -110
+ }
+ Shuffle {
+  name Shuffle1
+  selected true
+  xpos -438
+  ypos -69
+ }
+set N25c91680 [stack 0]
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name alpha
+  xpos 79
+  ypos 456
+ }
+push $N25c91680
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name red_matte6
+  xpos -136
+  ypos 281
+ }
+push $N25c91680
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name green_matte6
+  xpos -33
+  ypos 284
+ }
+set N25c92010 [stack 0]
+ Merge2 {
+  inputs 2
+  operation in
+  name Merge8
+  xpos -122
+  ypos 363
+ }
+push $N25c92010
+push $N25c91680
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name blue_matte6
+  xpos 68
+  ypos 286
+ }
+ Merge2 {
+  inputs 2
+  operation in
+  name Merge9
+  xpos -3
+  ypos 368
+ }
+ Merge2 {
+  inputs 2
+  operation in
+  name white
+  xpos -58
+  ypos 449
+ }
+push $N25c91680
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name green_matte3
+  xpos -1158
+  ypos 245
+ }
+push $N25c91680
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name red_matte3
+  xpos -1261
+  ypos 242
+ }
+ Merge2 {
+  inputs 2
+  operation in
+  name Merge5
+  xpos -1228
+  ypos 310
+ }
+push $N25c91680
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name blue_matte3
+  xpos -1057
+  ypos 248
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name yellow
+  xpos -1181
+  ypos 373
+ }
+push $N25c91680
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name red_matte5
+  xpos -526
+  ypos 276
+ }
+push $N25c91680
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name blue_matte5
+  xpos -322
+  ypos 282
+ }
+ Merge2 {
+  inputs 2
+  operation in
+  name Merge7
+  xpos -423
+  ypos 372
+ }
+push $N25c91680
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name green_matte5
+  xpos -423
+  ypos 278
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name magenta
+  xpos -423
+  ypos 438
+ }
+push $N25c91680
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name green_matte4
+  xpos -824
+  ypos 249
+ }
+push $N25c91680
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name blue_matte4
+  xpos -724
+  ypos 252
+ }
+ Merge2 {
+  inputs 2
+  operation in
+  name Merge6
+  xpos -768
+  ypos 321
+ }
+push $N25c91680
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name red_matte4
+  xpos -927
+  ypos 246
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name cyan
+  xpos -768
+  ypos 397
+ }
+push $N25c91680
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name blue_matte2
+  xpos 40
+  ypos 42
+ }
+push $N25c91680
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name green_matte2
+  xpos -70
+  ypos 42
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge4
+  xpos -28
+  ypos 109
+ }
+push $N25c91680
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name red_matte2
+  xpos -180
+  ypos 42
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name blue
+  xpos -142
+  ypos 182
+ }
+push $N25c91680
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name green_matte1
+  xpos -400
+  ypos 42
+ }
+push $N25c91680
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name red_matte1
+  xpos -510
+  ypos 42
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge3
+  xpos -454
+  ypos 101
+ }
+push $N25c91680
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name blue_matte1
+  xpos -290
+  ypos 42
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name green
+  xpos -386
+  ypos 177
+ }
+push $N25c91680
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name red_matte
+  xpos -840
+  ypos 37
+ }
+push $N25c91680
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name green_matte
+  xpos -728
+  ypos 35
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge1
+  xpos -767
+  ypos 102
+ }
+push $N25c91680
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name blue_matte
+  xpos -628
+  ypos 45
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name red
+  xpos -670
+  ypos 150
+ }
+ Switch {
+  inputs 8
+  which {{parent.channel i}}
+  name Switch1
+  xpos -551
+  ypos 589
+ }
+set N257cac70 [stack 0]
+push $N257cac70
+ Erode {
+  channels alpha
+  size 0
+  name Erode1
+  xpos -427
+  ypos 626
+ }
+ Merge2 {
+  inputs 2
+  mix {{parent.premultiply i}}
+  name Merge10
+  xpos -551
+  ypos 662
+ }
+ Invert {
+  mix {{parent.invert i}}
+  name Invert1
+  xpos -551
+  ypos 722
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -195
+  ypos 782
+  number 1
+ }
+ Invert {
+  name Invert2
+  xpos -326
+  ypos 776
+ }
+ Invert {
+  mix {{parent.invertmatte}}
+  name Invert3
+  xpos -432
+  ypos 779
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge2
+  xpos -551
+  ypos 782
+ }
+ Output {
+  name Output1
+  xpos -551
+  ypos 846
+ }
+end_group

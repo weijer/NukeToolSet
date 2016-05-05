@@ -1,0 +1,323 @@
+Gizmo {
+ help "<b>P_Ramp</b> creates a gradient matte based on a pass/layer containing position data"
+ knobChanged "\nn = nuke.thisNode()\nk = nuke.thisKnob()\ns = nuke.toNode('SphereMatte')\nr = nuke.toNode('Start_End')\n\nif k.name() == \"falloffType\":\n    n\['falloff'].setVisible( k.value() != 'None' )\n    n\['exp'].setVisible( k.value() == 'Exponential' )\n\nif k.name() == \"rampDirection\":\n    for knob in \[n\['rotDivider'], n\['rotateAround'], n\['rot_order'], n\['rotate']]:\n        knob.setVisible(k.value() == 'Custom')\n\n"
+ addUserKnob {20 User}
+ addUserKnob {41 in l "position data" t "Choose a layer from the input that contains position data" T Shuffle_Input_Channels.in}
+ addUserKnob {41 output t "Resulting matte will be written to this layer only" T OutChannel.out}
+ addUserKnob {6 unpremultiply t "Check if your position layer is premultiplied" +STARTLINE}
+ addUserKnob {6 useAlpha l "ignore outside alpha" t "If your input has an alpha channel, checking this will force everything outside that alpha channel to be black" -STARTLINE}
+ useAlpha true
+ addUserKnob {26 ""}
+ addUserKnob {4 rampDirection t "Choose the axis/direction of the ramp\n\nX : ramp along the X axis\nY : ramp along the Y axis\nZ : ramp along the Z axis\nCustom : starting with a ramp along the Z axis, rotate the ramp at will using the rotation controls\nStart to End: ramp along the vector that goes from start to end points" M {X Y Z Custom "Start to End" "" "" "" ""}}
+ rampDirection "Start to End"
+ addUserKnob {41 start T Start_End.start}
+ addUserKnob {41 end T Start_End.end}
+ addUserKnob {26 rotDivider l "" +STARTLINE +HIDDEN}
+ addUserKnob {4 rotateAround l "rotate around" +HIDDEN M {"start\t" center end}}
+ rotateAround center
+ addUserKnob {4 rot_order l "rotation order" +HIDDEN M {XYZ XZY YXZ YZX ZXY ZYX "" "" ""}}
+ rot_order ZXY
+ addUserKnob {13 rotate +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {4 falloffType M {None Linear Smooth Quadratic Cubic Exponential ""}}
+ falloffType Linear
+ addUserKnob {7 falloff}
+ falloff 1
+ addUserKnob {7 exp +HIDDEN R 0.1 10}
+ exp 4.5
+}
+ Input {
+  inputs 0
+  name img
+  selected true
+  xpos -828
+  ypos -365
+ }
+ AddChannels {
+  channels alpha
+  color 1
+  name AddChannels1
+  xpos -828
+  ypos -271
+ }
+ Shuffle {
+  in rgb
+  alpha blue
+  out rgb
+  name Shuffle_Input_Channels
+  xpos -828
+  ypos -210
+ }
+set N64beaa0 [stack 0]
+ Unpremult {
+  name Unpremult1
+  xpos -646
+  ypos -210
+  disable {{!parent.unpremultiply i}}
+ }
+ Dot {
+  name Dot4
+  xpos -278
+  ypos -205
+ }
+ NoOp {
+  name Ramps
+  xpos -312
+  ypos -187
+ }
+set N643cc60 [stack 0]
+ Add {
+  channels rgb
+  value {{-parent.start i} {-parent.start i} {-parent.start i} {curve i}}
+  name Set_Origin
+  xpos 133
+  ypos -187
+ }
+ ColorMatrix {
+  matrix {
+      {{tt*wnorm.x**2+d i} {tt*wnorm.x*wnorm.y-s*wnorm.z i} {"tt*wnorm.x*wnorm.z + s*wnorm.y" i}}
+      {{"tt*wnorm.x*wnorm.y + s*wnorm.z" i} {tt*wnorm.y**2+d i} {"tt*wnorm.y*wnorm.z - wnorm.x*s" i}}
+      {{"tt*wnorm.x*wnorm.z - s*wnorm.y" i} {tt*wnorm.y*wnorm.z+s*wnorm.x i} {"tt*wnorm.z**2 + d" i}}
+    }
+  name Rotate_Scale_Skew1
+  xpos 133
+  ypos -100
+  disable {{hasError i x200 1}}
+  addUserKnob {20 User}
+  addUserKnob {7 length}
+  length {{"sqrt ( ( (parent.end.r - parent.start.r) ** 2 )  + ( (parent.end.g - parent.start.g) ** 2 )  +  ( (parent.end.b - parent.start.b) ** 2 ))" i}}
+  addUserKnob {13 u}
+  u {0 1 0}
+  addUserKnob {13 v}
+  v {{"(parent.end.r - parent.start.r) / length" i} {"(parent.end.g - parent.start.g) / length" i} {"(parent.end.b - parent.start.b) / length" i}}
+  addUserKnob {13 w}
+  w {{"u.y * v.z - u.z * v.y" i} {"u.z * v.x - u.x * v.z" i} {"u.x * v.y - u.y * v.x" i}}
+  addUserKnob {13 wnorm}
+  wnorm {{"w.x / sqrt(w.x**2+w.y**2+w.z**2)" i} {"w.y / sqrt(w.x**2+w.y**2+w.z**2)" i} {"w.z / sqrt(w.x**2+w.y**2+w.z**2)" i}}
+  addUserKnob {7 phi}
+  phi {{acos(u.x*v.x+u.y*v.y+u.z*v.z) i}}
+  addUserKnob {7 tt}
+  tt {{1-cos(phi) i}}
+  addUserKnob {7 s}
+  s {{-sin(phi) i}}
+  addUserKnob {7 d}
+  d {{cos(phi) i}}
+ }
+ Multiply {
+  channels rgb
+  value {{1/Rotate_Scale_Skew1.length i}}
+  name Multiply1
+  xpos 133
+  ypos -64
+ }
+ Clamp {
+  channels rgb
+  name Clamp1
+  xpos 133
+  ypos -28
+ }
+ Expression {
+  expr0 "parent.useAlpha && a==0.0 ? 0 : r"
+  expr1 "parent.useAlpha && a==0.0 ? 0 : g"
+  expr2 "parent.useAlpha && a==0.0 ? 0 : b"
+  name IgnoreOutsideAlpha1
+  xpos 133
+  ypos 12
+ }
+ Shuffle {
+  alpha green
+  name Shuffle3
+  xpos 133
+  ypos 72
+ }
+push $N643cc60
+ Grade {
+  blackpoint {{start i} {start i} {start i} {curve i}}
+  whitepoint {{end i} {end i} {end i} {curve i}}
+  black_clamp false
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Start_End
+  xpos -312
+  ypos -146
+  addUserKnob {20 User}
+  addUserKnob {18 start}
+  start {0 0 0}
+  addUserKnob {18 end}
+  end {0 0 0}
+ }
+set N61967c0 [stack 0]
+ Dot {
+  name Dot2
+  xpos -141
+  ypos -141
+ }
+ Add {
+  channels rgb
+  value {{-Axis1.world_matrix.3} {-Axis1.world_matrix.7} {-Axis1.world_matrix.11} {curve}}
+  name Translate1
+  xpos -175
+  ypos -89
+ }
+ ColorMatrix {
+  matrix {
+      {{Axis1.world_matrix.0} {Axis1.world_matrix.1} {Axis1.world_matrix.2}}
+      {{Axis1.world_matrix.4} {Axis1.world_matrix.5} {Axis1.world_matrix.6}}
+      {{Axis1.world_matrix.8} {Axis1.world_matrix.9} {Axis1.world_matrix.10}}
+    }
+  invert true
+  name Rotate_Scale_Skew3
+  xpos -175
+  ypos -61
+  disable {{hasError x200 1}}
+ }
+ Expression {
+  expr0 "parent.useAlpha && a==0.0 ? 0 : r"
+  expr1 "parent.useAlpha && a==0.0 ? 0 : g"
+  expr2 "parent.useAlpha && a==0.0 ? 0 : b"
+  name IgnoreOutsideAlpha3
+  xpos -175
+  ypos -33
+ }
+ Shuffle {
+  alpha blue
+  name Shuffle4
+  xpos -175
+  ypos 2
+ }
+push $N61967c0
+ Expression {
+  expr0 "parent.useAlpha && a==0.0 ? 0 : r"
+  expr1 "parent.useAlpha && a==0.0 ? 0 : g"
+  expr2 "parent.useAlpha && a==0.0 ? 0 : b"
+  name IgnoreOutsideAlpha
+  xpos -312
+  ypos -109
+ }
+set N6611630 [stack 0]
+ Shuffle {
+  alpha blue
+  name Z
+  xpos -312
+  ypos -30
+ }
+push $N6611630
+ Shuffle {
+  alpha green
+  name Y
+  xpos -412
+  ypos -28
+ }
+push $N6611630
+ Shuffle {
+  alpha red
+  name X
+  xpos -518
+  ypos -28
+ }
+ Switch {
+  inputs 5
+  which {{parent.rampDirection i}}
+  name Switch3
+  xpos -371
+  ypos 72
+ }
+ Grade {
+  channels alpha
+  whitepoint {{falloffType?falloff:0}}
+  white_clamp true
+  name Falloff
+  xpos -366
+  ypos 124
+ }
+set N623a980 [stack 0]
+ Expression {
+  expr3 pow(a,parent.exp)
+  name Exponential
+  xpos -81
+  ypos 229
+ }
+push $N623a980
+ Expression {
+  expr3 clamp((a**3),0,1)
+  name Cubic
+  xpos -175
+  ypos 228
+ }
+push $N623a980
+ Expression {
+  expr3 clamp(pow2(a),0,1)
+  name Quadratic
+  xpos -269
+  ypos 227
+ }
+push $N623a980
+ Expression {
+  expr3 smoothstep(0,1,a)
+  name Smooth
+  xpos -366
+  ypos 230
+ }
+push $N623a980
+ NoOp {
+  name Linear
+  xpos -457
+  ypos 231
+ }
+push $N623a980
+ NoOp {
+  name None
+  xpos -557
+  ypos 231
+ }
+ Switch {
+  inputs 6
+  which {{falloffType i}}
+  name Switch2
+  xpos -366
+  ypos 318
+ }
+ Remove {
+  operation keep
+  channels alpha
+  name Remove1
+  xpos -366
+  ypos 378
+ }
+ Shuffle {
+  in alpha
+  out alpha
+  name OutChannel
+  xpos -366
+  ypos 439
+ }
+push $N64beaa0
+ Dot {
+  name Dot1
+  xpos -794
+  ypos 527
+ }
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  channels all
+  name Copy1
+  xpos -366
+  ypos 508
+ }
+ Output {
+  name Output1
+  xpos -366
+  ypos 637
+ }
+ Axis2 {
+  inputs 0
+  rot_order {{parent.rot_order i}}
+  rotate {{parent.rotate i} {parent.rotate i} {parent.rotate i}}
+  pivot {{parent.rotateAround/2 i} {parent.rotateAround/2 i} {parent.rotateAround/2 i}}
+  name Axis1
+  xpos -20
+  ypos -93
+ }
+end_group

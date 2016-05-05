@@ -1,0 +1,149 @@
+#! C:/tools64/Nuke6.1v2_x64/Nuke6.1.exe -nx
+version 6.1 v2
+Gizmo {
+ inputs 2
+ addUserKnob {20 RimLight}
+ addUserKnob {26 setup l "setup "}
+ addUserKnob {6 showrim l "show rim" -STARTLINE}
+ addUserKnob {26 explain l "" -STARTLINE T "<FONT COLOR='#ff0000'>勾选此项可以观察rim通道，并能更好地设置。同时也可以作为一单独的通道使用</FONT>"}
+ addUserKnob {41 in l "control range" T Histogram1.in}
+ addUserKnob {41 Angle T Emboss1.Angle}
+ addUserKnob {41 Width T Emboss1.Width}
+ addUserKnob {41 size l Blur T Blur1.size}
+ addUserKnob {26 illuminate}
+ addUserKnob {41 white l gain T Grade1.white}
+ addUserKnob {41 multiply T Grade1.multiply}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 maskChannelMask l mask T Multiply1.maskChannelMask}
+ addUserKnob {41 inject -STARTLINE T Multiply1.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Multiply1.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Multiply1.fringe}
+}
+ Bezier {
+  inputs 0
+  points {{
+{774 606 70.6 -2.43 70.6}
+{812 326 70.6 -0.8 70.6}
+{1164 202 93.3 0.71 93.3}
+{1146 614 93 2.34 93}
+}}
+  shape {{curve L x100 0}}
+  center {1024 436}
+  name Bezier1
+  xpos -342
+  ypos -196
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -355
+  ypos -61
+  number 1
+ }
+ Invert {
+  name Invert1
+  xpos -355
+  ypos -35
+ }
+ Shuffle {
+  in alpha
+  name Shuffle3
+  xpos -355
+  ypos 3
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -119
+  ypos -306
+ }
+ Dot {
+  name Dot2
+  xpos -85
+  ypos -248
+ }
+set N4ccc850 [stack 0]
+ Dot {
+  name Dot1
+  xpos -195
+  ypos -248
+ }
+ Emboss {
+  edgechannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Emboss1
+  xpos -229
+  ypos -208
+ }
+ Shuffle {
+  in alpha
+  name Shuffle2
+  xpos -229
+  ypos -157
+ }
+ Histogram {
+  name Histogram1
+  xpos -229
+  ypos -122
+ }
+ Shuffle {
+  in rgb
+  green red
+  blue red
+  alpha red
+  name Shuffle1
+  xpos -229
+  ypos -86
+ }
+ Blur {
+  name Blur1
+  xpos -229
+  ypos -60
+ }
+ Multiply {
+  inputs 1+1
+  value 0
+  name Multiply1
+  xpos -229
+  ypos -3
+ }
+ Dot {
+  name Dot4
+  xpos -195
+  ypos 69
+ }
+set N4ccddd0 [stack 0]
+push $N4ccddd0
+push $N4ccc850
+ Dot {
+  name Dot3
+  xpos -85
+  ypos -40
+ }
+ Switch {
+  inputs 2
+  which {{showrim i}}
+  name Switch1
+  xpos -119
+  ypos 94
+ }
+ Grade {
+  inputs 1+1
+  name Grade1
+  selected true
+  xpos -119
+  ypos 137
+ }
+set N4cce330 [stack 0]
+ Output {
+  name Output1
+  xpos -119
+  ypos 276
+ }
+push $N4cce330
+ Viewer {
+  input_process false
+  name Viewer1
+  xpos -229
+  ypos 428
+ }
+end_group

@@ -1,0 +1,116 @@
+#! C:/Program Files/Nuke5.0v2/Nuke5.0.exe -nx
+version 5.0200
+Gizmo {
+ inputs 2
+ lock_connections true
+ addUserKnob {20 User}
+ addUserKnob {7 shadOpacity l "Shadow Opacity" R 0 5}
+ shadOpacity 0.45
+ addUserKnob {7 occOpacity l "Occlusion Opacity" R 0 5}
+ occOpacity 1
+ addUserKnob {26 "" l ""}
+ addUserKnob {7 shadowBlur l "Shadow Blur" R 0 50}
+ shadowBlur 0
+ addUserKnob {7 shadBlurMix l "Shadow Blur Mix"}
+ shadBlurMix 0.85
+ addUserKnob {7 occBlur l "Occlusion Blur" R 0 50}
+ occBlur 0
+ addUserKnob {26 "" l ""}
+ addUserKnob {7 expIntensity l "Exposure Intensity" R -1 1}
+ expIntensity 0
+ addUserKnob {7 expR l "Exposure Red" R -1 1}
+ expR -0.5
+ addUserKnob {7 expG l "Exposure Green" R -1 1}
+ expG -0.5
+ addUserKnob {7 expBlue l "Exposure Blue" R -1 1}
+ expBlue -0.5
+}
+ Input {
+  inputs 0
+  name ContactMap
+  xpos 553
+  ypos 159
+ }
+set N4a49078 [stack 0]
+push 0
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.alpha
+  name ShadowCopy
+  xpos 506
+  ypos 240
+ }
+ Multiply {
+  value {{parent.shadOpacity i}}
+  name ShadowIntensity
+  xpos 506
+  ypos 300
+ }
+ Blur {
+  size {{parent.shadowBlur i}}
+  mix {{parent.shadBlurMix i}}
+  name ShadowBlur
+  xpos 506
+  ypos 356
+ }
+push $N4a49078
+push 0
+ Copy {
+  inputs 2
+  from0 rgba.green
+  to0 rgba.alpha
+  name OccCopy
+  xpos 621
+  ypos 242
+ }
+ Multiply {
+  value {{parent.occOpacity i}}
+  name OccIntensity
+  xpos 621
+  ypos 298
+ }
+ Blur {
+  size {{parent.occBlur i}}
+  name OccBlur
+  xpos 621
+  ypos 356
+ }
+ Merge2 {
+  inputs 2
+  Achannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  Bchannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  name ContactCombine
+  xpos 570
+  ypos 434
+ }
+ Input {
+  inputs 0
+  name Through
+  xpos 390
+  ypos 351
+  number 1
+ }
+ EXPTool {
+  inputs 1+1
+  blackpoint {{parent.expIntensity i}}
+  gang false
+  red {{parent.expR i}}
+  green {{parent.expG i}}
+  blue {{parent.expBlue i}}
+  name ContactExposure
+  xpos 427
+  ypos 454
+ }
+ Output {
+  name 0
+  xpos 435
+  ypos 560
+ }
+ Viewer {
+  name Viewer1
+  xpos 435
+  ypos 605
+ }
+end_group

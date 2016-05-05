@@ -1,0 +1,86 @@
+#! C:/Program Files/Nuke5.0v2/Nuke5.0.exe -nx
+version 5.0200
+Gizmo {
+ inputs 2
+ lock_connections true
+ addUserKnob {20 vectTab l VectorBlurGizmo}
+ addUserKnob {6 VectorPremult l "Vector Premultiply" 0}
+ VectorPremult true
+ addUserKnob {30 add l Add t "Add to vector information"}
+ addUserKnob {26 "" l ""}
+ addUserKnob {7 strength l Strength t "Intensity of motion Blur\t" R 0 100}
+ strength 6
+ addUserKnob {7 offset l Offset t "Shutter starts at frame + this" R -1 0}
+ offset -0.5
+ addUserKnob {7 growbbox l "Grow BBox" t "Add this many pixels to the outside edge of the image" R 0 100}
+ addUserKnob {26 "" l ""}
+ addUserKnob {7 mix l Mix}
+ mix 1
+}
+ Input {
+  inputs 0
+  name Colour
+  xpos 573
+  ypos 45
+  number 1
+ }
+set N26df5eb0 [stack 0]
+ Input {
+  inputs 0
+  name Motion
+  xpos 413
+  ypos 47
+ }
+set N1d48fe80 [stack 0]
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name alphaCopy
+  xpos 653
+  ypos 98
+ }
+ Premult {
+  name motionPremult
+  xpos 653
+  ypos 159
+ }
+push $N1d48fe80
+ Switch {
+  inputs 2
+  which {{parent.VectorPremult}}
+  name motionSwitch
+  xpos 413
+  ypos 132
+ }
+push $N26df5eb0
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 forward.u
+  from1 rgba.green
+  to1 forward.v
+  name vectorCopy
+  xpos 506
+  ypos 207
+ }
+ VectorBlur {
+  uv motion
+  constant {{parent.add.u} {parent.add.v}}
+  scale {{parent.strength}}
+  offset {{parent.offset}}
+  grow_bbox {{parent.growbbox}}
+  method forward
+  alpha rgba.alpha
+  maskChannel -rgba.alpha
+  mix {{parent.mix}}
+  name vectorBlur
+  xpos 506
+  ypos 259
+ }
+ Output {
+  name Output1
+  xpos 506
+  ypos 360
+ }
+end_group

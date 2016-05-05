@@ -1,0 +1,1472 @@
+#! C:/Program Files/Nuke6.1v1/Nuke6.1.exe -nx
+version 6.1 v1
+Gizmo {
+ inputs 3
+ tile_color 0x85ff7fff
+ addUserKnob {20 "" l IrradRigTop}
+ addUserKnob {26 "" l "TOP LIGHT"}
+ addUserKnob {6 top_on l "Enable Top Light" -STARTLINE}
+ addUserKnob {7 scaleT l "Overall Brightness" R 0 10}
+ scaleT 6.4
+ addUserKnob {26 ""}
+ addUserKnob {7 ambT l "Ambient Ratio" R -1 5}
+ ambT 0.5
+ addUserKnob {7 tboT l "Top/Bottom Ratio" R -5 5}
+ tboT 1
+ addUserKnob {7 lriT l "Left/Right Ratio" R -5 5}
+ lriT 1
+ addUserKnob {26 ""}
+ addUserKnob {7 top_spread l Spread}
+ top_spread 0.57
+ addUserKnob {18 top_gamma l Gamma R 0 5}
+ top_gamma {1 1 1}
+ addUserKnob {18 top_gain l Gain R 0 5}
+ top_gain {1 1 1}
+ addUserKnob {26 ""}
+ addUserKnob {6 top_shad l "Enable Top Shade" -STARTLINE}
+ top_shad true
+ addUserKnob {19 top_shad_cc l "Top Shade CC"}
+ top_shad_cc {0.2 1 0.9 1}
+ addUserKnob {7 top_shad_opac l "Top Shade Opacity"}
+ top_shad_opac 0.01
+ addUserKnob {26 ""}
+ addUserKnob {30 rot_top l "Rotation X/Z"}
+ rot_top {220 -22}
+ addUserKnob {26 ""}
+ addUserKnob {20 "" l IrradRigBottom}
+ addUserKnob {26 "" l "BOTTOM LIGHT"}
+ addUserKnob {6 bottom_on l "Enable Bottom Light" -STARTLINE}
+ bottom_on true
+ addUserKnob {7 scaleB l "Overall Brightness" R 0 10}
+ scaleB 5
+ addUserKnob {26 ""}
+ addUserKnob {7 ambB l "Ambient Ratio" R -1 5}
+ ambB -1
+ addUserKnob {7 tboB l "Top/Bottom Ratio" R -5 5}
+ tboB 1
+ addUserKnob {7 lriB l "Left/Right Ratio" R -5 5}
+ lriB 1
+ addUserKnob {26 ""}
+ addUserKnob {7 bottom_spread l Spread}
+ bottom_spread 0.46
+ addUserKnob {18 bottom_gamma l Gamma R 0 5}
+ bottom_gamma {1 1 1}
+ addUserKnob {18 bottom_gain l Gain R 0 5}
+ bottom_gain 1
+ addUserKnob {26 ""}
+ addUserKnob {6 bottom_shad l "Enable Bottom Shade" -STARTLINE}
+ bottom_shad true
+ addUserKnob {19 bottom_shad_cc l "Bottom Shade CC"}
+ bottom_shad_cc 0.71
+ addUserKnob {7 bottom_shad_opac l "Bottom Shade Opacity"}
+ bottom_shad_opac 0.04
+ addUserKnob {26 ""}
+ addUserKnob {30 rot_bottom l "Rotation X/Z"}
+ rot_bottom {120 63}
+ addUserKnob {26 ""}
+ addUserKnob {20 "" l IrradRigLeft}
+ addUserKnob {26 "" l "LEFT LIGHT"}
+ addUserKnob {6 left_on l "Enable Left Light" -STARTLINE}
+ addUserKnob {7 scaleL l "Overall Brightness" R 0 10}
+ scaleL 2.4
+ addUserKnob {26 ""}
+ addUserKnob {7 ambL l "Ambient Ratio" R -1 5}
+ ambL 1
+ addUserKnob {7 tboL l "Top/Bottom Ratio" R -5 5}
+ tboL 1
+ addUserKnob {7 lriL l "Left/Right Ratio" R -5 5}
+ lriL 1
+ addUserKnob {26 ""}
+ addUserKnob {7 left_spread l Spread}
+ left_spread 0.62
+ addUserKnob {18 left_gamma l Gamma R 0 5}
+ left_gamma 1
+ addUserKnob {18 left_gain l Gain R 0 5}
+ left_gain 5
+ addUserKnob {26 ""}
+ addUserKnob {6 left_shad l "Enable Left Shade" -STARTLINE}
+ left_shad true
+ addUserKnob {19 left_shad_cc l "Left Shade CC"}
+ left_shad_cc 0.5
+ addUserKnob {7 left_shad_opac l "Left Shade Opacity"}
+ left_shad_opac 0.01
+ addUserKnob {26 ""}
+ addUserKnob {30 rot_left l "Rotation Y/Z"}
+ addUserKnob {26 ""}
+ addUserKnob {20 "" l IrradRigRight}
+ addUserKnob {26 "" l "RIGHT LIGHT"}
+ addUserKnob {6 right_on l "Enable Right Light" -STARTLINE}
+ addUserKnob {7 scaleR l "Overall Brightness" R 0 10}
+ scaleR 1
+ addUserKnob {26 ""}
+ addUserKnob {7 ambR l "Ambient Ratio" R -1 5}
+ ambR 0.4
+ addUserKnob {7 tboR l "Top/Bottom Ratio" R -5 5}
+ tboR 1
+ addUserKnob {7 lriR l "Left/Right Ratio" R -5 5}
+ lriR 1
+ addUserKnob {26 ""}
+ addUserKnob {7 right_spread l Spread}
+ right_spread 0.775
+ addUserKnob {18 right_gamma l Gamma R 0 5}
+ right_gamma 1
+ addUserKnob {18 right_gain l Gain R 0 5}
+ right_gain 1
+ addUserKnob {26 ""}
+ addUserKnob {6 right_shad l "Enable Right Shade" -STARTLINE}
+ right_shad true
+ addUserKnob {19 right_shad_cc l "Right Shade CC"}
+ right_shad_cc 1
+ addUserKnob {7 right_shad_opac l "Right Shade Opacity"}
+ right_shad_opac 0.085
+ addUserKnob {26 ""}
+ addUserKnob {30 rot_right l "Rotation Y/Z"}
+ rot_right {-100 0}
+ addUserKnob {26 ""}
+ addUserKnob {20 "" l IrradRigGeneral}
+ addUserKnob {26 "" l "ROTATE RIG"}
+ addUserKnob {13 rot_rig l "Rotate Rig"}
+ rot_rig {28 900 0}
+ addUserKnob {26 "" l TEXTURE}
+ addUserKnob {6 Ccol l "Texture Pass" -STARTLINE}
+ Ccol true
+ addUserKnob {19 Ccol_cc l "Texture Pass CC" R 0 5}
+ Ccol_cc 1
+}
+ BackdropNode {
+  inputs 0
+  name RIGHT_SHADOW
+  tile_color 0x6a808000
+  xpos -1046
+  ypos 437
+  bdwidth 200
+  bdheight 385
+ }
+ BackdropNode {
+  inputs 0
+  name LEFT_SHADOW
+  tile_color 0x6a808000
+  xpos -1680
+  ypos 442
+  bdwidth 200
+  bdheight 385
+ }
+ BackdropNode {
+  inputs 0
+  name BOTTOM_SHADOW
+  tile_color 0x6a808000
+  xpos -2296
+  ypos 431
+  bdwidth 200
+  bdheight 385
+ }
+ BackdropNode {
+  inputs 0
+  name TOP_SHADOW
+  tile_color 0x6a808000
+  xpos -2907
+  ypos 436
+  bdwidth 200
+  bdheight 385
+ }
+ BackdropNode {
+  inputs 0
+  name ROTATE_RIG
+  tile_color 0x6a806f00
+  xpos -731
+  ypos -298
+  bdwidth 185
+  bdheight 248
+ }
+ BackdropNode {
+  inputs 0
+  name THREE_D_BACKGROUND_RIGHT_LIGHT
+  tile_color 0xff00
+  xpos -800
+  ypos 1151
+  bdwidth 280
+  bdheight 266
+ }
+ BackdropNode {
+  inputs 0
+  name THREE_D_BACKGROUND_LEFT_LIGHT
+  tile_color 0xff00
+  xpos -1416
+  ypos 1148
+  bdwidth 280
+  bdheight 266
+ }
+ BackdropNode {
+  inputs 0
+  name RIGHT_LIGHT_CENTERING
+  tile_color 0x61806000
+  xpos -737
+  ypos 471
+  bdwidth 182
+  bdheight 118
+ }
+ BackdropNode {
+  inputs 0
+  name RIGHT_LIGHT_ROTATION
+  tile_color 0x64807300
+  xpos -776
+  ypos 313
+  bdwidth 257
+  bdheight 140
+ }
+ BackdropNode {
+  inputs 0
+  name RIGHT_LIGHT
+  tile_color 0x388e8e00
+  xpos -802
+  ypos 256
+  bdwidth 323
+  bdheight 597
+ }
+ BackdropNode {
+  inputs 0
+  name THREE_D_BACKGROUND_BOTTOM_LIGHT
+  tile_color 0xff00
+  xpos -2048
+  ypos 1131
+  bdwidth 280
+  bdheight 266
+ }
+ BackdropNode {
+  inputs 0
+  name LEFT_LIGHT_CENTERING
+  tile_color 0x61806000
+  xpos -1372
+  ypos 476
+  bdwidth 182
+  bdheight 118
+ }
+ BackdropNode {
+  inputs 0
+  name LEFT_LIGHT_ROTATION
+  tile_color 0x64807300
+  xpos -1411
+  ypos 318
+  bdwidth 257
+  bdheight 140
+ }
+ BackdropNode {
+  inputs 0
+  name LEFT_LIGHT
+  tile_color 0x388e8e00
+  xpos -1437
+  ypos 261
+  bdwidth 344
+  bdheight 599
+ }
+ BackdropNode {
+  inputs 0
+  name TOP_LIGHT_CENTERING
+  tile_color 0x61806000
+  xpos -2629
+  ypos 468
+  bdwidth 182
+  bdheight 118
+ }
+ BackdropNode {
+  inputs 0
+  name BOTTOM_LIGHT_CENTERING
+  tile_color 0x61806000
+  xpos -1997
+  ypos 468
+  bdwidth 189
+  bdheight 116
+ }
+ BackdropNode {
+  inputs 0
+  name TOP_LIGHT_ROTATION
+  tile_color 0x64807300
+  xpos -2668
+  ypos 310
+  bdwidth 257
+  bdheight 140
+ }
+ BackdropNode {
+  inputs 0
+  name TOP_LIGHT
+  tile_color 0x388e8e00
+  xpos -2694
+  ypos 257
+  bdwidth 373
+  bdheight 611
+ }
+ BackdropNode {
+  inputs 0
+  name BOTTOM_LIGHT_ROTATION
+  tile_color 0x64807300
+  xpos -2025
+  ypos 302
+  bdwidth 257
+  bdheight 140
+ }
+ BackdropNode {
+  inputs 0
+  name BOTTOM_LIGHT
+  tile_color 0x637c8000
+  xpos -2064
+  ypos 257
+  bdwidth 352
+  bdheight 604
+ }
+ BackdropNode {
+  inputs 0
+  name THREE_D_BACKGROUND_TOP_LIGHT
+  tile_color 0xff00
+  xpos -2669
+  ypos 1128
+  bdwidth 280
+  bdheight 266
+ }
+ Camera {
+  inputs 0
+  file_menu Axis/File
+  snap_menu Axis/Snap
+  focal 14
+  name Camera1
+  tile_color 0x9c000000
+  gl_color 0xff0000
+  label "OUR POV"
+  xpos -1599
+  ypos 1731
+ }
+ Read {
+  inputs 0
+  file /Volumes/filmsoup/fxphd/class/nuk302/nuk302-class10/Normals/Nuke_MC_demo03_25Lighting/footage/singleLight_900.exr
+  format "1024 512 0 0 1024 512 1 "
+  proxy_format "666 401 0 0 666 401 1 lighting_proxy_1"
+  version 1
+  colorspace linear
+  name Read2
+  label (linear)
+  xpos -1628
+  ypos 1102
+ }
+set N6f8b420 [stack 0]
+ Mirror {
+  Horizontal true
+  name Mirror4
+  tile_color 0xa57aaa00
+  xpos -774
+  ypos 1332
+ }
+ Axis {
+  inputs 0
+  file_menu Axis/File
+  snap_menu Axis/Snap
+  rotate {{-(parent.rot_rig.x)} {-(parent.rot_rig.y) i} {parent.rot_rig.z i}}
+  name Axis5
+  tile_color 0x9c000000
+  xpos -1650
+  ypos 962
+ }
+set N6f8bb70 [stack 0]
+ Dot {
+  name Dot9
+  xpos -630
+  ypos 1022
+ }
+ Axis {
+  file_menu Axis/File
+  snap_menu Axis/Snap
+  rotate {0 {-(parent.rot_right.u)} {parent.rot_right.v i}}
+  name Axis4
+  tile_color 0x9c000000
+  xpos -654
+  ypos 1239
+ }
+ SphereObj {
+  inputs 2
+  name ENV_SPHERE3
+  xpos -664
+  ypos 1332
+  disable {{parent.right_on==0 i}}
+ }
+push $N6f8b420
+ Mirror {
+  Horizontal true
+  name Mirror3
+  tile_color 0xa57aaa00
+  xpos -1392
+  ypos 1321
+ }
+push $N6f8bb70
+ Dot {
+  name Dot12
+  xpos -1248
+  ypos 1096
+ }
+ Axis {
+  file_menu Axis/File
+  snap_menu Axis/Snap
+  rotate {0 {-(parent.rot_left.u)} {parent.rot_left.v i}}
+  name Axis3
+  tile_color 0x9c000000
+  xpos -1272
+  ypos 1230
+ }
+ SphereObj {
+  inputs 2
+  name ENV_SPHERE2
+  xpos -1282
+  ypos 1321
+  disable {{parent.left_on==0 i}}
+ }
+push $N6f8b420
+ Mirror {
+  Horizontal true
+  name Mirror2
+  tile_color 0xa57aaa00
+  xpos -2019
+  ypos 1312
+ }
+push $N6f8bb70
+ Dot {
+  name Dot11
+  xpos -1878
+  ypos 1090
+ }
+ Axis {
+  file_menu Axis/File
+  snap_menu Axis/Snap
+  rotate {{-(parent.rot_bottom.u) i} {curve} {parent.rot_bottom.v i}}
+  name Axis1
+  tile_color 0x9c000000
+  xpos -1902
+  ypos 1208
+ }
+ SphereObj {
+  inputs 2
+  name ENV_SPHERE1
+  xpos -1909
+  ypos 1312
+  disable {{parent.bottom_on==0 i}}
+ }
+push $N6f8b420
+ Mirror {
+  Horizontal true
+  name Mirror1
+  tile_color 0xa57aaa00
+  xpos -2640
+  ypos 1288
+ }
+push $N6f8bb70
+ Dot {
+  name Dot10
+  xpos -2484
+  ypos 1022
+ }
+ Axis {
+  file_menu Axis/File
+  snap_menu Axis/Snap
+  rotate {{-(parent.rot_top.u) i} 0 {parent.rot_top.v}}
+  name Axis2
+  tile_color 0x9c000000
+  xpos -2508
+  ypos 1183
+ }
+ SphereObj {
+  inputs 2
+  name ENV_SPHERE
+  note_font "Helvetica bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  xpos -2518
+  ypos 1289
+  disable {{parent.top_on==0 i}}
+ }
+ Scene {
+  inputs 5
+  name Scene1
+  tile_color 0x9c000000
+  xpos -1272
+  ypos 1651
+ }
+ Input {
+  inputs 0
+  name alpha
+  xpos -436
+  ypos -717
+  number 2
+ }
+ Clamp {
+  channels alpha
+  name CLAMP_ALPHA
+  tile_color 0x7aa9ff00
+  xpos -436
+  ypos -649
+ }
+set N7b94870 [stack 0]
+ Input {
+  inputs 0
+  name normals
+  xpos -656
+  ypos -556
+ }
+set N7b94ae0 [stack 0]
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos -436
+  ypos -561
+ }
+set N7b94d50 [stack 0]
+push $N7b94ae0
+add_layer {o_Nobj o_Nobj.red o_Nobj.green o_Nobj.blue}
+ ShuffleCopy {
+  inputs 2
+  in alpha
+  in2 o_Nobj
+  name ShuffleCopy1
+  xpos -741
+  ypos -462
+  disable true
+ }
+push $N7b94870
+ Input {
+  inputs 0
+  name aov
+  xpos -210
+  ypos -711
+  number 1
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  selected true
+  xpos -210
+  ypos -649
+ }
+add_layer {o_occ o_occ.red o_occ.green o_occ.blue}
+ Shuffle {
+  in o_occ
+  out rgb
+  name __USE_OCC__
+  tile_color 0x9e3c6300
+  xpos -210
+  ypos 704
+  disable true
+ }
+ Unpremult {
+  name Unpremult6
+  xpos -210
+  ypos 994
+ }
+set N7c46b80 [stack 0]
+push $N7c46b80
+push $N7b94d50
+ Dot {
+  name Dot8
+  xpos -402
+  ypos -179
+ }
+ Expression {
+  temp_name0 input
+  temp_expr0 parent.rot_rig.z
+  temp_name1 sigma
+  temp_expr1 radians(input)
+  expr0 "cos(sigma)*r + sin(sigma)*g"
+  expr1 "-sin(sigma)*r + cos(sigma)*g"
+  name ROT_Z8
+  xpos -687
+  ypos -183
+ }
+ Expression {
+  temp_name0 input2
+  temp_expr0 parent.rot_rig.x
+  temp_name1 theta
+  temp_expr1 radians(input2)
+  expr1 "cos(theta)*g + sin(theta)*b"
+  expr2 "-sin(theta)*g + cos(theta)*b"
+  name ROT_X6
+  xpos -687
+  ypos -159
+ }
+ Expression {
+  temp_name0 input3
+  temp_expr0 parent.rot_rig.y
+  temp_name1 epsilon
+  temp_expr1 radians(input3)
+  expr0 "cos(epsilon)*r - sin(epsilon)*b"
+  expr2 "sin(epsilon)*r + cos(epsilon)*b"
+  name ROT_Y6
+  xpos -687
+  ypos -135
+ }
+ Dot {
+  name Dot7
+  xpos -653
+  ypos 176
+ }
+set N7c477b0 [stack 0]
+ Expression {
+  temp_name0 input
+  temp_expr0 parent.rot_right.v
+  temp_name1 sigma
+  temp_expr1 radians(input)
+  expr0 "cos(sigma)*r + sin(sigma)*g"
+  expr1 "-sin(sigma)*r + cos(sigma)*g"
+  name ROT_Z6
+  xpos -687
+  ypos 361
+ }
+ Expression {
+  temp_name0 input3
+  temp_expr0 parent.rot_right.u
+  temp_name1 epsilon
+  temp_expr1 radians(input3)
+  expr0 "cos(epsilon)*r - sin(epsilon)*b"
+  expr2 "sin(epsilon)*r + cos(epsilon)*b"
+  name ROT_Y4
+  xpos -687
+  ypos 399
+ }
+ Expression {
+  temp_name0 input
+  temp_expr0 -42
+  temp_name1 sigma
+  temp_expr1 radians(input)
+  expr0 "cos(sigma)*r + sin(sigma)*g"
+  expr1 "-sin(sigma)*r + cos(sigma)*g"
+  name ROT_Z7
+  xpos -687
+  ypos 502
+ }
+ Expression {
+  temp_name0 input2
+  temp_expr0 -30
+  temp_name1 theta
+  temp_expr1 radians(input2)
+  expr1 "cos(theta)*g + sin(theta)*b"
+  expr2 "-sin(theta)*g + cos(theta)*b"
+  name ROT_X4
+  xpos -687
+  ypos 526
+ }
+ Expression {
+  temp_name0 input3
+  temp_expr0 26
+  temp_name1 epsilon
+  temp_expr1 radians(input3)
+  expr0 "cos(epsilon)*r - sin(epsilon)*b"
+  expr2 "sin(epsilon)*r + cos(epsilon)*b"
+  name ROT_Y5
+  xpos -687
+  ypos 550
+ }
+set N7c483e0 [stack 0]
+ Expression {
+  temp_name0 scaleT
+  temp_expr0 parent.right_shad_opac
+  temp_name1 ambT
+  temp_expr1 1
+  temp_name2 tboT
+  temp_expr2 1
+  temp_name3 lriT
+  temp_expr3 1
+  expr0 0.429043*scaleT*0.077106*(pow2(r)-pow2(g))+(0.743125*scaleT*0.07674*pow2(b))+0.886227*scaleT*ambT*3.34088-(0.247708*scaleT*0.07674)+2*0.429043*((scaleT*-0.190799*r*g)+(scaleT*-0.093763*r*b)+(scaleT*-0.127488*g*b))+2*0.511664*((scaleT*lriT*-0.149453*r)+(scaleT*tboT*-0.185939*g)+(scaleT*-0.093958*b))
+  expr1 0.429043*scaleT*0.077106*(pow2(r)-pow2(g))+(0.743125*scaleT*0.07674*pow2(b))+0.886227*scaleT*ambT*3.34088-(0.247708*scaleT*0.07674)+2*0.429043*((scaleT*-0.190799*r*g)+(scaleT*-0.093763*r*b)+(scaleT*-0.127488*g*b))+2*0.511664*((scaleT*lriT*-0.149453*r)+(scaleT*tboT*-0.185939*g)+(scaleT*-0.093958*b))
+  expr2 0.429043*scaleT*0.077106*(pow2(r)-pow2(g))+(0.743125*scaleT*0.07674*pow2(b))+0.886227*scaleT*ambT*3.34088-(0.247708*scaleT*0.07674)+2*0.429043*((scaleT*-0.190799*r*g)+(scaleT*-0.093763*r*b)+(scaleT*-0.127488*g*b))+2*0.511664*((scaleT*lriT*-0.149453*r)+(scaleT*tboT*-0.185939*g)+(scaleT*-0.093958*b))
+  expr3 a
+  name Irrad_RENDER_RightShad
+  tile_color 0xc6595900
+  label RIGHT_SHADE
+  note_font "Helvetica bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 24
+  xpos -984
+  ypos 534
+  addUserKnob {20 "" l Irradiance}
+ }
+ CCorrect {
+  gain {{1/(parent.right_shad_cc.r+0.00001) i} {1/(parent.right_shad_cc.g+0.00001) i} {1/(parent.right_shad_cc.b+0.00001) i} 1}
+  mix {{parent.right_shad_cc.a}}
+  name CCorrect9
+  tile_color 0x7aa9ff00
+  xpos -984
+  ypos 637
+ }
+ Premult {
+  name Premult8
+  xpos -984
+  ypos 697
+ }
+ Dot {
+  name Dot16
+  xpos -950
+  ypos 789
+ }
+push $N7c483e0
+ Expression {
+  temp_name0 scaleR
+  temp_expr0 parent.scaleR
+  temp_name1 ambR
+  temp_expr1 parent.ambR
+  temp_name2 tboR
+  temp_expr2 parent.tboR
+  temp_name3 lriR
+  temp_expr3 parent.lriR
+  expr0 "0.429043*scaleR*-0.115481*(pow2(r)-pow2(g))+(0.743125*scaleR*-0.120835 *pow2(b))+0.886227*scaleR*ambR*0.204266-(0.247708*scaleR*-0.120835 )+2*0.429043*((scaleR*0.286652 *r*g)+(scaleR*0.144743*r*b)+(scaleR*0.207198*g*b))+2*0.511664*((scaleR*lriR*0.178752*r)+(scaleR*tboR*0.262809*g)+(scaleR*0.129309*b))"
+  expr1 "0.429043*scaleR*-0.115481*(pow2(r)-pow2(g))+(0.743125*scaleR*-0.120835 *pow2(b))+0.886227*scaleR*ambR*0.204266-(0.247708*scaleR*-0.120835 )+2*0.429043*((scaleR*0.286652 *r*g)+(scaleR*0.144743*r*b)+(scaleR*0.207198*g*b))+2*0.511664*((scaleR*lriR*0.178752*r)+(scaleR*tboR*0.262809*g)+(scaleR*0.129309*b))"
+  expr2 "0.429043*scaleR*-0.115481*(pow2(r)-pow2(g))+(0.743125*scaleR*-0.120835 *pow2(b))+0.886227*scaleR*ambR*0.204266-(0.247708*scaleR*-0.120835 )+2*0.429043*((scaleR*0.286652 *r*g)+(scaleR*0.144743*r*b)+(scaleR*0.207198*g*b))+2*0.511664*((scaleR*lriR*0.178752*r)+(scaleR*tboR*0.262809*g)+(scaleR*0.129309*b))"
+  expr3 a
+  name Irrad_RENDER_RightLight
+  tile_color 0xc6595900
+  xpos -687
+  ypos 621
+  addUserKnob {20 "" l Irradiance}
+ }
+ Group {
+  name PerlinSpread
+  help "This is an implementation of Ken Perlin's gain function. It boosts micro-contrast (acutance, in photographic terms) without clipping. When set to 0.5, it has no effect. When >0.5, gain is boosted; when <.5, gain is muted. Only luminance is affected; not hue nor saturation. Superwhites remain untouched."
+  tile_color 0xcc9d6d00
+  xpos -687
+  ypos 665
+  addUserKnob {20 "" l User}
+  addUserKnob {7 realGain l "Inverse Perlin Gain function" t "This is an implementation of Ken Perlin's gain function. It boosts micro-contrast (acutance, in photographic terms) without clipping. When set to 0.5, it has no effect. When >0.5, gain is boosted; when <.5, gain is muted. Only luminance is affected; not hue nor saturation. Superwhites remain untouched."}
+  realGain {{parent.right_spread}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 191
+   ypos -85
+  }
+  Expression {
+   temp_name0 gain
+   temp_expr0 "1 - parent.realGain"
+   temp_name1 lum
+   temp_expr1 "0.2125*Br + 0.7154*Bg + 0.0721*Bb"
+   temp_name2 val
+   temp_expr2 .5*((lum<.5)?((1-gain)>0?pow(2*lum,log(1-gain)/log(0.5)):0):2-((1-gain)>0?pow(2-2*lum,log(1-gain)/log(0.5)):0))
+   temp_name3 inv
+   expr0 r>1?r:r*(val/(lum+0.00001))
+   expr1 g>1?g:g*(val/(lum+0.00001))
+   expr2 b>1?b:b*(val/(lum+0.00001))
+   name KPGain
+   tile_color 0xd47f3b00
+   label "TRUE GAIN\nFUNCTION"
+   selected true
+   xpos 121
+   ypos -19
+   addUserKnob {20 "" l User}
+  }
+  Output {
+   name Output1
+   xpos 191
+   ypos 137
+  }
+ end_group
+ CCorrect {
+  gamma {{parent.right_gamma.r i} {parent.right_gamma.g i} {parent.right_gamma.b i} 1}
+  gain {{parent.right_gain.r i} {parent.right_gain.g i} {parent.right_gain.b} 1}
+  name CCorrect3
+  tile_color 0x7aa9ff00
+  xpos -687
+  ypos 704
+ }
+ Premult {
+  name Premult3
+  xpos -687
+  ypos 738
+ }
+ Merge {
+  inputs 2
+  A {rgba.red rgba.green rgba.blue -rgba.alpha}
+  operation from
+  name Merge8
+  tile_color 0x4b5ec600
+  xpos -687
+  ypos 786
+  disable {{parent.right_shad.0==0}}
+ }
+ Clamp {
+  channels rgba
+  maximum_enable false
+  name CLAMP_BLACKS4
+  tile_color 0x7aa9ff00
+  xpos -687
+  ypos 825
+ }
+push $N7c477b0
+ Dot {
+  name Dot6
+  xpos -1288
+  ypos 176
+ }
+set N7c4a870 [stack 0]
+ Expression {
+  temp_name0 input
+  temp_expr0 parent.rot_left.v
+  temp_name1 sigma
+  temp_expr1 radians(input)
+  expr0 "cos(sigma)*r + sin(sigma)*g"
+  expr1 "-sin(sigma)*r + cos(sigma)*g"
+  name ROT_Z4
+  xpos -1322
+  ypos 366
+ }
+ Expression {
+  temp_name0 input3
+  temp_expr0 parent.rot_left.u
+  temp_name1 epsilon
+  temp_expr1 radians(input3)
+  expr0 "cos(epsilon)*r - sin(epsilon)*b"
+  expr2 "sin(epsilon)*r + cos(epsilon)*b"
+  name ROT_Y3
+  xpos -1322
+  ypos 404
+ }
+ Expression {
+  temp_name0 input
+  temp_expr0 138
+  temp_name1 sigma
+  temp_expr1 radians(input)
+  expr0 "cos(sigma)*r + sin(sigma)*g"
+  expr1 "-sin(sigma)*r + cos(sigma)*g"
+  name ROT_Z5
+  xpos -1322
+  ypos 507
+ }
+ Expression {
+  temp_name0 input2
+  temp_expr0 30
+  temp_name1 theta
+  temp_expr1 radians(input2)
+  expr1 "cos(theta)*g + sin(theta)*b"
+  expr2 "-sin(theta)*g + cos(theta)*b"
+  name ROT_X5
+  xpos -1322
+  ypos 531
+ }
+ Expression {
+  temp_name0 input3
+  temp_expr0 26
+  temp_name1 epsilon
+  temp_expr1 radians(input3)
+  expr0 "cos(epsilon)*r - sin(epsilon)*b"
+  expr2 "sin(epsilon)*r + cos(epsilon)*b"
+  name ROT_Y2
+  xpos -1322
+  ypos 555
+ }
+set N7c4b4a0 [stack 0]
+ Expression {
+  temp_name0 scaleT
+  temp_expr0 parent.left_shad_opac
+  temp_name1 ambT
+  temp_expr1 1
+  temp_name2 tboT
+  temp_expr2 1
+  temp_name3 lriT
+  temp_expr3 1
+  expr0 0.429043*scaleT*0.077106*(pow2(r)-pow2(g))+(0.743125*scaleT*0.07674*pow2(b))+0.886227*scaleT*ambT*3.34088-(0.247708*scaleT*0.07674)+2*0.429043*((scaleT*-0.190799*r*g)+(scaleT*-0.093763*r*b)+(scaleT*-0.127488*g*b))+2*0.511664*((scaleT*lriT*-0.149453*r)+(scaleT*tboT*-0.185939*g)+(scaleT*-0.093958*b))
+  expr1 0.429043*scaleT*0.077106*(pow2(r)-pow2(g))+(0.743125*scaleT*0.07674*pow2(b))+0.886227*scaleT*ambT*3.34088-(0.247708*scaleT*0.07674)+2*0.429043*((scaleT*-0.190799*r*g)+(scaleT*-0.093763*r*b)+(scaleT*-0.127488*g*b))+2*0.511664*((scaleT*lriT*-0.149453*r)+(scaleT*tboT*-0.185939*g)+(scaleT*-0.093958*b))
+  expr2 0.429043*scaleT*0.077106*(pow2(r)-pow2(g))+(0.743125*scaleT*0.07674*pow2(b))+0.886227*scaleT*ambT*3.34088-(0.247708*scaleT*0.07674)+2*0.429043*((scaleT*-0.190799*r*g)+(scaleT*-0.093763*r*b)+(scaleT*-0.127488*g*b))+2*0.511664*((scaleT*lriT*-0.149453*r)+(scaleT*tboT*-0.185939*g)+(scaleT*-0.093958*b))
+  expr3 a
+  name Irrad_RENDER_LeftShad
+  tile_color 0xc6595900
+  label LEFT_SHADE
+  note_font "Helvetica bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 24
+  xpos -1618
+  ypos 542
+  addUserKnob {20 "" l Irradiance}
+ }
+ CCorrect {
+  gain {{1/(parent.left_shad_cc.r+0.00001) i} {1/(parent.left_shad_cc.g+0.00001) i} {1/(parent.left_shad_cc.b+0.00001) i} 1}
+  mix {{parent.left_shad_cc.a}}
+  name CCorrect8
+  tile_color 0x7aa9ff00
+  xpos -1618
+  ypos 642
+ }
+ Premult {
+  name Premult7
+  xpos -1618
+  ypos 702
+ }
+ Dot {
+  name Dot15
+  xpos -1584
+  ypos 803
+ }
+push $N7c4b4a0
+ Expression {
+  temp_name0 scaleL
+  temp_expr0 parent.scaleL
+  temp_name1 ambL
+  temp_expr1 parent.ambL
+  temp_name2 tboL
+  temp_expr2 parent.tboL
+  temp_name3 lriL
+  temp_expr3 parent.lriL
+  expr0 "0.429043*scaleL*-0.115481*(pow2(r)-pow2(g))+(0.743125*scaleL*-0.120835 *pow2(b))+0.886227*scaleL*ambL*0.204266-(0.247708*scaleL*-0.120835 )+2*0.429043*((scaleL*0.286652 *r*g)+(scaleL*0.144743*r*b)+(scaleL*0.207198*g*b))+2*0.511664*((scaleL*lriL*0.178752*r)+(scaleL*tboL*0.262809*g)+(scaleL*0.129309*b))"
+  expr1 "0.429043*scaleL*-0.115481*(pow2(r)-pow2(g))+(0.743125*scaleL*-0.120835 *pow2(b))+0.886227*scaleL*ambL*0.204266-(0.247708*scaleL*-0.120835 )+2*0.429043*((scaleL*0.286652 *r*g)+(scaleL*0.144743*r*b)+(scaleL*0.207198*g*b))+2*0.511664*((scaleL*lriL*0.178752*r)+(scaleL*tboL*0.262809*g)+(scaleL*0.129309*b))"
+  expr2 "0.429043*scaleL*-0.115481*(pow2(r)-pow2(g))+(0.743125*scaleL*-0.120835 *pow2(b))+0.886227*scaleL*ambL*0.204266-(0.247708*scaleL*-0.120835 )+2*0.429043*((scaleL*0.286652 *r*g)+(scaleL*0.144743*r*b)+(scaleL*0.207198*g*b))+2*0.511664*((scaleL*lriL*0.178752*r)+(scaleL*tboL*0.262809*g)+(scaleL*0.129309*b))"
+  expr3 a
+  name Irrad_RENDER_LeftLight
+  tile_color 0xc6595900
+  xpos -1322
+  ypos 625
+  addUserKnob {20 "" l Irradiance}
+ }
+ Group {
+  name PerlinSpread1
+  help "This is an implementation of Ken Perlin's gain function. It boosts micro-contrast (acutance, in photographic terms) without clipping. When set to 0.5, it has no effect. When >0.5, gain is boosted; when <.5, gain is muted. Only luminance is affected; not hue nor saturation. Superwhites remain untouched."
+  tile_color 0xcc9d6d00
+  xpos -1322
+  ypos 666
+  addUserKnob {20 "" l User}
+  addUserKnob {7 realGain l "Inverse Perlin Gain function" t "This is an implementation of Ken Perlin's gain function. It boosts micro-contrast (acutance, in photographic terms) without clipping. When set to 0.5, it has no effect. When >0.5, gain is boosted; when <.5, gain is muted. Only luminance is affected; not hue nor saturation. Superwhites remain untouched."}
+  realGain {{parent.left_spread i}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 191
+   ypos -85
+  }
+  Expression {
+   temp_name0 gain
+   temp_expr0 "1 - parent.realGain"
+   temp_name1 lum
+   temp_expr1 "0.2125*Br + 0.7154*Bg + 0.0721*Bb"
+   temp_name2 val
+   temp_expr2 .5*((lum<.5)?((1-gain)>0?pow(2*lum,log(1-gain)/log(0.5)):0):2-((1-gain)>0?pow(2-2*lum,log(1-gain)/log(0.5)):0))
+   temp_name3 inv
+   expr0 r>1?r:r*(val/(lum+0.00001))
+   expr1 g>1?g:g*(val/(lum+0.00001))
+   expr2 b>1?b:b*(val/(lum+0.00001))
+   name KPGain
+   tile_color 0xd47f3b00
+   label "TRUE GAIN\nFUNCTION"
+   selected true
+   xpos 121
+   ypos -19
+   addUserKnob {20 "" l User}
+  }
+  Output {
+   name Output1
+   xpos 191
+   ypos 137
+  }
+ end_group
+ CCorrect {
+  gamma {{parent.left_gamma.r i} {parent.left_gamma.g i} {parent.left_gamma.b i} 1}
+  gain {{parent.left_gain.r i} {parent.left_gain.g i} {parent.left_gain.b} 1}
+  name CCorrect2
+  tile_color 0x7aa9ff00
+  xpos -1322
+  ypos 706
+ }
+ Premult {
+  name Premult2
+  xpos -1322
+  ypos 743
+ }
+ Merge {
+  inputs 2
+  A {rgba.red rgba.green rgba.blue -rgba.alpha}
+  operation from
+  name Merge7
+  tile_color 0x4b5ec600
+  xpos -1322
+  ypos 800
+  disable {{parent.left_shad.0==0}}
+ }
+ Clamp {
+  channels rgba
+  maximum_enable false
+  name CLAMP_BLACKS3
+  tile_color 0x7aa9ff00
+  xpos -1322
+  ypos 835
+ }
+push $N7c4a870
+ Dot {
+  name Dot4
+  xpos -1895
+  ypos 176
+ }
+set N7d39a70 [stack 0]
+ Expression {
+  temp_name0 input
+  temp_expr0 parent.rot_bottom.v
+  temp_name1 sigma
+  temp_expr1 radians(input)
+  expr0 "cos(sigma)*r + sin(sigma)*g"
+  expr1 "-sin(sigma)*r + cos(sigma)*g"
+  name ROT_Z3
+  xpos -1929
+  ypos 362
+ }
+ Expression {
+  temp_name0 input2
+  temp_expr0 parent.rot_bottom.u
+  temp_name1 theta
+  temp_expr1 radians(input2)
+  expr1 "cos(theta)*g + sin(theta)*b"
+  expr2 "-sin(theta)*g + cos(theta)*b"
+  name ROT_X3
+  xpos -1929
+  ypos 386
+ }
+ Expression {
+  temp_name0 input
+  temp_expr0 214
+  temp_name1 sigma
+  temp_expr1 radians(input)
+  expr0 "cos(sigma)*r + sin(sigma)*g"
+  expr1 "-sin(sigma)*r + cos(sigma)*g"
+  name ROT_Z2
+  xpos -1929
+  ypos 496
+ }
+ Expression {
+  temp_name0 input2
+  temp_expr0 -22
+  temp_name1 theta
+  temp_expr1 radians(input2)
+  expr1 "cos(theta)*g + sin(theta)*b"
+  expr2 "-sin(theta)*g + cos(theta)*b"
+  name ROT_X2
+  xpos -1929
+  ypos 520
+ }
+ Expression {
+  temp_name0 input3
+  temp_expr0 33
+  temp_name1 epsilon
+  temp_expr1 radians(input3)
+  expr0 "cos(epsilon)*r - sin(epsilon)*b"
+  expr2 "sin(epsilon)*r + cos(epsilon)*b"
+  name ROT_Y1
+  xpos -1929
+  ypos 544
+ }
+set N7d3a6a0 [stack 0]
+ Expression {
+  temp_name0 scaleT
+  temp_expr0 parent.bottom_shad_opac
+  temp_name1 ambT
+  temp_expr1 1
+  temp_name2 tboT
+  temp_expr2 1
+  temp_name3 lriT
+  temp_expr3 1
+  expr0 0.429043*scaleT*0.077106*(pow2(r)-pow2(g))+(0.743125*scaleT*0.07674*pow2(b))+0.886227*scaleT*ambT*3.34088-(0.247708*scaleT*0.07674)+2*0.429043*((scaleT*-0.190799*r*g)+(scaleT*-0.093763*r*b)+(scaleT*-0.127488*g*b))+2*0.511664*((scaleT*lriT*-0.149453*r)+(scaleT*tboT*-0.185939*g)+(scaleT*-0.093958*b))
+  expr1 0.429043*scaleT*0.077106*(pow2(r)-pow2(g))+(0.743125*scaleT*0.07674*pow2(b))+0.886227*scaleT*ambT*3.34088-(0.247708*scaleT*0.07674)+2*0.429043*((scaleT*-0.190799*r*g)+(scaleT*-0.093763*r*b)+(scaleT*-0.127488*g*b))+2*0.511664*((scaleT*lriT*-0.149453*r)+(scaleT*tboT*-0.185939*g)+(scaleT*-0.093958*b))
+  expr2 0.429043*scaleT*0.077106*(pow2(r)-pow2(g))+(0.743125*scaleT*0.07674*pow2(b))+0.886227*scaleT*ambT*3.34088-(0.247708*scaleT*0.07674)+2*0.429043*((scaleT*-0.190799*r*g)+(scaleT*-0.093763*r*b)+(scaleT*-0.127488*g*b))+2*0.511664*((scaleT*lriT*-0.149453*r)+(scaleT*tboT*-0.185939*g)+(scaleT*-0.093958*b))
+  expr3 a
+  name Irrad_RENDER_BottomShad
+  tile_color 0xc6595900
+  label BOTTOM_SHADE
+  note_font "Helvetica bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 24
+  xpos -2234
+  ypos 531
+  addUserKnob {20 "" l Irradiance}
+ }
+ CCorrect {
+  gain {{1/(parent.bottom_shad_cc.r+0.00001) i} {1/(parent.bottom_shad_cc.g+0.00001) i} {1/(parent.bottom_shad_cc.b+0.00001) i} 1}
+  mix {{parent.bottom_shad_cc.a}}
+  name CCorrect7
+  tile_color 0x7aa9ff00
+  xpos -2234
+  ypos 631
+ }
+ Premult {
+  name Premult5
+  xpos -2234
+  ypos 691
+ }
+ Dot {
+  name Dot14
+  xpos -2200
+  ypos 792
+ }
+push $N7d3a6a0
+ Expression {
+  temp_name0 scaleT
+  temp_expr0 parent.scaleB
+  temp_name1 ambT
+  temp_expr1 parent.ambB
+  temp_name2 tboT
+  temp_expr2 parent.tboB
+  temp_name3 lriT
+  temp_expr3 parent.lriB
+  expr0 "0.429043*scaleB*-0.115481*(pow2(r)-pow2(g))+(0.743125*scaleB*-0.120835 *pow2(b))+0.886227*scaleB*ambB*0.204266-(0.247708*scaleB*-0.120835 )+2*0.429043*((scaleB*0.286652 *r*g)+(scaleB*0.144743*r*b)+(scaleB*0.207198*g*b))+2*0.511664*((scaleB*lriB*0.178752*r)+(scaleB*tboB*0.262809*g)+(scaleB*0.129309*b))"
+  expr1 "0.429043*scaleB*-0.115481*(pow2(r)-pow2(g))+(0.743125*scaleB*-0.120835 *pow2(b))+0.886227*scaleB*ambB*0.204266-(0.247708*scaleB*-0.120835 )+2*0.429043*((scaleB*0.286652 *r*g)+(scaleB*0.144743*r*b)+(scaleB*0.207198*g*b))+2*0.511664*((scaleB*lriB*0.178752*r)+(scaleB*tboB*0.262809*g)+(scaleB*0.129309*b))"
+  expr2 "0.429043*scaleB*-0.115481*(pow2(r)-pow2(g))+(0.743125*scaleB*-0.120835 *pow2(b))+0.886227*scaleB*ambB*0.204266-(0.247708*scaleB*-0.120835 )+2*0.429043*((scaleB*0.286652 *r*g)+(scaleB*0.144743*r*b)+(scaleB*0.207198*g*b))+2*0.511664*((scaleB*lriB*0.178752*r)+(scaleB*tboB*0.262809*g)+(scaleB*0.129309*b))"
+  expr3 a
+  name Irrad_RENDER_BottomLight
+  tile_color 0xc6595900
+  xpos -1929
+  ypos 632
+  addUserKnob {20 "" l Irradiance}
+ }
+ Group {
+  name PerlinSpread2
+  help "This is an implementation of Ken Perlin's gain function. It boosts micro-contrast (acutance, in photographic terms) without clipping. When set to 0.5, it has no effect. When >0.5, gain is boosted; when <.5, gain is muted. Only luminance is affected; not hue nor saturation. Superwhites remain untouched."
+  tile_color 0xcc9d6d00
+  xpos -1929
+  ypos 667
+  addUserKnob {20 "" l User}
+  addUserKnob {7 realGain l "Inverse Perlin Gain function" t "This is an implementation of Ken Perlin's gain function. It boosts micro-contrast (acutance, in photographic terms) without clipping. When set to 0.5, it has no effect. When >0.5, gain is boosted; when <.5, gain is muted. Only luminance is affected; not hue nor saturation. Superwhites remain untouched."}
+  realGain {{parent.bottom_spread i}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 191
+   ypos -85
+  }
+  Expression {
+   temp_name0 gain
+   temp_expr0 "1 - parent.realGain"
+   temp_name1 lum
+   temp_expr1 "0.2125*Br + 0.7154*Bg + 0.0721*Bb"
+   temp_name2 val
+   temp_expr2 .5*((lum<.5)?((1-gain)>0?pow(2*lum,log(1-gain)/log(0.5)):0):2-((1-gain)>0?pow(2-2*lum,log(1-gain)/log(0.5)):0))
+   temp_name3 inv
+   expr0 r>1?r:r*(val/(lum+0.00001))
+   expr1 g>1?g:g*(val/(lum+0.00001))
+   expr2 b>1?b:b*(val/(lum+0.00001))
+   name KPGain
+   tile_color 0xd47f3b00
+   label "TRUE GAIN\nFUNCTION"
+   selected true
+   xpos 121
+   ypos -19
+   addUserKnob {20 "" l User}
+  }
+  Output {
+   name Output1
+   xpos 191
+   ypos 137
+  }
+ end_group
+ CCorrect {
+  gamma {{parent.bottom_gamma.r i} {parent.bottom_gamma.g i} {parent.bottom_gamma.b i} 1}
+  gain {{parent.bottom_gain.r i} {parent.bottom_gain.g i} {parent.bottom_gain.b} 1}
+  name CCorrect4
+  tile_color 0x7aa9ff00
+  xpos -1929
+  ypos 711
+ }
+ Premult {
+  name Premult1
+  xpos -1929
+  ypos 735
+ }
+ Merge {
+  inputs 2
+  A {rgba.red rgba.green rgba.blue -rgba.alpha}
+  operation from
+  name Merge6
+  tile_color 0x4b5ec600
+  xpos -1929
+  ypos 789
+  disable {{parent.bottom_shad.0==0}}
+ }
+ Clamp {
+  channels rgba
+  maximum_enable false
+  name CLAMP_BLACKS2
+  tile_color 0x7aa9ff00
+  xpos -1929
+  ypos 833
+ }
+push $N7d39a70
+ Dot {
+  name Dot3
+  xpos -2545
+  ypos 176
+ }
+ Expression {
+  temp_name0 input
+  temp_expr0 parent.rot_top.v
+  temp_name1 sigma
+  temp_expr1 radians(input)
+  expr0 "cos(sigma)*r + sin(sigma)*g"
+  expr1 "-sin(sigma)*r + cos(sigma)*g"
+  name ROT_Z1
+  xpos -2579
+  ypos 358
+ }
+ Expression {
+  temp_name0 input2
+  temp_expr0 parent.rot_top.u
+  temp_name1 theta
+  temp_expr1 radians(input2)
+  expr1 "cos(theta)*g + sin(theta)*b"
+  expr2 "-sin(theta)*g + cos(theta)*b"
+  name ROT_X1
+  xpos -2579
+  ypos 382
+ }
+ Expression {
+  temp_name0 input
+  temp_expr0 34
+  temp_name1 sigma
+  temp_expr1 radians(input)
+  expr0 "cos(sigma)*r + sin(sigma)*g"
+  expr1 "-sin(sigma)*r + cos(sigma)*g"
+  name ROT_Z
+  xpos -2579
+  ypos 499
+ }
+ Expression {
+  temp_name0 input2
+  temp_expr0 -22
+  temp_name1 theta
+  temp_expr1 radians(input2)
+  expr1 "cos(theta)*g + sin(theta)*b"
+  expr2 "-sin(theta)*g + cos(theta)*b"
+  name ROT_X
+  xpos -2579
+  ypos 523
+ }
+ Expression {
+  temp_name0 input3
+  temp_expr0 33
+  temp_name1 epsilon
+  temp_expr1 radians(input3)
+  expr0 "cos(epsilon)*r - sin(epsilon)*b"
+  expr2 "sin(epsilon)*r + cos(epsilon)*b"
+  name ROT_Y
+  xpos -2579
+  ypos 547
+ }
+set N7d3d760 [stack 0]
+ Expression {
+  temp_name0 scaleT
+  temp_expr0 parent.top_shad_opac
+  temp_name1 ambT
+  temp_expr1 1
+  temp_name2 tboT
+  temp_expr2 1
+  temp_name3 lriT
+  temp_expr3 1
+  expr0 0.429043*scaleT*0.077106*(pow2(r)-pow2(g))+(0.743125*scaleT*0.07674*pow2(b))+0.886227*scaleT*ambT*3.34088-(0.247708*scaleT*0.07674)+2*0.429043*((scaleT*-0.190799*r*g)+(scaleT*-0.093763*r*b)+(scaleT*-0.127488*g*b))+2*0.511664*((scaleT*lriT*-0.149453*r)+(scaleT*tboT*-0.185939*g)+(scaleT*-0.093958*b))
+  expr1 0.429043*scaleT*0.077106*(pow2(r)-pow2(g))+(0.743125*scaleT*0.07674*pow2(b))+0.886227*scaleT*ambT*3.34088-(0.247708*scaleT*0.07674)+2*0.429043*((scaleT*-0.190799*r*g)+(scaleT*-0.093763*r*b)+(scaleT*-0.127488*g*b))+2*0.511664*((scaleT*lriT*-0.149453*r)+(scaleT*tboT*-0.185939*g)+(scaleT*-0.093958*b))
+  expr2 0.429043*scaleT*0.077106*(pow2(r)-pow2(g))+(0.743125*scaleT*0.07674*pow2(b))+0.886227*scaleT*ambT*3.34088-(0.247708*scaleT*0.07674)+2*0.429043*((scaleT*-0.190799*r*g)+(scaleT*-0.093763*r*b)+(scaleT*-0.127488*g*b))+2*0.511664*((scaleT*lriT*-0.149453*r)+(scaleT*tboT*-0.185939*g)+(scaleT*-0.093958*b))
+  expr3 a
+  name Irrad_RENDER_TopShad
+  tile_color 0xc6595900
+  label TOP_SHADE
+  note_font "Helvetica bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 24
+  xpos -2845
+  ypos 531
+  addUserKnob {20 "" l Irradiance}
+ }
+ CCorrect {
+  gain {{1/(parent.top_shad_cc.r+0.00001) i} {1/(parent.top_shad_cc.g+0.00001) i} {1/(parent.top_shad_cc.b+0.00001) i} 1}
+  mix {{parent.top_shad_cc.a}}
+  name CCorrect6
+  tile_color 0x7aa9ff00
+  xpos -2845
+  ypos 636
+ }
+ Premult {
+  name Premult4
+  xpos -2845
+  ypos 703
+ }
+ Dot {
+  name Dot5
+  xpos -2811
+  ypos 801
+ }
+push $N7d3d760
+ Expression {
+  temp_name0 scaleT
+  temp_expr0 parent.scaleT
+  temp_name1 ambT
+  temp_expr1 parent.ambT
+  temp_name2 tboT
+  temp_expr2 parent.tboT
+  temp_name3 lriT
+  temp_expr3 parent.lriT
+  expr0 "0.429043*scaleT*-0.115481*(pow2(r)-pow2(g))+(0.743125*scaleT*-0.120835 *pow2(b))+0.886227*scaleT*ambT*0.204266-(0.247708*scaleT*-0.120835 )+2*0.429043*((scaleT*0.286652 *r*g)+(scaleT*0.144743*r*b)+(scaleT*0.207198*g*b))+2*0.511664*((scaleT*lriT*0.178752*r)+(scaleT*tboT*0.262809*g)+(scaleT*0.129309*b))"
+  expr1 "0.429043*scaleT*-0.115481*(pow2(r)-pow2(g))+(0.743125*scaleT*-0.120835 *pow2(b))+0.886227*scaleT*ambT*0.204266-(0.247708*scaleT*-0.120835 )+2*0.429043*((scaleT*0.286652 *r*g)+(scaleT*0.144743*r*b)+(scaleT*0.207198*g*b))+2*0.511664*((scaleT*lriT*0.178752*r)+(scaleT*tboT*0.262809*g)+(scaleT*0.129309*b))"
+  expr2 "0.429043*scaleT*-0.115481*(pow2(r)-pow2(g))+(0.743125*scaleT*-0.120835 *pow2(b))+0.886227*scaleT*ambT*0.204266-(0.247708*scaleT*-0.120835 )+2*0.429043*((scaleT*0.286652 *r*g)+(scaleT*0.144743*r*b)+(scaleT*0.207198*g*b))+2*0.511664*((scaleT*lriT*0.178752*r)+(scaleT*tboT*0.262809*g)+(scaleT*0.129309*b))"
+  expr3 a
+  name Irrad_RENDER_TopLight
+  tile_color 0xc6595900
+  xpos -2579
+  ypos 609
+  addUserKnob {20 "" l Irradiance}
+ }
+ Group {
+  name PerlinSpread3
+  help "This is an implementation of Ken Perlin's gain function. It boosts micro-contrast (acutance, in photographic terms) without clipping. When set to 0.5, it has no effect. When >0.5, gain is boosted; when <.5, gain is muted. Only luminance is affected; not hue nor saturation. Superwhites remain untouched."
+  tile_color 0xcc9d6d00
+  xpos -2579
+  ypos 660
+  addUserKnob {20 "" l User}
+  addUserKnob {7 realGain l "Inverse Perlin Gain function" t "This is an implementation of Ken Perlin's gain function. It boosts micro-contrast (acutance, in photographic terms) without clipping. When set to 0.5, it has no effect. When >0.5, gain is boosted; when <.5, gain is muted. Only luminance is affected; not hue nor saturation. Superwhites remain untouched."}
+  realGain {{parent.top_spread i}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 191
+   ypos -85
+  }
+  Expression {
+   temp_name0 gain
+   temp_expr0 "1 - parent.realGain"
+   temp_name1 lum
+   temp_expr1 "0.2125*Br + 0.7154*Bg + 0.0721*Bb"
+   temp_name2 val
+   temp_expr2 .5*((lum<.5)?((1-gain)>0?pow(2*lum,log(1-gain)/log(0.5)):0):2-((1-gain)>0?pow(2-2*lum,log(1-gain)/log(0.5)):0))
+   temp_name3 inv
+   expr0 r>1?r:r*(val/(lum+0.00001))
+   expr1 g>1?g:g*(val/(lum+0.00001))
+   expr2 b>1?b:b*(val/(lum+0.00001))
+   name KPGain
+   tile_color 0xd47f3b00
+   label "TRUE GAIN\nFUNCTION"
+   selected true
+   xpos 121
+   ypos -19
+   addUserKnob {20 "" l User}
+  }
+  Output {
+   name Output1
+   xpos 191
+   ypos 137
+  }
+ end_group
+ CCorrect {
+  gamma {{parent.top_gamma.r i} {parent.top_gamma.g i} {parent.top_gamma.b i} 1}
+  gain {{parent.top_gain.r i} {parent.top_gain.g i} {parent.top_gain.b} 1}
+  name CCorrect5
+  tile_color 0x7aa9ff00
+  xpos -2579
+  ypos 706
+ }
+ Premult {
+  name Premult6
+  xpos -2579
+  ypos 742
+ }
+ Merge {
+  inputs 2
+  A {rgba.red rgba.green rgba.blue -rgba.alpha}
+  operation from
+  name Merge5
+  tile_color 0x4b5ec600
+  xpos -2579
+  ypos 798
+  disable {{parent.top_shad.0==0}}
+ }
+ Clamp {
+  channels rgba
+  maximum_enable false
+  name CLAMP_BLACKS1
+  tile_color 0x7aa9ff00
+  xpos -2579
+  ypos 840
+ }
+ Dot {
+  name Dot13
+  xpos -2545
+  ypos 897
+ }
+ Switch {
+  which {{parent.top_on.0==0 i}}
+  name Switch1
+  xpos -2463
+  ypos 894
+ }
+ Merge {
+  inputs 2
+  A {rgba.red rgba.green rgba.blue -rgba.alpha}
+  operation plus
+  B {rgba.red rgba.green rgba.blue -rgba.alpha}
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge2
+  tile_color 0x4b5ec600
+  xpos -1929
+  ypos 894
+  disable {{parent.bottom_on.0==0 x86 1}}
+ }
+ Merge {
+  inputs 2
+  A {rgba.red rgba.green rgba.blue -rgba.alpha}
+  operation plus
+  B {rgba.red rgba.green rgba.blue -rgba.alpha}
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge3
+  tile_color 0x4b5ec600
+  xpos -1322
+  ypos 894
+  disable {{parent.left_on.0==0}}
+ }
+ Merge {
+  inputs 2
+  A {rgba.red rgba.green rgba.blue -rgba.alpha}
+  operation plus
+  B {rgba.red rgba.green rgba.blue -rgba.alpha}
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge4
+  tile_color 0x4b5ec600
+  xpos -687
+  ypos 894
+  disable {{parent.right_on.0==0}}
+ }
+ Unpremult {
+  name Unpremult5
+  xpos -436
+  ypos 894
+ }
+ Merge {
+  inputs 2
+  A rgb
+  operation mult
+  B rgb
+  bbox A
+  name Merge1
+  tile_color 0x4b5ec600
+  label "(rgba / )"
+  xpos -436
+  ypos 989
+  disable {{parent.Ccol.0==0 i}}
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  bbox B
+  name ChannelCopy14
+  tile_color 0x9e3c6300
+  xpos -360
+  ypos 1124
+ }
+ Premult {
+  name Premult9
+  xpos -360
+  ypos 1169
+ }
+set N7e76430 [stack 0]
+ Output {
+  name Output1
+  xpos -360
+  ypos 1814
+ }
+push $N7e76430
+ Viewer {
+  name Viewer1
+  xpos 33
+  ypos 158
+ }
+end_group

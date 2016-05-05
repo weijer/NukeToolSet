@@ -1,0 +1,61 @@
+#! C:/Program Files/Nuke5.0v2/Nuke5.0.exe -nx
+version 5.0200
+Gizmo {
+ inputs 2
+ lock_connections true
+ addUserKnob {20 zBlurGizmo}
+ addUserKnob {6 focalSetup l "Focal Plane Setup"}
+ addUserKnob {6 occlusion l Occlusion t "If checked, further objects will not blur over nearer ones"}
+ addUserKnob {26 "" l ""}
+ addUserKnob {7 focalPlane l "Focal Plane" R 0 5}
+ focalPlane 1
+ addUserKnob {7 depthField l "Depth Of Field"}
+ depthField 0.5
+ addUserKnob {26 "" l ""}
+ addUserKnob {7 size l Size t "Size of blur at infinite depth" R 1 100}
+ size 1.5
+ addUserKnob {7 maxSize l "Max Size" t "Filter Size will be clipped at this value" R 1 100}
+ maxSize 15
+ addUserKnob {7 filter l "Filter Shape"}
+}
+ Input {
+  inputs 0
+  name DepthMap
+  xpos 416
+  ypos 56
+ }
+ Input {
+  inputs 0
+  name through
+  xpos 587
+  ypos 68
+  number 1
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 depth.Z
+  name DepthCopy
+  xpos 506
+  ypos 117
+ }
+ ZBlur {
+  math far=0
+  occlusion {{parent.occlusion}}
+  setup_mode {{parent.focalSetup}}
+  center {{parent.focalPlane}}
+  dof {{parent.depthField}}
+  size {{parent.size}}
+  max_size {{parent.maxSize}}
+  shape {{parent.filter}}
+  name ZBlur
+  selected true
+  xpos 506
+  ypos 187
+ }
+ Output {
+  name Output1
+  xpos 506
+  ypos 287
+ }
+end_group

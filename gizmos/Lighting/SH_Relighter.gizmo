@@ -1,0 +1,64 @@
+#! D:/Program Files/Nuke5.1v2/Nuke5.1.exe -nx
+version 5.1200
+Gizmo {
+ addUserKnob {20 User}
+ addUserKnob {41 format T Constant1.format}
+ addUserKnob {26 ""}
+ addUserKnob {41 latitude T Constant1.latitude}
+ addUserKnob {41 longitude T Constant1.longitude}
+ addUserKnob {26 ""}
+ addUserKnob {41 multiply l Vlaue T Grade3.multiply}
+ addUserKnob {26 ""}
+ addUserKnob {41 size l Blur T Blur1.size}
+ addUserKnob {41 filter T Blur1.filter}
+ addUserKnob {41 quality l "" -STARTLINE T Blur1.quality}
+}
+ Input {
+  inputs 0
+  name Input1
+  selected true
+  xpos -384
+  ypos -518
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {{sin(radians(longitude))*cos(radians(latitude))} {sin(radians(latitude))} {cos(radians(longitude))*cos(radians(latitude))} 0}
+  name Constant1
+  xpos -179
+  ypos -607
+  addUserKnob {20 User}
+  addUserKnob {7 longitude R 0 360}
+  addUserKnob {7 latitude R 0 360}
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge2
+  xpos -237
+  ypos -449
+ }
+ Saturation {
+  saturation 0
+  name Saturation1
+  xpos -237
+  ypos -407
+ }
+ Grade {
+  white 3.85
+  name Grade3
+  xpos -237
+  ypos -327
+ }
+ Blur {
+  channels rgb
+  name Blur1
+  xpos -237
+  ypos -300
+ }
+ Output {
+  name Output1
+  xpos -237
+  ypos -200
+ }
+end_group

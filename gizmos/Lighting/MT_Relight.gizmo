@@ -1,0 +1,223 @@
+#! /Applications/Nuke5.2v1/Nuke5.2v1.app/Contents/MacOS/Nuke5.2v1 -nx
+version 5.2100
+Gizmo {
+ inputs 2
+ help "This node is a Relighting tool to use with a RGBpass or a normal pass to adjust an image.\nRelight tab is for setup light position and intensity.\nAccurate tab is for setup each channel with more control. \n"
+ tile_color 0x5380b5ff
+ lock_connections true
+ mapsize {0.159353 0.255396}
+ addUserKnob {20 Relight t "use this tab to set up the light and the direction"}
+ addUserKnob {41 hue_rotation l "Light position" t "define the position of light source around the object" T HueShift1.hue_rotation}
+ addUserKnob {41 Red t "set red (x) direction light" T Blend1.weight0}
+ addUserKnob {41 Green t "set green (y) direction light" T Blend1.weight1}
+ addUserKnob {41 Blue t "set blue (z) direction light" T Blend1.weight2}
+ addUserKnob {41 color_saturation l "light contrast" t "increase/decrease the contrast from light" T HueShift1.color_saturation}
+ addUserKnob {26 ""}
+ addUserKnob {20 author n 1}
+ addUserKnob {26 "" -STARTLINE T "MT_Lighting V.0.3 by William Eguienta\n\nthanks to report me bugs or request for new functions.\n\nwww.menthor-skillz.com\nmail: contact@menthor-skillz.com\n"}
+ addUserKnob {20 Accurate l "Accurate Master" t "set the master first and adjust others for details"}
+ addUserKnob {20 master_RED l "@b;master_RED" n 1}
+ addUserKnob {41 saturation T ColorCorrectR.saturation}
+ addUserKnob {41 contrast T ColorCorrectR.contrast}
+ addUserKnob {41 gamma T ColorCorrectR.gamma}
+ addUserKnob {41 gain T ColorCorrectR.gain}
+ addUserKnob {41 offset T ColorCorrectR.offset}
+ addUserKnob {20 master_GREEN l "@b;master_GREEN" n 1}
+ addUserKnob {41 saturation_1 l saturation T ColorCorrectG.saturation}
+ addUserKnob {41 contrast_1 l contrast T ColorCorrectG.contrast}
+ addUserKnob {41 gamma_1 l gamma T ColorCorrectG.gamma}
+ addUserKnob {41 gain_1 l gain T ColorCorrectG.gain}
+ addUserKnob {41 offset_1 l offset T ColorCorrectG.offset}
+ addUserKnob {20 "" n -1}
+ addUserKnob {20 master_BLUE l "@b;master_BLUE" n 1}
+ addUserKnob {41 saturation_2 l saturation T ColorCorrectB.saturation}
+ addUserKnob {41 contrast_2 l contrast T ColorCorrectB.contrast}
+ addUserKnob {41 gamma_2 l gamma T ColorCorrectB.gamma}
+ addUserKnob {41 gain_2 l gain T ColorCorrectB.gain}
+ addUserKnob {41 offset_2 l offset T ColorCorrectB.offset}
+ addUserKnob {20 "" n -1}
+ addUserKnob {20 Accurate_1 l "accurate midtones"}
+ addUserKnob {20 midtones_RED l "@b;midtones_RED" n 1}
+ addUserKnob {41 midtones.saturation l saturation T ColorCorrectR.midtones.saturation}
+ addUserKnob {41 midtones.contrast l contrast T ColorCorrectR.midtones.contrast}
+ addUserKnob {41 midtones.gamma l gamma T ColorCorrectR.midtones.gamma}
+ addUserKnob {41 midtones.gain l gain T ColorCorrectR.midtones.gain}
+ addUserKnob {41 midtones.offset l offset T ColorCorrectR.midtones.offset}
+ addUserKnob {20 "" n -1}
+ addUserKnob {20 midtones_GREEN l "@b;midtones_GREEN" n 1}
+ addUserKnob {41 midtones.saturation_2 l saturation T ColorCorrectB.midtones.saturation}
+ addUserKnob {41 midtones.contrast_2 l contrast T ColorCorrectB.midtones.contrast}
+ addUserKnob {41 midtones.gamma_2 l gamma T ColorCorrectB.midtones.gamma}
+ addUserKnob {41 midtones.gain_2 l gain T ColorCorrectB.midtones.gain}
+ addUserKnob {41 midtones.offset_2 l offset T ColorCorrectB.midtones.offset}
+ addUserKnob {20 "" n -1}
+ addUserKnob {20 midtones_BLUE l "@b;midtones_BLUE" n 1}
+ addUserKnob {41 midtones.saturation_1 l saturation T ColorCorrectG.midtones.saturation}
+ addUserKnob {41 midtones.contrast_1 l contrast T ColorCorrectG.midtones.contrast}
+ addUserKnob {41 midtones.gamma_1 l gamma T ColorCorrectG.midtones.gamma}
+ addUserKnob {41 midtones.gain_1 l gain T ColorCorrectG.midtones.gain}
+ addUserKnob {41 midtones.offset_1 l offset T ColorCorrectG.midtones.offset}
+ addUserKnob {20 "" n -1}
+ addUserKnob {20 accurate_shadow l "accurate Shadow"}
+ addUserKnob {20 shadows_RED l "@b;shadows_RED" n 1}
+ addUserKnob {41 shadows.saturation l saturation T ColorCorrectR.shadows.saturation}
+ addUserKnob {41 shadows.contrast l contrast T ColorCorrectR.shadows.contrast}
+ addUserKnob {41 shadows.gamma l gamma T ColorCorrectR.shadows.gamma}
+ addUserKnob {41 shadows.gain l gain T ColorCorrectR.shadows.gain}
+ addUserKnob {41 shadows.offset l offset T ColorCorrectR.shadows.offset}
+ addUserKnob {20 "" n -1}
+ addUserKnob {20 shadows_GREEN l "@b;shadows_GREEN" n 1}
+ addUserKnob {41 shadows.saturation_1 l saturation T ColorCorrectG.shadows.saturation}
+ addUserKnob {41 shadows.contrast_1 l contrast T ColorCorrectG.shadows.contrast}
+ addUserKnob {41 shadows.gamma_1 l gamma T ColorCorrectG.shadows.gamma}
+ addUserKnob {41 shadows.gain_1 l gain T ColorCorrectG.shadows.gain}
+ addUserKnob {41 shadows.offset_1 l offset T ColorCorrectG.shadows.offset}
+ addUserKnob {20 "" n -1}
+ addUserKnob {20 shadows_BLUE l "@b;shadows_BLUE" n 1}
+ addUserKnob {41 shadows.saturation_2 l saturation T ColorCorrectB.shadows.saturation}
+ addUserKnob {41 shadows.contrast_2 l contrast T ColorCorrectB.shadows.contrast}
+ addUserKnob {41 shadows.gamma_2 l gamma T ColorCorrectB.shadows.gamma}
+ addUserKnob {41 shadows.gain_2 l gain T ColorCorrectB.shadows.gain}
+ addUserKnob {41 shadows.offset_2 l offset T ColorCorrectB.shadows.offset}
+ addUserKnob {20 "" n -1}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+}
+ Input {
+  inputs 0
+  name RGBpass
+  xpos 0
+  ypos -71
+ }
+ HueShift {
+  name HueShift1
+  xpos 0
+  ypos -26
+ }
+ Dot {
+  name Dot1
+  xpos 34
+  ypos 15
+ }
+set N1d2829f0 [stack 0]
+ Dot {
+  name Dot3
+  xpos 150
+  ypos 15
+ }
+set N1d284290 [stack 0]
+ Dot {
+  name Dot4
+  xpos 271
+  ypos 15
+ }
+ Input {
+  inputs 0
+  name Source
+  xpos 180
+  ypos -70
+  number 1
+ }
+ Dot {
+  name Dot2
+  tile_color 0xffc000ff
+  xpos 214
+  ypos 48
+ }
+set N1d2de6b0 [stack 0]
+ Copy {
+  inputs 2
+  from0 rgba.blue
+  to0 rgba.alpha
+  name Blue
+  tile_color 0x28ffff
+  gl_color 0x38ffff
+  xpos 237
+  ypos 98
+ }
+ Premult {
+  name Premult3
+  tile_color 0xdffff
+  xpos 237
+  ypos 160
+ }
+ ColorCorrect {
+  name ColorCorrectB
+  tile_color 0xffff
+  xpos 237
+  ypos 201
+ }
+push 0
+push $N1d284290
+push $N1d2de6b0
+ Copy {
+  inputs 2
+  from0 rgba.green
+  to0 rgba.alpha
+  name Green
+  tile_color 0xff19ff
+  gl_color 0xff28ff
+  xpos 116
+  ypos 99
+ }
+ Premult {
+  name Premult2
+  tile_color 0x1fff00ff
+  xpos 116
+  ypos 159
+ }
+ ColorCorrect {
+  name ColorCorrectG
+  tile_color 0xff00ff
+  xpos 116
+  ypos 201
+ }
+push $N1d2829f0
+push $N1d2de6b0
+ Dot {
+  name Dot5
+  tile_color 0xffbc00ff
+  xpos 78
+  ypos 48
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.alpha
+  name Red
+  tile_color 0xff0000ff
+  xpos 0
+  ypos 99
+ }
+ Premult {
+  name Premult1
+  tile_color 0xff0000ff
+  xpos 0
+  ypos 160
+ }
+ ColorCorrect {
+  name ColorCorrectR
+  tile_color 0xff0000ff
+  xpos 0
+  ypos 201
+ }
+ Blend {
+  inputs 3+1
+  normalize false
+  name Blend1
+  xpos 116
+  ypos 286
+ }
+set N1d30a1f0 [stack 0]
+ Viewer {
+  name Viewer1
+  xpos 316
+  ypos 399
+ }
+push $N1d30a1f0
+ Output {
+  name Output1
+  xpos 116
+  ypos 367
+ }
+end_group

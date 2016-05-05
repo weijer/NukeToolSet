@@ -1,0 +1,62 @@
+#! C:/Program Files/Nuke6.1/Nuke6.1.exe -nx
+version 6.1 v3
+Gizmo {
+ label "v 1.0\n\[value size]\n"
+ note_font "Comic Sans MS Bold Bold"
+ addUserKnob {20 J_IDKeyer_L l J_IDKeyer}
+ addUserKnob {41 pick_color l pick_ID_color T ID_expression.pick_color}
+ addUserKnob {26 line l "" +STARTLINE}
+ addUserKnob {20 Erode n 1}
+ addUserKnob {41 channels T ID_Erode_blur.channels}
+ addUserKnob {41 size T ID_Erode_blur.size}
+ addUserKnob {41 blur T ID_Erode_blur.blur}
+ addUserKnob {41 quality T ID_Erode_blur.quality}
+ addUserKnob {6 invert l invert_ID +STARTLINE}
+ addUserKnob {41 mix T ID_Erode_blur.mix}
+ addUserKnob {20 endGroup n -1}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -240
+  ypos -94
+ }
+ Expression {
+  temp_name0 rr
+  temp_expr0 pick_color.r
+  temp_name1 gg
+  temp_expr1 pick_color.g
+  temp_name2 bb
+  temp_expr2 pick_color.b
+  expr0 floor(r*255)==floor(rr*255)&&floor(g*255)==floor(gg*255)&&floor(b*255)==floor(bb*255)
+  expr1 floor(r*255)==floor(rr*255)&&floor(g*255)==floor(gg*255)&&floor(b*255)==floor(bb*255)
+  expr2 floor(r*255)==floor(rr*255)&&floor(g*255)==floor(gg*255)&&floor(b*255)==floor(bb*255)
+  expr3 floor(r*255)==floor(rr*255)&&floor(g*255)==floor(gg*255)&&floor(b*255)==floor(bb*255)
+  name ID_expression
+  tile_color 0x380000ff
+  gl_color 0x930091ff
+  xpos -240
+  ypos 12
+  addUserKnob {20 Pick_InPut_color}
+  addUserKnob {18 pick_color l pick_ID_color}
+  pick_color {0 0 0}
+ }
+ Erode {
+  channels {rgba.red rgba.green rgba.blue rgba.alpha}
+  quality 30
+  name ID_Erode_blur
+  xpos 30
+  ypos 12
+ }
+ Invert {
+  name ID_Invert
+  xpos 30
+  ypos 59
+  disable {{1-parent.invert}}
+ }
+ Output {
+  name Output1
+  xpos 30
+  ypos 120
+ }
+end_group

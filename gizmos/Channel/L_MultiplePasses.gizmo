@@ -1,0 +1,482 @@
+#! C:/tools64/Nuke6.1v2_x64/Nuke6.1.exe -nx
+version 6.1 v2
+Gizmo {
+ addUserKnob {20 L_MultipleIDP}
+ addUserKnob {26 ""}
+ addUserKnob {26 tag l "" t "note color" +STARTLINE T "<FONT SIZE=6> <FONT COLOR='#ff0000'>R</FONT></FONT>\n<FONT SIZE=6> <FONT COLOR='#00ff00'>G</FONT></FONT>\n<FONT SIZE=6> <FONT COLOR='#0000ff'>B</FONT></FONT>\n<FONT SIZE=6> <FONT COLOR='#00aeef'>C</FONT></FONT>\n<FONT SIZE=6> <FONT COLOR='#ec008c'>M</FONT></FONT>\n<FONT SIZE=6> <FONT COLOR='#fff200'>Y</FONT></FONT>\n<FONT SIZE=6> <FONT COLOR='#58595b'>K1</FONT></FONT>\n<FONT SIZE=6> <FONT COLOR='#939598'>K2</FONT></FONT>"}
+ addUserKnob {26 ""}
+ addUserKnob {20 R n 1}
+ R 0
+ addUserKnob {41 size l R_edge T Dilate_R.size}
+ addUserKnob {41 size_1 l R_blur T Blur_R.size}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 G n 1}
+ G 0
+ addUserKnob {41 size_2 l G_edge T Dilate_G.size}
+ addUserKnob {41 size_3 l G_blur T Blur_G.size}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 B n 1}
+ B 0
+ addUserKnob {41 size_4 l B_edge T Dilate_B.size}
+ addUserKnob {41 size_5 l B_blur T Blur_B.size}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 C n 1}
+ C 0
+ addUserKnob {41 size_6 l C_edge T Dilate_C.size}
+ addUserKnob {41 size_7 l C_blur T Blur_C.size}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {20 M n 1}
+ M 0
+ addUserKnob {41 size_8 l M_edge T Dilate_M.size}
+ addUserKnob {41 size_9 l M_blur T Blur_M.size}
+ addUserKnob {20 endGroup_4 l endGroup n -1}
+ addUserKnob {20 Y n 1}
+ Y 0
+ addUserKnob {41 size_10 l Y_edge T DilateY.size}
+ addUserKnob {41 size_11 l Y_blur T Blur_Y.size}
+ addUserKnob {20 endGroup_5 l endGroup n -1}
+ addUserKnob {20 K1 n 1}
+ K1 0
+ addUserKnob {41 size_12 l K1_edge T Dilate_K1.size}
+ addUserKnob {41 size_13 l K1_blur T Blur_K1.size}
+ addUserKnob {20 endGroup_6 l endGroup n -1}
+ addUserKnob {20 K2 n 1}
+ K2 0
+ addUserKnob {41 size_14 l K2_edge T Dilate_K2.size}
+ addUserKnob {41 size_15 l K2_blur T Blur_K2.size}
+ addUserKnob {20 endGroup_7 l endGroup n -1}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -542
+  ypos -309
+ }
+ Dot {
+  name Dot_input
+  xpos -508
+  ypos -256
+ }
+ Dot {
+  name Dot4
+  xpos -508
+  ypos -82
+ }
+set N6fc6c80 [stack 0]
+ Dot {
+  name Dot17
+  label K2
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  note_font_color 0x919191ff
+  xpos -68
+  ypos -10
+ }
+ Expression {
+  expr3 r>0.3&&r<0.52
+  name Expression8
+  xpos -102
+  ypos 34
+ }
+ Shuffle {
+  in alpha
+  name Shuffle14
+  xpos -102
+  ypos 106
+ }
+ Dilate {
+  size -1
+  name Dilate_K2
+  xpos -102
+  ypos 172
+ }
+ Blur {
+  size 2
+  name Blur_K2
+  xpos -102
+  ypos 244
+ }
+ Dot {
+  name Dot18
+  xpos -68
+  ypos 518
+ }
+push $N6fc6c80
+ Dot {
+  name Dot15
+  label K1
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  note_font_color 0x686868ff
+  xpos -178
+  ypos -10
+ }
+ Expression {
+  expr3 r>0.1&&r<0.22
+  name Expression7
+  xpos -212
+  ypos 34
+ }
+ Shuffle {
+  in alpha
+  name Shuffle13
+  xpos -212
+  ypos 106
+ }
+ Dilate {
+  size -1
+  name Dilate_K1
+  xpos -212
+  ypos 172
+ }
+ Blur {
+  size 2
+  name Blur_K1
+  xpos -212
+  ypos 244
+ }
+ Dot {
+  name Dot16
+  xpos -178
+  ypos 494
+ }
+push $N6fc6c80
+ Dot {
+  name Dot1
+  label Y
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  note_font_color 0xff8d0fff
+  xpos -288
+  ypos -10
+ }
+ Expression {
+  expr3 ((r>0.6)?r:0)*((g>0.6)?g:0)
+  name Expression6
+  xpos -322
+  ypos 34
+ }
+ Shuffle {
+  in alpha
+  name Shuffle8
+  xpos -322
+  ypos 106
+ }
+ Dilate {
+  name DilateY
+  xpos -322
+  ypos 172
+ }
+ Blur {
+  name Blur_Y
+  xpos -322
+  ypos 244
+ }
+ Dot {
+  name Dot11
+  xpos -288
+  ypos 470
+ }
+push $N6fc6c80
+ Dot {
+  name Dot7
+  label M
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  note_font_color 0xff00ffff
+  xpos -398
+  ypos -10
+ }
+ Expression {
+  expr3 ((r>0.6)?r:0)*((b>0.6)?b:0)
+  name Expression5
+  xpos -432
+  ypos 34
+ }
+ Shuffle {
+  in alpha
+  name Shuffle12
+  xpos -432
+  ypos 106
+ }
+ Dilate {
+  name Dilate_M
+  xpos -432
+  ypos 172
+ }
+ Blur {
+  name Blur_M
+  xpos -432
+  ypos 244
+ }
+ Dot {
+  name Dot12
+  xpos -398
+  ypos 446
+ }
+push $N6fc6c80
+ Dot {
+  name Dot6
+  label C
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  note_font_color 0xffffff
+  xpos -508
+  ypos -10
+ }
+ Expression {
+  expr3 ((g>0.6)?g:0)*((b>0.6)?b:0)
+  name Expression4
+  xpos -542
+  ypos 34
+ }
+ Shuffle {
+  in alpha
+  name Shuffle11
+  xpos -542
+  ypos 106
+ }
+ Dilate {
+  name Dilate_C
+  xpos -542
+  ypos 172
+ }
+ Blur {
+  name Blur_C
+  xpos -542
+  ypos 244
+ }
+ Dot {
+  name Dot13
+  xpos -508
+  ypos 422
+ }
+push $N6fc6c80
+ Dot {
+  name Dot5
+  label B
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  note_font_color 0xffff
+  xpos -618
+  ypos -10
+ }
+ Expression {
+  expr3 b-r-g
+  name Expression3
+  xpos -652
+  ypos 34
+ }
+ Shuffle {
+  in alpha
+  name Shuffle7
+  xpos -652
+  ypos 106
+ }
+ Dilate {
+  name Dilate_B
+  xpos -652
+  ypos 172
+ }
+ Blur {
+  name Blur_B
+  xpos -652
+  ypos 244
+ }
+ Dot {
+  name Dot14
+  xpos -618
+  ypos 398
+ }
+push $N6fc6c80
+ Dot {
+  name Dot3
+  label G
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  note_font_color 0xff00ff
+  xpos -728
+  ypos -10
+ }
+ Expression {
+  expr3 g-r-b
+  name Expression2
+  xpos -762
+  ypos 34
+ }
+ Shuffle {
+  in alpha
+  name Shuffle10
+  xpos -762
+  ypos 106
+ }
+ Dilate {
+  name Dilate_G
+  xpos -762
+  ypos 172
+ }
+ Blur {
+  name Blur_G
+  xpos -762
+  ypos 244
+ }
+ Dot {
+  name Dot10
+  xpos -728
+  ypos 374
+ }
+push $N6fc6c80
+ Dot {
+  name Dot2
+  label R
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 30
+  note_font_color 0xff0000ff
+  xpos -838
+  ypos -10
+ }
+ Expression {
+  expr3 r-g-b
+  name Expression1
+  xpos -872
+  ypos 34
+ }
+ Shuffle {
+  in alpha
+  name Shuffle9
+  xpos -872
+  ypos 106
+ }
+ Dilate {
+  name Dilate_R
+  xpos -872
+  ypos 172
+ }
+ Blur {
+  name Blur_R
+  xpos -872
+  ypos 244
+ }
+ Dot {
+  name Dot9
+  xpos -838
+  ypos 350
+ }
+push $N6fc6c80
+ Dot {
+  name Dot8
+  xpos 262
+  ypos -82
+ }
+add_layer {idp1_R idp_R.a}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green black
+  blue black
+  alpha black
+  out idp1_R
+  name ShuffleCopy_R
+  xpos 228
+  ypos 346
+ }
+add_layer {idp2_G idp_G.a}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green black
+  blue black
+  alpha black
+  out idp2_G
+  name ShuffleCopy_G
+  xpos 228
+  ypos 370
+ }
+add_layer {idp3_B idp_B.a}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green black
+  blue black
+  alpha black
+  out idp3_B
+  name ShuffleCopy_B
+  xpos 228
+  ypos 394
+ }
+add_layer {idp4_C idp_C.a}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green black
+  blue black
+  alpha black
+  out idp4_C
+  name ShuffleCopy_C
+  xpos 228
+  ypos 418
+ }
+add_layer {idp5_M idp_M.a}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green black
+  blue black
+  alpha black
+  out idp5_M
+  name ShuffleCopy_M
+  xpos 228
+  ypos 442
+ }
+add_layer {idp6_Y idp_Y.a}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green black
+  blue black
+  alpha black
+  out idp6_Y
+  name ShuffleCopy_Y
+  xpos 228
+  ypos 466
+ }
+add_layer {idp7_K1 idp_K1.a}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green black
+  blue black
+  alpha black
+  out idp7_K1
+  name ShuffleCopy_K1
+  xpos 228
+  ypos 490
+ }
+add_layer {idp8_K2 idp_K2.a}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green black
+  blue black
+  alpha black
+  out idp8_K2
+  name ShuffleCopy_K2
+  xpos 228
+  ypos 514
+ }
+ Clamp {
+  name Clamp1
+  xpos 228
+  ypos 558
+ }
+ Dot {
+  name Dot_output
+  xpos 262
+  ypos 662
+ }
+ Output {
+  name Output1
+  xpos 228
+  ypos 765
+ }
+end_group

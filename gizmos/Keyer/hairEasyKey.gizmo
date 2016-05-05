@@ -1,0 +1,203 @@
+#! /usr/local/Nuke6.1v1/Nuke6.1 -nx
+version 6.1 v1
+Gizmo {
+ inputs 3
+ addUserKnob {20 User}
+ addUserKnob {41 saturation T Saturation2.saturation}
+ addUserKnob {26 ""}
+ addUserKnob {41 value l Brightness_Low T Brightness_Lows2.value}
+ addUserKnob {41 value_1 l Mult_Low T Multiply_lows2.value}
+ addUserKnob {26 ""}
+ addUserKnob {41 Value l Brightness_High T Brightness_Highs2.value}
+ addUserKnob {41 value_2 l Mult_High T Multiply_highs2.value}
+}
+ Input {
+  inputs 0
+  name FG
+  xpos -44
+  ypos 431
+ }
+ NoOp {
+  name Foreground
+  xpos -44
+  ypos 493
+ }
+ Colorspace {
+  colorspace_out Cineon
+  name Colorspace1
+  xpos -44
+  ypos 533
+ }
+set N1493f550 [stack 0]
+ Input {
+  inputs 0
+  name clean
+  xpos -154
+  ypos 498
+  number 1
+ }
+ Colorspace {
+  colorspace_out Cineon
+  name Colorspace2
+  xpos -154
+  ypos 582
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge3
+  xpos -44
+  ypos 582
+ }
+ Saturation {
+  saturation 0
+  name Saturation2
+  xpos -44
+  ypos 610
+ }
+set N14964f30 [stack 0]
+ Clamp {
+  minimum -15
+  maximum 0
+  MinClampTo -15
+  MaxClampTo 0
+  name Clamp3
+  xpos -95
+  ypos 653
+ }
+ Multiply {
+  value 2.7
+  name Brightness_Lows2
+  xpos -95
+  ypos 710
+ }
+ Multiply {
+  channels rgb
+  value 1.04
+  name Multiply_lows2
+  xpos -95
+  ypos 768
+ }
+ Input {
+  inputs 0
+  name BG
+  xpos 248
+  ypos 434
+  number 2
+ }
+ NoOp {
+  name Background
+  xpos 248
+  ypos 474
+ }
+ Colorspace {
+  colorspace_out Cineon
+  name Colorspace6
+  xpos 248
+  ypos 519
+ }
+ Dot {
+  name Dot5
+  xpos 282
+  ypos 616
+ }
+set N14991f70 [stack 0]
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue}
+  channel1 {-rgba.red -rgba.green -rgba.blue}
+  channel2 {-rgba.red -rgba.green -rgba.blue}
+  expr3 (r+g+b)/3
+  name Expression_luma1
+  xpos 160
+  ypos 611
+ }
+ Dot {
+  name Dot6
+  xpos 194
+  ypos 732
+ }
+set N1499c3e0 [stack 0]
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Multiply2
+  xpos -95
+  ypos 818
+ }
+push $N14964f30
+ Clamp {
+  maximum 15
+  MaxClampTo 15
+  name Clamp4
+  xpos 5
+  ypos 653
+ }
+ Multiply {
+  value 0
+  name Brightness_Highs2
+  xpos 5
+  ypos 710
+ }
+ Multiply {
+  channels rgb
+  value {1 1 1 1}
+  name Multiply_highs2
+  xpos 5
+  ypos 767
+ }
+push $N1499c3e0
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Multiply3
+  xpos 5
+  ypos 818
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Plus1
+  xpos -28
+  ypos 872
+ }
+set N149c56d0 [stack 0]
+push $N14991f70
+ Merge2 {
+  inputs 2
+  operation plus
+  name Plus2
+  xpos 248
+  ypos 872
+ }
+ Colorspace {
+  colorspace_in Cineon
+  name Colorspace8
+  xpos 248
+  ypos 913
+ }
+ NoOp {
+  name ScreenDiff_Out
+  xpos 248
+  ypos 949
+ }
+ Output {
+  name Output1
+  xpos 248
+  ypos 996
+ }
+ Output {
+  name Output2
+  xpos 248
+  ypos 1045
+ }
+push $N1493f550
+push $N149c56d0
+ Viewer {
+  inputs 2
+  viewerProcess rec709
+  input_process false
+  name Viewer1
+  xpos -154
+  ypos 997
+ }
+end_group

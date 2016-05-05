@@ -1,0 +1,246 @@
+#! C:/tools/Nuke9.0v3/nuke-9.0.3.dll -nx
+version 9.0 v3
+Gizmo {
+ inputs 2
+ tile_color 0x4dd637ff
+ label "v 1.0\n\[value lit1_cbx]\n\[value lit2_cbx]\n\[value lit3_cbx]"
+ addUserKnob {20 reLightMananger l jarr_reLightMananger}
+ addUserKnob {41 normal l "normal vectors" T ReLight3.normal}
+ addUserKnob {41 position l "point positions" T ReLight3.position}
+ addUserKnob {6 PositionToPoints_Display l "PositionToPoints Display" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {7 mast_RX l Master_RX R -360 360}
+ addUserKnob {7 mast_RY l Master_RY R -360 360}
+ addUserKnob {7 mast_RZ l Master_RZ R -360 360}
+ addUserKnob {20 light1 n 1}
+ addUserKnob {6 lit1_cbx l "Enable light 1" +STARTLINE}
+ addUserKnob {26 _ l "" +STARTLINE}
+ addUserKnob {18 clrLit1 l color}
+ addUserKnob {6 clrLit1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 intensityLit1 l intensity}
+ addUserKnob {26 ""}
+ addUserKnob {7 polarHeight_lit1 l polarHeight R -360 360}
+ addUserKnob {7 equatorAngle_lit1 l equatorAngle R -360 360}
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 light2 n 1}
+ addUserKnob {6 lit2_cbx l "Enable light 2" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {18 clrLit2 l color}
+ addUserKnob {6 clrLit2_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 intensityLit2 l intensity}
+ addUserKnob {26 ""}
+ addUserKnob {7 polarHeight_lit2 l polarHeight R -360 360}
+ addUserKnob {7 equatorAngle_lit2 l equatorAngle t "\t\t\t" R -360 360}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 light3 n 1}
+ addUserKnob {6 lit3_cbx l "Enable light 2" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {18 clrLit3 l color}
+ addUserKnob {6 clrLit3_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 intensityLit3 l intensity}
+ addUserKnob {26 ""}
+ addUserKnob {7 polarHeight_lit3 l polarHeight R -360 360}
+ addUserKnob {7 equatorAngle_lit3 l equatorAngle R -360 360}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 Use}
+ addUserKnob {26 aaaa l "" +STARTLINE T "使用方法:\nmaster:\n           normal vectors: 如需使用relighting这个节点，此处必须输入一张法线图（目前需为世界坐标）\n           point positions: 此处是否输入位置信息图，并不影响灯光效果，配合positionToPoints Display使用，在输入位置信息图且勾选下面显示按钮的情况下，将nuke切换至三维空间可以观看灯光效果。\n          master_RX/master_RY/master_RZ：为全局旋转信息，让下述三盏灯光整体旋转。\n\nlight：\n          Enable light x: 开启灯光\n          color : 调节灯光颜色"}
+}
+ Phong {
+  inputs 0
+  diffuse 1
+  specular 0
+  min_shininess 2
+  max_shininess 57
+  shininess_channel green
+  name Phong1
+  note_font Verdana
+  xpos 363
+  ypos 361
+ }
+ Camera2 {
+  inputs 0
+  name Camera1
+  xpos 335
+  ypos 160
+ }
+set Nd1f2b000 [stack 0]
+push $Nd1f2b000
+ Light2 {
+  inputs 0
+  color 0
+  intensity 0
+  name Light1
+  xpos 643
+  ypos 365
+ }
+ Axis2 {
+  inputs 0
+  rotate {{mast_RX} {mast_RY} {mast_RZ}}
+  name Axis1
+  xpos 1103
+  ypos 263
+ }
+set Nd1f2a800 [stack 0]
+ DirectLight {
+  color {{clrLit3.r i} {clrLit3.g i} {clrLit3.b i}}
+  intensity {{intensityLit3 i}}
+  rotate {{polarHeight_lit3 i} {equatorAngle_lit3 i} 0}
+  samples 0
+  sample_width 0
+  name DirectLight3
+  gl_color 0xff0000ff
+  note_font Verdana
+  xpos 853
+  ypos 347
+  disable {{1-lit3_cbx i x1 1}}
+ }
+push $Nd1f2a800
+ DirectLight {
+  color {{clrLit2 i x1 0.245} {clrLit2 i x1 0.245} {clrLit2 i x1 0.245}}
+  intensity {{intensityLit2 i}}
+  rotate {{polarHeight_lit2 i} {equatorAngle_lit2 i} 0}
+  samples 0
+  sample_width 0
+  name DirectLight2
+  gl_color 0x30ffff
+  note_font Verdana
+  xpos 857
+  ypos 263
+  disable {{1-lit2_cbx i}}
+ }
+push $Nd1f2a800
+ DirectLight {
+  color {{clrLit1.r} {clrLit1.g} {clrLit1.b}}
+  intensity {{intensityLit1}}
+  rotate {{polarHeight_lit1} {equatorAngle_lit1} 0}
+  samples 0
+  sample_width 0
+  name DirectLight1
+  tile_color 0xfff6adff
+  gl_color 0xffe500ff
+  note_font Verdana
+  xpos 857
+  ypos 177
+  disable {{1-lit1_cbx}}
+ }
+ Scene {
+  inputs 5
+  name Scene1
+  note_font Verdana
+  xpos 764
+  ypos 220
+ }
+set N972bd400 [stack 0]
+push $N972bd400
+ Input {
+  inputs 0
+  name alpha
+  xpos 743
+  ypos -43
+ }
+set N972bd000 [stack 0]
+ Input {
+  inputs 0
+  name dataPass
+  xpos 485
+  ypos -48
+  number 1
+ }
+add_layer {worldPosition worldPosition.NX worldPosition.NY worldPosition.NZ}
+ ShuffleCopy {
+  inputs 2
+  in2 worldPosition
+  red red
+  green green
+  blue blue
+  name copy1_alpha_in3
+  note_font Verdana
+  xpos 485
+  ypos 26
+ }
+set N972bc800 [stack 0]
+add_layer {normalWorld normalWorld.NX normalWorld.NY normalWorld.NZ}
+ Shuffle {
+  in normalWorld
+  alpha blue
+  name normalWord
+  note_font Verdana
+  xpos 818
+  ypos 26
+ }
+push $N972bd000
+push $N972bc800
+ Shuffle {
+  in worldPosition
+  alpha blue
+  name world_position
+  note_font Verdana
+  xpos 654
+  ypos 66
+ }
+ PositionToPoints {
+  inputs 3
+  detail 1
+  pointSize 1.1
+  name PositionToPoints2
+  note_font Verdana
+  xpos 743
+  ypos 145
+  disable {{1-PositionToPoints_Display x1 1}}
+ }
+ Scene {
+  inputs 2
+  name Scene2
+  note_font Verdana
+  xpos 626
+  ypos 163
+ }
+ Switch {
+  inputs 2
+  which {{1-PositionToPoints_Display}}
+  name Switch1
+  xpos 616
+  ypos 278
+ }
+push $N972bc800
+ Matrix {
+  channels normalWorld
+  matrix {
+      {1 2 1}
+      {2 4 2}
+      {1 2 1}
+    }
+  normalize true
+  name Matrix1
+  note_font Verdana
+  xpos 485
+  ypos 124
+ }
+ Matrix {
+  channels worldPosition
+  matrix {
+      {1 2 1}
+      {2 4 2}
+      {1 2 1}
+    }
+  normalize true
+  name Matrix2
+  note_font Verdana
+  xpos 485
+  ypos 166
+ }
+ ReLight {
+  inputs 4
+  use_alpha true
+  name ReLight3
+  note_font Verdana
+  xpos 485
+  ypos 279
+ }
+ Output {
+  name Output1
+  xpos 479
+  ypos 464
+ }
+end_group

@@ -1,0 +1,171 @@
+#! /Applications/Nuke5.1v5/Nuke5.1v5.app/Contents/MacOS/Nuke5.1v5 -nx
+version 5.1500
+Gizmo {
+ note_font "Verdana Bold"
+ note_font_size 13
+ note_font_color 0x7f1f00ff
+ addUserKnob {20 aKKROMATISM l aKROMATISM}
+ addUserKnob {41 multiplier l AberrationMultiplier T Dot1.multiplier}
+ addUserKnob {41 mixRay T moxDot.mixRay}
+ addUserKnob {41 which T Switch1.which}
+ addUserKnob {26 ""}
+ addUserKnob {26 "" l _ T "st.Rub's Akromatism\[6.1.2009]"}
+ addUserKnob {26 ""}
+ addUserKnob {20 about}
+ addUserKnob {26 "" l _ T "If you need any updates, or suggestions, just contact\n\ndonald@donaldstrubler.com"}
+}
+ Keymix {
+  inputs 0
+  invertMask true
+  mix 0
+  name Keymix1
+  xpos -160
+  ypos 109
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -133
+  ypos -363
+ }
+ Dot {
+  name Dot2
+  xpos -99
+  ypos -292
+ }
+set N19953c10 [stack 0]
+ GodRays {
+  channels {-rgba.red rgba.green -rgba.blue}
+  scale {{parent.GodRays8.scale}}
+  center {{parent.GodRays5.center.x} {parent.GodRays5.center.y}}
+  name GodRays6
+  xpos -15
+  ypos -189
+ }
+ GodRays {
+  channels {rgba.red -rgba.green -rgba.blue}
+  scale {{parent.GodRays5.scale}}
+  center {{parent.GodRays6.center.x} {parent.GodRays6.center.y}}
+  name GodRays7
+  xpos -15
+  ypos -141
+  addUserKnob {20 User}
+  addUserKnob {4 sasdasd M {Read1 ""}}
+ }
+push $N19953c10
+ GodRays {
+  channels {-rgba.red -rgba.green rgba.blue}
+  scale {{(Dot1.multiplier)+1 i}}
+  center {{(format.width)/2 i} {(format.height)/2 i}}
+  name GodRays8
+  xpos -117
+  ypos -187
+ }
+ GodRays {
+  channels {-rgba.red rgba.green -rgba.blue}
+  scale {{parent.GodRays2.scale i}}
+  center {{parent.GodRays8.center.x i} {parent.GodRays8.center.y i}}
+  name GodRays5
+  xpos -117
+  ypos -140
+  addUserKnob {20 User}
+  addUserKnob {4 sasdasd M {Read1 ""}}
+ }
+push $N19953c10
+ GodRays {
+  channels {-rgba.red -rgba.green rgba.blue}
+  scale {{(Dot1.multiplier)+1 i}}
+  center {{(format.width)/2 i} {(format.height)/2 i}}
+  name GodRays1
+  xpos -229
+  ypos -178
+ }
+ GodRays {
+  channels {rgba.red -rgba.green -rgba.blue}
+  scale {{((Dot1.multiplier)*(-1))+1 i}}
+  center {{parent.GodRays1.center.x i} {parent.GodRays1.center.y i}}
+  name GodRays2
+  xpos -229
+  ypos -139
+  addUserKnob {20 User}
+  addUserKnob {4 sasdasd M {Read1 ""}}
+ }
+ Switch {
+  inputs 3
+  which 2
+  name Switch1
+  xpos -104
+  ypos -70
+  addUserKnob {20 User}
+  addUserKnob {41 which_1 l which T Switch1.which}
+ }
+ GodRays {
+  scale {{((moxDot.mixRay)*.05)+1}}
+  center {{width/2} {height/2}}
+  name GodRays3
+  xpos -104
+  ypos -24
+  addUserKnob {20 User}
+  addUserKnob {7 mult}
+  mult 1
+ }
+ Blur {
+  size 0.6
+  name Blur1
+  xpos -63
+  ypos 66
+ }
+ Output {
+  name Output1
+  xpos -104
+  ypos 229
+ }
+ Dot {
+  inputs 0
+  name Dot1
+  xpos -297
+  ypos -172
+  addUserKnob {20 User}
+  addUserKnob {7 multiplier R -0.1 0.1}
+  multiplier -0.036
+ }
+ Radial {
+  inputs 0
+  cliptype none
+  area {0 0 {format.width i} {format.height i}}
+  softness 0.18
+  name Radial1
+  xpos 152
+  ypos -270
+  hide_input true
+ }
+ Blur {
+  size 300
+  quality 30
+  name Blur3
+  xpos 152
+  ypos -223
+ }
+ Grade {
+  blackpoint 0.015
+  whitepoint 0.4
+  name Grade1
+  xpos 152
+  ypos -166
+ }
+ Dot {
+  inputs 0
+  name moxDot
+  xpos 259
+  ypos 11
+  addUserKnob {20 User}
+  addUserKnob {7 mixRay}
+  mixRay 0.065
+ }
+ Viewer {
+  inputs 0
+  name Viewer1
+  xpos 32
+  ypos 229
+ }
+end_group

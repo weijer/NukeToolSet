@@ -1,0 +1,305 @@
+#! C:/Program Files/Nuke8.0v4/nuke-8.0.v4.dll -nx
+version 8.0 v4
+Gizmo {
+ inputs 2
+ help "EdgeMaker will eat into and extend the the edges of an image with an alpha"
+ note_font Verdana
+ mapsize {0.15 0.15}
+ addUserKnob {20 Controls}
+ addUserKnob {6 premulted l "image is premultiplied" +STARTLINE}
+ premulted true
+ addUserKnob {4 method t "Try directional if you want to keep lines that your image might have. Also, directional blur can be useful when extending something that has motion blur" M {"Regular Blur" "Directional Blur" ""}}
+ addUserKnob {26 ""}
+ addUserKnob {14 smooth R 0 100}
+ addUserKnob {14 inkeydist l "inside key distance" t "This will eat into your RGB before extending the edges. This is useful when your key has an edge color you want to eliminate " R 0 100}
+ addUserKnob {14 outkeydist l "outside key distance" t "extends the edges" R 0 100}
+ addUserKnob {26 ""}
+ addUserKnob {26 DirectionalBlur l "" +STARTLINE T "directional blur controls only\n"}
+ addUserKnob {7 rotation R -180 180}
+ addUserKnob {7 soften l "rotation soften" t "doing a directional blur can cause hard lines in one direction. This will soften them" R 0 10}
+ addUserKnob {26 ""}
+ addUserKnob {4 maskwith l "mask with" M {none original mask "mask (inverted)" "" ""}}
+ addUserKnob {6 Invert -STARTLINE}
+ addUserKnob {7 mix}
+ mix 1
+}
+ Input {
+  inputs 0
+  name Mask
+  xpos -32
+  ypos -109
+ }
+ Dot {
+  name Dot9
+  xpos 3
+  ypos 45
+ }
+set N250b4010 [stack 0]
+ Invert {
+  channels rgba
+  name Invert1
+  xpos 66
+  ypos 198
+ }
+set N250b4380 [stack 0]
+ Dot {
+  name Dot2
+  xpos 100
+  ypos 644
+ }
+push $N250b4010
+push $N250b4380
+ Switch {
+  inputs 2
+  which {{Invert i}}
+  name Switch1
+  xpos -31
+  ypos 284
+ }
+ FilterErode {
+  channels rgba
+  size {{-inkeydist i} {-inkeydist i}}
+  name FilterErode1
+  xpos -31
+  ypos 320
+ }
+set N250b4a60 [stack 0]
+ Dot {
+  name Dot4
+  xpos 3
+  ypos 678
+ }
+push $N250b4a60
+ Invert {
+  channels alpha
+  name Invert2
+  xpos -135
+  ypos 314
+ }
+ Input {
+  inputs 0
+  name RGB
+  xpos -540
+  ypos -109
+  number 1
+ }
+ Dot {
+  name Dot3
+  xpos -505
+  ypos 43
+ }
+set N250b5820 [stack 0]
+ Dot {
+  name Dot7
+  xpos -409
+  ypos 43
+ }
+set N250b5b90 [stack 0]
+ Dot {
+  name Dot6
+  xpos -326
+  ypos 43
+ }
+ Unpremult {
+  name Unpremult2
+  xpos -360
+  ypos 136
+  disable {{!parent.premulted i}}
+ }
+ Shuffle {
+  alpha white
+  name Shuffle1
+  xpos -361
+  ypos 267
+ }
+ Blur {
+  channels rgba
+  size {{smooth} {smooth}}
+  filter box
+  maskChannelMask -rgba.alpha
+  name Blur1
+  xpos -361
+  ypos 370
+ }
+set N253652a0 [stack 0]
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge1
+  xpos -135
+  ypos 370
+ }
+set N25057880 [stack 0]
+ Group {
+  name Group2
+  xpos -262
+  ypos 424
+  addUserKnob {20 User}
+  addUserKnob {7 rotation R -180 180}
+  rotation {{parent.rotation i}}
+  addUserKnob {41 size T Blur1.size}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos -643
+   ypos -558
+  }
+set N25057bf0 [stack 0]
+  Transform {
+   rotate {{parent.rotation i}}
+   center {1024 576}
+   name Transform1
+   xpos -643
+   ypos -509
+  }
+  Blur {
+   size {{-(outkeydist+inkeydist)*5/6 i} {parent.parent.soften i}}
+   name Blur1
+   xpos -643
+   ypos -448
+  }
+  Transform {
+   rotate {{-parent.Transform1.rotate i x36 -53.64279827}}
+   center {1024 576}
+   name Transform2
+   selected true
+   xpos -643
+   ypos -402
+  }
+set N2544f970 [stack 0]
+  Crop {
+   box {0 0 2048 1152}
+   name Crop1
+   xpos -643
+   ypos -343
+   disable true
+  }
+  Output {
+   name Output1
+   xpos -643
+   ypos -298
+  }
+push $N2544f970
+push 0
+push $N25057bf0
+  Viewer {
+   inputs 3
+   input_process false
+   name Viewer1
+   xpos -343
+   ypos -558
+  }
+ end_group
+push $N25057880
+ Blur {
+  channels rgba
+  size {{-(outkeydist+inkeydist)*5/6 i} {-(outkeydist+inkeydist)*5/6 i}}
+  maskChannelMask -rgba.alpha
+  name Blur2
+  selected true
+  xpos -135
+  ypos 428
+ }
+ Switch {
+  inputs 2
+  which {{parent.method i}}
+  name Switch3
+  xpos -135
+  ypos 470
+ }
+ Unpremult {
+  name Unpremult1
+  xpos -135
+  ypos 502
+ }
+ Expression {
+  expr3 a>0.0001?1:0
+  maskChannelMask -rgba.alpha
+  name Expression1
+  xpos -135
+  ypos 556
+ }
+ Premult {
+  name Premult1
+  xpos -135
+  ypos 598
+ }
+push $N253652a0
+ Dot {
+  name Dot5
+  xpos -327
+  ypos 678
+ }
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos -134
+  ypos 669
+ }
+set N254514f0 [stack 0]
+ Dot {
+  name Dot8
+  xpos -100
+  ypos 745
+ }
+set N254ce130 [stack 0]
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge4
+  xpos 66
+  ypos 862
+ }
+push $N250b4010
+ Dot {
+  name Dot1
+  xpos 180
+  ypos 45
+ }
+push $N254ce130
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge3
+  xpos 146
+  ypos 742
+ }
+push $N250b5b90
+push $N254ce130
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge2
+  xpos -443
+  ypos 742
+ }
+push $N254ce130
+ Switch {
+  inputs 4
+  which {{parent.maskwith i}}
+  name Switch2
+  xpos -134
+  ypos 891
+ }
+push $N250b5820
+ Dissolve {
+  inputs 2
+  which {{parent.mix i}}
+  name Dissolve1
+  xpos -554
+  ypos 885
+ }
+ Output {
+  name Output1
+  xpos -554
+  ypos 1042
+ }
+push $N254514f0
+ Viewer {
+  viewerProcess None
+  name Viewer1
+  xpos -76
+  ypos 1218
+ }
+end_group

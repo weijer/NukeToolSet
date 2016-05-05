@@ -1,0 +1,349 @@
+#! /lot/s27/SWDEVL/SOFTWARE/linuxrh9_intel/nuke4.5/12/nuke4.5.12 -nx
+version 4.5012
+Gizmo {
+ inputs 4
+ addUserKnob { 20 "" User }
+ addUserKnob { 26 "" Additive }
+ addUserKnob { 4 cspace "colour space" M { log lin } t "colour space for the internal math.\nIf set to log all inputs are converted to log before the math is applied. The result is converted back to linear space." }
+ addUserKnob { 7 saturation saturation R 0 3 }
+ addUserKnob { 7 fade fade R 0 5 }
+ addUserKnob { 7 brightness brightness R -1 1 }
+ addUserKnob { 18 tint tint R 0 1 }
+ addUserKnob { 6 clampblk "clamp blacks" t "check this to avoid negative values in the key result" }
+ addUserKnob { 6 usematte "use edge matte" t "this will premultiply the result by the alpha channel of the edge input" }
+ addUserKnob { 26 "" Negative }
+ addUserKnob { 7 saturation_neg saturation R 0 1 }
+ addUserKnob { 7 brightness_neg brightness R 0 5 }
+ addUserKnob { 18 tint_neg tint R 0 1 }
+ addUserKnob { 26 "" "Mix Negative into Additve" }
+ addUserKnob { 7 Dissolve2_which Mix R 0 1 t "This alows you to mix some darks back\n into the highlights incase they are too strong.\n" }
+ name AdditiveKeyer2
+ label "with added negative functionality"
+ help "Addive keyer usage:\n\nfg = bluescreen plate\nbg = background plate\nref = constant colour node with the colour of your blues in your bluescreen plate\n\nnote: this works for any colour extraction , green, red etc .I'm just using blue as an example\n\nThis keyer is for help extracting very fine hairs and light details in your key that you would\n not be able to achieve using a straight bluescreen keyer. It does not create a matte.\n The result of this keyer is what you now need to use as your bg, placing your exaction over it.\n You can also use the result through an edge matte. If your blue screen is very uneven this may\n be the best use of this tool. Keep in mind if you can use the whole plate though this tool it will\nretain the grain from the bs making a much nicer intergration of grain to comp.\n\n\n\n\n\n"
+ cspace lin
+ saturation 0.34
+ fade 1
+ tint {1 1 1}
+ clampblk true
+ saturation_neg 0.1
+ brightness_neg 1
+ tint_neg {0.07 0.08 0.08}
+}
+ Input {
+  inputs 0
+  name edge
+  xpos -682
+  ypos 1016
+  number 3
+ }
+ AddChannels {
+  channels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  name AddChannels1
+  xpos -682
+  ypos 1054
+ }
+ Input {
+  inputs 0
+  name fg
+  xpos -529
+  ypos 110
+ }
+set N8961b00 [stack 0]
+ Log2Lin {
+  operation lin2log
+  name Log2Lin2
+  xpos -331
+  ypos 110
+  disable {{parent.cspace}}
+ }
+ Input {
+  inputs 0
+  name ref
+  xpos -132
+  ypos -49
+  number 2
+ }
+set N8a01ed8 [stack 0]
+ Log2Lin {
+  operation lin2log
+  name Log2Lin1
+  xpos -132
+  ypos 24
+  disable {{parent.cspace}}
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge1
+  xpos -132
+  ypos 110
+ }
+ Clamp {
+  maximum_enable false
+  name Clamp1
+  xpos -14
+  ypos 103
+  disable {{1-parent.clampblk}}
+ }
+set N8a047f8 [stack 0]
+ Input {
+  inputs 0
+  name bg
+  xpos 372
+  ypos -25
+  number 1
+ }
+set N89f98f0 [stack 0]
+ Log2Lin {
+  operation lin2log
+  name Log2Lin3
+  xpos 372
+  ypos 13
+  disable {{parent.cspace}}
+ }
+set N89fa118 [stack 0]
+ Remove {
+  operation keep
+  channels rgb
+  name Remove2
+  xpos 252
+  ypos 13
+ }
+ Shuffle {
+  in rgb
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle1
+  xpos 150
+  ypos 13
+ }
+ Merge2 {
+  inputs 2
+  operation difference
+  name Merge2
+  xpos 150
+  ypos 242
+ }
+ Saturation {
+  saturation 0
+  name Saturation2
+  xpos 150
+  ypos 283
+ }
+set N89fdf00 [stack 0]
+ Dot {
+  xpos -216
+  ypos 287
+ }
+ Dot {
+  name Dot4
+  xpos -216
+  ypos 510
+ }
+push $N8961b00
+ Dot {
+  xpos -495
+  ypos 288
+ }
+push $N8a01ed8
+ Dot {
+  xpos -380
+  ypos -45
+ }
+ Merge2 {
+  inputs 2
+  operation min
+  name Merge5
+  xpos -414
+  ypos 284
+ }
+push $N8961b00
+ Dot {
+  xpos -495
+  ypos 391
+ }
+ Merge2 {
+  inputs 2
+  A {rgba.red rgba.green rgba.blue -rgba.red}
+  operation divide
+  name Merge4
+  xpos -414
+  ypos 387
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 uv.u
+  name Copy3
+  xpos -414
+  ypos 499
+ }
+ Multiply {
+  value {{parent.balance}}
+  mask uv.u
+  name Multiply1
+  xpos -414
+  ypos 551
+ }
+ Shuffle {
+  black red
+  out2 uv
+  name Shuffle2
+  xpos -414
+  ypos 603
+ }
+set N45effb68 [stack 0]
+ Saturation {
+  channels rgba
+  saturation {{parent.saturation_neg i x390 1.9}}
+  name Saturation3
+  xpos -268
+  ypos 603
+ }
+ Multiply {
+  channels rgba
+  value {{parent.brightness_neg}}
+  name Multiply3
+  xpos -268
+  ypos 649
+ }
+ Grade {
+  multiply {{parent.tint_neg.r i} {parent.tint_neg.g i} {parent.tint_neg.b i} {curve}}
+  black_clamp false
+  name Grade2
+  xpos -268
+  ypos 693
+ }
+push $N45effb68
+ Clamp {
+  channels uv
+  name Clamp2
+  xpos -414
+  ypos 641
+ }
+ Dissolve {
+  inputs 2
+  which 1
+  mask uv.u
+  invert_mask true
+  name Dissolve1
+  xpos -414
+  ypos 686
+ }
+push $N89f98f0
+ Dot {
+  xpos 406
+  ypos 844
+ }
+ Merge {
+  inputs 2
+  operation mult
+  name Merge6
+  xpos -414
+  ypos 840
+ }
+push $N89fdf00
+ Dot {
+  name Dot1
+  xpos 184
+  ypos 432
+ }
+push $N8a047f8
+ Saturation {
+  saturation {{parent.saturation i}}
+  name Saturation1
+  xpos -14
+  ypos 287
+ }
+ Multiply {
+  channels rgba
+  value {{parent.fade x390 2}}
+  name Multiply2
+  xpos -14
+  ypos 325
+ }
+ Grade {
+  multiply {{parent.tint.r i} {parent.tint.g i} {parent.tint.b i} {curve}}
+  black_clamp false
+  name Grade1
+  xpos -14
+  ypos 372
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 uv.u
+  name Copy1
+  xpos -14
+  ypos 421
+ }
+ Add {
+  channels rgb
+  value {{parent.brightness}}
+  mask uv.u
+  name Add1
+  xpos -14
+  ypos 473
+ }
+push $N89fa118
+ Dot {
+  name Dot2
+  xpos 406
+  ypos 529
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge3
+  xpos -14
+  ypos 525
+ }
+ Log2Lin {
+  name Log2Lin4
+  xpos -14
+  ypos 582
+  disable {{parent.cspace}}
+ }
+ Dot {
+  xpos 20
+  ypos 955
+ }
+ Dissolve {
+  inputs 2
+  which {{parent.Dissolve2_which}}
+  mask -uv.u
+  invert_mask true
+  name Dissolve2
+  xpos -414
+  ypos 944
+ }
+set N8a7e1f8 [stack 0]
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos -545
+  ypos 1054
+ }
+ Premult {
+  name Premult1
+  xpos -545
+  ypos 1106
+ }
+push $N8a7e1f8
+ Switch {
+  inputs 2
+  which {{parent.usematte}}
+  name Switch1
+  xpos -414
+  ypos 1106
+ }
+ Output {
+  name Output1
+  xpos -414
+  ypos 1216
+ }
+end_group

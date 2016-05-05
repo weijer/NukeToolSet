@@ -1,0 +1,1470 @@
+#! C:/Program Files/Nuke6.2v4/Nuke6.2.exe -nx
+version 6.2 v4
+Gizmo {
+ help "- For fine details on tiny distances, prefer 32b float renders to avoid banding.\n- To perform better antialiasing than by Matrix antialias, render pPass with double master resolution. The output is downscaled to root.format resolution.\n\n- If the the result is completly black, try raising spread and multiplier values.\n- If the the result is completly white, try lowering spread and multiplier values.\n - You can copy the rotation of the camera in the rotate channels to line up the orientations or tweak it to your needs...\n\n- falloff issue is now fixed, it's bidirectional.\n- This gizmo uses RotateNormals gizmo from Hakan Blomdahl. Thanks to him\n- Thanks to Nathan Dunsworth who made me discover pPass power !\n"
+ tile_color 0xff00ff
+ note_font Verdana
+ mapsize {0.15 0.15}
+ addUserKnob {20 PositionPass_maskGenerator_hub t "If the the result is completly black try to raise spread and multiplier values.\nIf the the result is completly white try to lower spread and multiplier values."}
+ addUserKnob {26 howto l "HOWTO : " T "first pick color on Ppass to select center of mask"}
+ addUserKnob {41 color T Constant1.color}
+ addUserKnob {6 Put_Alpha_In_RGB l "Put Alpha In RGB  (beware that color position changing wont work with this option ticked)" +STARTLINE}
+ Put_Alpha_In_RGB true
+ addUserKnob {20 setup n 1}
+ setup 0
+ addUserKnob {6 invert +STARTLINE}
+ addUserKnob {6 premult -STARTLINE}
+ premult true
+ addUserKnob {41 in l "point position layer" T ShuffleIN.in}
+ addUserKnob {41 out2 l "out mask" -STARTLINE T ShuffleCopyOUT.out2}
+ addUserKnob {6 AntiAlias l "MatrixAntiAlias (when no double size Ppass)" +STARTLINE}
+ AntiAlias true
+ addUserKnob {41 filter l "downscale filter" T ReformatOUT.filter}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {18 pos l offset R -2 -2}
+ pos {0 0 0}
+ addUserKnob {41 rotate T AxisInternRot.rotate}
+ addUserKnob {7 spread_uniform l spread R 0 2}
+ spread_uniform 0.31
+ addUserKnob {7 Multiplier R 0.1 50}
+ Multiplier 1
+ addUserKnob {7 falloff R 0 2}
+ falloff 1.15
+ addUserKnob {20 non_unif_GROUP l non_uniform n 1}
+ non_unif_GROUP 0
+ addUserKnob {7 spread_x}
+ spread_x 0.1
+ addUserKnob {7 falloff_x R 0 2}
+ falloff_x 1
+ addUserKnob {7 spread_y}
+ spread_y 0.1
+ addUserKnob {7 falloff_y R 0 2}
+ falloff_y 1
+ addUserKnob {7 spread_z}
+ spread_z 0.1
+ addUserKnob {7 falloff_z R 0 2}
+ falloff_z 1
+ addUserKnob {18 outFade}
+ outFade {0 0 0}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 philhub_2010 n 1}
+ philhub_2010 0
+ addUserKnob {26 philpmaATfreeDOTfr}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+}
+ Axis2 {
+  inputs 0
+  name AxisInternRot
+  xpos 240
+  ypos -4
+ }
+ Input {
+  inputs 0
+  name Input1
+  label "\[value number]"
+  xpos 349
+  ypos -203
+ }
+ Shuffle {
+  name ShuffleIN
+  xpos 349
+  ypos -165
+ }
+set N18ed5400 [stack 0]
+ Dot {
+  name Dot2
+  xpos 590
+  ypos -161
+ }
+ Dot {
+  name Dot1
+  xpos 590
+  ypos 309
+ }
+set N18ed6ee0 [stack 0]
+ Reformat {
+  filter Parzen
+  name ReformatOUT
+  xpos 566
+  ypos 423
+ }
+ set C18ed7190 [stack 0]
+set N18ed7190 [stack 0]
+ Dot {
+  name Dot3
+  xpos 743
+  ypos 427
+ }
+ Dot {
+  name Dot4
+  xpos 743
+  ypos 513
+ }
+push $N18ed6ee0
+ Constant {
+  inputs 0
+  channels rgb
+  color {-2.488512993 0.9999999404 4.085286617 0.8658558726}
+  name Constant1
+  xpos 459
+  ypos -104
+ }
+ Expression {
+  expr0 -r
+  expr1 -g
+  expr2 -b
+  name Expression3
+  xpos 459
+  ypos -26
+ }
+push $N18ed5400
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name PLUS
+  xpos 349
+  ypos -26
+ }
+set N21499960 [stack 0]
+ Grade {
+  add {{-parent.pos.r i} {-parent.pos.g i x483 0} {-parent.pos.b i} 1}
+  black_clamp false
+  name Grade_pos
+  xpos 349
+  ypos 110
+ }
+ Group {
+  name RotateNormals
+  help "This will rotate Normal-data using rotation matrixes.\nhttp://en.wikipedia.org/wiki/Rotation_matrix\n\nYou enable Normal-data in the ScanlineRender-node, create a new layer for this.\n\nTip 1:\n Link the rotation knob to the Nuke camera, revert the camera order and then either invert the matrixes or negate the angles.\nThis will convert the Normal data from World Space to Camera Space. I guess. I am no expert on the subject.\n\n\nTip 2:\nPut these in your init.tcl to always render out the normals:\n\nadd_layer \{P P.x P.y P.z\}\nknob_default ScanlineRender.P_channel P\nadd_layer \{N N.x N.y N.z\}\nknob_default ScanlineRender.N_channel N\nknob_default ScanlineRender.output_shader_vectors true\n\nNote:\n In Nuke4.6 and earlier, the Normals is multiplied with the Z, so you need to divide them first. Use Channel Merge for this.\n"
+  xpos 230
+  ypos 110
+  addUserKnob {20 "" l Parameters}
+  addUserKnob {26 "" l Rotation}
+  addUserKnob {41 negx t "Multiply x-angle with -1.\nGood if you have linked the rotation data to something and want to reverse it.\n" T RotData.negx}
+  addUserKnob {41 negy t "Multiply y-angle with -1.\nGood if you have linked the rotation data to something and want to reverse it.\n" T RotData.negy}
+  addUserKnob {41 negz t "Multiply z-angle with -1.\nGood if you have linked the rotation data to something and want to reverse it.\n" T RotData.negz}
+  addUserKnob {41 rotate T RotData.rotate}
+  addUserKnob {26 ""}
+  addUserKnob {4 rotationorder M {XYZ XZY YXZ YZX ZXY ZYX}}
+  rotationorder ZXY
+  addUserKnob {6 revertorder l "Revert Order" t "Quick order reversal." -STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {41 invertxmatrix t "Inverts the X rotation matrix. (Checks the invert knob on the ColorMatrix Node)\n" T RotData.invertxmatrix}
+  addUserKnob {41 invertymatrix t "Inverts the Y rotation matrix. (Checks the invert knob on the ColorMatrix Node)\n" T RotData.invertymatrix}
+  addUserKnob {41 invertzmatrix t "Inverts the Z rotation matrix. (Checks the invert knob on the ColorMatrix Node)\n" T RotData.invertzmatrix}
+  addUserKnob {26 "" l "Source Channels"}
+  addUserKnob {41 from0 l "Normal X" T CopyFrom.from0}
+  addUserKnob {41 from1 l "Normal Y" T CopyFrom.from1}
+  addUserKnob {41 from2 l "Normal Z" T CopyFrom.from2}
+  addUserKnob {26 "" l "Destination Channels"}
+  addUserKnob {41 to0 l X T CopyBack.to0}
+  addUserKnob {41 to1 l Y T CopyBack.to1}
+  addUserKnob {41 to2 l Z T CopyBack.to2}
+ }
+  BackdropNode {
+   inputs 0
+   name BackdropNode2
+   tile_color 0x8e8e3800
+   label "Normal Order"
+   note_font_size 32
+   xpos -581
+   ypos 22
+   bdwidth 1001
+   bdheight 355
+  }
+  BackdropNode {
+   inputs 0
+   name BackdropNode1
+   tile_color 0x7171c600
+   label "Reverted Order"
+   note_font_size 32
+   xpos 650
+   ypos 4
+   bdwidth 1030
+   bdheight 354
+  }
+  NoOp {
+   inputs 0
+   name RotData
+   xpos 1170
+   ypos -370
+   addUserKnob {20 "" l User}
+   addUserKnob {6 invertxmatrix -STARTLINE}
+   addUserKnob {6 invertymatrix -STARTLINE}
+   addUserKnob {6 invertzmatrix -STARTLINE}
+   addUserKnob {26 ""}
+   addUserKnob {6 negx -STARTLINE}
+   addUserKnob {6 negy -STARTLINE}
+   addUserKnob {6 negz -STARTLINE}
+   addUserKnob {13 rotate}
+   rotate {{parent.parent.AxisInternRot.rotate i} {parent.parent.AxisInternRot.rotate i} {parent.parent.AxisInternRot.rotate i}}
+   addUserKnob {26 ""}
+   addUserKnob {1 alphaexpr}
+   alphaexpr (negy?-1:1)*rotate.y/360.0*(2*PI)
+   addUserKnob {1 betaexpr}
+   betaexpr (negz?-1:1)*rotate.z/360.0*(2*PI)
+   addUserKnob {1 gammaexpr}
+   gammaexpr (negx?-1:1)*rotate.x/360.0*(2*PI)
+   addUserKnob {26 ""}
+   addUserKnob {7 alpha}
+   alpha {{"\[knob alphaexpr]" i}}
+   addUserKnob {7 beta}
+   beta {{"\[knob betaexpr]" i}}
+   addUserKnob {7 gamma}
+   gamma {{"\[knob gammaexpr]" i}}
+  }
+  Input {
+   inputs 0
+   name Input1
+   xpos 1830
+   ypos -610
+  }
+  Dot {
+   name Dot2
+   xpos 1863
+   ypos -487
+  }
+set N2149a980 [stack 0]
+  Dot {
+   name Dot3
+   xpos 653
+   ypos -477
+  }
+set N2149ac30 [stack 0]
+  Dot {
+   name Dot1
+   xpos 433
+   ypos -477
+  }
+push $N2149ac30
+  Copy {
+   inputs 2
+   from0 rgba.red
+   to0 rgba.red
+   from1 rgba.green
+   to1 rgba.green
+   from2 rgba.blue
+   to2 rgba.blue
+   name CopyFrom
+   xpos 400
+   ypos -367
+  }
+  Dot {
+   name Dot4
+   xpos 433
+   ypos -175
+  }
+set N2149b440 [stack 0]
+  ColorMatrix {
+   matrix {
+       {1 0 0}
+       {0 {"cos( \[value RotData.gamma] )" i} {"-1 * sin( \[value RotData.gamma] )" i}}
+       {0 {"sin( \[value RotData.gamma] )" i} {"cos( \[value RotData.gamma] )" i}}
+     }
+   invert {{"\[value RotData.invertxmatrix]" i}}
+   name ColorMatrix10
+   label "ROLL  X\ngamma"
+   xpos 1500
+   ypos 96
+  }
+  set C2149b6f0 [stack 0]
+  ColorMatrix {
+   matrix {
+       {{"cos( \[value RotData.alpha] )" i} 0 {"sin( \[value RotData.alpha] )" i}}
+       {0 1 0}
+       {{"-1 * sin( \[value RotData.alpha] )" i} 0 {"cos( \[value RotData.alpha] )" i}}
+     }
+   invert {{"\[value RotData.invertymatrix]" i}}
+   name ColorMatrix11
+   label "Pitch  Y\nalpha"
+   xpos 1500
+   ypos 150
+  }
+  set C2149b9a0 [stack 0]
+  ColorMatrix {
+   matrix {
+       {{"cos( \[value RotData.beta] )" i} {"-1 * sin( \[value RotData.beta] )" i} 0}
+       {{"sin( \[value RotData.beta] )" i} {"cos( \[value RotData.beta] )" i} 0}
+       {0 0 1}
+     }
+   invert {{"\[value RotData.invertzmatrix]"}}
+   name ColorMatrix12
+   label "Yaw  Z\nbeta"
+   xpos 1500
+   ypos 204
+  }
+  set C2149bc50 [stack 0]
+push $N2149b440
+clone $C2149b9a0 {
+   xpos 1360
+   ypos 96
+   selected false
+  }
+clone $C2149b6f0 {
+   xpos 1360
+   ypos 150
+   selected false
+  }
+clone $C2149bc50 {
+   xpos 1360
+   ypos 204
+   selected false
+  }
+push $N2149b440
+clone $C2149bc50 {
+   xpos 1210
+   ypos 102
+   selected false
+  }
+clone $C2149b6f0 {
+   xpos 1210
+   ypos 156
+   selected false
+  }
+clone $C2149b9a0 {
+   xpos 1210
+   ypos 210
+   selected false
+  }
+push $N2149b440
+clone $C2149b6f0 {
+   xpos 1047
+   ypos 108
+   selected false
+  }
+clone $C2149bc50 {
+   xpos 1047
+   ypos 174
+   selected false
+  }
+clone $C2149b9a0 {
+   xpos 1047
+   ypos 228
+   selected false
+  }
+push $N2149b440
+clone $C2149b9a0 {
+   xpos 890
+   ypos 108
+   selected false
+  }
+clone $C2149bc50 {
+   xpos 890
+   ypos 167
+   selected false
+  }
+clone $C2149b6f0 {
+   xpos 890
+   ypos 228
+   selected false
+  }
+push $N2149b440
+clone $C2149bc50 {
+   xpos 730
+   ypos 120
+   selected false
+  }
+clone $C2149b9a0 {
+   xpos 730
+   ypos 174
+   selected false
+  }
+clone $C2149b6f0 {
+   xpos 730
+   ypos 228
+   selected false
+  }
+  Switch {
+   inputs 6
+   which {{rotationorder}}
+   name Switch2
+   xpos 950
+   ypos 446
+  }
+push $N2149b440
+clone $C2149bc50 {
+   xpos 240
+   ypos 102
+   selected false
+  }
+clone $C2149b9a0 {
+   xpos 240
+   ypos 156
+   selected false
+  }
+clone $C2149b6f0 {
+   xpos 240
+   ypos 210
+   selected false
+  }
+push $N2149b440
+clone $C2149bc50 {
+   xpos 100
+   ypos 102
+   selected false
+  }
+clone $C2149b6f0 {
+   xpos 100
+   ypos 156
+   selected false
+  }
+clone $C2149b9a0 {
+   xpos 100
+   ypos 210
+   selected false
+  }
+push $N2149b440
+clone $C2149b9a0 {
+   xpos -50
+   ypos 108
+   selected false
+  }
+clone $C2149b6f0 {
+   xpos -50
+   ypos 162
+   selected false
+  }
+clone $C2149bc50 {
+   xpos -50
+   ypos 216
+   selected false
+  }
+push $N2149b440
+clone $C2149b9a0 {
+   xpos -213
+   ypos 114
+   selected false
+  }
+clone $C2149bc50 {
+   xpos -213
+   ypos 180
+   selected false
+  }
+clone $C2149b6f0 {
+   xpos -213
+   ypos 234
+   selected false
+  }
+push $N2149b440
+clone $C2149b6f0 {
+   xpos -370
+   ypos 114
+   selected false
+  }
+clone $C2149bc50 {
+   xpos -370
+   ypos 173
+   selected false
+  }
+clone $C2149b9a0 {
+   xpos -370
+   ypos 247
+   selected false
+  }
+push $N2149b440
+clone $C2149b6f0 {
+   xpos -501
+   ypos 102
+   selected false
+  }
+clone $C2149b9a0 {
+   xpos -501
+   ypos 171
+   selected false
+  }
+clone $C2149bc50 {
+   xpos -501
+   ypos 234
+   selected false
+  }
+  Switch {
+   inputs 6
+   which {{rotationorder}}
+   name Switch1
+   xpos -75
+   ypos 422
+  }
+  Switch {
+   inputs 2
+   which {{revertorder}}
+   name Switch3
+   xpos 510
+   ypos 542
+  }
+  Dot {
+   name Dot5
+   xpos 543
+   ypos 665
+  }
+push $N2149a980
+  Copy {
+   inputs 2
+   from0 rgba.red
+   to0 rgba.red
+   from1 rgba.green
+   to1 rgba.green
+   from2 rgba.blue
+   to2 rgba.blue
+   name CopyBack
+   xpos 1830
+   ypos 641
+  }
+  Output {
+   name Output1
+   xpos 1830
+   ypos 758
+  }
+ end_group
+ Grade {
+  multiply {{1/parent.Multiplier*10 i}}
+  black_clamp false
+  name MainMultiplier
+  xpos 113
+  ypos 110
+ }
+ Grade {
+  channels {rgba.red -rgba.green -rgba.blue}
+  multiply {{(1/parent.spread_x+.1)/10 x1 0.77823077}}
+  gamma {{parent.falloff_x}}
+  black_clamp false
+  name GradeSpreadX
+  xpos 15
+  ypos 105
+ }
+ set C21580440 [stack 0]
+ Grade {
+  channels {-rgba.red rgba.green -rgba.blue}
+  multiply {{(1/parent.spread_y+.1)/10 i}}
+  gamma {{parent.falloff_y i}}
+  black_clamp false
+  name GradeSpreadY
+  xpos 15
+  ypos 143
+ }
+ set C215806f0 [stack 0]
+ Grade {
+  channels {-rgba.red -rgba.green rgba.blue}
+  multiply {{(1/parent.spread_z+.1)/10 i}}
+  gamma {{parent.falloff_z i}}
+  black_clamp false
+  name GradeSpreadZ
+  xpos 15
+  ypos 181
+ }
+ set C215809a0 [stack 0]
+ Expression {
+  expr0 -r
+  expr1 -g
+  expr2 -b
+  name Expression6
+  xpos 15
+  ypos 249
+ }
+clone $C21580440 {
+  xpos 15
+  ypos 275
+  selected false
+ }
+clone $C215806f0 {
+  xpos 15
+  ypos 313
+  selected false
+ }
+clone $C215809a0 {
+  xpos 15
+  ypos 351
+  selected false
+ }
+ Expression {
+  expr0 -r
+  expr1 -g
+  expr2 -b
+  name Expression7
+  xpos 15
+  ypos 389
+ }
+ Grade {
+  multiply {{(1/parent.spread_uniform+.1)/10}}
+  gamma {{parent.falloff}}
+  black_clamp false
+  name GradeSpreadUnif
+  xpos 182
+  ypos 389
+ }
+ Expression {
+  expr0 -r
+  expr1 -g
+  expr2 -b
+  name Expression4
+  xpos 182
+  ypos 267
+ }
+ Grade {
+  gamma {{parent.GradeSpreadUnif.gamma i}}
+  black_clamp false
+  name GradeSpreadUnif_neg
+  xpos 182
+  ypos 227
+ }
+ Expression {
+  expr0 -r
+  expr1 -g
+  expr2 -b
+  name Expression5
+  xpos 182
+  ypos 187
+ }
+ ColorLookup {
+  lut {master {curve C x-10 0 x0 1 0}
+    red {}
+    green {}
+    blue {}
+    alpha {}}
+  name GaussCentered
+  xpos 421
+  ypos 187
+ }
+ Clamp {
+  channels rgba
+  name Clamp1
+  xpos 421
+  ypos 235
+ }
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr0 r*g*b
+  name Expression1
+  xpos 421
+  ypos 279
+ }
+ ShuffleCopy {
+  inputs 2
+  in2 alpha
+  alpha alpha2
+  black red
+  white green
+  red2 blue
+  out alpha
+  out2 rgb
+  name ShuffleCopy1
+  xpos 421
+  ypos 305
+ }
+set N21582f40 [stack 0]
+ Invert {
+  channels rgba
+  name Invert1
+  xpos 421
+  ypos 351
+  disable {{!invert i}}
+ }
+ Matrix {
+  channels rgba
+  matrix {
+      {1 2 1}
+      {2 10 2}
+      {1 2 1}
+    }
+  normalize true
+  name Matrix1
+  xpos 421
+  ypos 392
+  disable {{1-AntiAlias}}
+ }
+clone $C18ed7190 {
+  xpos 421
+  ypos 465
+  selected false
+ }
+push $N18ed7190
+ ShuffleCopy {
+  inputs 2
+  in alpha
+  alpha alpha2
+  black red
+  out2 alpha
+  name ShuffleCopyOUT
+  xpos 566
+  ypos 465
+ }
+set N21584f80 [stack 0]
+ Merge2 {
+  inputs 2
+  operation multiply
+  bbox B
+  name Multiply
+  selected true
+  xpos 566
+  ypos 509
+  disable {{!parent.premult}}
+ }
+set N215867b0 [stack 0]
+ Expression {
+  channel0 rgba
+  expr0 a
+  name AtoRGB
+  xpos 566
+  ypos 563
+  disable {{1-Put_Alpha_In_RGB}}
+ }
+ Output {
+  name Output1
+  xpos 566
+  ypos 613
+ }
+push $N21499960
+push 0
+push $N18ed6ee0
+push $N21582f40
+push $N18ed6ee0
+push $N215867b0
+push $N21584f80
+ Viewer {
+  inputs 7
+  input_number 1
+  viewerProcess None
+  input_process false
+  name Viewer1
+  xpos -110
+  ypos -96
+ }
+end_group
+#! C:/Program Files/Nuke6.2v4/Nuke6.2.exe -nx
+version 6.2 v4
+Gizmo {
+ help "- For fine details on tiny distances, prefer 32b float renders to avoid banding.\n- To perform better antialiasing than by Matrix antialias, render pPass with double master resolution. The output is downscaled to root.format resolution.\n\n- If the the result is completly black, try raising spread and multiplier values.\n- If the the result is completly white, try lowering spread and multiplier values.\n - You can copy the rotation of the camera in the rotate channels to line up the orientations or tweak it to your needs...\n\n- falloff issue is now fixed, it's bidirectional.\n- This gizmo uses RotateNormals gizmo from Hakan Blomdahl. Thanks to him\n- Thanks to Nathan Dunsworth who made me discover pPass power !\n"
+ tile_color 0xff00ff
+ note_font Verdana
+ mapsize {0.15 0.15}
+ addUserKnob {20 PositionPass_maskGenerator_hub t "If the the result is completly black try to raise spread and multiplier values.\nIf the the result is completly white try to lower spread and multiplier values."}
+ addUserKnob {26 howto l "HOWTO : " T "first pick color on Ppass to select center of mask"}
+ addUserKnob {41 color T Constant1.color}
+ addUserKnob {6 Put_Alpha_In_RGB l "Put Alpha In RGB  (beware that color position changing wont work with this option ticked)" +STARTLINE}
+ Put_Alpha_In_RGB true
+ addUserKnob {20 setup n 1}
+ setup 0
+ addUserKnob {6 invert +STARTLINE}
+ addUserKnob {6 premult -STARTLINE}
+ premult true
+ addUserKnob {41 in l "point position layer" T ShuffleIN.in}
+ addUserKnob {41 out2 l "out mask" -STARTLINE T ShuffleCopyOUT.out2}
+ addUserKnob {6 AntiAlias l "MatrixAntiAlias (when no double size Ppass)" +STARTLINE}
+ AntiAlias true
+ addUserKnob {41 filter l "downscale filter" T ReformatOUT.filter}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {18 pos l offset R -2 -2}
+ pos {0 0 0}
+ addUserKnob {41 rotate T AxisInternRot.rotate}
+ addUserKnob {7 spread_uniform l spread R 0 2}
+ spread_uniform 0.31
+ addUserKnob {7 Multiplier R 0.1 50}
+ Multiplier 1
+ addUserKnob {7 falloff R 0 2}
+ falloff 1.15
+ addUserKnob {20 non_unif_GROUP l non_uniform n 1}
+ non_unif_GROUP 0
+ addUserKnob {7 spread_x}
+ spread_x 0.1
+ addUserKnob {7 falloff_x R 0 2}
+ falloff_x 1
+ addUserKnob {7 spread_y}
+ spread_y 0.1
+ addUserKnob {7 falloff_y R 0 2}
+ falloff_y 1
+ addUserKnob {7 spread_z}
+ spread_z 0.1
+ addUserKnob {7 falloff_z R 0 2}
+ falloff_z 1
+ addUserKnob {18 outFade}
+ outFade {0 0 0}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 philhub_2010 n 1}
+ philhub_2010 0
+ addUserKnob {26 philpmaATfreeDOTfr}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+}
+ Axis2 {
+  inputs 0
+  name AxisInternRot
+  xpos 240
+  ypos -4
+ }
+ Input {
+  inputs 0
+  name Input1
+  label "\[value number]"
+  xpos 349
+  ypos -203
+ }
+ Shuffle {
+  name ShuffleIN
+  xpos 349
+  ypos -165
+ }
+set N18ed5400 [stack 0]
+ Dot {
+  name Dot2
+  xpos 590
+  ypos -161
+ }
+ Dot {
+  name Dot1
+  xpos 590
+  ypos 309
+ }
+set N18ed6ee0 [stack 0]
+ Reformat {
+  filter Parzen
+  name ReformatOUT
+  xpos 566
+  ypos 423
+ }
+ set C18ed7190 [stack 0]
+set N18ed7190 [stack 0]
+ Dot {
+  name Dot3
+  xpos 743
+  ypos 427
+ }
+ Dot {
+  name Dot4
+  xpos 743
+  ypos 513
+ }
+push $N18ed6ee0
+ Constant {
+  inputs 0
+  channels rgb
+  color {-2.488512993 0.9999999404 4.085286617 0.8658558726}
+  name Constant1
+  xpos 459
+  ypos -104
+ }
+ Expression {
+  expr0 -r
+  expr1 -g
+  expr2 -b
+  name Expression3
+  xpos 459
+  ypos -26
+ }
+push $N18ed5400
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name PLUS
+  xpos 349
+  ypos -26
+ }
+set N21499960 [stack 0]
+ Grade {
+  add {{-parent.pos.r i} {-parent.pos.g i x483 0} {-parent.pos.b i} 1}
+  black_clamp false
+  name Grade_pos
+  xpos 349
+  ypos 110
+ }
+ Group {
+  name RotateNormals
+  help "This will rotate Normal-data using rotation matrixes.\nhttp://en.wikipedia.org/wiki/Rotation_matrix\n\nYou enable Normal-data in the ScanlineRender-node, create a new layer for this.\n\nTip 1:\n Link the rotation knob to the Nuke camera, revert the camera order and then either invert the matrixes or negate the angles.\nThis will convert the Normal data from World Space to Camera Space. I guess. I am no expert on the subject.\n\n\nTip 2:\nPut these in your init.tcl to always render out the normals:\n\nadd_layer \{P P.x P.y P.z\}\nknob_default ScanlineRender.P_channel P\nadd_layer \{N N.x N.y N.z\}\nknob_default ScanlineRender.N_channel N\nknob_default ScanlineRender.output_shader_vectors true\n\nNote:\n In Nuke4.6 and earlier, the Normals is multiplied with the Z, so you need to divide them first. Use Channel Merge for this.\n"
+  xpos 230
+  ypos 110
+  addUserKnob {20 "" l Parameters}
+  addUserKnob {26 "" l Rotation}
+  addUserKnob {41 negx t "Multiply x-angle with -1.\nGood if you have linked the rotation data to something and want to reverse it.\n" T RotData.negx}
+  addUserKnob {41 negy t "Multiply y-angle with -1.\nGood if you have linked the rotation data to something and want to reverse it.\n" T RotData.negy}
+  addUserKnob {41 negz t "Multiply z-angle with -1.\nGood if you have linked the rotation data to something and want to reverse it.\n" T RotData.negz}
+  addUserKnob {41 rotate T RotData.rotate}
+  addUserKnob {26 ""}
+  addUserKnob {4 rotationorder M {XYZ XZY YXZ YZX ZXY ZYX}}
+  rotationorder ZXY
+  addUserKnob {6 revertorder l "Revert Order" t "Quick order reversal." -STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {41 invertxmatrix t "Inverts the X rotation matrix. (Checks the invert knob on the ColorMatrix Node)\n" T RotData.invertxmatrix}
+  addUserKnob {41 invertymatrix t "Inverts the Y rotation matrix. (Checks the invert knob on the ColorMatrix Node)\n" T RotData.invertymatrix}
+  addUserKnob {41 invertzmatrix t "Inverts the Z rotation matrix. (Checks the invert knob on the ColorMatrix Node)\n" T RotData.invertzmatrix}
+  addUserKnob {26 "" l "Source Channels"}
+  addUserKnob {41 from0 l "Normal X" T CopyFrom.from0}
+  addUserKnob {41 from1 l "Normal Y" T CopyFrom.from1}
+  addUserKnob {41 from2 l "Normal Z" T CopyFrom.from2}
+  addUserKnob {26 "" l "Destination Channels"}
+  addUserKnob {41 to0 l X T CopyBack.to0}
+  addUserKnob {41 to1 l Y T CopyBack.to1}
+  addUserKnob {41 to2 l Z T CopyBack.to2}
+ }
+  BackdropNode {
+   inputs 0
+   name BackdropNode2
+   tile_color 0x8e8e3800
+   label "Normal Order"
+   note_font_size 32
+   xpos -581
+   ypos 22
+   bdwidth 1001
+   bdheight 355
+  }
+  BackdropNode {
+   inputs 0
+   name BackdropNode1
+   tile_color 0x7171c600
+   label "Reverted Order"
+   note_font_size 32
+   xpos 650
+   ypos 4
+   bdwidth 1030
+   bdheight 354
+  }
+  NoOp {
+   inputs 0
+   name RotData
+   xpos 1170
+   ypos -370
+   addUserKnob {20 "" l User}
+   addUserKnob {6 invertxmatrix -STARTLINE}
+   addUserKnob {6 invertymatrix -STARTLINE}
+   addUserKnob {6 invertzmatrix -STARTLINE}
+   addUserKnob {26 ""}
+   addUserKnob {6 negx -STARTLINE}
+   addUserKnob {6 negy -STARTLINE}
+   addUserKnob {6 negz -STARTLINE}
+   addUserKnob {13 rotate}
+   rotate {{parent.parent.AxisInternRot.rotate i} {parent.parent.AxisInternRot.rotate i} {parent.parent.AxisInternRot.rotate i}}
+   addUserKnob {26 ""}
+   addUserKnob {1 alphaexpr}
+   alphaexpr (negy?-1:1)*rotate.y/360.0*(2*PI)
+   addUserKnob {1 betaexpr}
+   betaexpr (negz?-1:1)*rotate.z/360.0*(2*PI)
+   addUserKnob {1 gammaexpr}
+   gammaexpr (negx?-1:1)*rotate.x/360.0*(2*PI)
+   addUserKnob {26 ""}
+   addUserKnob {7 alpha}
+   alpha {{"\[knob alphaexpr]" i}}
+   addUserKnob {7 beta}
+   beta {{"\[knob betaexpr]" i}}
+   addUserKnob {7 gamma}
+   gamma {{"\[knob gammaexpr]" i}}
+  }
+  Input {
+   inputs 0
+   name Input1
+   xpos 1830
+   ypos -610
+  }
+  Dot {
+   name Dot2
+   xpos 1863
+   ypos -487
+  }
+set N2149a980 [stack 0]
+  Dot {
+   name Dot3
+   xpos 653
+   ypos -477
+  }
+set N2149ac30 [stack 0]
+  Dot {
+   name Dot1
+   xpos 433
+   ypos -477
+  }
+push $N2149ac30
+  Copy {
+   inputs 2
+   from0 rgba.red
+   to0 rgba.red
+   from1 rgba.green
+   to1 rgba.green
+   from2 rgba.blue
+   to2 rgba.blue
+   name CopyFrom
+   xpos 400
+   ypos -367
+  }
+  Dot {
+   name Dot4
+   xpos 433
+   ypos -175
+  }
+set N2149b440 [stack 0]
+  ColorMatrix {
+   matrix {
+       {1 0 0}
+       {0 {"cos( \[value RotData.gamma] )" i} {"-1 * sin( \[value RotData.gamma] )" i}}
+       {0 {"sin( \[value RotData.gamma] )" i} {"cos( \[value RotData.gamma] )" i}}
+     }
+   invert {{"\[value RotData.invertxmatrix]" i}}
+   name ColorMatrix10
+   label "ROLL  X\ngamma"
+   xpos 1500
+   ypos 96
+  }
+  set C2149b6f0 [stack 0]
+  ColorMatrix {
+   matrix {
+       {{"cos( \[value RotData.alpha] )" i} 0 {"sin( \[value RotData.alpha] )" i}}
+       {0 1 0}
+       {{"-1 * sin( \[value RotData.alpha] )" i} 0 {"cos( \[value RotData.alpha] )" i}}
+     }
+   invert {{"\[value RotData.invertymatrix]" i}}
+   name ColorMatrix11
+   label "Pitch  Y\nalpha"
+   xpos 1500
+   ypos 150
+  }
+  set C2149b9a0 [stack 0]
+  ColorMatrix {
+   matrix {
+       {{"cos( \[value RotData.beta] )" i} {"-1 * sin( \[value RotData.beta] )" i} 0}
+       {{"sin( \[value RotData.beta] )" i} {"cos( \[value RotData.beta] )" i} 0}
+       {0 0 1}
+     }
+   invert {{"\[value RotData.invertzmatrix]"}}
+   name ColorMatrix12
+   label "Yaw  Z\nbeta"
+   xpos 1500
+   ypos 204
+  }
+  set C2149bc50 [stack 0]
+push $N2149b440
+clone $C2149b9a0 {
+   xpos 1360
+   ypos 96
+   selected false
+  }
+clone $C2149b6f0 {
+   xpos 1360
+   ypos 150
+   selected false
+  }
+clone $C2149bc50 {
+   xpos 1360
+   ypos 204
+   selected false
+  }
+push $N2149b440
+clone $C2149bc50 {
+   xpos 1210
+   ypos 102
+   selected false
+  }
+clone $C2149b6f0 {
+   xpos 1210
+   ypos 156
+   selected false
+  }
+clone $C2149b9a0 {
+   xpos 1210
+   ypos 210
+   selected false
+  }
+push $N2149b440
+clone $C2149b6f0 {
+   xpos 1047
+   ypos 108
+   selected false
+  }
+clone $C2149bc50 {
+   xpos 1047
+   ypos 174
+   selected false
+  }
+clone $C2149b9a0 {
+   xpos 1047
+   ypos 228
+   selected false
+  }
+push $N2149b440
+clone $C2149b9a0 {
+   xpos 890
+   ypos 108
+   selected false
+  }
+clone $C2149bc50 {
+   xpos 890
+   ypos 167
+   selected false
+  }
+clone $C2149b6f0 {
+   xpos 890
+   ypos 228
+   selected false
+  }
+push $N2149b440
+clone $C2149bc50 {
+   xpos 730
+   ypos 120
+   selected false
+  }
+clone $C2149b9a0 {
+   xpos 730
+   ypos 174
+   selected false
+  }
+clone $C2149b6f0 {
+   xpos 730
+   ypos 228
+   selected false
+  }
+  Switch {
+   inputs 6
+   which {{rotationorder}}
+   name Switch2
+   xpos 950
+   ypos 446
+  }
+push $N2149b440
+clone $C2149bc50 {
+   xpos 240
+   ypos 102
+   selected false
+  }
+clone $C2149b9a0 {
+   xpos 240
+   ypos 156
+   selected false
+  }
+clone $C2149b6f0 {
+   xpos 240
+   ypos 210
+   selected false
+  }
+push $N2149b440
+clone $C2149bc50 {
+   xpos 100
+   ypos 102
+   selected false
+  }
+clone $C2149b6f0 {
+   xpos 100
+   ypos 156
+   selected false
+  }
+clone $C2149b9a0 {
+   xpos 100
+   ypos 210
+   selected false
+  }
+push $N2149b440
+clone $C2149b9a0 {
+   xpos -50
+   ypos 108
+   selected false
+  }
+clone $C2149b6f0 {
+   xpos -50
+   ypos 162
+   selected false
+  }
+clone $C2149bc50 {
+   xpos -50
+   ypos 216
+   selected false
+  }
+push $N2149b440
+clone $C2149b9a0 {
+   xpos -213
+   ypos 114
+   selected false
+  }
+clone $C2149bc50 {
+   xpos -213
+   ypos 180
+   selected false
+  }
+clone $C2149b6f0 {
+   xpos -213
+   ypos 234
+   selected false
+  }
+push $N2149b440
+clone $C2149b6f0 {
+   xpos -370
+   ypos 114
+   selected false
+  }
+clone $C2149bc50 {
+   xpos -370
+   ypos 173
+   selected false
+  }
+clone $C2149b9a0 {
+   xpos -370
+   ypos 247
+   selected false
+  }
+push $N2149b440
+clone $C2149b6f0 {
+   xpos -501
+   ypos 102
+   selected false
+  }
+clone $C2149b9a0 {
+   xpos -501
+   ypos 171
+   selected false
+  }
+clone $C2149bc50 {
+   xpos -501
+   ypos 234
+   selected false
+  }
+  Switch {
+   inputs 6
+   which {{rotationorder}}
+   name Switch1
+   xpos -75
+   ypos 422
+  }
+  Switch {
+   inputs 2
+   which {{revertorder}}
+   name Switch3
+   xpos 510
+   ypos 542
+  }
+  Dot {
+   name Dot5
+   xpos 543
+   ypos 665
+  }
+push $N2149a980
+  Copy {
+   inputs 2
+   from0 rgba.red
+   to0 rgba.red
+   from1 rgba.green
+   to1 rgba.green
+   from2 rgba.blue
+   to2 rgba.blue
+   name CopyBack
+   xpos 1830
+   ypos 641
+  }
+  Output {
+   name Output1
+   xpos 1830
+   ypos 758
+  }
+ end_group
+ Grade {
+  multiply {{1/parent.Multiplier*10 i}}
+  black_clamp false
+  name MainMultiplier
+  xpos 113
+  ypos 110
+ }
+ Grade {
+  channels {rgba.red -rgba.green -rgba.blue}
+  multiply {{(1/parent.spread_x+.1)/10 x1 0.77823077}}
+  gamma {{parent.falloff_x}}
+  black_clamp false
+  name GradeSpreadX
+  xpos 15
+  ypos 105
+ }
+ set C21580440 [stack 0]
+ Grade {
+  channels {-rgba.red rgba.green -rgba.blue}
+  multiply {{(1/parent.spread_y+.1)/10 i}}
+  gamma {{parent.falloff_y i}}
+  black_clamp false
+  name GradeSpreadY
+  xpos 15
+  ypos 143
+ }
+ set C215806f0 [stack 0]
+ Grade {
+  channels {-rgba.red -rgba.green rgba.blue}
+  multiply {{(1/parent.spread_z+.1)/10 i}}
+  gamma {{parent.falloff_z i}}
+  black_clamp false
+  name GradeSpreadZ
+  xpos 15
+  ypos 181
+ }
+ set C215809a0 [stack 0]
+ Expression {
+  expr0 -r
+  expr1 -g
+  expr2 -b
+  name Expression6
+  xpos 15
+  ypos 249
+ }
+clone $C21580440 {
+  xpos 15
+  ypos 275
+  selected false
+ }
+clone $C215806f0 {
+  xpos 15
+  ypos 313
+  selected false
+ }
+clone $C215809a0 {
+  xpos 15
+  ypos 351
+  selected false
+ }
+ Expression {
+  expr0 -r
+  expr1 -g
+  expr2 -b
+  name Expression7
+  xpos 15
+  ypos 389
+ }
+ Grade {
+  multiply {{(1/parent.spread_uniform+.1)/10}}
+  gamma {{parent.falloff}}
+  black_clamp false
+  name GradeSpreadUnif
+  xpos 182
+  ypos 389
+ }
+ Expression {
+  expr0 -r
+  expr1 -g
+  expr2 -b
+  name Expression4
+  xpos 182
+  ypos 267
+ }
+ Grade {
+  gamma {{parent.GradeSpreadUnif.gamma i}}
+  black_clamp false
+  name GradeSpreadUnif_neg
+  xpos 182
+  ypos 227
+ }
+ Expression {
+  expr0 -r
+  expr1 -g
+  expr2 -b
+  name Expression5
+  xpos 182
+  ypos 187
+ }
+ ColorLookup {
+  lut {master {curve C x-10 0 x0 1 0}
+    red {}
+    green {}
+    blue {}
+    alpha {}}
+  name GaussCentered
+  xpos 421
+  ypos 187
+ }
+ Clamp {
+  channels rgba
+  name Clamp1
+  xpos 421
+  ypos 235
+ }
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr0 r*g*b
+  name Expression1
+  xpos 421
+  ypos 279
+ }
+ ShuffleCopy {
+  inputs 2
+  in2 alpha
+  alpha alpha2
+  black red
+  white green
+  red2 blue
+  out alpha
+  out2 rgb
+  name ShuffleCopy1
+  xpos 421
+  ypos 305
+ }
+set N21582f40 [stack 0]
+ Invert {
+  channels rgba
+  name Invert1
+  xpos 421
+  ypos 351
+  disable {{!invert i}}
+ }
+ Matrix {
+  channels rgba
+  matrix {
+      {1 2 1}
+      {2 10 2}
+      {1 2 1}
+    }
+  normalize true
+  name Matrix1
+  xpos 421
+  ypos 392
+  disable {{1-AntiAlias}}
+ }
+clone $C18ed7190 {
+  xpos 421
+  ypos 465
+  selected false
+ }
+push $N18ed7190
+ ShuffleCopy {
+  inputs 2
+  in alpha
+  alpha alpha2
+  black red
+  out2 alpha
+  name ShuffleCopyOUT
+  xpos 566
+  ypos 465
+ }
+set N21584f80 [stack 0]
+ Merge2 {
+  inputs 2
+  operation multiply
+  bbox B
+  name Multiply
+  selected true
+  xpos 566
+  ypos 509
+  disable {{!parent.premult}}
+ }
+set N215867b0 [stack 0]
+ Expression {
+  channel0 rgba
+  expr0 a
+  name AtoRGB
+  xpos 566
+  ypos 563
+  disable {{1-Put_Alpha_In_RGB}}
+ }
+ Output {
+  name Output1
+  xpos 566
+  ypos 613
+ }
+push $N21499960
+push 0
+push $N18ed6ee0
+push $N21582f40
+push $N18ed6ee0
+push $N215867b0
+push $N21584f80
+ Viewer {
+  inputs 7
+  input_number 1
+  viewerProcess None
+  input_process false
+  name Viewer1
+  xpos -110
+  ypos -96
+ }
+end_group

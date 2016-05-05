@@ -1,0 +1,489 @@
+#! C:/Program Files/Nuke7.0v8/Nuke7.0.exe -nx
+version 7.0 v8
+Gizmo {
+ inputs 2
+ addUserKnob {20 Comp l Arnold}
+ addUserKnob {26 DD l "DIRECT DIFFUSE"}
+ addUserKnob {0 obso +INVISIBLE}
+ addUserKnob {41 gain T CC_diffuse.gain}
+ addUserKnob {41 gamma T CC_diffuse.gamma}
+ addUserKnob {41 contrast T CC_diffuse.contrast}
+ addUserKnob {41 saturation T CC_diffuse.saturation}
+ addUserKnob {26 ""}
+ addUserKnob {41 mix l "INDIRECT DIFFUSE" T MERGEIndirectdiffuse.mix}
+ addUserKnob {41 gain_1 l gain T CC_INDRECTdiF.gain}
+ addUserKnob {41 gamma_1 l gamma T CC_INDRECTdiF.gamma}
+ addUserKnob {41 contrast_1 l contrast T CC_INDRECTdiF.contrast}
+ addUserKnob {41 saturation_2 l saturation T CC_INDRECTdiF.saturation}
+ addUserKnob {26 ""}
+ addUserKnob {41 SPECULAR l "DIRECT SPECULAR" T MERGEspecular.mix}
+ addUserKnob {41 gain_3 l gain T CC_SPEC.gain}
+ addUserKnob {41 gamma_2 l gamma T CC_SPEC.gamma}
+ addUserKnob {41 contrast_2 l contrast T CC_SPEC.contrast}
+ addUserKnob {41 saturation_3 l saturation T CC_SPEC.saturation}
+ addUserKnob {26 ""}
+ addUserKnob {41 mix_2 l "INDIRECT SPECULAR" T MERGEindirectSpec.mix}
+ addUserKnob {41 gain_2 l gain T CC_INDIRECT_SPEC.gain}
+ addUserKnob {41 gamma_3 l gamma T CC_INDIRECT_SPEC.gamma}
+ addUserKnob {41 contrast_3 l contrast T CC_INDIRECT_SPEC.contrast}
+ addUserKnob {41 saturation_1 l saturation T CC_INDIRECT_SPEC.saturation}
+ addUserKnob {26 ""}
+ addUserKnob {41 reflec l "REFLECTION          " T MERGEreflection.mix}
+ addUserKnob {41 gain_4 l gain T CC_REFLECTION.gain}
+ addUserKnob {41 gamma_4 l gamma T CC_REFLECTION.gamma}
+ addUserKnob {41 contrast_4 l contrast T CC_REFLECTION.contrast}
+ addUserKnob {41 saturation_4 l saturation T CC_REFLECTION.saturation}
+ addUserKnob {26 ""}
+ addUserKnob {41 refrac l "REFRACTION        " T MERGErefraction.mix}
+ addUserKnob {41 gain_5 l gain T CC_REFRACTION.gain}
+ addUserKnob {41 gamma_5 l gamma T CC_REFRACTION.gamma}
+ addUserKnob {41 contrast_5 l contrast T CC_REFRACTION.contrast}
+ addUserKnob {41 saturation_5 l saturation T CC_REFRACTION.saturation}
+ addUserKnob {26 ""}
+ addUserKnob {41 sss l "SSS                      " T MERGEsss.mix}
+ addUserKnob {41 gain_6 l gain T CC_SSS.gain}
+ addUserKnob {41 gamma_6 l gamma T CC_SSS.gamma}
+ addUserKnob {41 contrast_6 l contrast T CC_SSS.contrast}
+ addUserKnob {41 saturation_6 l saturation T CC_SSS.saturation}
+ addUserKnob {26 ""}
+ addUserKnob {41 emission l "EMISSION             " T MERGEemission.mix}
+ addUserKnob {41 gain_7 l gain T CC_EMISSION.gain}
+ addUserKnob {41 gamma_7 l gamma T CC_EMISSION.gamma}
+ addUserKnob {41 contrast_7 l contrast T CC_EMISSION.contrast}
+ addUserKnob {41 saturation_7 l saturation T CC_EMISSION.saturation}
+ addUserKnob {26 ""}
+ addUserKnob {26 txt l "" +STARTLINE T "Autocomper Arnold by Pierre JURY"}
+}
+ Input {
+  inputs 0
+  name ID
+  xpos 36
+  ypos -340
+  number 1
+ }
+ Dot {
+  name Dot5
+  xpos 70
+  ypos 848
+ }
+ Input {
+  inputs 0
+  name BEAUTY_multipass
+  xpos 683
+  ypos -329
+ }
+ Dot {
+  name Dot7
+  xpos 717
+  ypos -216
+ }
+set N45eb42a0 [stack 0]
+ Dot {
+  name Dot9
+  xpos 845
+  ypos -216
+ }
+set N45eb4610 [stack 0]
+ Dot {
+  name Dot10
+  xpos 966
+  ypos -216
+ }
+set N45eb4980 [stack 0]
+ Dot {
+  name Dot11
+  xpos 1087
+  ypos -216
+ }
+set N45eb4cf0 [stack 0]
+ Dot {
+  name Dot6
+  xpos 1217
+  ypos -216
+ }
+set N6d362fd0 [stack 0]
+ Dot {
+  name Dot8
+  xpos 1346
+  ypos -216
+ }
+set N6d363340 [stack 0]
+ Dot {
+  name Dot12
+  xpos 1487
+  ypos -216
+ }
+set N6d3636b0 [stack 0]
+ Dot {
+  name Dot13
+  xpos 1629
+  ypos -216
+ }
+add_layer {emission emission.red emission.green emission.blue}
+ Shuffle {
+  in emission
+  in2 alpha
+  alpha red2
+  name EMISSION
+  xpos 1595
+  ypos -140
+ }
+ Unpremult {
+  name Unpremult8
+  xpos 1595
+  ypos -73
+  disable true
+ }
+ ColorCorrect {
+  unpremult rgba.alpha
+  name CC_EMISSION
+  selected true
+  xpos 1595
+  ypos -19
+ }
+ Premult {
+  name Premult8
+  xpos 1595
+  ypos 81
+  disable true
+ }
+ Dot {
+  name Dot14
+  xpos 1629
+  ypos 762
+ }
+push $N6d3636b0
+add_layer {sss sss.red sss.green sss.blue}
+ Shuffle {
+  in sss
+  in2 alpha
+  alpha red2
+  name SSS
+  xpos 1453
+  ypos -139
+ }
+ Unpremult {
+  name Unpremult7
+  xpos 1453
+  ypos -76
+  disable true
+ }
+ ColorCorrect {
+  unpremult rgba.alpha
+  name CC_SSS
+  xpos 1453
+  ypos -19
+ }
+ Premult {
+  name Premult7
+  xpos 1453
+  ypos 77
+  disable true
+ }
+ Dot {
+  name Dot15
+  xpos 1487
+  ypos 665
+ }
+push $N6d363340
+add_layer {refraction refraction.red refraction.green refraction.blue}
+ Shuffle {
+  in refraction
+  in2 alpha
+  alpha red2
+  name REFRACTION
+  xpos 1312
+  ypos -138
+ }
+ Unpremult {
+  name Unpremult6
+  xpos 1312
+  ypos -77
+  disable true
+ }
+ ColorCorrect {
+  unpremult rgba.alpha
+  name CC_REFRACTION
+  xpos 1312
+  ypos -19
+ }
+ Premult {
+  name Premult6
+  xpos 1312
+  ypos 77
+  disable true
+ }
+ Dot {
+  name Dot16
+  xpos 1346
+  ypos 558
+ }
+push $N6d362fd0
+add_layer {reflection reflection.red reflection.green reflection.blue}
+ Shuffle {
+  in reflection
+  in2 alpha
+  alpha red2
+  name REFLECTION
+  xpos 1183
+  ypos -138
+ }
+ Unpremult {
+  name Unpremult5
+  xpos 1183
+  ypos -78
+  disable true
+ }
+ ColorCorrect {
+  unpremult rgba.alpha
+  name CC_REFLECTION
+  xpos 1183
+  ypos -18
+ }
+ Premult {
+  name Premult4
+  xpos 1183
+  ypos 76
+  disable true
+ }
+ Dot {
+  name Dot17
+  xpos 1217
+  ypos 458
+ }
+push $N45eb4cf0
+add_layer {indirect_specular indirect_specular.red indirect_specular.green indirect_specular.blue}
+ Shuffle {
+  in indirect_specular
+  in2 alpha
+  alpha red2
+  name INDIRECT_SPECULAR
+  xpos 1053
+  ypos -135
+ }
+ Unpremult {
+  name Unpremult4
+  xpos 1053
+  ypos -77
+  disable true
+ }
+ ColorCorrect {
+  unpremult rgba.alpha
+  name CC_INDIRECT_SPEC
+  xpos 1053
+  ypos -18
+ }
+ Premult {
+  name Premult2
+  xpos 1053
+  ypos 76
+  disable true
+ }
+ Dot {
+  name Dot2
+  xpos 1088
+  ypos 359
+ }
+push $N45eb4980
+add_layer {direct_specular direct_specular.red direct_specular.green direct_specular.blue}
+ Shuffle {
+  in direct_specular
+  in2 alpha
+  alpha red2
+  name SPECULAR
+  xpos 932
+  ypos -135
+ }
+ Unpremult {
+  name Unpremult3
+  xpos 932
+  ypos -74
+  disable true
+ }
+ ColorCorrect {
+  unpremult rgba.alpha
+  name CC_SPEC
+  xpos 932
+  ypos -19
+ }
+ Premult {
+  name Premult3
+  xpos 932
+  ypos 77
+  disable true
+ }
+ Dot {
+  name Dot3
+  xpos 966
+  ypos 263
+ }
+push $N45eb4610
+add_layer {indirect_diffuse indirect_diffuse.red indirect_diffuse.green indirect_diffuse.blue}
+ Shuffle {
+  in indirect_diffuse
+  in2 alpha
+  alpha red2
+  name INDIIRECT_DIFFUSE
+  xpos 811
+  ypos -136
+ }
+ Unpremult {
+  name Unpremult2
+  xpos 811
+  ypos -73
+  disable true
+ }
+ ColorCorrect {
+  unpremult rgba.alpha
+  name CC_INDRECTdiF
+  xpos 811
+  ypos -18
+ }
+ Premult {
+  name Premult5
+  xpos 811
+  ypos 78
+  disable true
+ }
+ Dot {
+  name Dot4
+  xpos 845
+  ypos 174
+ }
+push $N45eb42a0
+add_layer {direct_diffuse direct_diffuse.red direct_diffuse.green direct_diffuse.blue}
+ Shuffle {
+  in direct_diffuse
+  in2 alpha
+  alpha red2
+  name DIFFUSE
+  xpos 683
+  ypos -135
+ }
+ Unpremult {
+  name Unpremult1
+  xpos 684
+  ypos -70
+  disable true
+ }
+ ColorCorrect {
+  unpremult rgba.alpha
+  name CC_diffuse
+  xpos 684
+  ypos -18
+ }
+ Premult {
+  name Premult1
+  xpos 684
+  ypos 78
+  disable true
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  bbox B
+  Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  Bchannels {rgba.red rgba.green rgba.blue rgba.alpha}
+  also_merge all
+  name MERGEIndirectdiffuse
+  xpos 684
+  ypos 171
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  bbox B
+  Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  Bchannels {rgba.red rgba.green rgba.blue rgba.alpha}
+  also_merge all
+  name MERGEspecular
+  xpos 684
+  ypos 260
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  bbox B
+  Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  Bchannels {rgba.red rgba.green rgba.blue rgba.alpha}
+  also_merge all
+  name MERGEindirectSpec
+  xpos 684
+  ypos 356
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  bbox B
+  Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  also_merge all
+  name MERGEreflection
+  xpos 684
+  ypos 455
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  bbox B
+  Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  also_merge all
+  name MERGErefraction
+  xpos 684
+  ypos 555
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  bbox B
+  Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  also_merge all
+  name MERGEsss
+  xpos 684
+  ypos 662
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  bbox B
+  Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  also_merge all
+  name MERGEemission
+  xpos 684
+  ypos 759
+ }
+add_layer {ID ID.red ID.green ID.blue ID.alpha}
+ ShuffleCopy {
+  inputs 2
+  in2 alpha
+  red red
+  green green
+  blue blue
+  alpha red2
+  out ID
+  name ID_in
+  xpos 684
+  ypos 845
+ }
+ Output {
+  name Output_comper
+  xpos 684
+  ypos 1100
+ }
+set N6d591350 [stack 0]
+push 0
+push 0
+push 0
+push 0
+push 0
+push 0
+push 0
+push $N6d591350
+push $N6d591350
+ Viewer {
+  inputs 10
+  input_process false
+  name Viewer1
+  xpos 117
+  ypos 1100
+ }
+end_group

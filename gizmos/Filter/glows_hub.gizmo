@@ -1,0 +1,632 @@
+set cut_paste_input [stack 0]
+version 6.3 v4
+push 0
+push 0
+push 0
+push $cut_paste_input
+Group {
+ inputs 4
+ name glows_hub
+ help "There are 5 modes available\n    1 - Bright Glows\n    2 - Bright & Dark Glows\n    3 - LightWrap\n    4 - Merge Under\n    5 - Output only Bright Pass\n\n\n-1- Performs simple Bright Glows but with some handy parameters.\n    - First use \"view threshold\" tickbox to finetune from which luminance the glow shines.\n    - \"Soft Mix\" : mix between Screen and Plus blend.\n    - \"Post Gain\" : Used to boost the effect but it can also be used to add a global tint.\n    - \"Thin Glow\" : Usually 2 glows gives better results. (because the light behaves not linearly)\n                          So the main one is a big one and the second is a thin one.\n\n-2- Enables Dark Glows with some same parameters as the Bright ones.\n    - There are extra options to avoid that the darks darken the super brights. (Because it hasn't to)\n\n-3- Performs a LightWrap with all Brights Glows options available (2 different size glows, threshold options)\n    - Of course it has sense only for RGBA sources, and assume to be premultiplied\n    - The input \"glow_source\" has to be connected to the background plate (which will be comped under)\n\n-4- Same as -1- but the glow is comped under the source.\n    - So the source must have an alpha, and is assumed to be premultiplied.\n\n-5- Same as -1- but the glow is NOT comped on the source.\n\n\n- All inputs are optionals except SOURCE of course.\n- \"Brights Mask\" allow to restrict the brights glow source areas. It is not masking, which is quiet useless.\n- \"Darks Mask\" i think you've understood ...\n- \"Glow Source\" allow to choose an alternate image to generate the glow. Especially for the LightWrap but for example you can use a quick comp as\" Glow_Source\" and then processing brightGlow and darkGlow on a RGBA source."
+ onCreate "\nimport os.path as op\nimport os\ntext = nuke.toNode('IF_glow_source_not_connected')\nfoo_text = nuke.createNode('Text')\nfont_path = foo_text\['font'].value()\nnukescripts.node_delete(popupOnError=True)\nif op.exists(font_path):\n    text\['font'].setValue(font_path)\nelse:\n    path = op.dirname( nuke.defaultFontPathname() )\n    for file in os.listdir(path):\n        if 'arial' in file.lower() and 'black' in file.lower():\n            font = file\n    text\['font'].setValue(path + '/' + font)\n"
+ tile_color 0xffe50000
+ label "\[value MODE]"
+ note_font Verdana
+ selected true
+ xpos -65
+ ypos 176
+ mapsize {0.15 0.15}
+ addUserKnob {20 GlowsHub l "Glows hub"}
+ addUserKnob {4 MODE t "For LIGHTWRAP Mode you have to connect \"glow_source\" to the background and the \"SOURCE\" must be a premultiplied RGBA image" M {"Bright Glows" "Bright & Dark Glows" LightWrap "Merge Under" "Output only Bright Pass" "" "" "" "" "" "" "" "" "" ""}}
+ MODE "Bright & Dark Glows"
+ addUserKnob {6 useGlowSource l "use\"glow_source\" input" -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 BrightGlows_1 l "<font size=4>BRIGHT GLOWS</font>"}
+ addUserKnob {26 ""}
+ addUserKnob {41 threshold_blackpoint_b l "threshold black" T Threshold_brights.blackpoint}
+ addUserKnob {41 threshold_whitepoint_b l "threshold white" T Threshold_brights.whitepoint}
+ addUserKnob {6 view_threshold l "view threshold" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {6 Dark_NOblend l INVISIBLE +INVISIBLE +STARTLINE}
+ addUserKnob {41 bright_glow_MIX l Mix T Bright_glow_merge.mix}
+ addUserKnob {7 soft_mix l "soft mix" t "Mix between a PLUS and a SCREEN Merge" -STARTLINE}
+ soft_mix 1
+ addUserKnob {41 size T Blur_brights.size}
+ addUserKnob {41 filter -STARTLINE T Blur_brights.filter}
+ addUserKnob {6 smooth_blur l smoothed t "Performs a an additionnal slight blur to soften the main one" -STARTLINE}
+ addUserKnob {41 saturation T Saturation_brights.saturation}
+ addUserKnob {41 white l PostGain t "You can use \"PostGain\" to colorize your glow" T PostGain.white}
+ addUserKnob {26 ""}
+ addUserKnob {6 additionnal_thin_glow l "<font size=4>Additionnal THIN glow</font>" +STARTLINE}
+ additionnal_thin_glow true
+ addUserKnob {7 addit_mix l "thin mix"}
+ addit_mix 0.5
+ addUserKnob {7 addit_size l "thin size" -STARTLINE R 0 20}
+ addit_size 8
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {22 infos T "import webbrowser \nwebbrowser.open(\"http://www.nukepedia.com/filter/glows_hub/\")" +STARTLINE}
+ addUserKnob {26 philhub_2010 l "philhub 2010" -STARTLINE}
+ addUserKnob {20 DarkGlowsTab l "Dark Glows"}
+ addUserKnob {26 ""}
+ addUserKnob {26 DarkGlowsText l "<font size=4>DARK GLOWS</font>"}
+ addUserKnob {26 ""}
+ addUserKnob {41 threshold_blackpoint_d l threshold_black T Threshold_darks.blackpoint}
+ addUserKnob {41 threshold_whitepoint_d l threshold_white T Threshold_darks.whitepoint}
+ addUserKnob {6 view_threshold_d l "view threshold" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {41 dark_glow_MIX T DarkGlow_merge.mix}
+ addUserKnob {41 size_1 l size T Blur_darks.size}
+ addUserKnob {41 filter_1 l filter -STARTLINE T Blur_darks.filter}
+ addUserKnob {41 saturation_1 l saturation T SaturationDarks.saturation}
+ addUserKnob {26 ""}
+ addUserKnob {6 DarkGlow_dont_affect_Highlights l "DarkGlow dont affect Highlights" t "Avoid DarkGlows to darken SuperBright areas" +STARTLINE}
+ DarkGlow_dont_affect_Highlights true
+ addUserKnob {41 mix_3 l mix -STARTLINE T HL_saving_merge.mix}
+ addUserKnob {41 blackpoint T HL_saving_MSK.blackpoint}
+ addUserKnob {41 whitepoint T HL_saving_MSK.whitepoint}
+ addUserKnob {6 view_mask_HL_keep l "view mask" +STARTLINE}
+ addUserKnob {20 MASKS l Masks}
+ addUserKnob {41 brightGlows_mask l brightGlows T Shuffle_bright_mask.in}
+ addUserKnob {41 mix_1 l mix -STARTLINE T Merge_brightMASK.mix}
+ addUserKnob {6 invert_brightMSK l invert -STARTLINE}
+ addUserKnob {41 darkGlows_mask l darkGlows T Shuffle_dark_mask.in}
+ addUserKnob {41 mix_2 l mix -STARTLINE T MergeDarkMASK.mix}
+ addUserKnob {6 invert_darkMSK l invert -STARTLINE}
+}
+ Input {
+  inputs 0
+  name SOURCE
+  xpos 300
+  ypos 11
+ }
+ Clamp {
+  channels alpha
+  name Clamp1
+  xpos 300
+  ypos 46
+ }
+set N12d449d0 [stack 0]
+ Dot {
+  name Dot15
+  xpos 1190
+  ypos 55
+ }
+add_layer {shadow}
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name alpha_source
+  xpos 1156
+  ypos 414
+ }
+set N12d45030 [stack 0]
+ Invert {
+  channels rgba
+  name Invert6
+  xpos 958
+  ypos 414
+  disable {{parent.PostMult_LW.disable i}}
+ }
+ Input {
+  inputs 0
+  name brights_mask
+  xpos 921
+  ypos 129
+  number 1
+ }
+ Shuffle {
+  in alpha
+  red green
+  alpha green
+  out alpha
+  name Shuffle_bright_mask
+  label "\[value in]"
+  xpos 921
+  ypos 230
+ }
+ Expression {
+  channel0 rgb
+  expr0 a
+  channel1 alpha
+  expr1 1
+  name Expression1
+  xpos 921
+  ypos 282
+ }
+ Invert {
+  channels rgb
+  name Invert5
+  xpos 921
+  ypos 320
+  disable {{1-invert_brightMSK i}}
+ }
+ Input {
+  inputs 0
+  name glow_source
+  xpos 461
+  ypos 71
+  number 3
+ }
+push $N12d449d0
+ Switch {
+  inputs 2
+  which {{"\[ exists parent.input\[value glow_source.number] ]" i}}
+  name Switch_glow_source
+  xpos 461
+  ypos 129
+  disable {{MODE==2?0:(!parent.useGlowSource) i}}
+ }
+set N12da3530 [stack 0]
+ Saturation {
+  saturation 0.7
+  mode Average
+  name Saturation_brights
+  xpos 648
+  ypos 200
+ }
+ Grade {
+  channels rgba
+  blackpoint 0.11
+  whitepoint 0.9
+  name Threshold_brights
+  xpos 648
+  ypos 240
+ }
+set N12edf730 [stack 0]
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge_brightMASK
+  xpos 738
+  ypos 320
+ }
+push $N12edf730
+ Switch {
+  inputs 2
+  which {{"\[ exists parent.input\[value brights_mask.number] ]" x101 0}}
+  name SwitchBrightMask
+  xpos 648
+  ypos 374
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name PreMult_LW
+  xpos 648
+  ypos 414
+  disable {{parent.PostMult_LW.disable i}}
+ }
+set N12edfd90 [stack 0]
+ Dot {
+  name Dot1
+  xpos 1119
+  ypos 377
+ }
+ Dot {
+  name Dot3
+  xpos 1119
+  ypos 1155
+ }
+ Input {
+  inputs 0
+  name darks_mask
+  xpos 71
+  ypos 114
+  number 2
+ }
+ Shuffle {
+  in alpha
+  red green
+  alpha green
+  out alpha
+  name Shuffle_dark_mask
+  label "\[value in]"
+  xpos 71
+  ypos 185
+ }
+ Expression {
+  channel0 rgb
+  expr0 a
+  channel1 alpha
+  expr1 1
+  name Expression2
+  xpos 71
+  ypos 288
+ }
+ Invert {
+  channels rgb
+  name Invert1
+  xpos 71
+  ypos 320
+  disable {{1-invert_darkMSK i}}
+ }
+push $N12da3530
+ Saturation {
+  saturation 0
+  mode Average
+  name SaturationDarks
+  xpos 417
+  ypos 210
+ }
+set N12ee13e0 [stack 0]
+ Grade {
+  channels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  blackpoint 0.1
+  whitepoint 0.165
+  name Threshold_darks
+  xpos 417
+  ypos 236
+ }
+ Invert {
+  channels rgb
+  clamp true
+  name Invert2
+  xpos 417
+  ypos 274
+ }
+set N12ee1a40 [stack 0]
+ Merge2 {
+  inputs 2
+  operation multiply
+  name MergeDarkMASK
+  xpos 510
+  ypos 320
+ }
+push $N12ee1a40
+ Switch {
+  inputs 2
+  which {{"\[ exists parent.input\[value darks_mask.number] ]"}}
+  name SwitchDarkMask
+  xpos 417
+  ypos 377
+ }
+set N12da3bd0 [stack 0]
+ Dot {
+  name Dot5
+  xpos 80
+  ypos 381
+ }
+ Dot {
+  name Dot4
+  xpos 80
+  ypos 1105
+ }
+push $N12ee13e0
+ Dot {
+  name Dot2
+  xpos 166
+  ypos 213
+ }
+ Grade {
+  blackpoint 0.37
+  whitepoint 0.575
+  name HL_saving_MSK
+  xpos 133
+  ypos 637
+ }
+set N12faaa70 [stack 0]
+ Dot {
+  name Dot8
+  xpos 166
+  ypos 1054
+ }
+push $N12da3bd0
+ Blur {
+  channels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  size 140
+  filter triangle
+  name Blur_darks
+  label "\n"
+  xpos 417
+  ypos 428
+ }
+set N12fab0d0 [stack 0]
+ Dot {
+  name Dot13
+  xpos -66
+  ypos 432
+ }
+ Dot {
+  name Dot11
+  xpos -66
+  ypos 1004
+ }
+push $N12edfd90
+ Blur {
+  channels rgba
+  size {{parent.addit_size}}
+  filter triangle
+  name Blur_brights_thin
+  label "\n"
+  xpos 793
+  ypos 458
+ }
+push $N12edfd90
+ Blur {
+  channels rgba
+  size 50
+  filter quadratic
+  name Blur_brights
+  label "\n"
+  xpos 648
+  ypos 458
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  mix {{parent.addit_mix i}}
+  name MergeThin
+  xpos 648
+  ypos 509
+  disable {{!parent.additionnal_thin_glow i}}
+ }
+ Grade {
+  name PostGain
+  xpos 648
+  ypos 533
+ }
+ Blur {
+  channels rgba
+  size {{parent.Blur_brights_thin.size i}}
+  filter triangle
+  name Blur_brights_smooth
+  xpos 648
+  ypos 567
+  disable {{!parent.smooth_blur i}}
+ }
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr0 (r+g+b)/3
+  name LtoA
+  xpos 648
+  ypos 600
+ }
+ Dot {
+  name Dot17
+  xpos 682
+  ypos 659
+ }
+set N12facd80 [stack 0]
+ Dot {
+  name Dot14
+  xpos 953
+  ypos 659
+ }
+ Dot {
+  name Dot9
+  label bright_pass_only
+  xpos 953
+  ypos 934
+ }
+push $N12facd80
+push $N12faaa70
+push 0
+ Switch {
+  inputs 2
+  which {{"\[ exists parent.input\[value 0] ]"}}
+  name Switch1
+  label "\[value which]"
+  xpos 254
+  ypos 632
+ }
+push $N12d449d0
+ Dot {
+  name Dot6
+  xpos 334
+  ypos 149
+ }
+set N12fad710 [stack 0]
+ Dot {
+  name Dot7
+  xpos 360
+  ypos 398
+ }
+ Dot {
+  name Dot10
+  xpos 360
+  ypos 570
+ }
+push $N12fab0d0
+push $N12d449d0
+ Invert {
+  channels rgb
+  clamp true
+  name Invert4
+  xpos 221
+  ypos 472
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  Bchannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  mix 0.6
+  name DarkGlow_merge
+  xpos 417
+  ypos 472
+ }
+ Invert {
+  channels rgb
+  clamp true
+  name Invert3
+  xpos 417
+  ypos 524
+ }
+ Merge2 {
+  inputs 2+1
+  maskChannelMask rgba.red
+  mix 0.35
+  name HL_saving_merge
+  xpos 416
+  ypos 637
+  disable {{"1-DarkGlow_dont_affect_Highlights || \[ exists parent.input\[value 0] ]"}}
+ }
+push $N12fad710
+ Dot {
+  name Dot12
+  xpos 334
+  ypos 710
+ }
+ Switch {
+  inputs 2
+  which {{MODE==1 i}}
+  name SwitchDarkGlow
+  xpos 416
+  ypos 707
+ }
+set N12da4270 [stack 0]
+ Merge2 {
+  inputs 2
+  operation under
+  mix {{parent.Bright_glow_merge.mix}}
+  name MergeUnder
+  xpos 416
+  ypos 863
+ }
+ Dot {
+  name Dot18
+  label under
+  xpos 544
+  ypos 918
+ }
+push $N12d45030
+ Dot {
+  name Dot16
+  xpos 1190
+  ypos 824
+ }
+ Invert {
+  channels rgba
+  name Invert7
+  xpos 1008
+  ypos 821
+  disable true
+ }
+push $N12facd80
+push $N12da4270
+ Merge2 {
+  inputs 2
+  operation screen
+  name Bright_glow_merge
+  xpos 732
+  ypos 732
+ }
+push $N12facd80
+push $N12da4270
+ Merge2 {
+  inputs 2
+  operation plus
+  mix {{parent.Bright_glow_merge.mix i}}
+  name Bright_glow_PLUS
+  xpos 597
+  ypos 734
+ }
+ Dissolve {
+  inputs 2
+  channels rgba
+  which {{parent.soft_mix i}}
+  name DissolvePLUSandSCREEN
+  xpos 661
+  ypos 786
+ }
+set N13077690 [stack 0]
+ Unpremult {
+  name Unpremult_LW
+  xpos 841
+  ypos 786
+  disable {{parent.PostMult_LW.disable i}}
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name PostMult_LW
+  xpos 841
+  ypos 821
+  disable {{!(MODE==2) i}}
+ }
+ Shuffle {
+  alpha white
+  name WipeAlpha_forMessage
+  xpos 841
+  ypos 854
+  disable {{"\[ exists parent.input\[value glow_source.number] ]" i}}
+ }
+ Text {
+  message "please connect \"glow_source\" input to the background plate"
+  font C:/Windows/Fonts/arial.ttf
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {960 540}
+  name IF_glow_source_not_connected
+  xpos 841
+  ypos 878
+  disable {{"\[ exists parent.input\[value glow_source.number] ]"}}
+ }
+set N13078350 [stack 0]
+push $N13077690
+ Dot {
+  name Dot20
+  label bright&dark
+  xpos 725
+  ypos 860
+ }
+push $N13077690
+ Dot {
+  name Dot19
+  label bright
+  xpos 658
+  ypos 858
+ }
+ Switch {
+  inputs 5
+  which {{MODE i}}
+  name Switch_MODE
+  label "\[value which]"
+  xpos 661
+  ypos 925
+ }
+ Switch {
+  inputs 2
+  which {{Dark_NOblend i}}
+  name SwitchDarkNoBlend
+  xpos 661
+  ypos 1002
+ }
+ Switch {
+  inputs 2
+  which {{view_mask_HL_keep i}}
+  name Switch_HLsaving_MSK
+  xpos 661
+  ypos 1051
+ }
+ Switch {
+  inputs 2
+  which {{view_threshold_d i}}
+  name Switch_threshod_darks
+  xpos 661
+  ypos 1101
+ }
+ Switch {
+  inputs 2
+  which {{view_threshold i}}
+  name Switch_threshod_brights
+  xpos 661
+  ypos 1152
+ }
+ Output {
+  name Output1
+  xpos 661
+  ypos 1195
+ }
+push $N13078350
+ Viewer {
+  input_process false
+  name Viewer1
+  xpos 247
+  ypos 739
+ }
+end_group
