@@ -1,244 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="181cdbd5-ce2f-4c71-b1c5-c86777149b1c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_item/AntsSlate.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_item/CWDefocus.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_item/DespillMadness.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_item/FallingLeavesIcon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_item/LumaDespill.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_item/RainMakerIcon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_item/ReLighting.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_item/RealHeatDistortion.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_item/TXFogIcon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_item/autoComper.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_item/iBlur.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_item/nuke2pack.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_item/pgBokeh.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_menu/logo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_toolbar/Tangent_Space_Normals.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_toolbar/Thumbs.db" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_toolbar/icon_toolbar_3d.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_toolbar/icon_toolbar_channel.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_toolbar/icon_toolbar_draw.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_toolbar/icon_toolbar_filter.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_toolbar/icon_toolbar_image.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_toolbar/icon_toolbar_keyer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_toolbar/icon_toolbar_light.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_toolbar/icon_toolbar_other.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_toolbar/icon_toolbar_other_lighting_magicCarpet.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_toolbar/icon_toolbar_release.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icons/icon_toolbar/icon_toolbar_toolsets.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/packproject/static/pack.ui" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/icons/clear.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/icons/donate.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/icons/exec_all.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/icons/exec_sel.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/icons/help.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/icons/pw.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/icons/pw_logo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/style/pw.ico" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/style/pw.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/style/script_editor.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/about.ui" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/findWidget.ui" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/scriptEditor.ui" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/shortcuts.ui" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/themeEditor.ui" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/chengwei.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/nuke_plugin.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/command.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/3D/CameraProjection.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/3D/EnvRelight.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/3D/FallingLeaves.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/3D/L_RimLight2D.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/3D/RainMaker.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/3D/ReLighting.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/3D/TX_Fog.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/3D/Tangent_Space_Normals/Multi_Tangent_Space_Normals_Generator.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/3D/Tangent_Space_Normals/Normalise_Tangent_Space_Normals.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/3D/Tangent_Space_Normals/Partial_Derivative_Blending.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/3D/Tangent_Space_Normals/Tangent_Space_Normals_Generator.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/3D/Tangent_Space_Normals/Tangent_Space_Normals_Previewer.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/3D/Tangent_Space_Normals/Tangent_Space_Normals_to_Cavity.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/3D/a_ReLighting.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/3D/a_ReLightingP.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/3D/a_RelightSimple.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/3D/a_RimLight2D.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Channel/Aberration_Chromatique.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Channel/AutocomperArnold.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Channel/L_MultiplePasses.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Channel/Multimatte.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Channel/akromatism_stRub.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Filter/BokehBlur.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Filter/CWDefocus.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Filter/DilateErodeFine_CB.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Filter/EdgeTreat.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Filter/RealHeatDist.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Filter/Turbulate.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Filter/bm_Lightwrap.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Filter/glows_hub.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Filter/iBlur.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Filter/mosaic.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Filter/vectorBlurGizmo.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Filter/zBlurGizmo.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Image/CWSlate.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Image/a_Text.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Keyer/AdditiveKeyer.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Keyer/DespillMadness.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Keyer/EdgeEx.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Keyer/EdgeExtend2.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Keyer/EdgeKey.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Keyer/KillOutline.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Keyer/LumaDespill.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Keyer/RemoveSkyEdge.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Keyer/Spill_Tool.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Keyer/a_IDKeyer.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Keyer/alpha_edge.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Keyer/edgeDespill.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Keyer/hairEasyKey.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Lighting/EnvRelight.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Lighting/MT_Relight.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Lighting/Mask3D_RS.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Lighting/PP_Mask_hub.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Lighting/PP_Mask_hub_V2.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Lighting/P_Matte.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Lighting/P_Noise3D.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Lighting/P_Ramp.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Lighting/ReLight_RS.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Lighting/ReProject3D.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Lighting/RimLight_RS.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Lighting/SH_Relighter.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Lighting/contactGizmo.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Lighting/depthSlice.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Lighting/final_flare_tool.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gizmos/Lighting/normalLighting.gizmo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libs/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libs/json_operation.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/menu.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/Channel/PreCompForArnold.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/Channel/RenderLayer.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/Channel/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/Channel/autoComper.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/ToolSet/ListShuffle.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/ToolSet/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/ToolSet/browseDir.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/ToolSet/correct_error_read_node.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/ToolSet/presetBackdrop.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/ToolSet/replace_read_node_path.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/ToolSet/single_to_sequence.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/ToolSet/switch_shot.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/ToolSet/toggle_input.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/ToolSet/toggle_stamp.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/packproject/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/packproject/config.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/packproject/loadui.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/packproject/nuke2pack.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/packproject/package.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/helpText.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/icons/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/icons_rcs.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/__main__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/_compatibility.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/api/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/api/classes.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/api/helpers.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/api/interpreter.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/api/keywords.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/api/replstartup.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/api/usages.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/cache.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/common.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/debug.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/analysis.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/cache.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/compiled/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/compiled/fake.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/compiled/fake/_functools.pym" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/compiled/fake/_sqlite3.pym" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/compiled/fake/_sre.pym" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/compiled/fake/_weakref.pym" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/compiled/fake/builtins.pym" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/compiled/fake/datetime.pym" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/compiled/fake/io.pym" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/compiled/fake/posix.pym" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/docstrings.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/dynamic.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/finder.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/helpers.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/imports.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/iterable.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/param.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/precedence.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/recursion.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/representation.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/stdlib.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/evaluate/sys_path.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/parser/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/parser/fast.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/parser/representation.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/parser/tokenize.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/parser/user_context.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/refactoring.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/settings.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/jedi/utils.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/managers/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/managers/_houdini.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/managers/_maya.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/managers/_nuke.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/managers/completeWidget.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/managers/houdini/hou.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/managers/houdini/pw_MultiScriptEditor.pypanel" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/managers/houdini/soptoolutils.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/managers/houdini/toolutils.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/managers/nuke/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/managers/nuke/callbacks.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/managers/nuke/geo.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/managers/nuke/main.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/managers/nuke/math.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/managers/nuke/nodes.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/run.cmd" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/run.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/scriptEditor.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/sessionManager.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/settingsManager.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/shortcuts.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/style/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/style/completer.qss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/style/links.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/style/style.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/tested.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/about.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/about_UIs.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/completeWidget.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/findWidget.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/findWidget_UIs.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/inputWidget.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/numBarWidget.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/outputWidget.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/pythonSyntax/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/pythonSyntax/design.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/pythonSyntax/keywords.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/pythonSyntax/syntaxHighLighter.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/scriptEditor_UI.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/scriptEditor_UIs.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/shortcuts.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/shortcuts_UIs.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/tabWidget.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/themeEditor.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/themeEditor_UI.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/python/pw_multiScriptEditor/widgets/themeEditor_UIs.py" />
+    <list id="181cdbd5-ce2f-4c71-b1c5-c86777149b1c" name="Default" comment="" />
+    <list default="true" id="bd01d07a-37f0-42ff-ad48-0d3bff1567b1" name="luts" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/luts/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nuke_plugin.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -265,11 +31,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="config.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="24">
-              <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+            <state relative-caret-position="144">
+              <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -277,6 +43,16 @@
       </file>
       <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="48">
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/luts/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -325,6 +101,7 @@
         <option value="$PROJECT_DIR$/python/ToolSet/switch_shot.py" />
         <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/command.py" />
+        <option value="$PROJECT_DIR$/luts/__init__.py" />
       </list>
     </option>
   </component>
@@ -366,7 +143,7 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="2" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
@@ -400,6 +177,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="NukeToolSet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NukeToolSet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NukeToolSet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="luts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -704,6 +495,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="181cdbd5-ce2f-4c71-b1c5-c86777149b1c" name="Default" comment="" />
+      <changelist id="bd01d07a-37f0-42ff-ad48-0d3bff1567b1" name="luts" comment="" />
       <created>1462342724858</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -723,19 +515,26 @@
       <option name="project" value="LOCAL" />
       <updated>1462458082075</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="nuke tool init">
+      <created>1462458380378</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1462458380378</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1828125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18710022" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28224102" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32936078" sideWeight="0.5021322" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32936078" sideWeight="0.4978678" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -932,6 +731,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -988,21 +788,38 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2413">
           <caret line="108" column="7" selection-start-line="108" selection-start-column="7" selection-end-line="108" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+        <state relative-caret-position="144">
+          <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2664">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/luts/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
