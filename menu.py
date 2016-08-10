@@ -146,6 +146,13 @@ class NukeMenu(object):
         final_path = path.replace('\\', '/')
         return final_path
 
+    def default_init(self):
+        """
+        default init
+        :return:
+        """
+        command.cryptomatte_utilities.setup_cryptomatte()
+
     def knob_show_frame(self):
         """
         show frame range on knob
@@ -156,8 +163,10 @@ class NukeMenu(object):
                          "<font color = red>[value first] - [value last] </font>")
 
 
+
 if __name__ == '__main__':
     run = NukeMenu()
+    run.default_init()
     run.add_bar_tools()
     run.add_menu_tools()
     run.knob_show_frame()
