@@ -6,6 +6,7 @@ from python.packproject import nuke2pack
 import python.pw_multiScriptEditor as ScriptEditor
 from python.Channel import autoComper, PreCompForArnold, RenderLayer
 import python.ToolSet as ToolSet
+from python.cryptomatte import cryptomatte_utilities
 
 
 def run_pack():
@@ -32,6 +33,26 @@ def run_autoComper():
     """
     autoComper.autoComper()
 
+def run_cryptomatte_create():
+    """
+    run cryptomatte script
+    :return:
+    """
+    cryptomatte_utilities.cryptomatte_create_gizmo()
+
+def run_decryptomatte_all():
+    """
+    run cryptomatte script
+    :return:
+    """
+    cryptomatte_utilities.decryptomatte_all()
+
+def run_decryptomatte_selected():
+    """
+    run cryptomatte script
+    :return:
+    """
+    cryptomatte_utilities.decryptomatte_selected()
 
 def run_preCompForArnold():
     """
