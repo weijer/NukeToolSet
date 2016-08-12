@@ -1,0 +1,266 @@
+#! /Applications/Nuke7.0v8/NukeX7.0v8.app/../Nuke7.0v8.app/Contents/MacOS/Nuke7.0v8 -nx
+version 7.0 v1
+Gizmo {
+ inputs 3
+ help "<h1>Go back from a stabilized view to the original perspective</h1><p>Undoes the stabilization of a stabilized view by reintroducing the movement of the original perspective.</p> <p>This node is normally used as part of a stabilized view rig. The rig uses a StartStabilized node to create a stabilized view on the region of the clip that you tracked. In this stabilized view you can do arbitrary modifications and then go back to the original perspective using the EndStabilized node.</p><h2>Inputs of EndStabilized</h2><p><strong>Stabilized:</strong>The stabilized view including all your manipulations</p><strong>Stabilized Plate:</strong>The orignal stabilized view as created by the StartStabilized node and without any modifications<p><strong>DistMap</strong> (optional) a Distortion Map Clip (ST Map) exported with the mocha Pro lens module with option 'distort'.</p><h2>Basic Usage of Stabilized View Rig</h2><ol><li>From the MochaImport+ menu, create the stabilized view rig consisting of the StartStabilized node, the EndStabilized node, and the Stabilized View Backdrop.</li><li>Load your mocha tracking data in the StartStabilized node.<li>Do arbitrary manipulations in the Stabilized View by inserting new nodes inside teh backdrop. All changes you do there in a stabilized setting will also be visible in your original perspective after the EndStabilized node.</li></ol><h2>Lens Distortion</h2><p>If you've used the mocha Lens module to analyze the lens distortion of your clip, you need to do the following things to get an undistorted stabilized view and reapply the lens distortion to the final result:<ul><li>make sure the mocha corner pin data you load into the StartStabilized node is exported from mocha Pro with the option 'Remove lens distortion'</li><li>as UndistMap input of the StartStabilized node use a Distortion Map Clip (ST Map) exported with the mocha Pro lens module with option 'undistort'.</li><li>as DistMap input of the EndStabilized node use a Distortion Map Clip (ST Map) exported with the mocha Pro lens module with option 'distort'.</li></ul>"
+ label MochaImport+
+ addUserKnob {20 User l "Stabilized View"}
+ addUserKnob {41 pin1 l INVISIBLE +INVISIBLE T CornerPin2D1.to1}
+ addUserKnob {41 pin2 l INVISIBLE +INVISIBLE T CornerPin2D1.to2}
+ addUserKnob {41 pin3 l INVISIBLE +INVISIBLE T CornerPin2D1.to3}
+ addUserKnob {41 pin4 l INVISIBLE +INVISIBLE T CornerPin2D1.to4}
+ addUserKnob {6 onlyRenderModifiedPixels l "only render modified pixels" t "modifies the alpha channel such that every pixel you didn't modify in the stabilized view becomes transparent. This improves quality as stabilizing and then reintroducing the movement causes some quality loss." +STARTLINE}
+ addUserKnob {7 modifiedPixelsSoftness l "w. softness" t "how soft the matte around the modified pixels should be" -STARTLINE R 0 100}
+ modifiedPixelsSoftness 10
+ addUserKnob {6 premultAlpha l "premult alpha" t "Premultiplies the alpha channel.\nThis is useful, for example, if you want to put a merge node direcly after this node, to merge the stabilized view on top of the background.\n" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {20 CornerPinDetails l "corner pin" n 1}
+ addUserKnob {41 filter T CornerPin2D1.filter}
+ addUserKnob {41 clamp -STARTLINE T CornerPin2D1.clamp}
+ addUserKnob {41 black_outside l "black outside" -STARTLINE T CornerPin2D1.black_outside}
+ addUserKnob {41 motionblur T CornerPin2D1.motionblur}
+ addUserKnob {41 shutter T CornerPin2D1.shutter}
+ addUserKnob {41 shutteroffset l "shutter offset" T CornerPin2D1.shutteroffset}
+ addUserKnob {41 shuttercustomoffset l "" -STARTLINE T CornerPin2D1.shuttercustomoffset}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 LensDistortionDetails l "lens distortion" n 1}
+ addUserKnob {41 filter_1 l filter T STMap1.filter}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 advanced n 1}
+ advanced 0
+ addUserKnob {22 LinkToSelectedStabilizedStart l "connect to StartStabilized" t "EndStabilized nodes must always be used in connection with a StartStabilized node.\n\nTo create such a connection, select a StartStabilized node and click this button to connect the two nodes. " T "import mochaimport\n\n\nendPrecompNode = nuke.thisNode()\nwith nuke.thisParent():\n\tif nuke.nodesSelected():\n\t\tstartPrecompNode = nuke.selectedNode()\t\n\t\tmochaimport.stabilizedPrecompNode___connectPrecompNodes(startPrecompNode,endPrecompNode)\n\telse:\n\t\tnuke.message(\"please select a StartStabilized node that this node should be connected to\")" +STARTLINE}
+ addUserKnob {20 endGroup n -1}
+}
+ BackdropNode {
+  inputs 0
+  name Lens_Distortion
+  xpos -14
+  ypos 298
+  bdwidth 250
+  bdheight 151
+ }
+ BackdropNode {
+  inputs 0
+  name Difference_Key
+  xpos 275
+  ypos -46
+  bdwidth 328
+  bdheight 288
+ }
+ BackdropNode {
+  inputs 0
+  name Soft_Edge_Control
+  tile_color 0x8e8e3800
+  note_font_size 42
+  xpos 494
+  ypos 8
+  bdheight 118
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote2
+  label "merge necessary to ensure \nbounding box is taken from \nstabilized plate"
+  xpos -141
+  ypos -17
+ }
+ Input {
+  inputs 0
+  name StabiilizedPlate
+  label "\[value number]"
+  xpos 285
+  ypos -130
+  number 2
+ }
+set N1f854690 [stack 0]
+ Input {
+  inputs 0
+  name Stabilized
+  label "\[value number]"
+  xpos 0
+  ypos -133
+ }
+set N1f855ee0 [stack 0]
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 0
+  ypos 86
+ }
+set N1f857730 [stack 0]
+push $N1f857730
+ Dot {
+  name Dot3
+  xpos 325
+  ypos 89
+ }
+set N1f859d10 [stack 0]
+push $N1f854690
+push $N1f855ee0
+push $N1f854690
+ Merge2 {
+  inputs 2
+  bbox B
+  name Merge1
+  xpos 285
+  ypos -30
+ }
+ Difference {
+  inputs 2
+  name Difference1
+  xpos 387
+  ypos -2
+ }
+ Expression {
+  channel0 alpha
+  expr0 a>0?1:0
+  name Expression1
+  label "make in Alpha everything non-black 100%white"
+  xpos 387
+  ypos 39
+ }
+set N1f8629d0 [stack 0]
+ Dilate {
+  channels alpha
+  size {{"\[python nuke.toNode(\\\"Blur1\\\")\\\[\\\"size\\\"\\].value()*0.55]"}}
+  name Dilate1
+  xpos 504
+  ypos 39
+ }
+ Blur {
+  channels alpha
+  size {{"\[python nuke.thisGroup()\\\['modifiedPixelsSoftness'\\].getValue()]" x3 1.5}}
+  name Blur1
+  xpos 504
+  ypos 81
+ }
+set N1f86aa20 [stack 0]
+ Merge2 {
+  inputs 2
+  operation min
+  Achannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  Bchannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  name Merge2
+  label "combine user alpha and difference alpha"
+  xpos 385
+  ypos 81
+ }
+push $N1f859d10
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  bbox B
+  name Copy1
+  xpos 291
+  ypos 199
+ }
+ Switch {
+  inputs 2
+  which {{"\[python not\\ nuke.thisGroup()\\\['onlyRenderModifiedPixels'\\].getValue()]"}}
+  name Switch_Diff1
+  xpos 0
+  ypos 204
+ }
+ CornerPin2D {
+  to1 {{StartStabilized2.pin1.x} {StartStabilized2.pin1.y}}
+  to2 {{StartStabilized2.pin2.x} {StartStabilized2.pin2.y}}
+  to3 {{StartStabilized2.pin3.x} {StartStabilized2.pin3.y}}
+  to4 {{StartStabilized2.pin4.x} {StartStabilized2.pin4.y}}
+  invert false
+  from1 {0 0}
+  from2 {{"\[python nuke.toNode(\\\"Stabilized\\\").width()\\ ]"} 0}
+  from3 {{"\[python nuke.toNode(\\\"Stabilized\\\").width()\\ ]"} {"\[python nuke.toNode(\\\"Stabilized\\\").height()\\ ]"}}
+  from4 {0 {"\[python nuke.toNode(\\\"Stabilized\\\").height()\\ ]"}}
+  name CornerPin2D1
+  xpos 0
+  ypos 254
+ }
+ Crop {
+  box {0 0 {"\[python nuke.toNode(\\\"Stabilized\\\").width()\\ ]"} {"\[python nuke.toNode(\\\"Stabilized\\\").height()\\ ]"}}
+  name Crop1
+  xpos 0
+  ypos 325
+ }
+set N1f880770 [stack 0]
+ Input {
+  inputs 0
+  name DistMap
+  label "\[value number]"
+  xpos 145
+  ypos -130
+  number 1
+ }
+ Crop {
+  box {{"\[python -execlocal bgNode\\ =\\ nuke.toNode(\\\"Stabilized\\\")\\ndistortionMapNode\\ =\\ nuke.toNode(\\\"DistMap\\\")\\ncurrentWidth\\ =\\ distortionMapNode.format().width()\\ntargetWidth\\ =\\ bgNode.format().width()\\nret\\ =\\ currentWidth/2\\ -\\ targetWidth/2]"} {"\[python -execlocal bgNode\\ =\\ nuke.toNode(\\\"Stabilized\\\")\\ndistortionMapNode\\ =\\ nuke.toNode(\\\"DistMap\\\")\\ncurrentHeight\\ =\\ distortionMapNode.format().height()\\ntargetHeight\\ =\\ bgNode.format().height()\\nret\\ =\\ currentHeight/2\\ -\\ targetHeight/2]"} {"\[python -execlocal bgNode\\ =\\ nuke.toNode(\\\"Stabilized\\\")\\ndistortionMapNode\\ =\\ nuke.toNode(\\\"DistMap\\\")\\ncurrentWidth\\ =\\ distortionMapNode.format().width()\\ntargetWidth\\ =\\ bgNode.format().width()\\nret\\ =\\ currentWidth/2\\ +\\ targetWidth/2]"} {"\[python -execlocal bgNode\\ =\\ nuke.toNode(\\\"Stabilized\\\")\\ndistortionMapNode\\ =\\ nuke.toNode(\\\"DistMap\\\")\\ncurrentHeight\\ =\\ distortionMapNode.format().height()\\ntargetHeight\\ =\\ bgNode.format().height()\\nret\\ =\\ currentHeight/2\\ +\\ targetHeight/2]"}}
+  reformat true
+  crop false
+  name Crop2
+  xpos 145
+  ypos 322
+ }
+push $N1f880770
+ STMap {
+  inputs 2
+  uv rgb
+  maskChannel rgba.alpha
+  name STMap1
+  selected true
+  xpos 145
+  ypos 401
+ }
+ Switch {
+  inputs 2
+  which {{"!\[exists parent.input1]"}}
+  name Switch1
+  xpos 0
+  ypos 406
+ }
+ Dot {
+  name Dot1
+  xpos 34
+  ypos 470
+ }
+set N1f88ecf0 [stack 0]
+push $N1f88ecf0
+ Dot {
+  name Dot2
+  xpos 178
+  ypos 470
+ }
+ Premult {
+  name Premult1
+  xpos 144
+  ypos 506
+ }
+ Switch {
+  inputs 2
+  which {{"\[python not\\ nuke.thisGroup()\\\['premultAlpha'\\].getValue()]"}}
+  name Switch_Diff2
+  xpos 0
+  ypos 506
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 590
+ }
+push $N1f8629d0
+push $N1f86aa20
+push $N1f86aa20
+ Viewer {
+  inputs 3
+  input_process false
+  name Viewer1
+  xpos -209
+  ypos 339
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "idea: only show pixels that actually changed. \nFor all other pixels, its better to keep the original values\nis doing the two corner pins causes a quality loss"
+  xpos 355
+  ypos -91
+ }
+end_group

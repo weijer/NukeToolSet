@@ -667,6 +667,125 @@ nuke_config = {
                     "icon": "icon_toolbar_toolsets.png",
                     "type": "toolbar"
                 },
+                #
+                # Mamoworld
+                #
+                #
+                #MochaImport+
+                {
+                    "name": "Mamoworld/MochaImport+/Stabilized View+",
+                    "command": "command.run_createStabilizedView()",
+                    "shortcut": "",
+                    "icon": "MiStabilizedView.png",
+                    "type": "python"
+                },
+                {
+                    "name": "Mamoworld/MochaImport+/CornerPin+ w. Lens Dist.",
+                    "command": "command.run_createCornerPin()",
+                    "shortcut": "",
+                    "icon": "MiCornerPin.png",
+                    "type": "python"
+                },
+                {
+                    "name": "Mamoworld/MochaImport+/Tracker+",
+                    "command": "command.run_createTracker4Node()",
+                    "shortcut": "",
+                    "icon": "MiTracker4.png",
+                    "type": "python"
+                },
+                {
+                    "name": "Mamoworld/MochaImport+/Tracker+ (old)",
+                    "command": "command.run_createTracker3Node()",
+                    "shortcut": "",
+                    "icon": "MiTracker3.png",
+                    "type": "python"
+                },
+                {
+                    "name": "Mamoworld/MochaImport+/RotoPaint+",
+                    "command": "command.run_createRotoPaintNodeMI()",
+                    "shortcut": "",
+                    "icon": "MiRotoPaint.png",
+                    "type": "python"
+                },
+                {
+                    "name": "Mamoworld/MochaImport+/Roto+",
+                    "command": "command.run_createRotoNodeMI()",
+                    "shortcut": "",
+                    "icon": "MiRoto.png",
+                    "type": "python"
+                },
+                {
+                    "name": "Mamoworld/MochaImport+/GridWarp+",
+                    "command": "command.run_createGridWarpNodeMI()",
+                    "shortcut": "",
+                    "icon": "MiGridWarp.png",
+                    "type": "python"
+                },
+                {
+                    "name": "Mamoworld/MochaImport+/Transform+",
+                    "command": "command.run_createTransformNodeMI()",
+                    "shortcut": "",
+                    "icon": "MiMove.png",
+                    "type": "python"
+                },
+                {
+                    "name": "Mamoworld/MochaImport+/Camera and Geo+",
+                    "command": "command.run_createCameraAndPointCloud()",
+                    "shortcut": "",
+                    "icon": "MiCameraAndGeo.png",
+                    "type": "python"
+                },
+                {
+                    "name": "Mamoworld/MochaImport+/Full camera rig+",
+                    "command": "command.run_createCameraRig()",
+                    "shortcut": "",
+                    "icon": "MiFullCameraRig.png",
+                    "type": "python"
+                },
+                {
+                    "name": "Mamoworld/MochaImport+/Settings",
+                    "command": "command.run_showSettings()",
+                    "shortcut": "",
+                    "icon": "MiSettings.png",
+                    "type": "python"
+                },
+                #Workflow
+                {
+                    "name": "Mamoworld/Workflow/Relative file path",
+                    "command": "command.run_relativeFilePath()",
+                    "shortcut": "",
+                    "icon": "MWRelativeFilePath.png",
+                    "type": "python"
+                },
+                {
+                    "name": "Mamoworld/Workflow/Collect files",
+                    "command": "nuke.message('Not yet implemented')",
+                    "shortcut": "",
+                    "icon": "MWCollectFiles.png",
+                    "type": "python"
+                },
+                # Mamoworld icon
+                {
+                    "name": "Mamoworld",
+                    "command": "",
+                    "shortcut": "",
+                    "icon": "Mamoworld.png",
+                    "type": "toolbar"
+                },
+                {
+                    "name": "Mamoworld/MochaImport+",
+                    "command": "",
+                    "shortcut": "",
+                    "icon": "MochaImport.png",
+                    "type": "toolbar"
+                },
+                {
+                    "name": "Mamoworld/Workflow",
+                    "command": "",
+                    "shortcut": "",
+                    "icon": "MWWorkflow.png",
+                    "type": "toolbar"
+                },
                 # Release Notes icon
                 {
                     "name": "Release Notes",
