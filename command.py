@@ -2,11 +2,20 @@
 # author=weijer
 # http://www.cgspread.com
 import nuke
+import os.path
 from python.packproject import nuke2pack
 import python.pw_multiScriptEditor as ScriptEditor
 from python.Channel import autoComper, PreCompForArnold, RenderLayer
 import python.ToolSet as ToolSet
 from python.cryptomatte import cryptomatte_utilities
+from python.mamoworld.workflow import relativeFilePath
+from python.mamoworld.mochaImportPlus import loadmochaimport
+
+base_dir = os.path.dirname(__file__)
+loadmochaimport.loadMochaimport(base_dir)
+loadmochaimport.addIconPath(base_dir)
+
+import mochaimport
 
 
 def run_pack():
@@ -33,12 +42,14 @@ def run_autoComper():
     """
     autoComper.autoComper()
 
+
 def run_cryptomatte_create():
     """
     run cryptomatte script
     :return:
     """
     cryptomatte_utilities.cryptomatte_create_gizmo()
+
 
 def run_decryptomatte_all():
     """
@@ -47,12 +58,14 @@ def run_decryptomatte_all():
     """
     cryptomatte_utilities.decryptomatte_all()
 
+
 def run_decryptomatte_selected():
     """
     run cryptomatte script
     :return:
     """
     cryptomatte_utilities.decryptomatte_selected()
+
 
 def run_preCompForArnold():
     """
@@ -140,6 +153,91 @@ def run_toggleStamp():
     :return:
     """
     ToolSet.toggle_stamp.main()
+
+
+def run_relativeFilePath():
+    """
+    run mamoworld script
+    @return:
+    """
+    relativeFilePath.showReplaceFilePathDialog()
+
+
+def run_createStabilizedView():
+    """
+    @return:
+    """
+    mochaimport.createStabilizedView()
+
+
+def run_createCornerPin():
+    """
+    @return:
+    """
+    mochaimport.createCornerPin()
+
+
+def run_createTracker4Node():
+    """
+    @return:
+    """
+    mochaimport.createTracker4Node()
+
+
+def run_createTracker3Node():
+    """
+    @return:
+    """
+    mochaimport.createTracker3Node()
+
+
+def run_createRotoPaintNodeMI():
+    """
+    @return:
+    """
+    mochaimport.createRotoPaintNodeMI()
+
+
+def run_createRotoNodeMI():
+    """
+    @return:
+    """
+    mochaimport.createRotoNodeMI()
+
+
+def run_createGridWarpNodeMI():
+    """
+    @return:
+    """
+    mochaimport.createGridWarpNodeMI()
+
+
+def run_createTransformNodeMI():
+    """
+    @return:
+    """
+    mochaimport.createTransformNodeMI()
+
+
+def run_createCameraAndPointCloud():
+    """
+    @return:
+    """
+    mochaimport.createCameraAndPointCloud()
+
+
+def run_createCameraRig():
+    """
+    @return:
+    """
+    mochaimport.createCameraRig()
+
+
+def run_showSettings():
+    """
+    @return:
+    """
+    mochaimport.showSettings()
 
 
 def run_releaseNotes():

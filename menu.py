@@ -22,6 +22,11 @@ class NukeMenu(object):
         self.template_dir = self.replace_path(os.path.join(base_dir, "template"))
 
         """
+         add default init
+        """
+        self.default_init()
+
+        """
          append system path
         """
         if not self.python_dir in sys.path:
@@ -163,10 +168,8 @@ class NukeMenu(object):
                          "<font color = red>[value first] - [value last] </font>")
 
 
-
 if __name__ == '__main__':
     run = NukeMenu()
-    run.default_init()
     run.add_bar_tools()
     run.add_menu_tools()
     run.knob_show_frame()
