@@ -351,6 +351,13 @@ nuke_config = {
                     "icon": "ReLighting.png",
                     "type": "gizmo"
                 },
+                 {
+                    "name": "3D/CreatedPointCloud",
+                    "command": "command.run_createdPointCloud()",
+                    "shortcut": "",
+                    "icon": "pointcloud.png",
+                    "type": "python"
+                },
                 {
                     "name": "3D/FallingLeaves",
                     "command": "FallingLeaves",

@@ -10,6 +10,7 @@ import python.ToolSet as ToolSet
 from python.cryptomatte import cryptomatte_utilities
 from python.mamoworld.workflow import relativeFilePath
 from python.mamoworld.mochaImportPlus import loadmochaimport
+import python.CreatePointCloud.CreatedPointCloud as CreatedPointCloud
 
 base_dir = os.path.dirname(__file__)
 loadmochaimport.loadMochaimport(base_dir)
@@ -238,6 +239,13 @@ def run_showSettings():
     @return:
     """
     mochaimport.showSettings()
+
+
+def run_createdPointCloud():
+    """
+    @return:
+    """
+    CreatedPointCloud.create_cloud_point()
 
 
 def run_releaseNotes():
