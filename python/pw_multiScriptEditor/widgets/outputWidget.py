@@ -1,5 +1,6 @@
-from PySide.QtCore import *
-from PySide.QtGui import *
+from Qt.QtCore import *
+from Qt.QtGui import *
+from Qt.QtWidgets import *
 
 from managers import context
 
@@ -14,7 +15,7 @@ class outputClass(QTextBrowser):
     def showMessage(self, msg):
         self.moveCursor(QTextCursor.End)
         cursor = self.textCursor()
-        cursor.insertText(str(msg)+'\n')
+        cursor.insertText(msg+'\n')
         self.setTextCursor(cursor)
         self.moveCursor(QTextCursor.End)
         self.ensureCursorVisible()

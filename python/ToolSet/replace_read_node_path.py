@@ -9,7 +9,8 @@
 # notes       :
 
 # Built-in modules
-from PySide import QtGui, QtCore
+from Qt import QtWidgets as QtGui
+from Qt import QtCore as QtCore
 # Third-party modules
 import nuke
 # Studio modules

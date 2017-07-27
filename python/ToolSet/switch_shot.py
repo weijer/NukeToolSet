@@ -9,10 +9,12 @@
 # notes       :
 
 # Built-in modules
-from PySide import QtGui, QtCore
+from Qt import QtWidgets as QtGui
+from Qt import QtCore as QtCore
 import os
 import getpass
 import re
+
 import random
 # Third-party modules
 import nuke

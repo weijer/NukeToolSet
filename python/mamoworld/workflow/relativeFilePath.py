@@ -1,7 +1,8 @@
 
 import nuke
 import posixpath
-from PySide import QtGui, QtCore
+from Qt import QtWidgets as QtGui
+from Qt import QtCore as QtCore
 from platform import system
 
 def showReplaceFilePathDialog():

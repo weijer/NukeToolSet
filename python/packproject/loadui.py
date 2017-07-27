@@ -1,6 +1,6 @@
 # coing=utf8
-import PySide.QtCore as QtCore
-import PySide.QtUiTools as QtUiTools
+from Qt import QtCore as QtCore
+from Qt import QtCompat as QtUiTools
 
 
 def load_ui(ui_path):

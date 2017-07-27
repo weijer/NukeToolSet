@@ -1,10 +1,11 @@
 # coding=utf-8
 # author=weijer
-import PySide.QtGui as QtGui
-import PySide.QtCore as QtCore
+from Qt import QtWidgets as QtGui
+from Qt import QtCore as QtCore
+from Qt import QtCompat as QtCompat
 import sys
 import os
-import loadui
+# import loadui
 import package
 
 current_dir = os.path.dirname(__file__)
@@ -16,7 +17,7 @@ class PackageDialog(QtGui.QDialog):
         super(PackageDialog, self).__init__()
 
         main_layout = QtGui.QVBoxLayout(self)
-        self.mainWidget = loadui.load_ui(ui_path)
+        self.mainWidget = QtCompat.load_ui(ui_path)
         self.setWindowTitle(self.mainWidget.windowTitle())
         main_layout.addWidget(self.mainWidget)
 

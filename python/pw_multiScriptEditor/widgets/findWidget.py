@@ -1,5 +1,6 @@
-from PySide.QtCore import *
-from PySide.QtGui import *
+from Qt.QtCore import *
+from Qt.QtGui import *
+from Qt.QtWidgets import *
 import findWidget_UIs as ui
 
 class findWidgetClass(QWidget, ui.Ui_findReplace):

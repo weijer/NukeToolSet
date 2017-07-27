@@ -85,7 +85,8 @@ def aj(eO, eP, dj, eQ):
 
 
 import nuke as b
-from PySide import QtGui as l
+#from PySide import QtGui as l
+from Qt import QtWidgets as l
 from tempfile import mkstemp as hg
 import os as al
 import stat as dl
@@ -232,7 +233,8 @@ import nukescripts
 import os as al
 import MiImageFolder as hi
 import webbrowser as fm
-from PySide import QtGui as l
+#from PySide import QtGui as l
+from Qt import QtWidgets as l
 
 def dm():
     return dn().exec_()
@@ -271,7 +273,8 @@ class dn(l.QDialog):
         a.setWindowTitle('End User License Agreement (EULA)')
 
 
-from PySide import QtGui as l, QtCore
+#from PySide import QtGui as l, QtCore
+from Qt import QtWidgets as l, QtCore
 
 class dp(object):
 

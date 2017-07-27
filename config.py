@@ -67,6 +67,13 @@ nuke_config = {
                     "type": "python"
                 },
                 {
+                    "name": "Channel/Cryptomatte/Encryptomatte",
+                    "command": "command.run_encryptomatte()",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "python"
+                },
+                {
                     "name": "Channel/PreCompForArnold",
                     "command": "command.run_preCompForArnold()",
                     "shortcut": "",
@@ -664,6 +671,13 @@ nuke_config = {
                     "command": "command.run_toggleInput()",
                     "shortcut": "alt+shift+Q",
                     "icon": "",
+                    "type": "python"
+                },
+                {
+                    "name": "ToolSet/nukeFXSExporter",
+                    "command": "command.run_nukeFXSExporter()",
+                    "shortcut": "",
+                    "icon": "NukeFXSExporter.png",
                     "type": "python"
                 },
                 # ToolSet icon

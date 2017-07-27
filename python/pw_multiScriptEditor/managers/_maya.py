@@ -1,5 +1,6 @@
-from PySide.QtGui import *
-from PySide.QtCore import *
+from Qt.QtGui import *
+from Qt.QtWidgets import *
+from Qt.QtCore import *
 import maya.OpenMayaUI as omui
 from shiboken import wrapInstance as wrp
 import os, sys, re

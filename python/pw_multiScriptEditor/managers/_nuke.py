@@ -9,8 +9,9 @@ from managers.nuke import nodes
 nuke_nodes = dir(nodes)
 from managers.completeWidget import contextCompleterClass
 
-from PySide.QtGui import *
-from PySide.QtCore import *
+from Qt.QtGui import *
+from Qt.QtWidgets import *
+from Qt.QtCore import *
 
 p = os.path.dirname(__file__).replace('\\','/')
 if not p in sys.path:

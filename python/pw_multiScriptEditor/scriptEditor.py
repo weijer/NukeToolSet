@@ -1,11 +1,14 @@
-import traceback
 import sys
+import traceback
 import webbrowser
-import os
-from PySide.QtCore import *
-from PySide.QtGui import *
+
+from Qt.QtCore import *
+from Qt.QtGui import *
+from Qt.QtWidgets import *
+
 from widgets import scriptEditor_UIs as ui, tabWidget, outputWidget, about, shortcuts
 from widgets.pythonSyntax import design
+
 reload(tabWidget)
 reload(outputWidget)
 import sessionManager
@@ -18,7 +21,6 @@ reload(managers)
 if managers._s == 'w':
     import ctypes
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID('paulwinex.multiscripteditor.1.0')
-import icons_rcs
 from icons import *
 
 class scriptEditorClass(QMainWindow, ui.Ui_scriptEditor):
@@ -157,6 +159,8 @@ class scriptEditorClass(QMainWindow, ui.Ui_scriptEditor):
             return menu
 
     def addArgs(self):
+        if len(sys.argv) == 1:
+            return
         f = sys.argv[-1]
         if os.path.exists(f):
             if not os.path.basename(f) == os.path.basename(__file__):
@@ -399,7 +403,7 @@ class scriptEditorClass(QMainWindow, ui.Ui_scriptEditor):
         elif os.name =='os2':
             os.system('open "%s"' % path)
 
-QTextCodec.setCodecForCStrings(QTextCodec.codecForName("UTF-8"))
+# QTextCodec.setCodecForCStrings(QTextCodec.codecForName("UTF-8"))
 
 if __name__ == '__main__':
     app = QApplication([])

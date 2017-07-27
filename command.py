@@ -11,6 +11,7 @@ from python.cryptomatte import cryptomatte_utilities
 from python.mamoworld.workflow import relativeFilePath
 from python.mamoworld.mochaImportPlus import loadmochaimport
 import python.CreatePointCloud.CreatedPointCloud as CreatedPointCloud
+import python.NukeFXSExporter.NukeFXSExporter as NukeFXSExporter
 
 base_dir = os.path.dirname(__file__)
 loadmochaimport.loadMochaimport(base_dir)
@@ -66,6 +67,14 @@ def run_decryptomatte_selected():
     :return:
     """
     cryptomatte_utilities.decryptomatte_selected()
+
+
+def run_encryptomatte():
+    """
+    run cryptomatte script
+    :return:
+    """
+    cryptomatte_utilities.encryptomatte_create_gizmo()
 
 
 def run_preCompForArnold():
@@ -247,6 +256,11 @@ def run_createdPointCloud():
     """
     CreatedPointCloud.create_cloud_point()
 
+def run_nukeFXSExporter():
+    """
+    @return:
+    """
+    NukeFXSExporter.silhouetteFxsExporter()
 
 def run_releaseNotes():
     nuke.message('<p style="color:#99CCFF;font-weight:600">Nuke ToolSet Ver1.0</p>'
