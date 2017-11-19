@@ -22,7 +22,7 @@ class ReplaceFilePathDialog(QtGui.QDialog):
         self.supportedKnobTypes =[{'label':'File','types':['file']},
                                    {'label':'Proxy','types':['proxy']}
                                  ]
-        self.aboutText = "<h3>What does it do?</h3><p>Tired of footage files breaking when you move your project to a different folder or open it on another machine? Relative File Path makes all paths of footage in your NUKE script relative to the location of the NUKE script itself. Now you can copy the folder containing you project wherever you want and the footage will always be found.</p><h3>Tutorial</h3><p>Watch the video tutorial about RelativeFilePath for more infos: http://CGHotman.com:808/mocha/relative-file-path-nuke.mp4</p>"
+        self.aboutText = "<h3>What does it do?</h3><p>Tired of footage files breaking when you move your project to a different folder or open it on another machine? Relative File Path makes all paths of footage in your NUKE script relative to the location of the NUKE script itself. Now you can copy the folder containing you project wherever you want and the footage will always be found.</p><h3>Tutorial</h3><p>Watch the video tutorial about RelativeFilePath for more infos: http://mamoworld.com/tutorials/relative-file-path-nuke</p>"
         
         self.initUI()
         

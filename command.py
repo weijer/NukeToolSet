@@ -9,16 +9,15 @@ from python.Channel import autoComper, PreCompForArnold, RenderLayer
 import python.ToolSet as ToolSet
 from python.cryptomatte import cryptomatte_utilities
 from python.mamoworld.workflow import relativeFilePath
-from python.mamoworld.mochaImportPlus import loadmochaimport
+from python.mamoworld.mochaImportPlus import loadMochaImport
 import python.CreatePointCloud.CreatedPointCloud as CreatedPointCloud
 import python.NukeFXSExporter.NukeFXSExporter as NukeFXSExporter
 
 base_dir = os.path.dirname(__file__)
-loadmochaimport.loadMochaimport(base_dir)
-loadmochaimport.addIconPath(base_dir)
+loadMochaImport.load()
+loadMochaImport.addIconPath(base_dir)
 
 import mochaimport
-
 
 def run_pack():
     """

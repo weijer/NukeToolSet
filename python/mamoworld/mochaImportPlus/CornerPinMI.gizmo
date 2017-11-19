@@ -1,0 +1,150 @@
+#! /Applications/Nuke7.0v8/NukeX7.0v8.app/../Nuke7.0v8.app/Contents/MacOS/Nuke7.0v8 -nx
+version 7.0 v1
+Gizmo {
+ inputs 3
+ help "<h1>Corner Pin With Lens Distortion</h1><p>Creates a corner pin based on mocha tracking data and optionally also mocha lens data</p> <h2>Inputs</h2><p><strong>Src:</strong>The image that you want to corner pin</p><strong>Bg:</strong>The background (usually the clip that you tracked). It is required for two things: (1) The node has an option to merge the background behind the corner pin (2) The background is required to correctly interpret the size of the DistMap input<p><strong>DistMap</strong> (optional) a Distortion Map Clip (ST Map) exported with the mocha Pro lens module with option 'distort'.</p><h2>Basic Usage</h2><ol><li>Create the node.</li><li>connect the Src and Bg inputs</li><li>Load your mocha tracking data from the clipboard or from file. The format you need to export from mocha is Nuke corner pin (*.nk)</li></ol><h2>Lens Distortion</h2><p>If you've used the mocha Lens module to analyze the lens distortion of your clip, you need to do the following things to apply both the corner pin and the lens distortion to your image:<ul><li>Make sure to provide the Background (Bg) input, even if you don't want the option to merge in the background. The background is needed to correctly interpret the size of the distortion map.</li><li>Make sure the mocha corner pin data you load into the node is exported from mocha Pro with the option 'Remove lens distortion'.</li><li>as DistMap input of the node use a Distortion Map Clip (ST Map) exported with the mocha Pro lens module with option 'distort'.</li></ul>"
+ label MochaImport+
+ addUserKnob {20 User l "Corner Pin"}
+ addUserKnob {26 loadMochaDataLabel l "load mocha data" t "load Nuke Corner Pin (*.nk) data from mocha" T ""}
+ addUserKnob {22 loadCornerPinFile l "from file" t "import mocha corner pin data from a file\n\nrequired format: Nuke Corner Pin (*.nk)" -STARTLINE T "if not locals().has_key(\"mochaimport\"):\n    nuke.message(\"Please install MochaImport+ for NUKE (by mamoworld.com) to use this function\")\nelse:\n    mochaimport.cornerPinNode___loadTrackingDataFromFile()\n"}
+ addUserKnob {22 pasteMochaDataFromClipboard l "from clipboard" t "import mocha corner pin data from the clipboard \n\nrequired format: Nuke Corner Pin (*.nk)" -STARTLINE T "if not locals().has_key(\"mochaimport\"):\n    nuke.message(\"Please install MochaImport+ for NUKE (by mamoworld.com) to use this function\")\nelse:\n    mochaimport.cornerPinNode___loadTrackinDataFromClipboard()\n"}
+ addUserKnob {20 cornerpindata l data t "the actual corner pin data loaded from the file" n 1}
+ addUserKnob {12 pin1 l "pin 1" t "corner pin tracking data"}
+ addUserKnob {12 pin2 l "pin 2" t "corner pin tracking data"}
+ addUserKnob {12 pin3 l "pin 3" t "corner pin tracking data"}
+ addUserKnob {12 pin4 l "pin 4" t "corner pin tracking data"}
+ addUserKnob {78 pinTimeOffset l "corner pin time offset" t "shift your tracking data if it does not start at the first frame" n 1}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 divName l "" +STARTLINE}
+ addUserKnob {6 mergeBackground l "merge background" t "NOTE: also provide a background input if you do not want to merge it. It is necessary to interpret the size of the distortion map correctly" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {20 CornerPinDetails l "corner pin" n 1}
+ addUserKnob {41 filter T "corner pin.filter"}
+ addUserKnob {41 clamp -STARTLINE T "corner pin.clamp"}
+ addUserKnob {41 black_outside l "black outside" -STARTLINE T "corner pin.black_outside"}
+ addUserKnob {41 motionblur T "corner pin.motionblur"}
+ addUserKnob {41 shutter T "corner pin.shutter"}
+ addUserKnob {41 shutteroffset l "shutter offset" T "corner pin.shutteroffset"}
+ addUserKnob {41 shuttercustomoffset l "" -STARTLINE T "corner pin.shuttercustomoffset"}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 LensDistortionDetails l "lens distortion" n 1}
+ addUserKnob {41 filter_1 l filter T "apply distortion.filter"}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+}
+ BackdropNode {
+  inputs 0
+  name Merge_Background
+  xpos -78
+  ypos 36
+  bdwidth 242
+  bdheight 69
+ }
+ BackdropNode {
+  inputs 0
+  name Apply_Lens_Distortion
+  xpos 59
+  ypos -222
+  bdwidth 246
+  bdheight 245
+ }
+ Input {
+  inputs 0
+  name Bg
+  label "\[value number]"
+  xpos -57
+  ypos -223
+  number 1
+ }
+ Input {
+  inputs 0
+  name Src
+  label "\[value number]"
+  xpos 70
+  ypos -327
+ }
+ CornerPin2D {
+  to1 {{parent.pin1.x(t+parent.pinTimeOffset)} {parent.pin1.y(t+parent.pinTimeOffset)}}
+  to2 {{parent.pin2.x(t+parent.pinTimeOffset)} {parent.pin2.y(t+parent.pinTimeOffset)}}
+  to3 {{parent.pin3.x(t+parent.pinTimeOffset)} {parent.pin3.y(t+parent.pinTimeOffset)}}
+  to4 {{parent.pin4.x(t+parent.pinTimeOffset)} {parent.pin4.y(t+parent.pinTimeOffset)}}
+  invert false
+  from1 {0 0}
+  from2 {{"\[python nuke.toNode(\\\"Src\\\").width()\\ ]"} {curve}}
+  from3 {{"\[python nuke.toNode(\\\"Src\\\").width()\\ ]"} {"\[python nuke.toNode(\\\"Src\\\").height()\\ ]"}}
+  from4 {0 {"\[python nuke.toNode(\\\"Src\\\").height()\\ ]"}}
+  name "corner pin"
+  xpos 70
+  ypos -264
+ }
+set N1f8decd0 [stack 0]
+ Crop {
+  box {0 0 {"\[python -execlocal bgNode\\ =\\ nuke.toNode(\\\"Bg\\\")\\nret\\ =\\ bgNode.format().width()]"} {"\[python -execlocal bgNode\\ =\\ nuke.toNode(\\\"Bg\\\")\\nret\\ =\\ bgNode.format().height()]"}}
+  reformat true
+  crop false
+  name Crop1
+  xpos 70
+  ypos -85
+ }
+set N1f8e5f00 [stack 0]
+ Input {
+  inputs 0
+  name DistMap
+  label "\[value number]"
+  xpos 216
+  ypos -328
+  number 2
+ }
+ Crop {
+  box {{"\[python -execlocal bgNode\\ =\\ nuke.toNode(\\\"Bg\\\")\\ndistortionMapNode\\ =\\ nuke.toNode(\\\"DistMap\\\")\\ncurrentWidth\\ =\\ distortionMapNode.format().width()\\ntargetWidth\\ =\\ bgNode.format().width()\\nret\\ =\\ currentWidth/2\\ -\\ targetWidth/2\\n]"} {"\[python -execlocal bgNode\\ =\\ nuke.toNode(\\\"Bg\\\")\\ndistortionMapNode\\ =\\ nuke.toNode(\\\"DistMap\\\")\\ncurrentHeight\\ =\\ distortionMapNode.format().height()\\ntargetHeight\\ =\\ bgNode.format().height()\\nret\\ =\\ currentHeight/2\\ -\\ targetHeight/2]"} {"\[python -execlocal bgNode\\ =\\ nuke.toNode(\\\"Bg\\\")\\ndistortionMapNode\\ =\\ nuke.toNode(\\\"DistMap\\\")\\ncurrentWidth\\ =\\ distortionMapNode.format().width()\\ntargetWidth\\ =\\ bgNode.format().width()\\nret\\ =\\ currentWidth/2\\ +\\ targetWidth/2]"} {"\[python -execlocal bgNode\\ =\\ nuke.toNode(\\\"Bg\\\")\\ndistortionMapNode\\ =\\ nuke.toNode(\\\"DistMap\\\")\\ncurrentHeight\\ =\\ distortionMapNode.format().height()\\ntargetHeight\\ =\\ bgNode.format().height()\\nret\\ =\\ currentHeight/2\\ +\\ targetHeight/2]"}}
+  reformat true
+  crop false
+  name Crop2
+  xpos 216
+  ypos -88
+ }
+push $N1f8e5f00
+ STMap {
+  inputs 2
+  uv rgb
+  name "apply distortion"
+  xpos 216
+  ypos -9
+ }
+ Switch {
+  inputs 2
+  which {{"!\[exists parent.input2]"}}
+  name Switch2
+  selected true
+  xpos 70
+  ypos -9
+ }
+set N1f8f1f00 [stack 0]
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge1
+  xpos -57
+  ypos 70
+ }
+push $N1f8f1f00
+ Switch {
+  inputs 2
+  which {{"\[python nuke.thisGroup()\\\['mergeBackground'\\].getValue()]"}}
+  name Switch1
+  xpos 70
+  ypos 70
+ }
+ Output {
+  name Output1
+  xpos 70
+  ypos 139
+ }
+push $N1f8decd0
+ Viewer {
+  input_process false
+  name Viewer1
+  xpos -307
+  ypos -29
+ }
+end_group
