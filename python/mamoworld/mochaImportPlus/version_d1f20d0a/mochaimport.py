@@ -271,6 +271,7 @@ class dn(l.QDialog):
 
 # from PySide import QtGui as l, QtCore
 from Qt import QtWidgets as l, QtCore
+from Qt import QtGui as qui
 
 
 class dp(object):
@@ -362,7 +363,7 @@ class dr(l.QDialog):
         h = a.wehsrhv.ertzz()
         dt = l.QHBoxLayout()
         fj = hi.getFolder() + 'about.png'
-        fk = l.QPixmap(fj)
+        fk = qui.QPixmap(fj)
         du = l.QLabel('No image available')
         du.setPixmap(fk)
         dt.addWidget(du)
