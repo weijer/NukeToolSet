@@ -1,33 +1,21 @@
+import imp, os, sys
 import nuke
-import os.path
-import imp, sys
 
 
-def addIconPath(base_dir):
-    """
-    @param base_dir:
-    @return:
-    """
-    icons_mocha_dir = replace_path(os.path.join(base_dir, "python/mamoworld/mochaImportPlus/icons"))
-    nuke.pluginAddPath(icons_mocha_dir)
+## adds the correct plugin path for this version of NUKE
 
-
-def loadMochaimport(base_dir):
-    """
-    adds the correct plugin path for this version of NUKE
-    @param basepath:
-    @return:
-    """
+def load():
     supportedMagicNumbers = ['03f30d0a', 'd1f20d0a']
+
     try:
         magicNumberOfThisVersion = imp.get_magic().encode('hex')
         if magicNumberOfThisVersion in supportedMagicNumbers:
-            pathToThisVersion = replace_path(
-                os.path.join(base_dir, "python/mamoworld/mochaImportPlus/version_" + magicNumberOfThisVersion))
+            pathToThisVersion = "python/mamoworld/mochaImportPlus/version_" + magicNumberOfThisVersion
             nuke.pluginAddPath(pathToThisVersion)
         else:
             raise Exception(
                 "MochaImport+ for NUKE: unsupported version of Python:" + sys.version + "(magic number:" + magicNumberOfThisVersion + ")")
+
     except Exception as e:
         import traceback
         nuke.tprint(traceback.format_exc())  # Just in case
@@ -37,6 +25,14 @@ def loadMochaimport(base_dir):
         else:
             nuke.tprint(msg)
 
+
+def addIconPath(base_dir):
+    """
+    @param base_dir:
+    @return:
+    """
+    icons_mocha_dir = replace_path(os.path.join(base_dir, "python/mamoworld/mochaImportPlus/icons"))
+    nuke.pluginAddPath(icons_mocha_dir)
 
 def replace_path(path):
     """

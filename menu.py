@@ -7,6 +7,7 @@ import os.path
 import config
 import sys
 import command
+import mochaimport
 
 
 class NukeMenu(object):

@@ -1,0 +1,119 @@
+#! /Applications/Nuke7.0v8/NukeX7.0v8.app/../Nuke7.0v8.app/Contents/MacOS/Nuke7.0v8 -nx
+version 7.0 v1
+Gizmo {
+ inputs 2
+ help "<h1>Creates a stabilized view</h1><p>Transforms an input image such that only the region of the corner pin track is shown as stabilized view.</p><p>This node is normally used as part of a stabilized view rig. The rig uses the StartStabilized node to create a stabilized view on the region of the clip that you tracked. In this stabilized view you can do arbitrary modifications and then go back to the original perspective using an EndStabilized node.</p><h2>Inputs of StartStabilized</h2><p><strong>Src:</strong>The input clip that you tracked</p><p><strong>UndistMap</strong> (optional) a Distortion Map Clip (ST Map) exported with the mocha Pro lens module with option 'undistort'.</p><h2>Basic Usage of Stabilized View Rig</h2><ol><li>From the MochaImport+ menu, create the stabilized view rig consisting of the StartStabilized node, the EndStabilized node, and the Stabilized View Backdrop.</li><li>Load your mocha tracking data in the StartStabilized node.<li>Do arbitrary manipulations in the Stabilized View by inserting new nodes inside the backdrop. All changes you do there in a stabilized setting will also be visible in your original perspective after the EndStabilized node.</li></ol><h2>Lens Distortion</h2><p>If you've used the mocha Lens module to analyze the lens distortion of your clip, you need to do the following things to get an undistorted stabilized view and reapply the lens distortion to the final result:<ul><li>make sure the mocha corner pin data you load into the StartStabilized node is exported from mocha Pro with the option 'Remove lens distortion'</li><li>as UndistMap input of the StartStabilized node use a Distortion Map Clip (ST Map) exported with the mocha Pro lens module with option 'undistort'.</li><li>as DistMap input of the EndStabilized node use a Distortion Map Clip (ST Map) exported with the mocha Pro lens module with option 'distort'.</li></ul>"
+ label MochaImport+
+ addUserKnob {20 User l "Stabilized View"}
+ addUserKnob {26 loadMochaDataLabel l "load mocha data" t "load Nuke Corner Pin (*.nk) data from mocha" T ""}
+ addUserKnob {22 loadCornerPinFile l "from file" t "import mocha corner pin data from a file\n\nrequired format: Nuke Corner Pin (*.nk)" -STARTLINE T "if not locals().has_key(\"mochaimport\"):\n    nuke.message(\"Please install MochaImport+ for NUKE (by mamoworld.com) to use this function\")\nelse:\n    mochaimport.cornerPinNode___loadTrackingDataFromFile()"}
+ addUserKnob {22 pasteCornerPinDataFromClipboard l "from clipboard" t "import mocha corner pin data from the clipboard \n\nrequired format: Nuke Corner Pin (*.nk)" -STARTLINE T "if not locals().has_key(\"mochaimport\"):\n    nuke.message(\"Please install MochaImport+ for NUKE (by mamoworld.com) to use this function\")\nelse:\n    mochaimport.cornerPinNode___loadTrackinDataFromClipboard()"}
+ addUserKnob {20 cornerpindata l data n 1}
+ addUserKnob {12 pin1 l "pin 1"}
+ addUserKnob {12 pin2 l "pin 2"}
+ addUserKnob {12 pin3 l "pin 3"}
+ addUserKnob {12 pin4 l "pin 4"}
+ addUserKnob {78 pinTimeOffset l "corner pin time offset" t "shift your tracking data if it does not start at the first frame" n 1}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 CornerPinDetails l "corner pin" n 1}
+ addUserKnob {41 filter T CornerPin2D1.filter}
+ addUserKnob {41 clamp -STARTLINE T CornerPin2D1.clamp}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 LensDistortionDetails l "lens distortion" n 1}
+ addUserKnob {41 filter_1 l filter T undistortion.filter}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+}
+ Input {
+  inputs 0
+  name Src
+  label "\[value number]"
+  xpos 0
+ }
+set N1f7e9e10 [stack 0]
+ Dot {
+  name Dot2
+  xpos -63
+  ypos 8
+ }
+ Dot {
+  name Dot3
+  xpos -63
+  ypos 266
+ }
+push $N1f7e9e10
+ Input {
+  inputs 0
+  name UndistMap
+  label "\[value number]"
+  xpos 238
+  ypos -4
+  number 1
+ }
+ Crop {
+  box {{"\[python -execlocal bgNode\\ =\\ nuke.toNode(\\\"Src\\\")\\ndistortionMapNode\\ =\\ nuke.toNode(\\\"UndistMap\\\")\\ncurrentWidth\\ =\\ distortionMapNode.format().width()\\ntargetWidth\\ =\\ bgNode.format().width()\\nret\\ =\\ currentWidth/2\\ -\\ targetWidth/2\\n]"} {"\[python -execlocal bgNode\\ =\\ nuke.toNode(\\\"Src\\\")\\ndistortionMapNode\\ =\\ nuke.toNode(\\\"UndistMap\\\")\\ncurrentHeight\\ =\\ distortionMapNode.format().height()\\ntargetHeight\\ =\\ bgNode.format().height()\\nret\\ =\\ currentHeight/2\\ -\\ targetHeight/2]"} {"\[python -execlocal bgNode\\ =\\ nuke.toNode(\\\"Src\\\")\\ndistortionMapNode\\ =\\ nuke.toNode(\\\"UndistMap\\\")\\ncurrentWidth\\ =\\ distortionMapNode.format().width()\\ntargetWidth\\ =\\ bgNode.format().width()\\nret\\ =\\ currentWidth/2\\ +\\ targetWidth/2]"} {"\[python -execlocal bgNode\\ =\\ nuke.toNode(\\\"Src\\\")\\ndistortionMapNode\\ =\\ nuke.toNode(\\\"UndistMap\\\")\\ncurrentHeight\\ =\\ distortionMapNode.format().height()\\ntargetHeight\\ =\\ bgNode.format().height()\\nret\\ =\\ currentHeight/2\\ +\\ targetHeight/2]"}}
+  reformat true
+  crop false
+  name Crop2
+  selected true
+  xpos 238
+  ypos 88
+ }
+push $N1f7e9e10
+ Dot {
+  name Dot1
+  xpos 162
+  ypos 8
+ }
+ STMap {
+  inputs 2
+  uv rgb
+  name undistortion
+  xpos 128
+  ypos 151
+ }
+ Switch {
+  inputs 2
+  which {{"!\[exists parent.input1]"}}
+  name Switch1
+  xpos 0
+  ypos 156
+ }
+ CornerPin2D {
+  to1 {{parent.pin1.x(t+parent.pinTimeOffset)} {parent.pin1.y(t+parent.pinTimeOffset)}}
+  to2 {{parent.pin2.x(t+parent.pinTimeOffset)} {parent.pin2.y(t+parent.pinTimeOffset)}}
+  to3 {{parent.pin3.x(t+parent.pinTimeOffset)} {parent.pin3.y(t+parent.pinTimeOffset)}}
+  to4 {{parent.pin4.x(t+parent.pinTimeOffset)} {parent.pin4.y(t+parent.pinTimeOffset)}}
+  invert true
+  from1 {0 0}
+  from2 {{"\[python nuke.toNode(\\\"Src\\\").width()\\ ]"} 0}
+  from3 {{"\[python nuke.toNode(\\\"Src\\\").width()\\ ]"} {"\[python nuke.toNode(\\\"Src\\\").height()\\ ]"}}
+  from4 {0 {"\[python nuke.toNode(\\\"Src\\\").height()\\ ]"}}
+  name CornerPin2D1
+  xpos 0
+  ypos 212
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 0
+  ypos 263
+ }
+set N1f8057c0 [stack 0]
+ Output {
+  name Output1
+  xpos 0
+  ypos 300
+ }
+push $N1f8057c0
+push $N1f8057c0
+ Viewer {
+  inputs 2
+  input_number 1
+  input_process false
+  name Viewer1
+  xpos -294
+  ypos 200
+ }
+end_group
