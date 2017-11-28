@@ -1,23 +1,27 @@
 # coding=utf-8
 # author=weijer
 # http://www.cgspread.com
-import nuke
 import os.path
-from python.packproject import nuke2pack
-import python.pw_multiScriptEditor as ScriptEditor
-from python.Channel import autoComper, PreCompForArnold, RenderLayer
-import python.ToolSet as ToolSet
-from python.cryptomatte import cryptomatte_utilities
-from python.mamoworld.workflow import relativeFilePath
-from python.mamoworld.mochaImportPlus import loadMochaImport
+
+import nuke
+
 import python.CreatePointCloud.CreatedPointCloud as CreatedPointCloud
 import python.NukeFXSExporter.NukeFXSExporter as NukeFXSExporter
+import python.ToolSet as ToolSet
+import python.pw_multiScriptEditor as ScriptEditor
+from python.Channel import autoComper, PreCompForArnold, RenderLayer
+from python.ToolSet import ReadAfterRender
+from python.cryptomatte import cryptomatte_utilities
+from python.mamoworld.mochaImportPlus import loadMochaImport
+from python.mamoworld.workflow import relativeFilePath
+from python.packproject import nuke2pack
 
 base_dir = os.path.dirname(__file__)
 loadMochaImport.load()
 loadMochaImport.addIconPath(base_dir)
 
 import mochaimport
+
 
 def run_pack():
     """
@@ -255,11 +259,20 @@ def run_createdPointCloud():
     """
     CreatedPointCloud.create_cloud_point()
 
+
 def run_nukeFXSExporter():
     """
     @return:
     """
     NukeFXSExporter.silhouetteFxsExporter()
+
+
+def run_readFromWrite():
+    """
+    @return:
+    """
+    ReadAfterRender.RenderWrite().read_from_write()
+
 
 def run_releaseNotes():
     nuke.message('<p style="color:#99CCFF;font-weight:600">Nuke ToolSet Ver1.0</p>'

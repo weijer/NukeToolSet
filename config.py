@@ -680,6 +680,13 @@ nuke_config = {
                     "icon": "NukeFXSExporter.png",
                     "type": "python"
                 },
+                 {
+                    "name": "ToolSet/readFromWrite",
+                    "command": "command.run_readFromWrite()",
+                    "shortcut": "shift+r",
+                    "icon": "",
+                    "type": "python"
+                },
                 # ToolSet icon
                 {
                     "name": "ToolSet",
