@@ -168,9 +168,17 @@ class NukeMenu(object):
                          "<font size=\"3\" color =#548DD4><b> Frame range :</b></font> "
                          "<font color = red>[value first] - [value last] </font>")
 
+    def knob_after_render(self):
+        """
+        after write render
+        :return:
+        """
+        nuke.knobDefault("Write.afterRender", "command.run_readFromWrite()")
+
 
 if __name__ == '__main__':
     run = NukeMenu()
     run.add_bar_tools()
     run.add_menu_tools()
     run.knob_show_frame()
+    run.knob_after_render()
