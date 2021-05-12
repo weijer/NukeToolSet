@@ -114,12 +114,12 @@ class Nuke(object):
                     try:
                         self.import_pictures(sequence_dir, sep)
                     except Exception as e:
-                        print '[AAs] error:', e
+                        print ('[AAs] error:'), e
                     value += 1
                 task.setMessage('Auto Read Successful')
                 task.setProgress(100)
         else:
-            print '[AAS info]: %s is not an exist folder' % project_dir
+            print ('[AAS info]: %s is not an exist folder') % project_dir
 
     def get_current_shot_options(self):
         all_paths = list()
