@@ -93,7 +93,7 @@ def getParentNode(layer, compNodes, mergeLayer):
 
         iteration += 1
         if iteration > 20:
-            print "ERROR:\nPLEASE CHECK IF THE NAMES OF THE PARENT-NAMES FIT TO THE LAYER-NAMES"
+            print ("ERROR:\nPLEASE CHECK IF THE NAMES OF THE PARENT-NAMES FIT TO THE LAYER-NAMES")
             parentNode = -1
             break
 
