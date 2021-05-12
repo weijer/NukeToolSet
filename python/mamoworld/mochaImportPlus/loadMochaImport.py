@@ -5,13 +5,17 @@ import nuke
 ## adds the correct plugin path for this version of NUKE
 
 def load():
-    supportedMagicNumbers = ['03f30d0a', 'd1f20d0a']
+    supportedMagicNumbers = ['03f30d0a', 'd1f20d0a','420d0d0a']
 
     try:
-        magicNumberOfThisVersion = imp.get_magic().encode('hex')
+        if nuke.NUKE_VERSION_STRING.startswith('13'):
+            magicNumberOfThisVersion = imp.get_magic().hex()
+        else:
+            magicNumberOfThisVersion = imp.get_magic().encode('hex')
         if magicNumberOfThisVersion in supportedMagicNumbers:
             pathToThisVersion = "python/mamoworld/mochaImportPlus/version_" + magicNumberOfThisVersion
             nuke.pluginAddPath(pathToThisVersion)
+            print('**--**-*-*-*-*'+magicNumberOfThisVersion)
         else:
             raise Exception(
                 "MochaImport+ for NUKE: unsupported version of Python:" + sys.version + "(magic number:" + magicNumberOfThisVersion + ")")
