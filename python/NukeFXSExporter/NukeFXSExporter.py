@@ -861,13 +861,13 @@ def silhouetteFxsExporter():
                 ext = ext + ".fxs"
                 path = os.path.join(base, ext)
     else:
-        print "Saving file to: %s" % path
+        print ("Saving file to: %s") % path
 
     indent(fxsExport)
     ET.ElementTree(fxsExport).write(path)
     nuke.delete(rotoNode)
     task.setProgress(100)
-    print "Time elapsed: %s seconds" % (time.time() - start_time)
+    print ("Time elapsed: %s seconds") % (time.time() - start_time)
 
 
 if __name__ == '__main__':
