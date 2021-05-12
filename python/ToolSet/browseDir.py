@@ -65,7 +65,7 @@ def browseDirByNode():
     regcombile_t = re.compile('(//192.168.0.250/tvcServe/)\S+')
     matchgroup_r = regcombile_r.match(dirFromNode)
     matchgroup_t = regcombile_t.match(dirFromNode)
-    print matchgroup_r, matchgroup_t
+    print (matchgroup_r, matchgroup_t)
 
     if matchgroup_r:
         dirFromNode_new = re.sub("//192.168.0.243/nas/", "R:/", dirFromNode)
@@ -74,7 +74,7 @@ def browseDirByNode():
     else:
         dirFromNode_new = dirFromNode
 
-    print dirFromNode
+    print (dirFromNode)
     # selectedNode['file'].setValue(dirFromNode_new)
 
 

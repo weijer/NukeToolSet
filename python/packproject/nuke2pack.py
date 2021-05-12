@@ -6,7 +6,7 @@ from Qt import QtCompat as QtCompat
 import sys
 import os
 # import loadui
-import package
+from . import package
 
 current_dir = os.path.dirname(__file__)
 ui_path = os.path.join(current_dir, "static/pack.ui")

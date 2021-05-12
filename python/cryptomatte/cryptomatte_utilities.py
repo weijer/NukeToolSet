@@ -35,7 +35,7 @@ try:
     import mmh3 as mmh3
 except ImportError:
     # ... otherwise fallback to the pure python version
-    import pymmh3 as mmh3
+    from . import pymmh3 as mmh3
 
 
 def mm3hash_float(name):
@@ -200,7 +200,7 @@ class CryptomatteInfo(object):
     def resolve_manifest_paths(self, exr_path, sidecar_path):
         import os
         if "\\" in sidecar_path:
-            print "Cryptomatte: Invalid sidecar path (Back-slashes not allowed): ", sidecar_path
+            print ("Cryptomatte: Invalid sidecar path (Back-slashes not allowed): "), sidecar_path
             return "" # to enforce the specification.
         joined = os.path.join(os.path.dirname(exr_path), sidecar_path)
         return os.path.normpath(joined)
@@ -229,9 +229,9 @@ class CryptomatteInfo(object):
                     with open(manif_file) as json_data:
                         manifest = json.load(json_data)
                 except:
-                    print "Cryptomatte: Unable to parse manifest, ", manif_file
+                    print ("Cryptomatte: Unable to parse manifest, "), manif_file
             else:
-                print "Cryptomatte: Unable to find manifest file: ", manif_file
+                print ("Cryptomatte: Unable to find manifest file: "), manif_file
         else:
             try:
                 manifest = json.loads(self.cryptomattes[num].get("manifest", "{}"))
@@ -299,22 +299,22 @@ class CryptomatteInfo(object):
                     collisions.append("colliding: %s %s" % (ids[idvalue], name))
                 ids[idvalue] = name
 
-        print "Tested %s, %s names" % (self.nuke_node.name(), len(manifest))
-        print "    ", len(errors), "non-matching IDs between python and c++."
-        print "    ", len(collisions), "hash collisions in manifest."
+        print ("Tested %s, %s names") % (self.nuke_node.name(), len(manifest))
+        print ("    "), len(errors), "non-matching IDs between python and c++."
+        print ("    "), len(collisions), "hash collisions in manifest."
 
         return errors, collisions
 
 
 def print_hash_info(name):
     hash_32 = mmh3.hash(name)
-    print "Name:", name
-    print "UTF-8 bytes:", " ".join( hex(ord(x))[2:] for x in name)
-    print "Hash value (signed):", hash_32
+    print ("Name:"), name
+    print ("UTF-8 bytes:"), " ".join( hex(ord(x))[2:] for x in name)
+    print ("Hash value (signed):"), hash_32
     if hash_32 < 0:
         hash_32 = (-hash_32 - 1) ^ 0xFFFFFFFF
-    print "Hash value (unsigned):", hash_32
-    print "Float converted:", mm3hash_float(name)
+    print ("Hash value (unsigned):"), hash_32
+    print ("Float converted:"), mm3hash_float(name)
 
 
 def test_csv_round_trip():
@@ -330,9 +330,9 @@ def test_csv_round_trip():
 
     def check_results(encoded, decoded):
         if encoded != csv_str:
-            print "list:   ", decoded
-            print "orig:   ", csv_str
-            print "encoded:", encoded
+            print ("list:   "), decoded
+            print ("orig:   "), csv_str
+            print ("encoded:"), encoded
             raise RuntimeError("Round trip to str failed: %s != %s" % (csv_str, encoded));
         for x, y in zip(name_list, decoded):
             if x != y:
@@ -347,7 +347,7 @@ def test_csv_round_trip():
     encoded = _encode_csv(name_list)
     decoded = _decode_csv(encoded)
     check_results(encoded, decoded)
-    print "Success."
+    print ("Success.")
     return True
 
 

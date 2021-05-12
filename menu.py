@@ -110,7 +110,7 @@ class NukeMenu(object):
                 else:
                     tools_icon = ""
 
-                print tools_icon
+                print (tools_icon)
                 self.create_tools(cmenu,
                                   tools["type"],
                                   tools["name"],
