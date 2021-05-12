@@ -79,7 +79,7 @@ class Package(object):
                             os.makedirs(copy_dir)
                         shutil.copy2(read_file, copy_path)
 
-                    print copy_path
+                    print (copy_path)
                     # change file path to relative
                     cdir = os.path.join(relative_dir, file_info["base_name"])
                     cdir = cdir.replace("\\", "/")
