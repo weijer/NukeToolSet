@@ -40,14 +40,14 @@ def scan_ply_data(path, max_points):
     for line in lines:
         if "element vertex" in line:
             verts_count = int(line.split()[2])
-            print "%s points detected! " % verts_count
+            print ("%s points detected! " % verts_count)
         if started and total < verts_count:
             vert_entries.append(line)
             total += 1
         if "end_header" in line:
             started = True
     if max_points <= verts_count:
-        print "selecting only %s points at random! " % max_points
+        print ("selecting only %s points at random! ") % max_points
         vert_entries = randomSelection(max_points, vert_entries)
     for entry in vert_entries:
         data_split = entry.split()
