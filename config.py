@@ -50,28 +50,32 @@ nuke_config = {
                     "command": "command.run_cryptomatte_create()",
                     "shortcut": "",
                     "icon": "",
-                    "type": "python"
+                    "type": "python",
+                    "max_version": "12"
                 },
                 {
                     "name": "Channel/Cryptomatte/Decryptomatte All",
                     "command": "command.run_decryptomatte_all()",
                     "shortcut": "",
                     "icon": "",
-                    "type": "python"
+                    "type": "python",
+                    "max_version": "12"
                 },
                 {
                     "name": "Channel/Cryptomatte/Decryptomatte Selection",
                     "command": "command.run_decryptomatte_selected()",
                     "shortcut": "",
                     "icon": "",
-                    "type": "python"
+                    "type": "python",
+                    "max_version": "12"
                 },
                 {
                     "name": "Channel/Cryptomatte/Encryptomatte",
                     "command": "command.run_encryptomatte()",
                     "shortcut": "",
                     "icon": "",
-                    "type": "python"
+                    "type": "python",
+                    "max_version": "12"
                 },
                 {
                     "name": "Channel/PreCompForArnold",
@@ -135,7 +139,8 @@ nuke_config = {
                     "command": "",
                     "shortcut": "",
                     "icon": "cryptomatte_logo.png",
-                    "type": "toolbar"
+                    "type": "toolbar",
+                    "max_version": "12"
                 },
                 #
                 # Filter
