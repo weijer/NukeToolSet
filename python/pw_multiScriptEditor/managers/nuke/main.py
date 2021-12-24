@@ -1,4 +1,5 @@
-import math, geo
+import math
+from . import geo
 
 # KNOB
 class KnobType(object):

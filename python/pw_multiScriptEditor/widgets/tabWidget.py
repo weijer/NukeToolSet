@@ -1,22 +1,24 @@
 try:
     from PySide.QtCore import *
     from PySide.QtGui import *
+
     qt = 1
 except:
     from PySide2.QtCore import *
     from PySide2.QtGui import *
     from PySide2.QtWidgets import *
-    qt = 2
-import os
-import numBarWidget, inputWidget
-reload(inputWidget)
-reload(numBarWidget)
-from managers import context
 
+    qt = 2
+import importlib,os
+from . import numBarWidget, inputWidget
+
+importlib.reload(inputWidget)
+importlib.reload(numBarWidget)
+from python.pw_multiScriptEditor.managers import context
 
 style = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'style', 'completer.qss')
 if not os.path.exists(style):
-    style=None
+    style = None
 
 
 class tabWidgetClass(QTabWidget):
@@ -40,17 +42,17 @@ class tabWidgetClass(QTabWidget):
         self.p = parent
         self.lastSearch = [0, None]
 
-        #connects
+        # connects
         self.currentChanged.connect(self.hideAllCompleters)
 
     def closeTab(self, i):
         if self.count() > 1:
             if self.getCurrentText(i).strip():
                 # if qt == 1:
-                if self.yes_no_question('Close this tab without saving?\n'+self.tabText(i)):
-                # if QMessageBox.question(self, 'Close Tab',
-                #                        'Close this tab without saving?\n'+self.tabText(i),
-                #                         self.buttons) == QMessageBox.Yes:
+                if self.yes_no_question('Close this tab without saving?\n' + self.tabText(i)):
+                    # if QMessageBox.question(self, 'Close Tab',
+                    #                        'Close this tab without saving?\n'+self.tabText(i),
+                    #                         self.buttons) == QMessageBox.Yes:
                     self.removeTab(i)
                 # else:
                 #     if QMessageBox.question(self, 'Close Tab',
@@ -61,7 +63,7 @@ class tabWidgetClass(QTabWidget):
 
     def openMenu(self):
         menu = QMenu(self)
-        menu.addAction(QAction('Rename Current Tab', self, triggered = self.renameTab))
+        menu.addAction(QAction('Rename Current Tab', self, triggered=self.renameTab))
         menu.exec_(QCursor.pos())
 
     def renameTab(self):
@@ -76,13 +78,13 @@ class tabWidgetClass(QTabWidget):
         text = self.tabText(index)
         return text
 
-    def addNewTab(self, name='New Tab', text = None):
-        cont = container(text, self.p, self.desk)#, self.completer)
+    def addNewTab(self, name='New Tab', text=None):
+        cont = container(text, self.p, self.desk)  # , self.completer)
         cont.edit.saveSignal.connect(self.p.saveSession)
         # cont.edit.executeSignal.connect(self.p.executeSelected)
         self.addTab(cont, name)
         cont.edit.moveCursor(QTextCursor.Start)
-        self.setCurrentIndex(self.count()-1)
+        self.setCurrentIndex(self.count() - 1)
         return cont.edit
 
     def getTabText(self, i):
@@ -108,7 +110,6 @@ class tabWidgetClass(QTabWidget):
         i = self.currentIndex()
         self.widget(i).edit.setPlainText(text)
 
-
     def hideAllCompleters(self):
         for i in range(self.count()):
             self.widget(i).edit.completer.hideMe()
@@ -116,7 +117,7 @@ class tabWidgetClass(QTabWidget):
     def current(self):
         return self.widget(self.currentIndex()).edit
 
-############################## editor commands
+    ############################## editor commands
     def undo(self):
         self.current().undo()
 
@@ -169,22 +170,22 @@ class container(QWidget):
         super(container, self).__init__()
         hbox = QHBoxLayout(self)
         hbox.setSpacing(0)
-        hbox.setContentsMargins(0,0,0,0)
+        hbox.setContentsMargins(0, 0, 0, 0)
         # input widget
         self.edit = inputWidget.inputClass(parent, desk)
         self.edit.executeSignal.connect(parent.executeSelected)
         if text:
             self.edit.addText(text)
         # if not context == 'hou':
-            # line number
+        # line number
         # if context == 'hou':
         #     import hou
         #     if hou.applicationVersion()[0] > 14:
         hbox.addWidget(self.edit)
-                # return
+        # return
         self.lineNum = numBarWidget.lineNumberBarClass(self.edit, self)
-        self.edit.verticalScrollBar().valueChanged.connect(lambda :self.lineNum.update())
-        self.edit.inputSignal.connect(lambda :self.lineNum.update())
+        self.edit.verticalScrollBar().valueChanged.connect(lambda: self.lineNum.update())
+        self.edit.inputSignal.connect(lambda: self.lineNum.update())
 
         hbox.addWidget(self.lineNum)
         hbox.addWidget(self.edit)

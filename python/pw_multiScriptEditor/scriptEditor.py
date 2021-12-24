@@ -2,6 +2,7 @@ import traceback
 import sys
 import webbrowser
 import os
+import importlib
 try:
     from PySide.QtCore import *
     from PySide.QtGui import *
@@ -15,12 +16,12 @@ import sessionManager
 import settingsManager
 from widgets import themeEditor, findWidget
 import managers
-reload(themeEditor)
-reload(findWidget)
-reload(tabWidget)
-reload(outputWidget)
-reload(ui)
-reload(managers)
+importlib.reload(themeEditor)
+importlib.reload(findWidget)
+importlib.reload(tabWidget)
+importlib.reload(outputWidget)
+importlib.reload(ui)
+importlib.reload(managers)
 if managers._s == 'w':
     import ctypes
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID('paulwinex.multiscripteditor.2')
@@ -288,7 +289,7 @@ class scriptEditorClass(QMainWindow, ui.Ui_scriptEditor):
                         self.out.showMessage(repr(result))
 
                 except SyntaxError:
-                    exec command in self.namespace
+                    exec(command, self.namespace)
             except SystemExit:
                 self.close()
             except:

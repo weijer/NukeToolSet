@@ -5,7 +5,7 @@ except:
     from PySide2.QtCore import *
     from PySide2.QtGui import *
     from PySide2.QtWidgets import *
-import shortcuts_UIs
+from . import shortcuts_UIs
 import os
 
 class shortcutsClass(QDialog, shortcuts_UIs.Ui_Dialog):

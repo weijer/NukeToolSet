@@ -1,4 +1,5 @@
 _pyside_ver = 0
+import importlib
 try:
     from PySide.QtCore import *
     from PySide.QtGui import *
@@ -12,11 +13,11 @@ except:
 import maya.OpenMayaUI as omui
 
 import os, sys, re
-from managers.completeWidget import contextCompleterClass
+from python.pw_multiScriptEditor.managers.completeWidget import contextCompleterClass
 
 main = __import__('__main__')
 ns = main.__dict__
-exec 'import pymel.core as pm' in ns
+exec('import pymel.core as pm', ns)
 pm = main.__dict__['pm']
 
 # jedi completion path
@@ -42,7 +43,7 @@ def show(dock=False):
 
 def showWindow():
     from multi_script_editor import scriptEditor
-    reload(scriptEditor)
+    importlib.reload(scriptEditor)
 
     editor = scriptEditor.scriptEditorClass(parent=getMayaWindow())
     editor.show()
@@ -58,7 +59,7 @@ def showDickControl():
     if pm.window(name, q=1, ex=1):
         pm.deleteUI(name)
     from multi_script_editor import scriptEditor
-    reload(scriptEditor)
+    importlib.reload(scriptEditor)
     editor = scriptEditor.scriptEditorClass(parent=getMayaWindow())
     clearDoc()
     pm.dockControl(dockName, area='left',
@@ -223,7 +224,8 @@ class mayaIconsClass(QListWidget):
         return result
 
     def print_name(self, item):
-        print item.data(32)
+        print(item.data(32))
+
 
 class saveToShelfClass(QDialog):
     def __init__(self, parent):

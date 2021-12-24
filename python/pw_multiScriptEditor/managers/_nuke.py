@@ -1,12 +1,14 @@
-import os, sys, re
+import importlib,os, sys, re
+
 # import nuke
 main = __import__('__main__')
 ns = main.__dict__
-exec 'import nuke' in ns
-exec 'import nukescripts' in ns
+exec('import nuke', ns)
+exec('import nukescripts', ns)
 nuke = ns['nuke']
 import nukescripts
 from managers.nuke import nodes
+
 nuke_nodes = dir(nodes)
 from managers.completeWidget import contextCompleterClass
 
@@ -18,12 +20,13 @@ except ImportError:
     from PySide2.QtCore import *
     from PySide2.QtWidgets import *
 
-p = os.path.dirname(__file__).replace('\\','/')
+p = os.path.dirname(__file__).replace('\\', '/')
 if not p in sys.path:
     sys.path.insert(0, p)
 
-from multi_script_editor import scriptEditor
-reload(scriptEditor)
+from python.pw_multiScriptEditor import scriptEditor
+
+importlib.reload(scriptEditor)
 
 # QT
 qApp = QApplication.instance()
@@ -32,12 +35,16 @@ def getMainWindow():
     for widget in qApp.topLevelWidgets():
         if widget.metaObject().className() == 'Foundry::UI::DockMainWindow':
             return widget
+
+
 qNuke = getMainWindow()
+
 
 def show(panel=False):
     if panel:
         import multi_script_editor.scriptEditor
-        nukescripts.panels.registerWidgetAsPanel("multi_script_editor.scriptEditor.scriptEditorClass", "Multi Script Editor", "pw_multi_script_editor")
+        nukescripts.panels.registerWidgetAsPanel("multi_script_editor.scriptEditor.scriptEditorClass",
+                                                 "Multi Script Editor", "pw_multi_script_editor")
     else:
         showWindow()
 
@@ -82,8 +89,8 @@ def completer(line, ns):
     # p2 = r"nuke\.allNodes\(.*(filter=)*['\"](\w*)$"
     funcs = ['allNodes', 'selectedNodes']
     for f in funcs:
-        p2 = r"nuke\."+f+"\(\w*(filter=)*['\"]{1}(\w*)$"
-        m = re.search(p2, line)# or re.search(p2, line)
+        p2 = r"nuke\." + f + "\(\w*(filter=)*['\"]{1}(\w*)$"
+        m = re.search(p2, line)  # or re.search(p2, line)
         if m:
             name = m.group(2)
             l = len(name)
@@ -99,7 +106,7 @@ def completer(line, ns):
     if m:
         name = m.group(1)
         # nuke.tprint(name)
-        nodes = [x.name() for x in nuke.allNodes()] + ['preferences', 'root'] #recurseGroups=True
+        nodes = [x.name() for x in nuke.allNodes()] + ['preferences', 'root']  # recurseGroups=True
         if name:
             result = [x for x in nodes if x.lower().startswith(name.lower())]
         else:
@@ -125,11 +132,13 @@ def completer(line, ns):
             # nuke.tprint(ns[node])
     return None, None
 
+
 ################  CONTEXT MENU
 
 def contextMenu(parent):
     m = nukeContextMenu(parent)
     return m
+
 
 class nukeContextMenu(QMenu):
     def __init__(self, parent):
@@ -153,7 +162,7 @@ class nukeContextMenu(QMenu):
         s = nuke.selectedNodes()
         if s:
             s = s[0]
-            pyKnobs = [x for x in s.knobs().values() if x.Class() in ['PyScript_Knob','PythonCustomKnob']]
+            pyKnobs = [x for x in s.knobs().values() if x.Class() in ['PyScript_Knob', 'PythonCustomKnob']]
             if pyKnobs:
                 result = {}
                 for k in pyKnobs:
@@ -175,7 +184,7 @@ class nukeContextMenu(QMenu):
         knob = self.getPyKnob('Select Python Knob to Read')
         if knob:
             text = knob.value()
-            self.par.tab.addNewTab(knob.node().name()+' | '+knob.name(), text)
+            self.par.tab.addNewTab(knob.node().name() + ' | ' + knob.name(), text)
 
     def saveToKnob(self):
         knob = self.getPyKnob('Select Python Knob to Save')
@@ -195,6 +204,7 @@ class nukeContextMenu(QMenu):
                     nodes.append(name)
         for n in nodes:
             self.par.tab.addToCurrent('nuke.toNode("%s")\n' % n)
+
 
 class selectDialog(QDialog):
     def __init__(self, items, title, sel=None):
@@ -219,9 +229,6 @@ class selectDialog(QDialog):
         if selected:
             self.list.setCurrentIndex(self.list.indexFromItem(selected))
 
-
-
     def closeEvent(self, *args, **kwargs):
         self.reject()
-        super(selectDialog, self).closeEvent( *args, **kwargs)
-
+        super(selectDialog, self).closeEvent(*args, **kwargs)

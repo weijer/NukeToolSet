@@ -1,4 +1,4 @@
-from main import Node, Group, Gizmo, Viewer, Root, Precomp, Gizmo
+from .main import Node, Group, Gizmo, Viewer, Root, Precomp, Gizmo
 
 class DeepHoldout(Node):
     pass

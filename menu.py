@@ -152,10 +152,15 @@ class NukeMenu(object):
         toolMenu = menubar.addMenu('&Tools')
         toolMenu_config = self.config["toolMenu"]
         for tools in toolMenu_config:
-            self.create_menu_tools(toolMenu,
-                                   toolMenu_config[tools]["name"],
-                                   toolMenu_config[tools]["command"]
-                                   )
+            if "max_version" in toolMenu_config[tools].keys():
+                max_version = toolMenu_config[tools]["max_version"]
+            else:
+                max_version = None
+            if max_version is None or (self.nuke_version_number <= toolMenu_config[tools]["max_version"]):
+                self.create_menu_tools(toolMenu,
+                                       toolMenu_config[tools]["name"],
+                                       toolMenu_config[tools]["command"]
+                                       )
 
     def replace_path(self, path):
         """

@@ -6,7 +6,7 @@ except:
     from PySide2.QtGui import *
     from PySide2.QtWidgets import *
 import icons
-import about_UIs
+from . import about_UIs
 import os
 
 class aboutClass(QDialog, about_UIs.Ui_Dialog):

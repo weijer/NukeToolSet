@@ -6,8 +6,8 @@ except:
     from PySide2.QtGui import *
     from PySide2.QtWidgets import *
 import re
-import design
-import keywords
+from . import design
+from . import keywords
 
 
 class PythonHighlighterClass (QSyntaxHighlighter):

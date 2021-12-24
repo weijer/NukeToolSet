@@ -7,13 +7,12 @@ except:
     from PySide2.QtGui import *
     from PySide2.QtWidgets import *
     qt = 2
-import themeEditor_UIs as ui
-import settingsManager
+from . import themeEditor_UIs as ui
+from python.pw_multiScriptEditor import settingsManager,icons_rcs
 import os
 from .pythonSyntax import design
 from .pythonSyntax import syntaxHighLighter
 from . import inputWidget
-import icons_rcs
 
 
 class themeEditorClass(QDialog, ui.Ui_themeEditor):
