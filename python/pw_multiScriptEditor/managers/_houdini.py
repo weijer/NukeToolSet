@@ -1,5 +1,4 @@
 import os, sys, re
-# import hou
 main = __import__('__main__')
 hou = main.__dict__['hou']
 import hqt
@@ -8,7 +7,6 @@ from managers.completeWidget import contextCompleterClass
 
 path = os.path.join(os.path.dirname(__file__), 'houdini')
 
-main = __import__('__main__')
 ns = main.__dict__
 for mod in [os.path.splitext(x)[0] for x in os.listdir(path)]:
     if not mod in ns:
@@ -20,13 +18,18 @@ for mod in [os.path.splitext(x)[0] for x in os.listdir(path)]:
 if not path in sys.path:
     sys.path.insert(0, path)
 
-from pw_multiScriptEditor import scriptEditor
+from multi_script_editor import scriptEditor
 reload(scriptEditor)
 
 
 def show(*args, **kwargs):
     hqt.show(scriptEditor.scriptEditorClass, *args, **kwargs)
 
+def get_widget():
+    widget = scriptEditor.scriptEditorClass()
+    widget.setStyleSheet('')            
+    widget.setStyleSheet( hqt.get_h14_style() )
+    return widget
 
 
 # EXAMPLE SHELF BUTTON
@@ -35,9 +38,9 @@ def show(*args, **kwargs):
 # # example c:/houdini/python/lib
 # if not path in sys.path:
 #     sys.path.append(path)
-# import pw_multiScriptEditor
-# reload(pw_multiScriptEditor)
-# pw_multiScriptEditor.showHoudini(ontop=1)
+# import multi_script_editor
+# reload(multi_script_editor)
+# multi_script_editor.showHoudini(ontop=1)
 
 # H14
 #import sys
@@ -45,9 +48,9 @@ def show(*args, **kwargs):
 # # example c:/houdini/python/lib
 # if not path in sys.path:
 #     sys.path.append(path)
-# import pw_multiScriptEditor
-# reload(pw_multiScriptEditor)
-# pw_multiScriptEditor.showHoudini(name='Multi Script Editor',replacePyPanel=1, hideTitleMenu=0)
+# import multi_script_editor
+# reload(multi_script_editor)
+# multi_script_editor.showHoudini(name='Multi Script Editor',replacePyPanel=1, hideTitleMenu=0)
 
 
 
@@ -69,11 +72,11 @@ def getAllDifinitions():
 roots = ['obj', 'shop', 'ch', 'vex', 'img', 'out']
 nodes = list(set(getAllDifinitions()))
 
-def completer(line):
+def completer(line, ns):
     # node types
     func = ['createNode', 'createInputNode', 'createOutputNode']
     for f in func:
-        p = r"\.%s\(['\"](\w*)$" % f
+        p = r"\.%s\(.*['\"](\w*)$" % f
         m = re.search(p, line)
         if m:
             name = m.group(1)
@@ -121,8 +124,14 @@ class houdiniMenuClass(hqt.QMenu):
     def __init__(self, parent):
         super(houdiniMenuClass, self).__init__('Houdini', parent)
         self.par = parent
-        self.addAction(hqt.QAction('Save To Node', parent, triggered=self.saveToNode))
+        self.setTearOffEnabled(1)
+        self.setWindowTitle('MSE %s Houdini' % self.par.ver)
         self.addAction(hqt.QAction('Read From Node', parent, triggered=self.readFromNode))
+        self.addAction(hqt.QAction('Save To Node', parent, triggered=self.saveToNode))
+        self.addSeparator()
+        self.addAction(hqt.QAction('Read from hou.session Sourse', parent, triggered=self.readFromSession))
+        self.addAction(hqt.QAction('Save to hou.session', parent, triggered=self.saveToSession))
+
 
 
     def readFromNode(self):
@@ -151,8 +160,14 @@ class houdiniMenuClass(hqt.QMenu):
             res = self.getSectionsFromNode(sel[0])
             if res:
                 text = self.par.tab.getCurrentText()
+                curr = self.par.tab.currentTabName()
+                section = curr.split('|')[-1]
                 keys = res.keys()
-                s = hou.ui.selectFromList(keys, exclusive=1)
+                if section in keys:
+                    d = (keys.index(section),)
+                else:
+                    d = ()
+                s = hou.ui.selectFromList(keys,  default_choices=d,exclusive=1)
                 if s:
                     source = res[keys[s[0]]]
                     if isinstance(source, hou.Parm):
@@ -164,7 +179,6 @@ class houdiniMenuClass(hqt.QMenu):
                 return
         else:
             hou.ui.displayMessage('Select One Node')
-
 
     def getSectionsFromNode(self, node):
         default = ['Help', 'TypePropertiesOptions', 'ExtraFileOptions',  'Tools.shelf', 'InternalFileOptions', 'Contents.gz', 'CreateScript', 'DialogScript']
@@ -179,6 +193,15 @@ class houdiniMenuClass(hqt.QMenu):
         if pySop:
             res['PythonSOP'] = pySop
         return res
+
+    def readFromSession(self):
+        source = hou.sessionModuleSource()
+        self.par.tab.addNewTab('hou.session', source)
+
+    def saveToSession(self):
+        text = self.par.tab.getCurrentText()
+        hou.setSessionModuleSource(text)
+
 
 
 def wrapDroppedText(namespace, text, event):

@@ -1,21 +1,33 @@
-from Qt.QtCore import *
-from Qt.QtGui import *
-from Qt.QtWidgets import *
+try:
+    from PySide.QtCore import *
+    from PySide.QtGui import *
+except:
+    from PySide2.QtCore import *
+    from PySide2.QtGui import *
+    from PySide2.QtWidgets import *
 
 from managers import context
+font_name = 'Courier'
+
 
 class outputClass(QTextBrowser):
     def __init__(self):
         super(outputClass, self).__init__()
         self.setWordWrapMode(QTextOption.NoWrap)
+        font = QFont("Courier")
+        font.setStyleHint(QFont.Monospace)
+        font.setFixedPitch(True)
+        self.setFont(font)
+        self.fs = 14
+        self.document().setDefaultFont(QFont(font_name, self.fs, QFont.Monospace))
         metrics = QFontMetrics(self.document().defaultFont())
         self.setTabStopWidth(4 * metrics.width(' '))
-        self.fs = 14
+        self.setMouseTracking(1)
 
     def showMessage(self, msg):
         self.moveCursor(QTextCursor.End)
         cursor = self.textCursor()
-        cursor.insertText(msg+'\n')
+        cursor.insertText(str(msg)+'\n')
         self.setTextCursor(cursor)
         self.moveCursor(QTextCursor.End)
         self.ensureCursorVisible()

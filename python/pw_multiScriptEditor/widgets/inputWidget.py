@@ -1,10 +1,12 @@
-from Qt.QtCore import *
-from Qt.QtGui import *
-from Qt.QtWidgets import *
+try:
+    from PySide.QtCore import *
+    from PySide.QtGui import *
+except:
+    from PySide2.QtCore import *
+    from PySide2.QtGui import *
+    from PySide2.QtWidgets import *
 import re
 import jedi
-# https://github.com/davidhalter/jedi
-# http://jedi.jedidjah.ch/en/latest/
 from pythonSyntax import syntaxHighLighter
 reload(syntaxHighLighter)
 import completeWidget
@@ -21,19 +23,28 @@ addEndBracket = True
 
 indentLen = 4
 minimumFontSize = 10
-escapeButtons = [Qt.Key_Return, Qt.Key_Enter, Qt.Key_Left, Qt.Key_Right, Qt.Key_Home, Qt.Key_End, Qt.Key_PageUp, Qt.Key_PageDown,
-                 Qt.Key_Delete, Qt.Key_Insert, Qt.Key_Escape]
+escapeButtons = [Qt.Key_Return, Qt.Key_Enter, Qt.Key_Left, Qt.Key_Right, Qt.Key_Home, Qt.Key_End, Qt.Key_PageUp, Qt.Key_PageDown, Qt.Key_Delete, Qt.Key_Insert, Qt.Key_Escape]
+# font_name = 'Lucida Console'
+font_name = 'Courier'
 
 
 class inputClass(QTextEdit):
     executeSignal = Signal()
     saveSignal = Signal()
+    inputSignal = Signal()
     def __init__(self, parent, desk=None):
+
+        # https://github.com/davidhalter/jedi
+        # http://jedi.jedidjah.ch/en/latest/
         super(inputClass, self).__init__(parent)
         self.p = parent
         self.desk = desk
         self.setWordWrapMode(QTextOption.NoWrap)
-        self.document().setDefaultFont(QFont("monospace", minimumFontSize, QFont.Normal))
+        font = QFont("Courier")
+        font.setStyleHint(QFont.Monospace)
+        font.setFixedPitch(True)
+        self.setFont(font)
+        self.document().setDefaultFont(QFont(font_name, minimumFontSize, QFont.Monospace))
         metrics = QFontMetrics(self.document().defaultFont())
         self.setTabStopWidth(4 * metrics.width(' '))
         self.setAcceptDrops(True)
@@ -43,7 +54,9 @@ class inputClass(QTextEdit):
         # self.customContextMenuRequested.connect(self.openMenu)
         data = settingsManager.scriptEditorClass().readSettings()
         self.applyHightLighter(data.get('theme'))
-        self.changeFontSize(False)
+        self.setFont(font)
+        # self.changeFontSize(False)
+
         self.changeFontSize(True)
 
     def focusOutEvent(self, event):
@@ -87,12 +100,12 @@ class inputClass(QTextEdit):
                 pos = tc.position()
                 if managers.context in managers.contextCompleters:
                     line = text[:pos].split('\n')[-1]
-                    comp, extra = managers.contextCompleters[managers.context ](line)
+                    comp, extra = managers.contextCompleters[managers.context ](line, self.p.namespace)
                     if comp or extra:
                         context_completer = True
                         self.completer.updateCompleteList(comp, extra)
                 if not context_completer:
-                    if re.match('[a-zA-Z0-9.]', text[pos-1]):
+                    if re.match('[a-zA-Z0-9_.]', text[pos-1]):
                         offs = 0
                         if managers.context in managers.autoImport:
                             autoImp = managers.autoImport.get(managers.context, '')
@@ -107,13 +120,13 @@ class inputClass(QTextEdit):
                             self.completer.updateCompleteList(script.completions())
                         except:
                             self.completer.updateCompleteList()
-                        return
                     else:
                         self.completer.updateCompleteList()
             else:
                 self.completer.updateCompleteList()
 
     def moveCompleter(self):
+        # self.p.out.showMessage('move')
         rec = self.cursorRect()
         # pt = self.mapToGlobal(QPoint(rec.bottomRight().x(), rec.y()+self.completer.lineHeight))
         pt = self.mapToGlobal(rec.bottomRight())
@@ -123,12 +136,16 @@ class inputClass(QTextEdit):
             futureCompGeo = self.completer.geometry()
             futureCompGeo.moveTo(pt)
             if not currentScreen.contains(futureCompGeo):
-                i = currentScreen.intersect(futureCompGeo)
+                try:
+                    i = currentScreen.intersect(futureCompGeo)
+                except:
+                    i = currentScreen.intersected(futureCompGeo)
                 x = futureCompGeo.width() - i.width()
                 y = futureCompGeo.height()+self.completer.lineHeight if (futureCompGeo.height()-i.height())>0 else 0
 
         pt = self.mapToGlobal(rec.bottomRight()) + QPoint(10-x, -y)
-
+        # if managers.context == 'hou':
+        #     print self.mapToParent(self.geometry().topLeft())
         self.completer.move(pt)
 
     def charBeforeCursor(self, cursor):
@@ -154,6 +171,7 @@ class inputClass(QTextEdit):
         return result
 
     def keyPressEvent(self, event):
+        self.inputSignal.emit()
         parse = 0
         # apply complete
         if event.modifiers() == Qt.NoModifier and event.key() in [Qt.Key_Return , Qt.Key_Enter]:
@@ -261,8 +279,8 @@ class inputClass(QTextEdit):
             newEnd = cursor.position()
             cursor.setPosition(start)
             cursor.setPosition(newEnd, QTextCursor.KeepAnchor)
-            self.setTextCursor(cursor)
             self.document().documentLayout().blockSignals(False)
+            self.setTextCursor(cursor)
             self.update()
 
     def commentSelected(self):
@@ -277,20 +295,23 @@ class inputClass(QTextEdit):
         cursor.setPosition(end,QTextCursor.KeepAnchor)
         cursor.movePosition(QTextCursor.MoveOperation.EndOfLine,QTextCursor.KeepAnchor)
         text = cursor.selection().toPlainText()
-        cursor.removeSelectedText()
+        self.document().documentLayout().blockSignals(False)
+        # cursor.removeSelectedText()
         text, offset = self.addRemoveComments(text)
         cursor.insertText(text)
         cursor.setPosition(min(pos+offset, len(self.toPlainText())))
         self.setTextCursor(cursor)
-        self.document().documentLayout().blockSignals(False)
         self.update()
 
     def addRemoveComments(self, text):
         result = text
         ofs = 0
-        if text:
+        if text.strip():
             lines = text.split('\n')
-            if lines[0].strip()[0] == '#': # remove comment
+            ind = 0
+            while not lines[ind].strip():
+                ind += 1
+            if lines[ind].strip()[0] == '#': # remove comment
                 result = '\n'.join([x.replace('#','',1) for x in lines])
                 ofs = -1
             else:   # add comment
@@ -299,15 +320,16 @@ class inputClass(QTextEdit):
         return result, ofs
 
     def insertText(self, comp):
-        self.document().documentLayout().blockSignals(True)
         cursor = self.textCursor()
+        self.document().documentLayout().blockSignals(True)
         cursor.insertText(comp.complete)
         cursor = self.fixLine(cursor, comp)
-        self.setTextCursor(cursor)
         self.document().documentLayout().blockSignals(False)
+        self.setTextCursor(cursor)
         self.update()
 
     def fixLine(self, cursor, comp):
+        # self.document().documentLayout().blockSignals(True)
         pos = cursor.position()
         linePos = cursor.positionInBlock()
 
@@ -332,6 +354,7 @@ class inputClass(QTextEdit):
 
         res = before + comp.name + br + end
 
+        # self.document().documentLayout().blockSignals(False)
         cursor.beginEditBlock()
         cursor.insertText(res)
         cursor.endEditBlock()
@@ -407,7 +430,7 @@ class inputClass(QTextEdit):
         QTextEdit.dragMoveEvent(self,event)
 
     def dragLeaveEvent(self, event):
-        event.acceptProposedAction()
+        event.accept()
         QTextEdit.dragLeaveEvent(self,event)
 
     def dropEvent(self, event):
@@ -454,13 +477,15 @@ class inputClass(QTextEdit):
             else:
                 size = max(8, size - 1)
             f.setPointSize(size)
+            f.setFamily(font_name)
             self.setFont(f)
 
     def setTextEditFontSize(self, size):
         style = self.styleSheet() +'''QTextEdit
     {
         font-size: %spx;
-    }''' % size
+        font-family: %s;
+    }''' % (size, font_name)
         self.setStyleSheet(style)
 
     def insertFromMimeData (self, source ):
@@ -514,3 +539,4 @@ class inputClass(QTextEdit):
 
     def replaceAll(selfold, new):
         pass
+

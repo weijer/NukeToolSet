@@ -65,16 +65,23 @@ dropEvents = dict(
 autoImport = dict(
     hou='import hou\n',
     nuke='import nuke\n',
+    max='import MaxPlus\n'
 )
 mayaDragTempData = 'maya_temp_drag_empty_Data'
 
+main_parent = None
 context = None
 if 'hou' in main.__dict__:
     context = 'hou'
+    if main.__dict__['hou'].applicationVersion()[0] >= 15:
+         main_parent = main.__dict__['hou'].ui.mainQtWindow()
 elif 'cmds' in main.__dict__:
     context = 'maya'
 elif 'nuke' in main.__dict__:
     context = 'nuke'
+elif 'MaxPlus' in main.__dict__:
+    context = 'max'
+
 
 
 
