@@ -13,6 +13,13 @@ import mochaimport
 class NukeMenu(object):
     def __init__(self):
         self.config = config.nuke_config
+
+        """
+        get current nuke version number
+        """
+        nuke_version_str = nuke.NUKE_VERSION_STRING
+        self.nuke_version_number = nuke_version_str.split('.')[0]
+
         """
          add folder path
         """
@@ -110,14 +117,21 @@ class NukeMenu(object):
                 else:
                     tools_icon = ""
 
-                print (tools_icon)
-                self.create_tools(cmenu,
-                                  tools["type"],
-                                  tools["name"],
-                                  tools["command"],
-                                  tools["shortcut"],
-                                  tools_icon
-                                  )
+                print(tools_icon)
+
+                if "max_version" in tools.keys():
+                    max_version = tools["max_version"]
+                else:
+                    max_version = None
+
+                if max_version is None or (self.nuke_version_number <= tools["max_version"]):
+                    self.create_tools(cmenu,
+                                      tools["type"],
+                                      tools["name"],
+                                      tools["command"],
+                                      tools["shortcut"],
+                                      tools_icon
+                                      )
 
     def create_menu_tools(self, toolMenu, name, command):
         """
@@ -138,10 +152,15 @@ class NukeMenu(object):
         toolMenu = menubar.addMenu('&Tools')
         toolMenu_config = self.config["toolMenu"]
         for tools in toolMenu_config:
-            self.create_menu_tools(toolMenu,
-                                   toolMenu_config[tools]["name"],
-                                   toolMenu_config[tools]["command"]
-                                   )
+            if "max_version" in toolMenu_config[tools].keys():
+                max_version = toolMenu_config[tools]["max_version"]
+            else:
+                max_version = None
+            if max_version is None or (self.nuke_version_number <= toolMenu_config[tools]["max_version"]):
+                self.create_menu_tools(toolMenu,
+                                       toolMenu_config[tools]["name"],
+                                       toolMenu_config[tools]["command"]
+                                       )
 
     def replace_path(self, path):
         """

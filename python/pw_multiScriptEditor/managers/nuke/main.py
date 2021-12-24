@@ -1,9 +1,21 @@
-import math, geo
+import math
+from . import geo
+
+# KNOB
 class KnobType(object):
     pass
 
-class Knob(object):
-
+class _Knob(object):
+    """
+    Fake class for default methods in all Knobs. Not Nuke default class !!!!
+    Used for auto comlete
+    """
+    def __init__(self,name, label, *flags):
+        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
+        pass
+    def __new__(self,S, ):
+        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
+        pass
     def clearAnimated(self):
         """Clear animation for channel 'c'. Return True if successful."""
         pass
@@ -57,10 +69,6 @@ Return True if animation at index 'index' has an expression.
 @param index: Optional index parameter. Defaults to -1 if not specified. This can be specified as a keyword parameter if desired.
 @return: True if has expression, False otherwise.
 """
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
         pass
 
     def getKeyTime(self):
@@ -126,7 +134,6 @@ Return the node that this knob belongs to. If the node has been cloned, we'll al
 @return: The node which owns this knob, or None if the knob has no owner yet."""
         return Node()
 
-
     def setEnabled(self,enabled):
         """self.setEnabled(enabled) -> None.
 
@@ -134,12 +141,12 @@ Enable or disable the knob.
 @param enabled: True to enable the knob, False to disable it."""
         pass
 
-    def setValue(self):
+    def setValue(self, val, chan):
         """self.setValue(val, chan) -> bool
 
 Sets the value 'val' at channel 'chan'.
 @return: True if successful, False if not."""
-        pass
+        return  True
 
     def setName(self,s):
         """self.setName(s) -> None.
@@ -152,10 +159,9 @@ Sets the value 'val' at channel 'chan'.
         """Return True if channel 'c' is animated."""
         pass
 
-    def setAnimated(self):
+    def setAnimated(self, chan):
         """Set channel 'c' to be animated."""
         pass
-
 
     def getDerivative(self):
         """Return derivative at time 't' for channel 'c'."""
@@ -242,7 +248,1423 @@ Show or hide the knob.
     def animation(self, i):
         return AnimationCurve()
 
+    def animations(self,view):
+        """self.animations(view) -> AnimationCurve list.
+@param view: Optional view.
+@return: AnimationCurve list.
+Example:
+b = nuke.nodes.Blur()
+k = b['size']
+k.setAnimated(0)
+a = k.animations()
+a[0].setKey(0, 11)
+a[0].setKey(10, 20)
+"""
+        return [AnimationCurve(),]
+
+
+class Font_Knob(_Knob):
+
+    def value(self):
+        """None"""
+        return ''
+
+    def setValue(self):
+        """None"""
+        pass
+
+class Array_Knob(_Knob):
+    def clearAnimated(self, index, view):
+        """self.clearAnimated(index, view) -> True if succeeded, False otherwise.
+Delete animation.
+@param index: Optional index.
+@param view: Optional view.
+@return: True if succeeded, False otherwise.
+"""
+        pass
+
+    def removeKey(self, index, view):
+        """self.removeKey(index, view) -> True if succeeded, False otherwise.
+Remove key.
+@param index: Optional index.
+@param view: Optional view.
+@return: True if succeeded, False otherwise.
+"""
+        pass
+
+    def setValueAt(self, value, time, index, view):
+        """self.setValueAt(value, time, index, view) -> bool.
+Set value of element 'index' at time for view. If the knob is animated, it will set a new keyframe or change an existing one. Index and view are optional. Return True if successful.
+@param value: Floating point value.
+@param time: Time.
+@param index: Optional index.
+@param view: Optional view.
+@return: True if value changed, False otherwise. Safe to ignore.
+"""
+        pass
+
+    def frame(self):
+        """self.frame() -> Frame number.
+@return: Frame number.
+"""
+        return 0
+
+    def removeKeyAt(self, time, index, view):
+        """self.removeKeyAt(time, index, view) -> True if succeeded, False otherwise.
+Remove keyframe at specified time, optional index and view. Return True if successful.
+@param time: Time.
+@param index: Optional index.
+@param view: Optional view.
+@return: True if succeeded, False otherwise.
+"""
+        pass
+
+    def height(self):
+        """self.height() -> Height of array of values.
+@return: Height of array of values.
+"""
+        return 0
+
+    def minimum(self):
+        """self.min() -> Minimum value.
+@return: Minimum value.
+"""
+        return 0
+
+    def unsplitView(self,view):
+        """self.unsplitView(view) -> None.
+Unsplit the view so that it shares a value with other views.
+@param view: Optional view. Default is current view.
+@return: None.
+"""
+        pass
+
+    def array(self):
+        """self.array() -> List of knob values.
+@return: List of knob values.
+"""
+        return [0,]
+
+    def getIntegral(self):
+        """Return integral at time interval [t1, t2] and index 'i'."""
+        pass
+
+    def singleValue(self,view):
+        """self.singleValue(view) -> True if holds a single value.
+@param view: Optional view. Default is current view.
+@return: True if holds a single value.
+"""
+        return [0,0]
+
+    def isKeyAt(self, time, index, view):
+        """self.isKeyAt(time, index, view) -> True if succeeded, False otherwise.
+Returns True if there is a keyframe at specified time, optional index and view, otherwise returns False.
+@param time: Time.
+@param index: Optional index.
+@param view: Optional view.
+@return: True if succeeded, False otherwise.
+"""
+        pass
+
+    def hasExpression(self,index):
+        """self.hasExpression(index) -> True if has expression, False otherwise.
+@param index: Optional index.
+@return: True if has expression, False otherwise.
+"""
+        pass
+
+    def setKeyAt(self, time, index, view):
+        """self.setKeyAt(time, index, view) -> None.
+Set a key on element 'index', at time and view.
+@param time: Time.
+@param index: Optional index.
+@param view: Optional view.
+@return: None.
+"""
+        pass
+
+    def min(self):
+        """self.min() -> Minimum value.
+@return: Minimum value.
+"""
+        return 0
+
+    def defaultValue(self):
+        """self.defaultValue() -> Default value.
+@return: Default value.
+"""
+        return 0
+
+    def getKeyTime(self):
+        """Return time of the keyframe at time 't' and channel 'c'."""
+        return 0
+
+    def deleteAnimation(self,curve):
+        """self.deleteAnimation(curve) -> None. Raises ValueError if not found.
+Deletes the AnimationCurve.
+@param curve: An AnimationCurve instance which belongs to this Knob.
+@return: None. Raises ValueError if not found.
+"""
+        pass
+
+    def width(self):
+        """self.width() -> Width of array of values.
+@return: Width of array of values.
+"""
+        return 0
+
+    def getNumKeys(self):
+        """Return number of keys at channel 'c'."""
+        return 0
+
+    def valueAt(self, time, index, view):
+        """self.valueAt(time, index, view) -> Floating point or List of floating point values (in case some are different).
+Return value for this knob at specified time, optional index and view.
+@param time: Time.
+@param index: Optional index. Default is 0.
+@param view: Optional view.
+@return: Floating point or List of floating point values (in case some are different).
+"""
+        return 0.0
+
+    def arraySize(self):
+        """self.arraySize() -> Number of elements in array.
+@return: Number of elements in array.
+"""
+        return 0
+
+    def max(self):
+        """self.max() -> Maximum value.
+@return: Maximum value.
+"""
+        return 0
+
+    def setSingleValue(self,b, view):
+        """self.setSingleValue(b, view) -> None.
+Set to just hold a single value or not.
+@param b: Boolean object.
+@param view: Optional view. Default is current view.
+@return: None.
+"""
+        pass
+
+    def toScript(self,quote, context):
+        """self.toScript(quote, context) -> String.
+Return the value of the knob in script syntax.
+@param quote: Optional, default is False. Specify True to return the knob value quoted in {}.
+@param context: Optional context, default is current, None will be "contextless" (all views, all keys) as in a .nk file.
+@return: String.
+"""
+        return ''
+
+    def notDefault(self):
+        """self.notDefault() -> True if any of the values is not set to the default, False otherwise.
+@return: True if any of the values is not set to the default, False otherwise.
+"""
+        pass
+
+    def splitView(self, view):
+        """self.splitView(view) -> None.
+Split the view away from the current knob value.
+@param view: Optional view. Default is current view.
+@return: None.
+"""
+        pass
+
+    def setValue(self,value, index=0, time=0, view=None):
+        """self.setValue(value, index, time, view) -> True if value changed, False otherwise. Safe to ignore.
+Set index to value at time and view.
+@param value: Floating point value.
+@param index: Optional index.
+@param time: Optional time.
+@param view: Optional view.
+@return: True if value changed, False otherwise. Safe to ignore.
+"""
+        pass
+
+    def isAnimated(self,curves, view):
+        """self.isAnimated(index, view) -> True if animated, False otherwise.
+@param index: Optional index.
+@param view: Optional view.
+@return: True if animated, False otherwise.
+"""
+        pass
+
+    def copyAnimations(self, curves, view):
+        """self.copyAnimations(curves, view) -> None.
+Copies the AnimationCurves from curves to this object. The view is optional and defaults to the current view.
+@param curves: AnimationCurve list.
+@param view: Optional view. Defaults to current.
+@return: None.
+"""
+        pass
+
+    def setDefaultValue(self,s):
+        """self.setDefaultValue(s) -> None.
+@param s: Sequence of floating-point values.
+@return: None.
+"""
+        pass
+
+    def dimensions(self):
+        """self.dimensions() -> Dimensions in array.
+@return: Dimensions in array.
+"""
+        return 0
+
+    def vect(self):
+        """self.vect() -> List of knob values.
+@return: List of knob values.
+"""
+        return [0,]
+
+    def animations(self,view):
+        """self.animations(view) -> AnimationCurve list.
+@param view: Optional view.
+@return: AnimationCurve list.
+Example:
+b = nuke.nodes.Blur()
+k = b['size']
+k.setAnimated(0)
+a = k.animations()
+a[0].setKey(0, 11)
+a[0].setKey(10, 20)
+"""
+        return [AnimationCurve(),]
+
+    def setAnimated(self, index, view):
+        """self.setAnimated(index, view) -> True if succeeded, False otherwise.
+Create an Animation object. Return True if successful, in which case caller must initialise it by calling setValue() or setValueAt().
+@param index: Optional index.
+@param view: Optional view.
+@return: True if succeeded, False otherwise.
+"""
+        pass
+
+    def getDerivative(self, t, i):
+        """Return derivative at time 't' and index 'i'."""
+        pass
+
+    def setExpression(self, expr, channel=-1, view=None):
+        """self.setExpression(expr, channel=-1, view=None) -> bool
+Set the expression for a knob. You can optionally specify a channel to set the expression for.
+
+@param expr: The new expression for the knob. This should be a string.
+@param channel: Optional parameter, specifying the channel to set the expression for. This should be an integer.
+@param view: Optional view parameter. Without, this command will set the expression for the current view theinterface is displaying. Can be the name of the view or the index.
+@return: True if successful, False if not."""
+        pass
+
+    def animation(self, chan, view):
+        """self.animation(chan, view) -> AnimationCurve or None.
+Return the AnimationCurve for the  channel 'chan' and view 'view'. The view argument is optional.
+@param channel: The channel index.
+@param view: Optional view.
+@return: AnimationCurve or None.
+"""
+        return AnimationCurve()
+
+    def resize(self, w, h):
+        """self.resize(w, h) -> True if successful, False otherwise.
+Resize the array.
+@param w: New width
+@param h: Optional new height
+@return: True if successful, False otherwise.
+"""
+        pass
+
+    def setRange(self, f1, f2):
+        """self.setRange(f1, f2) -> None.
+Set range of values.
+@param f1 Min value.
+@param f2 Max value.
+@return: None.
+"""
+        pass
+
+    def getValueAt(self, time, index, view):
+        """self.valueAt(time, index, view) -> Floating point or List of floating point values (in case some are different).
+Return value for this knob at specified time, optional index and view.
+@param time: Time.
+@param index: Optional index. Default is 0.
+@param view: Optional view.
+@return: Floating point or List of floating point values (in case some are different).
+"""
+        return 0.0
+
+    def getNthDerivative(self, t, i):
+        """Return n'th derivative at time 't' and index 'i'."""
+        return 0
+
+    def isKey(self, index, view):
+        """self.isKey(index, view) -> True if succeeded, False otherwise.
+@param index: Optional index.
+@param view: Optional view.
+@return: True if succeeded, False otherwise.
+"""
+        pass
+
+    def fromScript(self, s):
+        """self.fromScript(s) -> True if successful, False otherwise.
+Set value of the knob to a user defined script (TCL syntax, as in .nk file). Return True if successful.
+@param s: Nuke script to be set on knob.
+@return: True if successful, False otherwise.
+"""
+        pass
+
+    def maximum(self):
+        """self.max() -> Maximum value.
+@return: Maximum value.
+"""
+        return 0
+
+    def value(self, index, view, time):
+        """self.value(index, view, time) -> Floating point or List of floating point values (in case some are different).
+@param index: Optional index. Default is 0.
+@param view: Optional view.
+@param time: Optional time.
+@return: Floating point or List of floating point values (in case some are different).
+"""
+        return 0.0
+
+    def getValue(self, index, view, time):
+        """self.value(index, view, time) -> Floating point or List of floating point values (in case some are different).
+@param index: Optional index. Default is 0.
+@param view: Optional view.
+@param time: Optional time.
+@return: Floating point or List of floating point values (in case some are different).
+"""
+        return 0.0
+
+    def getKeyIndex(self):
+        """Return index of the keyframe at time 't' and channel 'c'."""
+        pass
+
+    def copyAnimation(self, channel, curve, view):
+        """self.copyAnimation(channel, curve, view) -> None.
+Copies the i'th channel of the AnimationCurve curve to this object. The view is optional and defaults to the current view.
+@param channel: The channel index.
+@param curve: AnimationCurve.
+@param view: Optional view. Defaults to current.
+@return: None.
+"""
+        pass
+
+class Axis_Knob(_Knob):
+    def __new__(self,S, ):
+        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
+        pass
+    def uniformScale(self):
+        """self.uniformScale() -> Double_Knob
+Return uniform scale knob."""
+        return Double_Knob()
+
+    def rotate(self):
+        """self.rotate() -> XYZ_Knob
+
+Return rotation knob."""
+        return XYZ_Knob()
+
+    def skew(self):
+        """self.skew() -> XYZ_Knob
+
+Return skew knob."""
+        return XYZ_Knob()
+
+    def value(self):
+        """self.value() -> _nukemath.Matrix4
+Return the transform matrix formed by combining the input knob values for translate, rotate, scale, skew and pivot."""
+        return math.Matrix4()
+
+    def scale(self):
+        """self.scale() -> Scale_Knob
+
+Return scale knob."""
+        return Scale_Knob()
+
+    def pivot(self):
+        """self.pivot() -> XYZ_Knob
+
+Return pivot knob."""
+        return XYZ_Knob()
+
+    def translate(self):
+        """self.translate() -> XYZ_Knob
+
+Return translation knob."""
+        return XYZ_Knob()
+
+class Channel_Knob(_Knob):
+    def inputNumber(self):
+        """self.inputNumber() -> int"""
+        return 0
+
+    def enableChannel(self):
+        """self.enableChannel(name, b) -> None
+Enable or disable a channel.
+@param name: The name of the channel.
+@param b: True to enable the channel, False to disable it.
+@return: None"""
+        pass
+
+    def layerSelector(self):
+        """self.layerSelector() -> bool"""
+        pass
+
+    def setEnable(self,name):
+        """self.setEnable(name) -> None
+Enable a channel.
+@param name: The name of the channel to enable.
+@return: None"""
+        pass
+
+    def value(self):
+        """self.value() -> str
+Get the name of the selected channel.
+@return: The name of the channel as a string.
+"""
+        return ''
+
+    def checkMarks(self):
+        """self.checkMarks() -> bool"""
+        pass
+
+    def channelSelector(self):
+        """self.channelSelector() -> bool"""
+        pass
+
+    def depth(self):
+        """self.depth() -> int
+
+Get the channel depth.
+@return: The depth of the channel as an int."""
+        return 0
+
+    def setValue(self,name):
+        """self.setValue(name) -> None
+Set the selected channel using the channel name.
+@param name: The name of the new channel as a string.
+@return: None
+@raise ValueError exception if the channel doesn't exist."""
+        pass
+
+    def setInput(self,num):
+        """self.setInput(num) -> None
+Set the input number for this knob.@param num: The number of the new input.
+@return: None"""
+        pass
+
+    def inputKnob(self):
+        """self.inputKnob() -> bool"""
+        return True
+
+    def isChannelEnabled(self,name):
+        """self.isChannelEnabled(name) -> bool
+Test if a channel is enabled.
+@param name: The name of the channel.@return: True if the channel is enabled, False otherwise."""
+        pass
+
+class BeginTabGroup_Knob(_Knob):
+    pass
+
+class Format_Knob(_Knob):
+    def setValue(self,format):
+        """setValue(format) -> True if succeeded, False otherwise.
+
+Set value of knob to format (either a Format object or a name of a format, e.g. "NTSC")."""
+        pass
+
+    def __new__(self,S, ):
+        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
+        pass
+
+    def fromScript(self,s):
+        """fromScript(s) -> True if succeeded, False otherwise.
+
+Initialise from script s."""
+        pass
+
+    def value(self):
+        """value() -> Format.
+
+Return value of knob."""
+        return Format()
+
+    def actualValue(self):
+        """actualValue() -> Format.
+
+Return value of knob."""
+        return Format()
+
+    def toScript(self, quote, context=None):
+        """toScript(quote, context=current) -> string.
+
+Return the value of the knob in script syntax.
+Pass True for quote to return results quoted in {}.
+Pass None for context to get results for all views and key times (as stored in a .nk file)."""
+        return ''
+
+    def notDefault(self):
+        """notDefault() -> True if set to its default value, False otherwise."""
+        pass
+
+    def name(self):
+        """name() -> string.
+
+Return name of knob."""
+        return ''
+
+class GeoSelect_Knob(_Knob):
+
+    def __setattr__(self):
+        """x.__setattr__('name', value) <==> x.name = value"""
+        pass
+
+    def getSelection(self):
+        """self.getSelection() -> list of lists of floats
+Returns the selection weights for each vertex as a float. If you access the result as selection[obj][pt], then obj is the index of the object in the input geometry and pt is the index of the point in that object."""
+        return [0,]
+
+    def __getattribute__(self, name):
+        """x.__getattribute__('name') <==> x.name"""
+        pass
+
+    def getGeometry(self):
+        """self.getGeometry() -> _geo.GeometryList
+Get the geometry which this knob can select from."""
+        return geo.GeometryList()
+
+    def __delattr__(self,name):
+        """x.__delattr__('name') <==> del x.name"""
+        pass
+
+class Help_Knob(_Knob):
+    pass
+
+class Histogram_Knob(_Knob):
+    pass
+
+class Link_Knob(_Knob):
+    def setValue(self):
+        """setValue() -> None
+
+Set value of knob."""
+        pass
+
+    def getLinkedKnob(self):
+        """getLinkedKnob() -> knob
+"""
+        return Knob()
+
+    def value(self):
+        """value() -> string
+Return value of knob."""
+        return ''
+
+    def getLink(self):
+        """getLink() -> s
+"""
+        pass
+
+    def setLink(self,s):
+        """setLink(s) -> None
+"""
+        pass
+
+    def makeLink(self):
+        """makeLink(s, t) -> None
+"""
+        pass
+
+class LookupCurves_Knob(_Knob):
+    def delCurve(self,curve):
+        """self.delCurve(curve) -> None
+Deletes a curve.
+@param curve: The name of the animation curve.
+@return: None
+"""
+        pass
+
+    def editCurve(self):
+        """self.editCurve(curve, expr=None) -> None
+Edits an existing curve.
+@param curve: The name of an animation curve.
+@param expr: The new expression for the curve.
+@return: None
+"""
+        pass
+
+    def addCurve(self):
+        """self.addCurve(curve, expr=None) -> None
+Adds a curve.
+@param curve: The name of an animation curve, or an AnimationCurve instance.
+@param expr: Optional parameter giving an expression for the curve.
+@return: None
+"""
+        pass
+
+class MultiView_Knob(_Knob):
+    def toScriptPrefix(self):
+        """"""
+        pass
+
+    def setValue(self,s):
+        """fromScript(s) -> True if succeeded, False otherwise.
+
+Initialise from script s."""
+        pass
+
+    def fromScript(self,s):
+        """fromScript(s) -> True if succeeded, False otherwise.
+
+Initialise from script s."""
+        pass
+
+    def value(self, quote, context=None):
+        """toScript(quote, context=current) -> string.
+Return the value of the knob in script syntax.
+Pass True for quote to return results quoted in {}.
+Pass None for context to get results for all views and key times (as stored in a .nk file)."""
+        pass
+
+    def toScriptPrefixUserKnob(self):
+        """"""
+        pass
+
+    def toScript(self, quote, context=None):
+        """toScript(quote, context=current) -> string.
+Return the value of the knob in script syntax.
+Pass True for quote to return results quoted in {}.
+Pass None for context to get results for all views and key times (as stored in a .nk file)."""
+        return ''
+
+    def notDefault(self):
+        """notDefault() -> True if set to its default value, False otherwise."""
+        pass
+
+class Obsolete_Knob(_Knob):
+
+    def setValue(self):
+        """None"""
+        pass
+
+    def value(self):
+        """None"""
+        pass
+
+class Password_Knob(_Knob):
+    def setValue(self, val, view='default'):
+        """self.setValue(val, view='default') -> None
+Set value of knob.
+@param val: The new value.
+@param view: Optional parameter specifying which view to set the value for. If omitted, the value will be set for the default view.
+@return: None"""
+        pass
+
+    def value(self):
+        """self.value() -> str
+
+Get the value of this knob as a string.
+@return: String value.
+"""
+        return ''
+
+    def getText(self):
+        """self.getText() -> string
+
+Return text associated with knob."""
+        return ''
+
+class String_Knob(_Knob):
+
+    def splitView(self,view):
+        """self.splitView(view) -> None.
+Split the view away from the current knob value.
+@param view: Optional view. Default is current view.
+@return: None.
+"""
+        pass
+
+    def setValue(self, val, view='default'):
+        """self.setValue(val, view='default') -> None
+
+Set value of knob.
+@param val: The new value.
+@param view: Optional parameter specifying which view to set the value for. If omitted, the value will be set for the default view.
+@return: None"""
+        pass
+
+    def setText(self, val, view='default'):
+        """self.setValue(val, view='default') -> None
+
+Set value of knob.
+@param val: The new value.
+@param view: Optional parameter specifying which view to set the value for. If omitted, the value will be set for the default view.
+@return: None"""
+        pass
+
+    def getText(self, output_context):
+        """self.value(oc) -> str
+Get the value of this knob as a string.
+@param oc: Optional parameter specifying the output context.
+@return: String value.
+"""
+        return ''
+
+    def getValue(self,oc):
+        """self.value(oc) -> str
+
+Get the value of this knob as a string.
+@param oc: Optional parameter specifying the output context.
+@return: String value.
+"""
+        return ''
+
+    def value(self,oc):
+        """self.value(oc) -> str
+Get the value of this knob as a string.
+@param oc: Optional parameter specifying the output context.
+@return: String value.
+"""
+        return ''
+
+    def unsplitView(self,view):
+        """self.unsplitView(view) -> None.
+Unsplit the view so that it shares a value with other views.
+@param view: Optional view. Default is current view.
+@return: None.
+"""
+        pass
+
+class Tab_Knob(_Knob):
+    def setValue(self):
+        """None"""
+        pass
+
+    def value(self):
+        """None"""
+        pass
+
+class Text_Knob(_Knob):
+    def value(self):
+        """None"""
+        return ''
+
+    def setValue(self):
+        """None"""
+        pass
+
+class Transform2d_Knob(_Knob):
+    def value(self,oc):
+        """value(oc) -> matrix
+
+Return transformation matrix. The argument oc is an OutputContext. Both arguments are optional."""
+        return math.Matrix4()
+
+class ViewView_Knob(_Knob):
+    pass
+class EndTabGroup_Knob(_Knob):
+    pass
+class Disable_Knob(_Knob):
+    pass
+class Radio_Knob(_Knob):
+    pass
+class FreeType_Knob(_Knob):
+    pass
+class SceneView_Knob(_Knob):
+    pass
+
+class BBox_Knob(Array_Knob):
+
+    def value(self):
+        """Return value for dimension 'i'"""
+        pass
+
+    def setT(self):
+        """Set value for T extent."""
+        pass
+
+    def fromDict(self,box):
+        """self.fromDict(box) -> None
+
+Set the bounding box from the given box.
+@param box: Dictionary containing the x, y, r and t keys.
+@return: None"""
+        pass
+
+    def r(self):
+        """Return value for R extent."""
+        return 0
+
+    def names(self):
+        """Return name for dimension 'i'"""
+        return ''
+
+    def setR(self):
+        """Set value for R extent."""
+        return 0
+
+    def toDict(self):
+        """self.toDict() -> dict.
+
+Returns the bounding box as a dict with x, y, r, and t keys.
+@return: dict with x, y, r and t keys"""
+        return {'':1,}
+
+    def y(self):
+        """Return value for Y position."""
+        return 0
+
+    def x(self):
+        """Return value for X position."""
+        return 0
+
+    def setX(self):
+        """Set value for X position."""
+        pass
+
+    def setY(self):
+        """Set value for Y position."""
+        pass
+
+    def t(self):
+        """Return value for T extent."""
+        return 0
+
+class Boolean_Knob(Array_Knob):
+    def value(self):
+        """self.value() -> bool
+Get the boolean value for this knob.
+@return: True or False.
+"""
+        return True
+
+    def setValue(self,b):
+        """self.setValue(b) -> bool
+Set the boolean value of this knob.
+@param b: Boolean convertible object.
+@return: True if modified, False otherwise.
+"""
+        pass
+
+class Box3_Knob(Array_Knob):
+
+    def setF(self,far):
+        """Set value for F extent. F (far) is the maximum Z extent of the box."""
+        pass
+
+    def f(self,ar):
+        """Return value for F extent. F (far) is the maximum Z extent of the box."""
+        return 0
+
+    def setN(self,near):
+        """Set value for N position. N (near) is the minimum Z extent of the box."""
+        pass
+
+    def value(self):
+        """Return value for dimension 'i'"""
+        return 0
+
+    def n(self,ear):
+        """Return value for N position. N (near) is the minimum Z extent of the box."""
+        return 0
+
+    def setT(self,top):
+        """Set value for T extent. T (top) is the maximum vertical extent of the box."""
+        pass
+
+    def r(self,ight):
+        """Return value for R extent. R (right) is the right extent of the box."""
+        return 0
+
+    def names(self):
+        """Return name for dimension 'i'"""
+        return ''
+
+    def setR(self,right):
+        """Set value for R extent. R (right) is the right extent of the box."""
+        pass
+
+    def y(self):
+        """Return value for Y position. Y is the minimum vertical extent of the box."""
+        return 0
+
+    def x(self):
+        """Return value for X position. X is the minimum horizontal extent of the box."""
+        return 0
+
+    def setX(self):
+        """Set value for X position. X is the minimum horizontal extent of the box."""
+        pass
+
+    def setY(self):
+        """Set value for Y position. Y is the minimum vertical extent of the box."""
+        pass
+
+    def t(self,op):
+        """Return value for T extent. T (top) is the maximum vertical extent of the box."""
+        return 0
+
+class Color_Knob(Array_Knob):
+    def inputNumber(self):
+        """inputNumber() -> int
+Return input number."""
+        pass
+
+    def names(self, n):
+        """names(n) -> string
+Return name for dimension n. The argument n is an integer."""
+        return ''
+
+class IArray_Knob(Array_Knob):
+    def value(self):
+        """Return value of the array at position (x, y)."""
+        return (0,)
+
+
+    def height(self):
+        """Return height of the array."""
+        return 0
+
+    def width(self):
+        """Return width of the array."""
+        return 0
+
+    def dimensions(self):
+        """Return number of dimensions."""
+        return 0
+
+class Int_Knob(Array_Knob):
+    def value(self):
+        """self.value() -> int
+Get the integer value of this knob.
+@return: The value of this knob as an int.
+"""
+        return 0
+
+    def setValue(self,val):
+        """self.setValue(val) -> bool
+Set the integer value of this knob.
+@param val: The new value. Must be an integer.
+@return: True if succeeded, False otherwise."""
+        pass
+
+class Keyer_Knob(Array_Knob):
+
+    def highTol(self):
+        """"""
+        pass
+
+    def lowSoft(self):
+        """"""
+        pass
+
+    def lowTol(self):
+        """"""
+        pass
+
+    def value(self, outputCtx, n):
+        """self.value(outputCtx, n) -> float
+Get the value of argument n.
+@param outputCtx: The OutputContext to evaluate the argument in.
+@param n: The index of the argument to get the value of.
+@return: The value of argument n."""
+        return 0.0
+
+    def names(self,n):
+        """self.names(n) -> string
+@param n: The index of the name to return.
+@return: The name at position n."""
+        return ''
+
+    def highSoft(self):
+        """"""
+        pass
+
+class XY_Knob(Array_Knob):
+    def value(self, n, oc):
+        """value(n, oc) -> float
+Return value for dimension n. The optional argument oc is an OutputContext."""
+        return 0.0
+
+    def names(self,n):
+        """names(n) -> string
+Return name for dimension n. The argument n is an integer."""
+        return ''
+
+    def y(self,oc):
+        """y(oc) -> float
+Return value for y. The optional oc argument is an OutputContext"""
+        return 0.0
+
+    def x(self,oc):
+        """x(oc) -> float
+Return value for x. The optional oc argument is an OutputContext"""
+        return 0.0
+
+class Double_Knob(Array_Knob):
+    pass
+
+class UV_Knob(Array_Knob):
+    def names(self,n):
+        """names(n) -> string
+Return name for dimension n. The argument n is an integer."""
+        return ''
+
+class Unsigned_Knob(Array_Knob):
+    def value(self):
+        """self.value() -> int
+Get the value of this knob as an integer.
+@return: int
+"""
+        return 0
+
+    def setValue(self,val):
+        """self.setValue(val) -> bool
+Set the unsigned integer value of this knob.
+@param val: The new value for the knob. Must be an integer >= 0.
+@return: True if succeeded, False otherwise.
+"""
+        pass
+
+class Scale_Knob(Array_Knob):
+    def value(self, n, oc):
+        """value(n, oc) -> float
+Return value for dimension n. The optional argument oc is an OutputContext."""
+        return 0.0
+
+    def names(self,n):
+        """names(n) -> string
+
+Return name for dimension n. The argument n is an integer."""
+        return ''
+
+    def y(self,oc):
+        """y(oc) -> float
+Return value for y. The optional oc argument is an OutputContext"""
+        return 0.0
+
+    def x(self,oc):
+        """x(oc) -> float
+Return value for x. The optional oc argument is an OutputContext"""
+        return 0.0
+
+    def z(self,oc):
+        """z(oc) -> float
+Return value for z. The optional oc argument is an OutputContext"""
+        return 0.0
+
+class Range_Knob(Array_Knob):
+    pass
+
+class WH_Knob(Array_Knob):
+    def y_at(self):
+        """Return value for Y position at time 't'."""
+        return 0
+
+    def names(self):
+        """Return name for dimension 'i'."""
+        return ''
+
+    def y(self):
+        """Return value for Y position."""
+        return 0
+
+    def x(self):
+        """Return value for X position."""
+        return 0
+
+    def x_at(self):
+        """Return value for X position at time 't'."""
+        return 0
+
+class XYZ_Knob(Array_Knob):
+    def parent(self):
+        """parent() -> XYZ_Knob
+
+Return parent."""
+        return XYZ_Knob()
+
+
+    def value(self):
+        """value(n, oc) -> float
+
+Return value for dimension n. The optional argument oc is an OutputContext."""
+        return 0.0
+
+    def names(self,n):
+        """names(n) -> string
+
+Return name for dimension n. The argument n is an integer."""
+        return ''
+
+
+    def y(self,oc):
+        """y(oc) -> float
+
+Return value for y. The optional oc argument is an OutputContext"""
+        return 0.0
+
+
+    def x(self,oc):
+        """x(oc) -> float
+
+Return value for x. The optional oc argument is an OutputContext"""
+        return 0.0
+
+    def z(self,oc):
+        """z(oc) -> float
+
+Return value for z. The optional oc argument is an OutputContext"""
+        return 0.0
+
+class ChannelMask_Knob(Channel_Knob):
+    pass
+
+class EvalString_Knob(String_Knob):
+    def evaluate(self):
+        """self.evaluate() -> String.
+Evaluate the string, performing substitutions.
+@return: String.
+"""
+        pass
+
+class Multiline_Eval_String_Knob(EvalString_Knob):
+    pass
+
+class Enumeration_Knob(Unsigned_Knob):
+    def setValue(self,item):
+        """self.setValue(item) -> None.
+Set the current value. If item is of an Integer type it will treat it as an index to the enum, otherwise as a value.
+@param item: String or Integer.
+@return: None.
+Example:
+w = nuke.nodes.Write()
+k = w['file_type']
+k.setValue('exr')
+"""
+        pass
+
+    def numValues(self):
+        """self.numValues() -> int
+
+Return number of values. Deprecated."""
+        return 0
+
+    def value(self):
+        """self.value() -> String.
+Current value.
+@return: String.
+Example:
+w = nuke.nodes.Write()
+k = w['file_type']
+k.value()
+"""
+        return ''
+
+    def enumName(self,n):
+        """self.enumName(n) -> string
+
+Return name of enumeration n. The argument n is an integer and in the range of 0 and numValues. Deprecated."""
+        return ''
+
+    def values(self):
+        """self.values() -> List of strings.
+Return list of items.
+@return: List of strings.
+Example:
+w = nuke.nodes.Write()
+k = w['file_type']
+k.values()
+"""
+        return ['',]
+
+    def setValues(self,items):
+        """self.setValues(items) -> None.
+(Re)initialise knob to the supplied list of items.
+@param items: The new list of values.
+@return: None.
+Example:
+w = nuke.nodes.Write()
+k = w['file_type']
+k.setValues(['exr'])
+"""
+        pass
+
+class OneView_Knob(Enumeration_Knob):
+    pass
+
+class Pulldown_Knob(Enumeration_Knob):
+    def commands(self,n):
+        """commands(n) -> string
+
+Return command n. The argument n is an integer and in the range of 0 and numValues."""
+        return ''
+
+    def numValues(self):
+        """numValues() -> int
+
+Return number of values."""
+        return 0
+
+    def value(self):
+        """None"""
+        return 0.0
+
+    def setValues(self,items):
+        """self.setValues(items) -> None.
+(Re)initialise knob to the list of items.
+@param items: Dictionary of name/value pairs.
+@return: None.
+Example:
+w = nuke.nodes.NoOp()
+k = nuke.Pulldown_Knob('kname', 'klabel')
+k.setValues({'label/command' : 'eval("3*2")'})
+w.addKnob(k)
+k = w['kname']
+"""
+        pass
+
+    def itemName(self,n):
+        """itemName(n) -> string
+
+Return name of item n. The argument n is an integer and in the range of 0 and numValues."""
+        return ''
+
+class Bitmask_Knob(Enumeration_Knob):
+    pass
+
+class Script_Knob(String_Knob):
+    def execute(self):
+        """self.execute() -> None
+Execute the command.
+@return: None.
+"""
+        pass
+
+    def setValue(self,cmd):
+        """self.setValue(cmd) -> None
+Set the new command for this knob.
+@param cmd: String containing a TCL command.
+@return: None."""
+        pass
+
+    def value(self):
+        """self.value() -> str
+
+Get the current command.
+@return: The current command as a string, or None if there is no current command."""
+        return ''
+
+    def command(self):
+        """self.command() -> str
+Get the current command.
+@return: The current command as a string, or None if there is no current command."""
+        return ''
+
+    def setCommand(self,cmd):
+        """self.setCommand(cmd) -> None
+Set the new command for this knob.
+@param cmd: String containing a TCL command.
+@return: None."""
+        pass
+
+class PyCustom_Knob(Script_Knob):
+
+    def getObject(self):
+        """Returns the custom knob object as created in the by the 'command' argument to the PyCuston_Knob constructor."""
+        return Knob()
+
+class PyScript_Knob(Script_Knob):
+    pass
+
+class PythonKnob(String_Knob):
+    pass
+
+class ColorChip_Knob(Unsigned_Knob):
+    pass
+
+class CascadingEnumeration_Knob(Enumeration_Knob):
+    pass
+
+class AColor_Knob(Color_Knob):
+    pass
+
+class Eyedropper_Knob(AColor_Knob):
+    pass
+
+class File_Knob(EvalString_Knob):
+    def fromUserText(self,s):
+        """self.fromUserText(s) -> None.
+Assign string to knob, parses frame range off the end and opens file to get set the format.
+@param s: String to assign.
+@return: None.
+"""
+        pass
+
+    def setValue(self,s):
+        """self.fromScript(s) -> None.
+Assign string to knob.
+@param s: String to assign.
+@return: None.
+"""
+        pass
+
+    def fromScript(self,s):
+        """self.fromScript(s) -> None.
+Assign string to knob.
+@param s: String to assign.
+@return: None.
+"""
+        pass
+
+    def value(self):
+        """self.getEvaluatedValue() -> String.
+Returns the string on this knob, will be normalized to technical notation if sequence (%4d).
+@return: String.
+"""
+        return ''
+
+    def getValue(self):
+        """self.getEvaluatedValue() -> String.
+Returns the string on this knob, will be normalized to technical notation if sequence (%4d).
+@return: String.
+"""
+        return ''
+
+    def getEvaluatedValue(self,oc):
+        """self.getValue(oc) -> String.
+Returns the string on this knob, will be normalized to technical notation if sequence (%4d). Will also evaluate the string for any tcl expressions
+@parm oc: the output context to use, if None the knob uiContext will be used.
+@return: String.
+"""
+        return ''
+
+ # NODES
+
+
+class Knob(File_Knob, PyCustom_Knob, Script_Knob, Pulldown_Knob, XYZ_Knob, WH_Knob, Scale_Knob, Keyer_Knob, Color_Knob,
+            Box3_Knob, BBox_Knob):
+    """
+    Replace main Knob class to inherit all knobs methods
+    Not Nuke default. For auto complete only!!!
+    """
+
+# NODES
+
 class Node(object):
+    def __init__(self, inputs=[], name='', postage_stamp=False, hide_input=False,
+                 label='', help='', tile_color=0, gl_color=0, note_font='',
+                 note_font_size=12, note_font_color=0, selected=False,
+                 xpos=0, ypos=0, icon='', cached=False, disable=False, dope_sheet=False,
+                 bookmark=False, lifetimeStart=0, lifetimeEnd=0, useLifetime=False, **kwargs):
+        pass
+    def __getitem__(self,y):
+        """x.__getitem__(y) <==> x[y]"""
+        return Knob()
+    def __len__(self):
+        """x.__len__() <==> len(x)"""
+        return 0
 
     def getNumKnobs(self):
         """self.numKnobs() -> The number of knobs.
@@ -538,7 +1960,7 @@ Remove knob k from this node or panel. Throws a ValueError exception if k is not
 @param i: Input number.
 @return: The i'th input.
 """
-        return 0
+        return Node()
 
     def knobs(self):
         """self.knobs() -> dict
@@ -553,7 +1975,6 @@ For example:
 @return: Dictionary of all knobs.
 """
         return {'':Knob(),}
-
 
     def Class(self):
         """self.Class() -> Class of node.
@@ -606,10 +2027,6 @@ Set name of the node and resolve name collisions if optional named argument 'unc
 @return: None"""
         pass
 
-    def __getitem__(self,y):
-        """x.__getitem__(y) <==> x[y]"""
-        return Knob()
-
     def format(self):
         """self.format() -> Format.
 Format of the node.
@@ -638,7 +2055,7 @@ nuke.toNode('Blur1').dependent( nuke.INPUTS | nuke.EXPRESSIONS )
 """
         return [Node(),]
 
-    def setXYpos(self):
+    def setXYpos(self, x, y):
         """self.setXYpos(x, y) -> None.
 Set the (x, y) position of node in node graph.
 @param x: The x position of node in node graph.
@@ -746,9 +2163,6 @@ Add knob k to this node or panel.
 """
         pass
 
-    def __len__(self):
-        """x.__len__() <==> len(x)"""
-        return 0
 
     def frameRange(self):
         """self.frameRange() -> FrameRange.
@@ -1000,6 +2414,8 @@ selected        True if the point is selected in the curve editor
 x               The horizontal position of the point
 y               The vertical position of the point
     """
+    def __init__(self, time, val):
+        pass
     extrapolation= None
     #Controls how to set the left slope of the first point and the right slope of the last point
     interpolation=0
@@ -1160,16 +2576,6 @@ The left edge of the box."""
 class FnPySingleton(object):
 
     def __new__(self,type):
-        """None"""
-        pass
-
-class Font_Knob(Knob):
-
-    def value(self):
-        """None"""
-        return ''
-
-    def setValue(self):
         """None"""
         pass
 
@@ -2016,7 +3422,6 @@ Add an expression evaluator to the panel.
 """
         pass
 
-
 class PanelNode(object):
 
     def writeKnobs(self,i):
@@ -2280,6 +3685,9 @@ class Undo(object):
     def __enter__(self):
         """None"""
         pass
+    def __exit__(self):
+        """None"""
+        pass
 
     def redoDescribeFully(self):
         """Return long description of redo n."""
@@ -2303,9 +3711,6 @@ class Undo(object):
 
     def enable(self):
         """Undoes the previous disable()"""
-        pass
-    def __exit__(self):
-        """None"""
         pass
 
     def undo(self):
@@ -2476,1701 +3881,6 @@ i is an integer indicating viewer frame control 'button' to execute:
 """
         pass
 
-# KNOB
-
-class Array_Knob(Knob):
-    def clearAnimated(self, index, view):
-        """self.clearAnimated(index, view) -> True if succeeded, False otherwise.
-Delete animation.
-@param index: Optional index.
-@param view: Optional view.
-@return: True if succeeded, False otherwise.
-"""
-        pass
-
-    def removeKey(self, index, view):
-        """self.removeKey(index, view) -> True if succeeded, False otherwise.
-Remove key.
-@param index: Optional index.
-@param view: Optional view.
-@return: True if succeeded, False otherwise.
-"""
-        pass
-
-    def setValueAt(self, value, time, index, view):
-        """self.setValueAt(value, time, index, view) -> bool.
-Set value of element 'index' at time for view. If the knob is animated, it will set a new keyframe or change an existing one. Index and view are optional. Return True if successful.
-@param value: Floating point value.
-@param time: Time.
-@param index: Optional index.
-@param view: Optional view.
-@return: True if value changed, False otherwise. Safe to ignore.
-"""
-        pass
-
-    def frame(self):
-        """self.frame() -> Frame number.
-@return: Frame number.
-"""
-        return 0
-
-    def removeKeyAt(self, time, index, view):
-        """self.removeKeyAt(time, index, view) -> True if succeeded, False otherwise.
-Remove keyframe at specified time, optional index and view. Return True if successful.
-@param time: Time.
-@param index: Optional index.
-@param view: Optional view.
-@return: True if succeeded, False otherwise.
-"""
-        pass
-
-    def height(self):
-        """self.height() -> Height of array of values.
-@return: Height of array of values.
-"""
-        return 0
-
-    def minimum(self):
-        """self.min() -> Minimum value.
-@return: Minimum value.
-"""
-        return 0
-
-    def unsplitView(self,view):
-        """self.unsplitView(view) -> None.
-Unsplit the view so that it shares a value with other views.
-@param view: Optional view. Default is current view.
-@return: None.
-"""
-        pass
-
-    def array(self):
-        """self.array() -> List of knob values.
-@return: List of knob values.
-"""
-        return [0,]
-
-    def getIntegral(self):
-        """Return integral at time interval [t1, t2] and index 'i'."""
-        pass
-
-    def singleValue(self,view):
-        """self.singleValue(view) -> True if holds a single value.
-@param view: Optional view. Default is current view.
-@return: True if holds a single value.
-"""
-        return [0,0]
-
-    def isKeyAt(self, time, index, view):
-        """self.isKeyAt(time, index, view) -> True if succeeded, False otherwise.
-Returns True if there is a keyframe at specified time, optional index and view, otherwise returns False.
-@param time: Time.
-@param index: Optional index.
-@param view: Optional view.
-@return: True if succeeded, False otherwise.
-"""
-        pass
-
-    def hasExpression(self,index):
-        """self.hasExpression(index) -> True if has expression, False otherwise.
-@param index: Optional index.
-@return: True if has expression, False otherwise.
-"""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def setKeyAt(self, time, index, view):
-        """self.setKeyAt(time, index, view) -> None.
-Set a key on element 'index', at time and view.
-@param time: Time.
-@param index: Optional index.
-@param view: Optional view.
-@return: None.
-"""
-        pass
-
-    def min(self):
-        """self.min() -> Minimum value.
-@return: Minimum value.
-"""
-        return 0
-
-    def defaultValue(self):
-        """self.defaultValue() -> Default value.
-@return: Default value.
-"""
-        return 0
-
-    def getKeyTime(self):
-        """Return time of the keyframe at time 't' and channel 'c'."""
-        return 0
-
-    def deleteAnimation(self,curve):
-        """self.deleteAnimation(curve) -> None. Raises ValueError if not found.
-Deletes the AnimationCurve.
-@param curve: An AnimationCurve instance which belongs to this Knob.
-@return: None. Raises ValueError if not found.
-"""
-        pass
-
-    def width(self):
-        """self.width() -> Width of array of values.
-@return: Width of array of values.
-"""
-        return 0
-
-    def getNumKeys(self):
-        """Return number of keys at channel 'c'."""
-        return 0
-
-    def valueAt(self, time, index, view):
-        """self.valueAt(time, index, view) -> Floating point or List of floating point values (in case some are different).
-Return value for this knob at specified time, optional index and view.
-@param time: Time.
-@param index: Optional index. Default is 0.
-@param view: Optional view.
-@return: Floating point or List of floating point values (in case some are different).
-"""
-        return 0.0
-
-    def arraySize(self):
-        """self.arraySize() -> Number of elements in array.
-@return: Number of elements in array.
-"""
-        return 0
-
-    def max(self):
-        """self.max() -> Maximum value.
-@return: Maximum value.
-"""
-        return 0
-
-    def setSingleValue(self,b, view):
-        """self.setSingleValue(b, view) -> None.
-Set to just hold a single value or not.
-@param b: Boolean object.
-@param view: Optional view. Default is current view.
-@return: None.
-"""
-        pass
-
-    def toScript(self,quote, context):
-        """self.toScript(quote, context) -> String.
-Return the value of the knob in script syntax.
-@param quote: Optional, default is False. Specify True to return the knob value quoted in {}.
-@param context: Optional context, default is current, None will be "contextless" (all views, all keys) as in a .nk file.
-@return: String.
-"""
-        return ''
-
-    def notDefault(self):
-        """self.notDefault() -> True if any of the values is not set to the default, False otherwise.
-@return: True if any of the values is not set to the default, False otherwise.
-"""
-        pass
-
-    def splitView(self, view):
-        """self.splitView(view) -> None.
-Split the view away from the current knob value.
-@param view: Optional view. Default is current view.
-@return: None.
-"""
-        pass
-
-    def setValue(self,value, index, time, view):
-        """self.setValue(value, index, time, view) -> True if value changed, False otherwise. Safe to ignore.
-Set index to value at time and view.
-@param value: Floating point value.
-@param index: Optional index.
-@param time: Optional time.
-@param view: Optional view.
-@return: True if value changed, False otherwise. Safe to ignore.
-"""
-        pass
-
-    def isAnimated(self,curves, view):
-        """self.isAnimated(index, view) -> True if animated, False otherwise.
-@param index: Optional index.
-@param view: Optional view.
-@return: True if animated, False otherwise.
-"""
-        pass
-
-    def copyAnimations(self, curves, view):
-        """self.copyAnimations(curves, view) -> None.
-Copies the AnimationCurves from curves to this object. The view is optional and defaults to the current view.
-@param curves: AnimationCurve list.
-@param view: Optional view. Defaults to current.
-@return: None.
-"""
-        pass
-
-    def setDefaultValue(self,s):
-        """self.setDefaultValue(s) -> None.
-@param s: Sequence of floating-point values.
-@return: None.
-"""
-        pass
-
-    def dimensions(self):
-        """self.dimensions() -> Dimensions in array.
-@return: Dimensions in array.
-"""
-        return 0
-
-    def vect(self):
-        """self.vect() -> List of knob values.
-@return: List of knob values.
-"""
-        return [0,]
-
-    def animations(self,view):
-        """self.animations(view) -> AnimationCurve list.
-@param view: Optional view.
-@return: AnimationCurve list.
-Example:
-b = nuke.nodes.Blur()
-k = b['size']
-k.setAnimated(0)
-a = k.animations()
-a[0].setKey(0, 11)
-a[0].setKey(10, 20)
-"""
-        return [AnimationCurve(),]
-
-    def setAnimated(self, index, view):
-        """self.setAnimated(index, view) -> True if succeeded, False otherwise.
-Create an Animation object. Return True if successful, in which case caller must initialise it by calling setValue() or setValueAt().
-@param index: Optional index.
-@param view: Optional view.
-@return: True if succeeded, False otherwise.
-"""
-        pass
-
-    def getDerivative(self, t, i):
-        """Return derivative at time 't' and index 'i'."""
-        pass
-
-    def setExpression(self, expr, channel=-1, view=None):
-        """self.setExpression(expr, channel=-1, view=None) -> bool
-Set the expression for a knob. You can optionally specify a channel to set the expression for.
-
-@param expr: The new expression for the knob. This should be a string.
-@param channel: Optional parameter, specifying the channel to set the expression for. This should be an integer.
-@param view: Optional view parameter. Without, this command will set the expression for the current view theinterface is displaying. Can be the name of the view or the index.
-@return: True if successful, False if not."""
-        pass
-
-    def animation(self, chan, view):
-        """self.animation(chan, view) -> AnimationCurve or None.
-Return the AnimationCurve for the  channel 'chan' and view 'view'. The view argument is optional.
-@param channel: The channel index.
-@param view: Optional view.
-@return: AnimationCurve or None.
-"""
-        return AnimationCurve()
-
-    def resize(self, w, h):
-        """self.resize(w, h) -> True if successful, False otherwise.
-Resize the array.
-@param w: New width
-@param h: Optional new height
-@return: True if successful, False otherwise.
-"""
-        pass
-
-    def setRange(self, f1, f2):
-        """self.setRange(f1, f2) -> None.
-Set range of values.
-@param f1 Min value.
-@param f2 Max value.
-@return: None.
-"""
-        pass
-
-    def getValueAt(self, time, index, view):
-        """self.valueAt(time, index, view) -> Floating point or List of floating point values (in case some are different).
-Return value for this knob at specified time, optional index and view.
-@param time: Time.
-@param index: Optional index. Default is 0.
-@param view: Optional view.
-@return: Floating point or List of floating point values (in case some are different).
-"""
-        return 0.0
-
-    def getNthDerivative(self, t, i):
-        """Return n'th derivative at time 't' and index 'i'."""
-        return 0
-
-    def isKey(self, index, view):
-        """self.isKey(index, view) -> True if succeeded, False otherwise.
-@param index: Optional index.
-@param view: Optional view.
-@return: True if succeeded, False otherwise.
-"""
-        pass
-
-    def fromScript(self, s):
-        """self.fromScript(s) -> True if successful, False otherwise.
-Set value of the knob to a user defined script (TCL syntax, as in .nk file). Return True if successful.
-@param s: Nuke script to be set on knob.
-@return: True if successful, False otherwise.
-"""
-        pass
-
-    def maximum(self):
-        """self.max() -> Maximum value.
-@return: Maximum value.
-"""
-        return 0
-
-    def value(self, index, view, time):
-        """self.value(index, view, time) -> Floating point or List of floating point values (in case some are different).
-@param index: Optional index. Default is 0.
-@param view: Optional view.
-@param time: Optional time.
-@return: Floating point or List of floating point values (in case some are different).
-"""
-        return 0.0
-
-    def getValue(self, index, view, time):
-        """self.value(index, view, time) -> Floating point or List of floating point values (in case some are different).
-@param index: Optional index. Default is 0.
-@param view: Optional view.
-@param time: Optional time.
-@return: Floating point or List of floating point values (in case some are different).
-"""
-        return 0.0
-
-    def getKeyIndex(self):
-        """Return index of the keyframe at time 't' and channel 'c'."""
-        pass
-
-    def copyAnimation(self, channel, curve, view):
-        """self.copyAnimation(channel, curve, view) -> None.
-Copies the i'th channel of the AnimationCurve curve to this object. The view is optional and defaults to the current view.
-@param channel: The channel index.
-@param curve: AnimationCurve.
-@param view: Optional view. Defaults to current.
-@return: None.
-"""
-        pass
-
-class Axis_Knob(Knob):
-    def uniformScale(self):
-        """self.uniformScale() -> Double_Knob
-Return uniform scale knob."""
-        return Double_Knob()
-
-    def rotate(self):
-        """self.rotate() -> XYZ_Knob
-
-Return rotation knob."""
-        return XYZ_Knob()
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def skew(self):
-        """self.skew() -> XYZ_Knob
-
-Return skew knob."""
-        return XYZ_Knob()
-
-    def value(self):
-        """self.value() -> _nukemath.Matrix4
-Return the transform matrix formed by combining the input knob values for translate, rotate, scale, skew and pivot."""
-        return math.Matrix4()
-
-    def scale(self):
-        """self.scale() -> Scale_Knob
-
-Return scale knob."""
-        return Scale_Knob()
-
-    def pivot(self):
-        """self.pivot() -> XYZ_Knob
-
-Return pivot knob."""
-        return XYZ_Knob()
-
-    def translate(self):
-        """self.translate() -> XYZ_Knob
-
-Return translation knob."""
-        return XYZ_Knob()
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class Channel_Knob(Knob):
-    def inputNumber(self):
-        """self.inputNumber() -> int"""
-        return 0
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def enableChannel(self):
-        """self.enableChannel(name, b) -> None
-Enable or disable a channel.
-@param name: The name of the channel.
-@param b: True to enable the channel, False to disable it.
-@return: None"""
-        pass
-
-    def layerSelector(self):
-        """self.layerSelector() -> bool"""
-        pass
-
-    def setEnable(self,name):
-        """self.setEnable(name) -> None
-Enable a channel.
-@param name: The name of the channel to enable.
-@return: None"""
-        pass
-
-    def value(self):
-        """self.value() -> str
-Get the name of the selected channel.
-@return: The name of the channel as a string.
-"""
-        return ''
-
-    def checkMarks(self):
-        """self.checkMarks() -> bool"""
-        pass
-
-    def channelSelector(self):
-        """self.channelSelector() -> bool"""
-        pass
-
-    def depth(self):
-        """self.depth() -> int
-
-Get the channel depth.
-@return: The depth of the channel as an int."""
-        return 0
-
-    def setValue(self,name):
-        """self.setValue(name) -> None
-Set the selected channel using the channel name.
-@param name: The name of the new channel as a string.
-@return: None
-@raise ValueError exception if the channel doesn't exist."""
-        pass
-
-    def setInput(self,num):
-        """self.setInput(num) -> None
-Set the input number for this knob.@param num: The number of the new input.
-@return: None"""
-        pass
-
-    def inputKnob(self):
-        """self.inputKnob() -> bool"""
-        return True
-
-    def isChannelEnabled(self,name):
-        """self.isChannelEnabled(name) -> bool
-Test if a channel is enabled.
-@param name: The name of the channel.@return: True if the channel is enabled, False otherwise."""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class BeginTabGroup_Knob(Knob):
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-class Format_Knob(Knob):
-    def setValue(self,format):
-        """setValue(format) -> True if succeeded, False otherwise.
-
-Set value of knob to format (either a Format object or a name of a format, e.g. "NTSC")."""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def fromScript(self,s):
-        """fromScript(s) -> True if succeeded, False otherwise.
-
-Initialise from script s."""
-        pass
-
-    def value(self):
-        """value() -> Format.
-
-Return value of knob."""
-        return Format()
-
-    def actualValue(self):
-        """actualValue() -> Format.
-
-Return value of knob."""
-        return Format()
-
-    def toScript(self, quote, context=None):
-        """toScript(quote, context=current) -> string.
-
-Return the value of the knob in script syntax.
-Pass True for quote to return results quoted in {}.
-Pass None for context to get results for all views and key times (as stored in a .nk file)."""
-        return ''
-
-    def notDefault(self):
-        """notDefault() -> True if set to its default value, False otherwise."""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-    def name(self):
-        """name() -> string.
-
-Return name of knob."""
-        return ''
-
-class GeoSelect_Knob(Knob):
-
-    def __setattr__(self):
-        """x.__setattr__('name', value) <==> x.name = value"""
-        pass
-
-    def getSelection(self):
-        """self.getSelection() -> list of lists of floats
-Returns the selection weights for each vertex as a float. If you access the result as selection[obj][pt], then obj is the index of the object in the input geometry and pt is the index of the point in that object."""
-        return [0,]
-
-    def __getattribute__(self, name):
-        """x.__getattribute__('name') <==> x.name"""
-        pass
-
-    def getGeometry(self):
-        """self.getGeometry() -> _geo.GeometryList
-Get the geometry which this knob can select from."""
-        return geo.GeometryList()
-
-    def __delattr__(self,name):
-        """x.__delattr__('name') <==> del x.name"""
-        pass
-
-class Help_Knob(Knob):
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class Histogram_Knob(Knob):
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class Link_Knob(Knob):
-    def setValue(self):
-        """setValue() -> None
-
-Set value of knob."""
-        pass
-
-    def getLinkedKnob(self):
-        """getLinkedKnob() -> knob
-"""
-        return Knob()
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def value(self):
-        """value() -> string
-Return value of knob."""
-        return ''
-
-    def getLink(self):
-        """getLink() -> s
-"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-    def setLink(self,s):
-        """setLink(s) -> None
-"""
-        pass
-
-    def makeLink(self):
-        """makeLink(s, t) -> None
-"""
-        pass
-
-class LookupCurves_Knob(Knob):
-    def delCurve(self,curve):
-        """self.delCurve(curve) -> None
-Deletes a curve.
-@param curve: The name of the animation curve.
-@return: None
-"""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def editCurve(self):
-        """self.editCurve(curve, expr=None) -> None
-Edits an existing curve.
-@param curve: The name of an animation curve.
-@param expr: The new expression for the curve.
-@return: None
-"""
-        pass
-
-    def addCurve(self):
-        """self.addCurve(curve, expr=None) -> None
-Adds a curve.
-@param curve: The name of an animation curve, or an AnimationCurve instance.
-@param expr: Optional parameter giving an expression for the curve.
-@return: None
-"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class MultiView_Knob(Knob):
-    def toScriptPrefix(self):
-        """"""
-        pass
-
-    def setValue(self,s):
-        """fromScript(s) -> True if succeeded, False otherwise.
-
-Initialise from script s."""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def fromScript(self,s):
-        """fromScript(s) -> True if succeeded, False otherwise.
-
-Initialise from script s."""
-        pass
-
-    def value(self, quote, context=None):
-        """toScript(quote, context=current) -> string.
-Return the value of the knob in script syntax.
-Pass True for quote to return results quoted in {}.
-Pass None for context to get results for all views and key times (as stored in a .nk file)."""
-        pass
-
-    def toScriptPrefixUserKnob(self):
-        """"""
-        pass
-
-    def toScript(self, quote, context=None):
-        """toScript(quote, context=current) -> string.
-Return the value of the knob in script syntax.
-Pass True for quote to return results quoted in {}.
-Pass None for context to get results for all views and key times (as stored in a .nk file)."""
-        return ''
-
-    def notDefault(self):
-        """notDefault() -> True if set to its default value, False otherwise."""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class Obsolete_Knob(Knob):
-
-    def setValue(self):
-        """None"""
-        pass
-
-    def value(self):
-        """None"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class Password_Knob(Knob):
-    def setValue(self, val, view='default'):
-        """self.setValue(val, view='default') -> None
-Set value of knob.
-@param val: The new value.
-@param view: Optional parameter specifying which view to set the value for. If omitted, the value will be set for the default view.
-@return: None"""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def value(self):
-        """self.value() -> str
-
-Get the value of this knob as a string.
-@return: String value.
-"""
-        return ''
-
-    def getText(self):
-        """self.getText() -> string
-
-Return text associated with knob."""
-        return ''
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class String_Knob(Knob):
-
-    def splitView(self,view):
-        """self.splitView(view) -> None.
-Split the view away from the current knob value.
-@param view: Optional view. Default is current view.
-@return: None.
-"""
-        pass
-
-    def setValue(self):
-        """self.setValue(val, view='default') -> None
-
-Set value of knob.
-@param val: The new value.
-@param view: Optional parameter specifying which view to set the value for. If omitted, the value will be set for the default view.
-@return: None"""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def setText(self, val, view='default'):
-        """self.setValue(val, view='default') -> None
-
-Set value of knob.
-@param val: The new value.
-@param view: Optional parameter specifying which view to set the value for. If omitted, the value will be set for the default view.
-@return: None"""
-        pass
-
-    def getText(self, output_context):
-        """self.value(oc) -> str
-Get the value of this knob as a string.
-@param oc: Optional parameter specifying the output context.
-@return: String value.
-"""
-        return ''
-
-    def getValue(self,oc):
-        """self.value(oc) -> str
-
-Get the value of this knob as a string.
-@param oc: Optional parameter specifying the output context.
-@return: String value.
-"""
-        return ''
-
-    def value(self,oc):
-        """self.value(oc) -> str
-Get the value of this knob as a string.
-@param oc: Optional parameter specifying the output context.
-@return: String value.
-"""
-        return ''
-
-    def unsplitView(self,view):
-        """self.unsplitView(view) -> None.
-Unsplit the view so that it shares a value with other views.
-@param view: Optional view. Default is current view.
-@return: None.
-"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class Tab_Knob(Knob):
-    def setValue(self):
-        """None"""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def value(self):
-        """None"""
-        pass
-
-class Text_Knob(Knob):
-    def value(self):
-        """None"""
-        return ''
-
-    def setValue(self):
-        """None"""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class Transform2d_Knob(Knob):
-    def value(self,oc):
-        """value(oc) -> matrix
-
-Return transformation matrix. The argument oc is an OutputContext. Both arguments are optional."""
-        return math.Matrix4()
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class ViewView_Knob(Knob):
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class EndTabGroup_Knob(Knob):
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-class BBox_Knob(Array_Knob):
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def value(self):
-        """Return value for dimension 'i'"""
-        pass
-
-    def setT(self):
-        """Set value for T extent."""
-        pass
-
-    def fromDict(self,box):
-        """self.fromDict(box) -> None
-
-Set the bounding box from the given box.
-@param box: Dictionary containing the x, y, r and t keys.
-@return: None"""
-        pass
-
-    def r(self):
-        """Return value for R extent."""
-        return 0
-
-    def names(self):
-        """Return name for dimension 'i'"""
-        return ''
-
-    def setR(self):
-        """Set value for R extent."""
-        return 0
-
-    def toDict(self):
-        """self.toDict() -> dict.
-
-Returns the bounding box as a dict with x, y, r, and t keys.
-@return: dict with x, y, r and t keys"""
-        return {'':1,}
-
-    def y(self):
-        """Return value for Y position."""
-        return 0
-
-    def x(self):
-        """Return value for X position."""
-        return 0
-
-    def setX(self):
-        """Set value for X position."""
-        pass
-
-    def setY(self):
-        """Set value for Y position."""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-    def t(self):
-        """Return value for T extent."""
-        return 0
-
-class Boolean_Knob(Array_Knob):
-    def value(self):
-        """self.value() -> bool
-Get the boolean value for this knob.
-@return: True or False.
-"""
-        return True
-
-    def setValue(self,b):
-        """self.setValue(b) -> bool
-Set the boolean value of this knob.
-@param b: Boolean convertible object.
-@return: True if modified, False otherwise.
-"""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class Box3_Knob(Array_Knob):
-
-    def setF(self,far):
-        """Set value for F extent. F (far) is the maximum Z extent of the box."""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def f(self,ar):
-        """Return value for F extent. F (far) is the maximum Z extent of the box."""
-        return 0
-
-    def setN(self,near):
-        """Set value for N position. N (near) is the minimum Z extent of the box."""
-        pass
-
-    def value(self):
-        """Return value for dimension 'i'"""
-        return 0
-
-    def n(self,ear):
-        """Return value for N position. N (near) is the minimum Z extent of the box."""
-        return 0
-
-    def setT(self,top):
-        """Set value for T extent. T (top) is the maximum vertical extent of the box."""
-        pass
-
-    def r(self,ight):
-        """Return value for R extent. R (right) is the right extent of the box."""
-        return 0
-
-    def names(self):
-        """Return name for dimension 'i'"""
-        return ''
-
-    def setR(self,right):
-        """Set value for R extent. R (right) is the right extent of the box."""
-        pass
-
-    def y(self):
-        """Return value for Y position. Y is the minimum vertical extent of the box."""
-        return 0
-
-    def x(self):
-        """Return value for X position. X is the minimum horizontal extent of the box."""
-        return 0
-
-    def setX(self):
-        """Set value for X position. X is the minimum horizontal extent of the box."""
-        pass
-
-    def setY(self):
-        """Set value for Y position. Y is the minimum vertical extent of the box."""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-    def t(self,op):
-        """Return value for T extent. T (top) is the maximum vertical extent of the box."""
-        return 0
-
-class Color_Knob(Array_Knob):
-    def inputNumber(self):
-        """inputNumber() -> int
-Return input number."""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-    def names(self, n):
-        """names(n) -> string
-Return name for dimension n. The argument n is an integer."""
-        return ''
-
-class IArray_Knob(Array_Knob):
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def value(self):
-        """Return value of the array at position (x, y)."""
-        return (0,)
-
-
-    def height(self):
-        """Return height of the array."""
-        return 0
-
-    def width(self):
-        """Return width of the array."""
-        return 0
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-
-    def dimensions(self):
-        """Return number of dimensions."""
-        return 0
-
-class Int_Knob(Array_Knob):
-    def value(self):
-        """self.value() -> int
-Get the integer value of this knob.
-@return: The value of this knob as an int.
-"""
-        return 0
-
-    def setValue(self,val):
-        """self.setValue(val) -> bool
-Set the integer value of this knob.
-@param val: The new value. Must be an integer.
-@return: True if succeeded, False otherwise."""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class Keyer_Knob(Array_Knob):
-
-    def highTol(self):
-        """"""
-        pass
-
-    def lowSoft(self):
-        """"""
-        pass
-
-    def lowTol(self):
-        """"""
-        pass
-
-    def value(self, outputCtx, n):
-        """self.value(outputCtx, n) -> float
-Get the value of argument n.
-@param outputCtx: The OutputContext to evaluate the argument in.
-@param n: The index of the argument to get the value of.
-@return: The value of argument n."""
-        return 0.0
-
-    def names(self,n):
-        """self.names(n) -> string
-@param n: The index of the name to return.
-@return: The name at position n."""
-        return ''
-
-    def highSoft(self):
-        """"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-class XY_Knob(Array_Knob):
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def value(self, n, oc):
-        """value(n, oc) -> float
-Return value for dimension n. The optional argument oc is an OutputContext."""
-        return 0.0
-
-    def names(self,n):
-        """names(n) -> string
-Return name for dimension n. The argument n is an integer."""
-        return ''
-
-    def y(self,oc):
-        """y(oc) -> float
-Return value for y. The optional oc argument is an OutputContext"""
-        return 0.0
-
-    def x(self,oc):
-        """x(oc) -> float
-Return value for x. The optional oc argument is an OutputContext"""
-        return 0.0
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class Double_Knob(Array_Knob):
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class UV_Knob(Array_Knob):
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-    def names(self,n):
-        """names(n) -> string
-Return name for dimension n. The argument n is an integer."""
-        return ''
-
-class Unsigned_Knob(Array_Knob):
-    def value(self):
-        """self.value() -> int
-Get the value of this knob as an integer.
-@return: int
-"""
-        return 0
-
-    def setValue(self,val):
-        """self.setValue(val) -> bool
-Set the unsigned integer value of this knob.
-@param val: The new value for the knob. Must be an integer >= 0.
-@return: True if succeeded, False otherwise.
-"""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class Scale_Knob(Array_Knob):
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def value(self, n, oc):
-        """value(n, oc) -> float
-Return value for dimension n. The optional argument oc is an OutputContext."""
-        return 0.0
-
-    def names(self,n):
-        """names(n) -> string
-
-Return name for dimension n. The argument n is an integer."""
-        return ''
-
-    def y(self,oc):
-        """y(oc) -> float
-Return value for y. The optional oc argument is an OutputContext"""
-        return 0.0
-
-    def x(self,oc):
-        """x(oc) -> float
-Return value for x. The optional oc argument is an OutputContext"""
-        return 0.0
-
-    def z(self,oc):
-        """z(oc) -> float
-Return value for z. The optional oc argument is an OutputContext"""
-        return 0.0
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class Range_Knob(Array_Knob):
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class WH_Knob(Array_Knob):
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def y_at(self):
-        """Return value for Y position at time 't'."""
-        return 0
-
-    def names(self):
-        """Return name for dimension 'i'."""
-        return ''
-
-    def y(self):
-        """Return value for Y position."""
-        return 0
-
-    def x(self):
-        """Return value for X position."""
-        return 0
-
-    def x_at(self):
-        """Return value for X position at time 't'."""
-        return 0
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class XYZ_Knob(Array_Knob):
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def parent(self):
-        """parent() -> XYZ_Knob
-
-Return parent."""
-        return XYZ_Knob()
-
-
-    def value(self):
-        """value(n, oc) -> float
-
-Return value for dimension n. The optional argument oc is an OutputContext."""
-        return 0.0
-
-    def names(self,n):
-        """names(n) -> string
-
-Return name for dimension n. The argument n is an integer."""
-        return ''
-
-
-    def y(self,oc):
-        """y(oc) -> float
-
-Return value for y. The optional oc argument is an OutputContext"""
-        return 0.0
-
-
-    def x(self,oc):
-        """x(oc) -> float
-
-Return value for x. The optional oc argument is an OutputContext"""
-        return 0.0
-
-    def z(self,oc):
-        """z(oc) -> float
-
-Return value for z. The optional oc argument is an OutputContext"""
-        return 0.0
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class ChannelMask_Knob(Channel_Knob):
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class EvalString_Knob(String_Knob):
-    def evaluate(self):
-        """self.evaluate() -> String.
-Evaluate the string, performing substitutions.
-@return: String.
-"""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class Multiline_Eval_String_Knob(EvalString_Knob):
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class Enumeration_Knob(Unsigned_Knob):
-    def setValue(self,item):
-        """self.setValue(item) -> None.
-Set the current value. If item is of an Integer type it will treat it as an index to the enum, otherwise as a value.
-@param item: String or Integer.
-@return: None.
-Example:
-w = nuke.nodes.Write()
-k = w['file_type']
-k.setValue('exr')
-"""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def numValues(self):
-        """self.numValues() -> int
-
-Return number of values. Deprecated."""
-        return 0
-
-    def value(self):
-        """self.value() -> String.
-Current value.
-@return: String.
-Example:
-w = nuke.nodes.Write()
-k = w['file_type']
-k.value()
-"""
-        return ''
-
-    def enumName(self,n):
-        """self.enumName(n) -> string
-
-Return name of enumeration n. The argument n is an integer and in the range of 0 and numValues. Deprecated."""
-        return ''
-
-    def values(self):
-        """self.values() -> List of strings.
-Return list of items.
-@return: List of strings.
-Example:
-w = nuke.nodes.Write()
-k = w['file_type']
-k.values()
-"""
-        return ['',]
-
-    def setValues(self,items):
-        """self.setValues(items) -> None.
-(Re)initialise knob to the supplied list of items.
-@param items: The new list of values.
-@return: None.
-Example:
-w = nuke.nodes.Write()
-k = w['file_type']
-k.setValues(['exr'])
-"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class OneView_Knob(Enumeration_Knob):
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-class Pulldown_Knob(Enumeration_Knob):
-    def commands(self,n):
-        """commands(n) -> string
-
-Return command n. The argument n is an integer and in the range of 0 and numValues."""
-        return ''
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def numValues(self):
-        """numValues() -> int
-
-Return number of values."""
-        return 0
-
-    def value(self):
-        """None"""
-        return 0.0
-
-    def setValues(self,items):
-        """self.setValues(items) -> None.
-(Re)initialise knob to the list of items.
-@param items: Dictionary of name/value pairs.
-@return: None.
-Example:
-w = nuke.nodes.NoOp()
-k = nuke.Pulldown_Knob('kname', 'klabel')
-k.setValues({'label/command' : 'eval("3*2")'})
-w.addKnob(k)
-k = w['kname']
-"""
-        pass
-
-    def itemName(self,n):
-        """itemName(n) -> string
-
-Return name of item n. The argument n is an integer and in the range of 0 and numValues."""
-        return ''
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class Bitmask_Knob(Enumeration_Knob):
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-class Script_Knob(String_Knob):
-    def execute(self):
-        """self.execute() -> None
-Execute the command.
-@return: None.
-"""
-        pass
-
-    def setValue(self,cmd):
-        """self.setValue(cmd) -> None
-Set the new command for this knob.
-@param cmd: String containing a TCL command.
-@return: None."""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def value(self):
-        """self.value() -> str
-
-Get the current command.
-@return: The current command as a string, or None if there is no current command."""
-        return ''
-
-    def command(self):
-        """self.command() -> str
-Get the current command.
-@return: The current command as a string, or None if there is no current command."""
-        return ''
-
-    def setCommand(self,cmd):
-        """self.setCommand(cmd) -> None
-Set the new command for this knob.
-@param cmd: String containing a TCL command.
-@return: None."""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class PyCustom_Knob(Script_Knob):
-
-    def getObject(self):
-        """Returns the custom knob object as created in the by the 'command' argument to the PyCuston_Knob constructor."""
-        return Knob()
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class PyScript_Knob(Script_Knob):
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class PythonKnob(String_Knob):
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class ColorChip_Knob(Unsigned_Knob):
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class CascadingEnumeration_Knob(Enumeration_Knob):
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class AColor_Knob(Color_Knob):
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-class Eyedropper_Knob(AColor_Knob):
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def __init__(self):
-        """x.__init__(...) initializes x; see x.__class__.__doc__ for signature"""
-        pass
-
-
-class File_Knob(EvalString_Knob):
-    def fromUserText(self,s):
-        """self.fromUserText(s) -> None.
-Assign string to knob, parses frame range off the end and opens file to get set the format.
-@param s: String to assign.
-@return: None.
-"""
-        pass
-
-    def setValue(self,s):
-        """self.fromScript(s) -> None.
-Assign string to knob.
-@param s: String to assign.
-@return: None.
-"""
-        pass
-
-    def __new__(self,S, ):
-        """T.__new__(S, ...) -> a new object with type S, a subtype of T"""
-        pass
-
-    def fromScript(self,s):
-        """self.fromScript(s) -> None.
-Assign string to knob.
-@param s: String to assign.
-@return: None.
-"""
-        pass
-
-    def value(self):
-        """self.getEvaluatedValue() -> String.
-Returns the string on this knob, will be normalized to technical notation if sequence (%4d).
-@return: String.
-"""
-        return ''
-
-    def getValue(self):
-        """self.getEvaluatedValue() -> String.
-Returns the string on this knob, will be normalized to technical notation if sequence (%4d).
-@return: String.
-"""
-        return ''
-
-    def getEvaluatedValue(self,oc):
-        """self.getValue(oc) -> String.
-Returns the string on this knob, will be normalized to technical notation if sequence (%4d). Will also evaluate the string for any tcl expressions
-@parm oc: the output context to use, if None the knob uiContext will be used.
-@return: String.
-"""
-        return ''
-
- # NODES
-
 class Group(Node):
     def node(self,s):
         """self.node(s) -> Node with name s or None.
@@ -4179,6 +3889,10 @@ Locate a node by name.
 @return: Node with name s or None.
 """
         return Node()
+
+    def __enter__(self):
+        """None"""
+        return Group()
 
     def __exit__(self):
         """None"""
@@ -4189,10 +3903,6 @@ Locate a node by name.
 All python code that follows will be executed in the context of node. All names are evaluated relative to this object. Must be paired with end.
 @return: Group.
 """
-        return Group()
-
-    def __enter__(self):
-        """None"""
         return Group()
 
     def run(self,callable):
@@ -4266,7 +3976,6 @@ List of nodes in group.
 @return: List of nodes
 """
         return [Node(),]
-
 
     def splaySelectedNodes(self, backward, inputA):
         """self.splaySelectedNodes(backward, inputA) -> None.
@@ -4508,8 +4217,8 @@ Returns None if the Viewer has no window yet.
         """x.__len__() <==> len(x)"""
         pass
 
-# MENU
 
+# MENU
 
 class Menu(MenuItem):
 
@@ -4636,7 +4345,7 @@ Return an object representing the active Viewer panel. This
 is not the same as the Viewer node, this is the viewer UI element.
 
 @return: Object representing the active Viewer"""
-    return Viewer()
+    return ViewerWindow()
 
 def addAfterBackgroundFrameRender(call,args,kwargs):
     """Add code to execute after each frame of a background render.
@@ -4769,7 +4478,7 @@ Create a new image format, which will show up on the pull-down menus for image f
 """
     return Format()
 
-def addKnobChanged(call,args,kwargs,nodeClass,node):
+def addKnobChanged(call,args,kwargs,nodeClass='',node=None):
     """Add code to execute when the user changes a knob
   The knob is availble in nuke.thisKnob() and the node in nuke.thisNode().
   This is also called with dummy knobs when the control panel is opened
@@ -4857,7 +4566,7 @@ def afterRender():
     """None"""
     pass
 
-def allNodes():
+def allNodes(filter=None, group=None):
     """allNodes(filter, group) -> List.
 List of all nodes in a group. If you need to get all the nodes in the script
 from a context which has no child nodes, for instance a control panel, use
@@ -4939,7 +4648,7 @@ Otherwise this produces an error indicating that the command requries a knob con
 Also see the 'selected' argument to the animation command.
 See also: animation, animationStart, animationEnd, animationIncrement
 @return: A tuple of animatable things."""
-    return (None,)
+    return (AnimationCurve(),)
 
 def applyPreset(nodeName, presetName):
     """applyPreset(nodeName, presetName) -> None
@@ -5218,9 +4927,6 @@ Example:
   deps = nuke.dependencies([n2], nuke.INPUTS | nuke.HIDDEN_INPUTS | nuke.EXPRESSIONS)"""
     pass
 
-def extractSelected():
-    pass
-
 def dependentNodes(what,nodes,evaluateAll):
     """ List all nodes referred to by the nodes argument. 'what' is an optional integer (see below).
   You can use the following constants or'ed together to select what types of dependent nodes are looked for:
@@ -5313,7 +5019,7 @@ Run an instance of Nuke as a monitored sub process. Returns an integer that's us
 @return: Int."""
     return 0
 
-def executeInMainThread(call,args,kwargs):
+def executeInMainThread(call,*args,**kwargs):
     """ Execute the callable 'call' with optional arguments 'args' and named arguments 'kwargs' i
 n
       Nuke's main thread and return immediately. """
@@ -5473,7 +5179,6 @@ This function is most useful when combining Python and TCL scripts for backwards
 """
     return ''
 
-
 def getAllUserPresets():
     """getAllUserPresets() -> None
 gets a list of all current user presets
@@ -5538,7 +5243,6 @@ Pops up a file chooser dialog box. You can use the pattern to restrict the displ
 """
     return ['',]
 
-
 def getFramesAndViews(label, default=None, maxviews=0):
     """getFramesAndViews(label, default=None, maxviews=0) -> (ranges, views)
 
@@ -5550,7 +5254,6 @@ Pops up a dialog with fields for a frame range and view selection.
 @return: List of ranges and views."""
     return [0, ['',],]
 
-
 def getInput(prompt, default):
     """getInput(prompt, default) -> str
 
@@ -5560,7 +5263,6 @@ Pops up a dialog box with a text field for an arbitrary string.
 @param default: Default value for the input text field.
 @return: String from text field or None if dialog is cancelled."""
     return ''
-
 
 def getNodeClassName():
     """getNodeClassName() -> None
@@ -5576,7 +5278,6 @@ Gets a list of all paths that are excluded from the search for node presets.
 @return: List of paths."""
     return ['',]
 
-
 def getPaneFor( panelName ):
     """getPaneFor( panelName ) -> Dock
 
@@ -5586,7 +5287,6 @@ For example, 'Properties.1' or 'Viewer.1 or 'co.uk.thefoundry.WebBrowser'
 
 @return: The pane or None."""
     return Panel()
-
 
 def getPresetKnobValues():
     """getPresetKnobValues() -> None
@@ -5648,7 +5348,6 @@ Returns the Nuke key assignments as a string formatted for use in nuke.display()
 
 @return: A formatted string."""
     return ''
-
 
 def import_module(name,filterRule):
     """None"""
@@ -6027,7 +5726,7 @@ print n[1]
 """
     return [0,0]
 
-def pluginAddPath(args,addToSysPath):
+def pluginAddPath(args,addToSysPath=False):
     """ Adds all the paths to the beginning of the Nuke plugin path.
       If the path already exists in the list of plugin paths, it is moved
       to the start. If this command is executed inside an init.py then
@@ -6242,7 +5941,8 @@ def root():
 Get the DAG's root node. Always succeeds.
 
 @return: The root node. This will never be None."""
-    return Node()
+    return Root()
+
 
 def runIn(object, cmd):
     """runIn(object, cmd) -> bool
@@ -6273,7 +5973,6 @@ This requires the image to be calculated, so performance may be very bad if this
 """
     return 0.0
 
-
 def saveUserPreset(node, presetName):
     """saveUserPreset(node, presetName) -> None
 Saves a node's current knob values as a user preset.
@@ -6291,7 +5990,7 @@ Saves the current window layout.
 """
     pass
 
-def scriptClear():
+def scriptClear(filename=None, ignoreUnsavedChanges=False):
     """Clears a Nuke script."""
     pass
 
@@ -6307,11 +6006,11 @@ def scriptNew():
     """Start a new script. Returns True if successful."""
     pass
 
-def scriptOpen():
+def scriptOpen(path):
     """Opens a new script containing the contents of the named file."""
     pass
 
-def scriptReadFile():
+def scriptReadFile(path):
     """Read nodes from a file."""
     pass
 
@@ -6339,6 +6038,17 @@ Saves the current script with the given file name if supplied, or (in GUI mode) 
 
 def scriptSource():
     """Same as scriptReadFile()."""
+    pass
+def scriptSaveAndClear():
+    """Calls nuke.scriptSave and nuke.scriptClear
+
+Parameters:
+
+        filename - Save to this file name without changing the script name in the project.
+        ignoreUnsavedChanges - Optional. If set to True scripSave will be called, ignoring any unsaved changes
+
+Returns: None
+    True when sucessful. False if the user cancels the operation. In this case nuke.scripClear will not be called """
     pass
 
 def script_directory():
@@ -6577,7 +6287,6 @@ A RuntimeException is thrown if not in GUI mode.
 @param create: Optional parameter. True (the default value) will mean that a new  toolbar gets created if one with the given name couldn't be found; False will  mean that no new toolbar will be created.@return: The toolbar, or None if no toolbar was found and 'create' was False."""
     return ToolBar()
 
-
 def tprint(text, sep=' ', end='\n', file=None):
     """tprint(value, ..., sep=' ', end='\n', file=sys.stdout) -> None
 
@@ -6656,3 +6365,31 @@ The new scale factor will be returned, or None if the function is run in a non-G
 @return: Current zoom factor or None if not in a GUI context.
 """
     return 0.0
+
+def zoomToFitSelected():
+    """
+    Does a zoom to fit on the selected nodes in the DAG
+    :return: None
+    """
+
+def center():
+    """
+    center() -> array with x, then y
+
+    Return the center values of a group's display, these values are suitable to be passed to nuke.zoom as the DAG center point.  Like so:
+    center = nuke.center()
+    zoom = nuke.zoom()
+    print center[0]
+    print center[1]
+    ## move DAG back to center point without changing zoom.
+    nuke.zoom( zoom, center )
+    @return: Array of x, y.
+    """
+    return [0,0]
+
+def openPanels():
+    """
+    returns a list of Nodes which have panels open.The last item in the list is the currently active Node panel.
+    """
+    return ['',]
+

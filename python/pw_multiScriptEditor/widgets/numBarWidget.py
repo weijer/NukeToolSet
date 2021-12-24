@@ -1,6 +1,10 @@
-from Qt.QtCore import *
-from Qt.QtGui import *
-from Qt.QtWidgets import *
+try:
+    from PySide.QtCore import *
+    from PySide.QtGui import *
+except:
+    from PySide2.QtCore import *
+    from PySide2.QtGui import *
+    from PySide2.QtWidgets import *
 import managers
 
 class lineNumberBarClass(QWidget):
@@ -9,8 +13,8 @@ class lineNumberBarClass(QWidget):
         self.edit = edit
         self.highest_line = 0
         self.setMinimumWidth(30)
-        self.edit.installEventFilter(self)
-        self.edit.viewport().installEventFilter(self)
+        # self.edit.installEventFilter(self)
+        # self.edit.viewport().installEventFilter(self)
         self.bg = None
 
     def update(self, *args):

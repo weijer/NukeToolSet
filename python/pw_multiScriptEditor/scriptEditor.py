@@ -1,44 +1,55 @@
-import sys
 import traceback
+import sys
 import webbrowser
-
-from Qt.QtCore import *
-from Qt.QtGui import *
-from Qt.QtWidgets import *
-
+import os
+import importlib
+try:
+    from PySide.QtCore import *
+    from PySide.QtGui import *
+except:
+    from PySide2.QtCore import *
+    from PySide2.QtGui import *
+    from PySide2.QtWidgets import *
 from widgets import scriptEditor_UIs as ui, tabWidget, outputWidget, about, shortcuts
 from widgets.pythonSyntax import design
-
-reload(tabWidget)
-reload(outputWidget)
 import sessionManager
 import settingsManager
 from widgets import themeEditor, findWidget
-reload(themeEditor)
-reload(findWidget)
 import managers
-reload(managers)
+importlib.reload(themeEditor)
+importlib.reload(findWidget)
+importlib.reload(tabWidget)
+importlib.reload(outputWidget)
+importlib.reload(ui)
+importlib.reload(managers)
 if managers._s == 'w':
     import ctypes
-    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID('paulwinex.multiscripteditor.1.0')
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID('paulwinex.multiscripteditor.2')
+import icons_rcs
 from icons import *
+
 
 class scriptEditorClass(QMainWindow, ui.Ui_scriptEditor):
     def __init__(self, parent=None):
         QMainWindow.__init__(self, parent)
         # ui
-        self.ver = '2.0.3'
+        self.ver = '2.1'
         self.setupUi(self)
-        self.setWindowTitle('pw Multi Script Editor v%s' % self.ver)
+        self.setWindowTitle('Multi Script Editor v%s' % self.ver)
         self.setObjectName('pw_scriptEditor')
         # widgets
         self.out = outputWidget.outputClass()
         self.out_ly.addWidget(self.out)
         self.tab = tabWidget.tabWidgetClass(self)
         self.in_ly.addWidget(self.tab)
+
+        for m in self.file_menu, self.tools_menu, self.options_menu, self.run_menu, self.help_menu:
+            m.setWindowTitle('MSE '+self.ver)
+
         #variables
         self.s = settingsManager.scriptEditorClass()
-        self.namespace = {}
+        # self.namespace = {}
+        self.namespace = __import__('__main__').__dict__
         self.dial = None
 
         self.updateNamespace({'self_main':self,
@@ -47,20 +58,13 @@ class scriptEditorClass(QMainWindow, ui.Ui_scriptEditor):
                               'self_help': self.mse_help,
                               'self_context':managers.context})
         self.session = sessionManager.sessionManagerClass()
-
-        def fixButton(btn, ico):
-            btn.setText('')
-            btn.setFixedSize(QSize(32,32))
-            btn.setIconSize(QSize(24,24))
-            btn.setIcon(QIcon(icons[ico]))
-        fixButton(self.executeAll_btn, 'all')
-        fixButton(self.executeSel_btn, 'sel')
-        fixButton(self.clearHistory_btn, 'clear')
-
+        self.execAll_act.setIcon(QIcon(icons['all']))
+        self.execSel_act.setIcon(QIcon(icons['sel']))
+        self.clearHistory_act.setIcon(QIcon(icons['clear']))
+        self.toolBar.setIconSize(QSize(32,32))
+        self.menubar.setNativeMenuBar(False)
         # connects
-        self.executeAll_btn.clicked.connect(self.executeAll)
-        self.executeSel_btn.clicked.connect(self.executeSelected)
-        self.clearHistory_btn.clicked.connect(self.clearHistory)
+
         self.save_act.triggered.connect(self.saveScript)
         self.load_act.triggered.connect(self.loadScript)
         self.exit_act.triggered.connect(self.close)
@@ -111,6 +115,7 @@ class scriptEditorClass(QMainWindow, ui.Ui_scriptEditor):
             if nuke.NUKE_VERSION_MAJOR>8:
                 self.execSel_act.setShortcut('Ctrl+Return')
                 self.execSel_act.setShortcutContext(Qt.ApplicationShortcut)
+
         self.execSel_act.triggered.connect(self.executeSelected)
         self.execSel_act.setShortcut('Ctrl+Return')
         self.execSel_act.setShortcutContext(Qt.WidgetWithChildrenShortcut)
@@ -121,11 +126,14 @@ class scriptEditorClass(QMainWindow, ui.Ui_scriptEditor):
 
         self.clearHistory_act.triggered.connect(self.clearHistory)
 
+        # hide
+        self.donate_act.setVisible(False)
+
         #start
         self.loadSession()
         self.loadSettings()
         self.setWindowStyle()
-        self.out.showMessage('>>> pw Multi Script Editor v.%s\npaulwinex.ru' % self.ver)
+        # self.out.showMessage('Multi Script Editor v.%s Loaded\npaulwinex.com' % self.ver)
         self.tab.widget(0).edit.setFocus()
         self.appContextMenu()
         self.addArgs()
@@ -150,6 +158,9 @@ class scriptEditorClass(QMainWindow, ui.Ui_scriptEditor):
         self.close()
         if __name__ == '__main__':
             sys.exit()
+        # if managers.context == 'maya':
+        #     from managers import _maya
+        #     _maya.clearDoc()
 
     def appContextMenu(self):
         if managers.context in managers.contextMenus:
@@ -159,16 +170,15 @@ class scriptEditorClass(QMainWindow, ui.Ui_scriptEditor):
             return menu
 
     def addArgs(self):
-        if len(sys.argv) == 1:
-            return
-        f = sys.argv[-1]
-        if os.path.exists(f):
-            if not os.path.basename(f) == os.path.basename(__file__):
-                if os.path.splitext(f)[-1] in ['.txt', '.py']:
-                    self.out.showMessage( os.path.splitext(f)[-1])
-                    self.out.showMessage('Open File: '+f)
-                    text = open(f).read()
-                    self.tab.addNewTab(os.path.basename(f), text)
+        if sys.argv:
+            f = sys.argv[-1]
+            if os.path.exists(f):
+                if not os.path.basename(f) == os.path.basename(__file__):
+                    if os.path.splitext(f)[-1] in ['.txt', '.py']:
+                        self.out.showMessage( os.path.splitext(f)[-1])
+                        self.out.showMessage('Open File: '+f)
+                        text = open(f).read()
+                        self.tab.addNewTab(os.path.basename(f), text)
 
     def fillThemeMenu(self):
         self.theme_menu.clear()
@@ -247,6 +257,8 @@ class scriptEditorClass(QMainWindow, ui.Ui_scriptEditor):
 
     def updateNamespace(self, namespace):
         self.namespace.update(namespace)
+        # md = __import__('__main__').__dict__
+        # md['mse'] = self.namespace
 
     def executeCommand(self, cmd):
         self.out.showMessage(cmd)
@@ -266,6 +278,8 @@ class scriptEditorClass(QMainWindow, ui.Ui_scriptEditor):
                         self.write_func(stripped_text)
                         QCoreApplication.processEvents()
                     self.skip = not self.skip
+                def flush(self):
+                    pass
 
             sys.stdout = stdoutProxy(self.out.showMessage)
             try:
@@ -273,8 +287,9 @@ class scriptEditorClass(QMainWindow, ui.Ui_scriptEditor):
                     result = eval(command, self.namespace, self.namespace)
                     if result != None:
                         self.out.showMessage(repr(result))
+
                 except SyntaxError:
-                    exec command in self.namespace
+                    exec(command, self.namespace)
             except SystemExit:
                 self.close()
             except:
@@ -283,6 +298,7 @@ class scriptEditorClass(QMainWindow, ui.Ui_scriptEditor):
                     traceback_lines.pop(i)
                 self.out.showMessage('\n'.join(traceback_lines))
             sys.stdout = tmp_stdout
+            # __import__("__main__").__dict__.update(self.namespace)
 
     def clearHistory(self):
         self.out.setText('')
@@ -374,7 +390,6 @@ class scriptEditorClass(QMainWindow, ui.Ui_scriptEditor):
         # super(scriptEditorClass, self).resizeEvent(event)
         QMainWindow.resizeEvent(self, event)
 
-
     def openLink(self, name):
         from style.links import links
         webbrowser.open(links[name])
@@ -403,7 +418,11 @@ class scriptEditorClass(QMainWindow, ui.Ui_scriptEditor):
         elif os.name =='os2':
             os.system('open "%s"' % path)
 
-# QTextCodec.setCodecForCStrings(QTextCodec.codecForName("UTF-8"))
+try:
+    QTextCodec.setCodecForCStrings(QTextCodec.codecForName("UTF-8"))
+except:
+    pass
+
 
 if __name__ == '__main__':
     app = QApplication([])

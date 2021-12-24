@@ -1,6 +1,6 @@
 main = __import__('__main__')
 import platform
-
+import importlib
 
 #######  COMPLETERS  ##############################################
 
@@ -11,7 +11,7 @@ def nukeCompleter(*args):
 
 def getNukeContextMenu(*args):
     from managers import _nuke
-    reload(_nuke)
+    importlib.reload(_nuke)
     return _nuke.contextMenu(*args)
 ###################################################################
 
@@ -21,18 +21,18 @@ def houdiniCompleter(*args):
     return _houdini.completer(*args)
 def getHoudiniContextMenu(*args):
     from managers import _houdini
-    reload(_houdini)
+    importlib.reload(_houdini)
     return _houdini.contextMenu(*args)
 def houdiniDropEvent(*args):
     from managers import _houdini
-    reload(_houdini)
+    importlib.reload(_houdini)
     return _houdini.wrapDroppedText(*args)
 ###################################################################
 
 # MAYA
 def mayaCompleter(*args):
     from managers import _maya
-    reload(_maya)
+    importlib.reload(_maya)
     return _maya.completer(*args)
 
 def mayaDropEvent(*args):
@@ -40,7 +40,7 @@ def mayaDropEvent(*args):
     return _maya.wrapDroppedText(*args)
 def getMayaContextMenu(*args):
     from managers import _maya
-    reload(_maya)
+    importlib.reload(_maya)
     return _maya.contextMenu(*args)
 ###################################################################
 
@@ -65,16 +65,23 @@ dropEvents = dict(
 autoImport = dict(
     hou='import hou\n',
     nuke='import nuke\n',
+    max='import MaxPlus\n'
 )
 mayaDragTempData = 'maya_temp_drag_empty_Data'
 
+main_parent = None
 context = None
 if 'hou' in main.__dict__:
     context = 'hou'
+    if main.__dict__['hou'].applicationVersion()[0] >= 15:
+         main_parent = main.__dict__['hou'].ui.mainQtWindow()
 elif 'cmds' in main.__dict__:
     context = 'maya'
 elif 'nuke' in main.__dict__:
     context = 'nuke'
+elif 'MaxPlus' in main.__dict__:
+    context = 'max'
+
 
 
 

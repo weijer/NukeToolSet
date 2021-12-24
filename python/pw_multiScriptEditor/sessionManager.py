@@ -9,7 +9,7 @@ sessionFilename = 'pw_scriptEditor_session.json'
 
 class sessionManagerClass(object):
     def __init__(self):
-        self.path = os.path.normpath(os.path.join(settingsManager.userPrefFolder(), sessionFilename)).replace('\\','/')
+        self.path = os.path.normpath(os.path.join(settingsManager.userPrefFolder(), sessionFilename))
         if not os.path.exists(self.path):
             f = open(self.path, 'w')
             f.write('{}')
