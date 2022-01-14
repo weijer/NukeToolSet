@@ -45,7 +45,7 @@ class NukeMenu(object):
         """
         self.gizmos_image_dir = self.replace_path(os.path.join(base_dir, "gizmos/Image"))
         self.gizmos_Filter_dir = self.replace_path(os.path.join(base_dir, "gizmos/Filter"))
-        self.gizmos_channel_dir = self.replace_path(os.path.join(base_dir, "gizmos/Channel2"))
+        self.gizmos_channel_dir = self.replace_path(os.path.join(base_dir, "gizmos/Channel"))
         self.gizmos_Lighting_dir = self.replace_path(os.path.join(base_dir, "gizmos/Lighting"))
         self.gizmos_3D_dir = self.replace_path(os.path.join(base_dir, "gizmos/3D"))
         self.gizmos_Keyer_dir = self.replace_path(os.path.join(base_dir, "gizmos/Keyer"))
@@ -59,6 +59,13 @@ class NukeMenu(object):
         nuke.pluginAddPath(self.gizmos_Keyer_dir)
         nuke.pluginAddPath(self.gizmos_ToolSet_dir)
         nuke.pluginAddPath(self.gizmos_3D_Tangent_dir)
+
+        """
+        add Cryptomatte gizmo path
+        """
+        if self.nuke_version_number < 13:
+            self.gizmos_cryptomatte_dir = self.replace_path(os.path.join(base_dir, "gizmos/Cryptomatte"))
+            nuke.pluginAddPath(self.gizmos_cryptomatte_dir)
 
         """
          add icons path
