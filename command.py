@@ -9,7 +9,7 @@ import python.CreatePointCloud.CreatedPointCloud as CreatedPointCloud
 import python.NukeFXSExporter.NukeFXSExporter as NukeFXSExporter
 import python.ToolSet as ToolSet
 import python.pw_multiScriptEditor as ScriptEditor
-from python.Channel import autoComper, PreCompForArnold, RenderLayer
+from python.UserChannel import autoComper, PreCompForArnold, RenderLayer
 from python.ToolSet import ReadAfterRender
 from python.cryptomatte import cryptomatte_utilities
 from python.mamoworld.mochaImportPlus import loadMochaImport
