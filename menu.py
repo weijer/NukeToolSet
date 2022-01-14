@@ -18,7 +18,7 @@ class NukeMenu(object):
         get current nuke version number
         """
         nuke_version_str = nuke.NUKE_VERSION_STRING
-        self.nuke_version_number = nuke_version_str.split('.')[0]
+        self.nuke_version_number = int(nuke_version_str.split('.')[0])
 
         """
          add folder path
@@ -52,13 +52,20 @@ class NukeMenu(object):
         self.gizmos_ToolSet_dir = self.replace_path(os.path.join(base_dir, "gizmos/ToolSet"))
         self.gizmos_3D_Tangent_dir = self.replace_path(os.path.join(base_dir, "gizmos/3D/Tangent_Space_Normals"))
         nuke.pluginAddPath(self.gizmos_image_dir)
-        nuke.pluginAddPath(self.gizmos_channel_dir)
         nuke.pluginAddPath(self.gizmos_Filter_dir)
+        nuke.pluginAddPath(self.gizmos_channel_dir)
         nuke.pluginAddPath(self.gizmos_Lighting_dir)
         nuke.pluginAddPath(self.gizmos_3D_dir)
         nuke.pluginAddPath(self.gizmos_Keyer_dir)
         nuke.pluginAddPath(self.gizmos_ToolSet_dir)
         nuke.pluginAddPath(self.gizmos_3D_Tangent_dir)
+
+        """
+        add Cryptomatte gizmo path
+        """
+        if self.nuke_version_number < 13:
+            self.gizmos_cryptomatte_dir = self.replace_path(os.path.join(base_dir, "gizmos/Cryptomatte"))
+            nuke.pluginAddPath(self.gizmos_cryptomatte_dir)
 
         """
          add icons path
@@ -117,14 +124,12 @@ class NukeMenu(object):
                 else:
                     tools_icon = ""
 
-                print(tools_icon)
-
                 if "max_version" in tools.keys():
                     max_version = tools["max_version"]
                 else:
                     max_version = None
 
-                if max_version is None or (self.nuke_version_number <= tools["max_version"]):
+                if max_version is None or (self.nuke_version_number <= int(tools["max_version"])):
                     self.create_tools(cmenu,
                                       tools["type"],
                                       tools["name"],
@@ -156,7 +161,7 @@ class NukeMenu(object):
                 max_version = toolMenu_config[tools]["max_version"]
             else:
                 max_version = None
-            if max_version is None or (self.nuke_version_number <= toolMenu_config[tools]["max_version"]):
+            if max_version is None or (self.nuke_version_number <= int(toolMenu_config[tools]["max_version"])):
                 self.create_menu_tools(toolMenu,
                                        toolMenu_config[tools]["name"],
                                        toolMenu_config[tools]["command"]
@@ -176,7 +181,8 @@ class NukeMenu(object):
         default init
         :return:
         """
-        command.cryptomatte_utilities.setup_cryptomatte()
+        if self.nuke_version_number < 13:
+            command.cryptomatte_utilities.setup_cryptomatte()
 
     def knob_show_frame(self):
         """
