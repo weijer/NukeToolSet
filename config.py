@@ -834,8 +834,7 @@ nuke_config = {
         # Multi Script Editor
         "ScriptEditor": {
             "name": "Multi Script Editor",
-            "command": "command.run_ScriptEditor()",
-            "max_version": ""
+            "command": "command.run_ScriptEditor()"
         }
     }
 }
