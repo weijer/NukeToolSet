@@ -17,8 +17,7 @@ class NukeMenu(object):
         """
         get current nuke version number
         """
-        nuke_version_str = nuke.NUKE_VERSION_STRING
-        self.nuke_version_number = int(nuke_version_str.split('.')[0])
+        self.nuke_version_number = nuke.NUKE_VERSION_MAJOR
 
         """
          add folder path
