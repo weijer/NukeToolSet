@@ -1,13 +1,9 @@
-try:
-    from PySide.QtCore import *
-    from PySide.QtGui import *
-except:
-    from PySide2.QtCore import *
-    from PySide2.QtGui import *
-    from PySide2.QtWidgets import *
+from Qt.QtCore import *
+from Qt.QtGui import *
+from Qt.QtWidgets import *
 import re
-from . import design
-from . import keywords
+from .import design
+from .import keywords
 
 
 class PythonHighlighterClass (QSyntaxHighlighter):
@@ -24,8 +20,6 @@ class PythonHighlighterClass (QSyntaxHighlighter):
         self.tri_double = (QRegExp('"""'), 2, self.getStyle(self.colors['docstring']))
 
         rules = []
-        # defaults
-        # rules += [(r".*", 0, self.getStyle(self.colors['default'], False))]
         # Keywords
         rules += [('\\b%s\\b' % w, 0, self.getStyle(self.colors['keywords'], True))
             for w in keywords.syntax['keywords']]
@@ -75,8 +69,6 @@ class PythonHighlighterClass (QSyntaxHighlighter):
     def highlightBlock(self, text):
         """Apply syntax highlighting to the given block of text.
         """
-        defFormat = self.getStyle(self.colors['default'])
-        self.setFormat(0, len(text), defFormat)
 
         # Do other syntax formatting
         for expression, nth, format in self.rules:

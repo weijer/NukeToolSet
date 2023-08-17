@@ -12,15 +12,25 @@ import python.pw_multiScriptEditor as ScriptEditor
 from python.Channel import autoComper, PreCompForArnold, RenderLayer
 from python.ToolSet import ReadAfterRender
 from python.cryptomatte import cryptomatte_utilities
-from python.mamoworld.mochaImportPlus import loadMochaImport
-from python.mamoworld.workflow import relativeFilePath
-from python.packproject import nuke2pack
+
 
 base_dir = os.path.dirname(__file__)
-loadMochaImport.load()
-loadMochaImport.addIconPath(base_dir)
+if nuke.NUKE_VERSION_MAJOR < 13:
+    from python.mamoworld.mochaImportPlus import loadMochaImport
+    from python.mamoworld.workflow import relativeFilePath
 
-import mochaimport
+    loadMochaImport.load()
+    loadMochaImport.addIconPath(base_dir)
+    import mochaimport
+else:
+    # nuke13以上版本适用，兼容python3
+    from python.mamoworld2.mochaImportPlus import loadMochaImport
+    from python.mamoworld2.workflow import relativeFilePath
+
+    loadMochaImport.addIconPath(base_dir)
+    from python.mamoworld2.mochaImportPlus.mochaimport import mochaimport
+
+from python.packproject import nuke2pack
 
 
 def run_pack():

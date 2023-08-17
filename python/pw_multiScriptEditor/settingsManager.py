@@ -13,9 +13,6 @@ def userPrefFolder():
         appData = os.getenv('MAYA_APP_DIR')
     elif context == 'nuke':
         appData = os.path.join(os.environ['HOME'], '.nuke')
-    elif context == 'max':
-        import MaxPlus
-        appData = os.path.dirname(MaxPlus.PathManager.GetTempDir())
     if not appData:
         appData = os.getenv('HOME') or os.path.expanduser('~')
     return  appData
@@ -48,6 +45,5 @@ class scriptEditorClass(object):
 
     def defaults(self):
         return dict(geometry=None,
-                    outFontSize=8
-                    )
+                    outFontSize=8)
 

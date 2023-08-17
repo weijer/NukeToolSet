@@ -1,12 +1,8 @@
-try:
-    from PySide.QtCore import *
-    from PySide.QtGui import *
-except:
-    from PySide2.QtCore import *
-    from PySide2.QtGui import *
-    from PySide2.QtWidgets import *
+from Qt.QtCore import *
+from Qt.QtGui import *
+from Qt.QtWidgets import *
 import icons
-from . import about_UIs
+import about_UIs
 import os
 
 class aboutClass(QDialog, about_UIs.Ui_Dialog):
@@ -20,13 +16,12 @@ class aboutClass(QDialog, about_UIs.Ui_Dialog):
         self.donate_btn.setIconSize(QSize(24,24))
         self.donate_btn.setIcon(QIcon(icons.icons['donate']))
         self.donate_btn.clicked.connect(lambda :parent.openLink('donate'))
-        self.donate_btn.hide()
         testedFile = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'tested.txt')
         if os.path.exists(testedFile):
             outText = open(testedFile).read()
             self.textBrowser.setPlainText(outText)
 
 
-text = '''Paul Winex 2018
+text = '''Paul Winex 2015
 Any question or bug report: paulwinex@gmail.com
 '''

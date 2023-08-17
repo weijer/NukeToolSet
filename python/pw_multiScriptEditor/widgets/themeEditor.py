@@ -1,19 +1,13 @@
-try:
-    from PySide.QtCore import *
-    from PySide.QtGui import *
-    qt = 1
-except:
-    from PySide2.QtCore import *
-    from PySide2.QtGui import *
-    from PySide2.QtWidgets import *
-    qt = 2
-from . import themeEditor_UIs as ui
-from python.pw_multiScriptEditor import settingsManager,icons_rcs
+from Qt.QtCore import *
+from Qt.QtGui import *
+from Qt.QtWidgets import *
+import themeEditor_UIs as ui
+import settingsManager
 import os
-from .pythonSyntax import design
-from .pythonSyntax import syntaxHighLighter
-from . import inputWidget
-
+from pythonSyntax import design
+from pythonSyntax import syntaxHighLighter
+import inputWidget
+import icons_rcs
 
 class themeEditorClass(QDialog, ui.Ui_themeEditor):
     def __init__(self, parent = None, desk=None):
@@ -36,7 +30,6 @@ class themeEditorClass(QDialog, ui.Ui_themeEditor):
         self.updateUI()
         self.updateColors()
         self.preview_twd.completer.updateCompleteList()
-        self.namespace={}
 
 
     def fillUI(self, restore=None):
@@ -112,6 +105,7 @@ class themeEditorClass(QDialog, ui.Ui_themeEditor):
                 item.setIcon(QIcon(pix))
                 self.updateExample()
 
+
     def saveTheme(self):
         text = self.themeList_cbb.currentText() or 'NewTheme'
         name = QInputDialog.getText(self, 'Theme name', 'Enter Theme name', QLineEdit.Normal, text)
@@ -122,7 +116,7 @@ class themeEditorClass(QDialog, ui.Ui_themeEditor):
             settings = self.s.readSettings()
             if 'colors' in settings:
                 if name in settings['colors']:
-                    if not self.yes_no_question('Replace exists?'):
+                    if QMessageBox.question(self, 'Save Theme', 'Replace exists?', QMessageBox.Save | QMessageBox.Cancel) == QMessageBox.Cancel:
                         return
 
             colors = self.getCurrentColors()
@@ -137,7 +131,7 @@ class themeEditorClass(QDialog, ui.Ui_themeEditor):
     def deleteTheme(self):
         text = self.themeList_cbb.currentText()
         if text:
-            if self.yes_no_question('Remove current theme?'):
+            if QMessageBox.question(self, 'Delete Theme', 'Remove current theme?', QMessageBox.Yes | QMessageBox.No) == QMessageBox.Yes:
                 name = self.themeList_cbb.currentText()
                 settings = self.s.readSettings()
                 if 'colors' in settings:
@@ -171,14 +165,6 @@ class themeEditorClass(QDialog, ui.Ui_themeEditor):
         pass
         # print self.colors_lwd.selectedItems()[0].data(32)
 
-    def yes_no_question(self, question):
-        msg_box = QMessageBox(self)
-        msg_box.setText(question)
-        yes_button = msg_box.addButton("Yes", QMessageBox.YesRole)
-        no_button = msg_box.addButton("No", QMessageBox.NoRole)
-        msg_box.exec_()
-        return msg_box.clickedButton() == yes_button
-
 defaultText = r'''@decorator(param=1)
 def f(x):
     """ Syntax Highlighting Demo
@@ -197,8 +183,6 @@ class Foo:
 x = len('abc')
 print(f.__doc__)
 '''
-
-
 
 
 if __name__ == '__main__':

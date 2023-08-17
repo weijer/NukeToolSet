@@ -1,6 +1,6 @@
-import settingsManager
-import os, re
 
+import os, re
+from pw_multiScriptEditor import settingsManager
 EditorStyle = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'style', 'completer.qss')
 if not os.path.exists(EditorStyle):
     EditorStyle=None
@@ -25,7 +25,7 @@ defaultColors = dict(
         completer_alt_background= (65,65,65),
         completer_hover_background= (85,85,85),
         completer_selected_background= (123,123,123),
-        default=(210,210,210)
+        default=(128,128,128)
 )
 
 

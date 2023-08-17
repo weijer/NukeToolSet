@@ -1,7 +1,8 @@
 from .main import *
 from . import math
-from . import geo
-from . import nodes
+from .import geo
+from .import nodes
+
 
 AFTER_CONST = 21
 AFTER_LINEAR = 22
