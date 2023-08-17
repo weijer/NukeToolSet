@@ -5,6 +5,12 @@
 ### 更新说明
  #### 2021-5-12
 
+ 1. 支持Nuke 14
+ 2. pw_multiScriptEditor 支持py3
+ 3. 更新mochaimport版本
+
+ #### 2021-5-12
+
  1. 支持Nuke 13
 
  #### 2017-7-27
