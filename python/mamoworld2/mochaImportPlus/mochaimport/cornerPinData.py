@@ -6,7 +6,7 @@ try:
 
     clipboardModule = QtGui
 except:
-    from PySide2 import QtWidgets
+    from Qt import QtWidgets
 
     clipboardModule = QtWidgets
 

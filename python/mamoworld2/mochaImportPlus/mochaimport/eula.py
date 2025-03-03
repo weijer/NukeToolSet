@@ -11,7 +11,7 @@ try:
 
     myQtModule = QtGui
 except:
-    from PySide2 import QtWidgets
+    from Qt import QtWidgets
 
     myQtModule = QtWidgets
 
