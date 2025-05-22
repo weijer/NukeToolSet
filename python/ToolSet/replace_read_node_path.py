@@ -57,7 +57,7 @@ class ReplacePath(QtGui.QDialog):
 
 
 def main():
-    app = QtGui.qApp
+    app = QtGui.QApplication
     global rp
     try:
         rp.close()

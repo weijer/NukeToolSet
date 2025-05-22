@@ -3,6 +3,13 @@
 大部分都是这几年干合成用到的，有些自己写的，有些朋友写的，有些网上down的！现在免费开源共享，希望大家都来共享自己的nuke插件！
 
 ### 更新说明
+#### 2025-5-22
+
+ 1. 增加若干常用gizmo
+ 2. 修复 Switch Shot 支持>QT5
+ 3. 修复 Replace Read Node Path 支持>QT5
+ 3. 修复 PresetBackdrop 类型错误
+
 #### 2025-3-3
 
  1. 支持Nuke 16
