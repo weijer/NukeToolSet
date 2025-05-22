@@ -11,6 +11,12 @@
 # Built-in modules
 from Qt import QtWidgets as QtGui
 from Qt import QtCore as QtCore
+
+try:
+    from Qt.QtWidgets import QIcon
+except ImportError:
+    from Qt.QtGui import QIcon
+
 import os
 import getpass
 import re
@@ -186,8 +192,8 @@ class ReplaceReadNodeView(QtGui.QDialog):
         self.file_path_cbox = QtGui.QComboBox()
         self.file_path_cbox.setEditable(True)
         self.file_path_btn = QtGui.QToolButton()
-        icon = QtGui.QIcon()
-        icon.addPixmap(self.style().standardPixmap(QtGui.QStyle.SP_DirOpenIcon))
+        icon = QIcon()
+        icon.addPixmap(self.style().standardPixmap(QtGui.QStyle.SP_DirOpenIcon, None, None))
         self.file_path_btn.setIcon(icon)
         separator_label = QtGui.QLabel('Sep:')
         separator_label.setFixedWidth(30)
@@ -351,7 +357,7 @@ class ReplaceReadNode(ReplaceReadNodeView):
 
 
 def main():
-    app = QtGui.qApp
+    app = QtGui.QApplication
     global rrn
     try:
         rrn.close()
