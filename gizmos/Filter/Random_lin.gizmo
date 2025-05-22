@@ -1,0 +1,75 @@
+#! C:/Program Files/Nuke10.0v1/nuke-10.0.1.dll -nx
+version 10.0 v1
+Gizmo {
+ inputs 0
+ note_font "Verdana Bold Bold Bold Bold Bold"
+ note_font_color 0xa5004fff
+ addUserKnob {20 Random_lin}
+ addUserKnob {41 c l first T Random_lin1.c}
+ addUserKnob {41 b l Size T Random_lin1.b}
+ addUserKnob {41 a l velocity T Random_lin1.a}
+ addUserKnob {26 ""}
+ addUserKnob {41 d l "export Random" T Random_lin1.d}
+ addUserKnob {41 n l "export largen" T Random_lin1.n}
+ addUserKnob {20 name1 l "linjunyi 林君义" n 1}
+ name1 0
+ addUserKnob {26 id1 l "" +STARTLINE T "WeChat：4772491\nlinjy0454@icloud.com\nlinkedin.com/in/junyi-lin-a67bb1118\n\n微信公众号：影视深井冰"}
+ addUserKnob {20 endGroup n -1}
+}
+ Group {
+  inputs 0
+  name Random_lin1
+  note_font "宋体 Bold Bold Bold Bold Bold Bold Bold"
+  note_font_color 0xc60f76ff
+  xpos -140
+  ypos -122
+  addUserKnob {20 Random_lin t Random_lin}
+  addUserKnob {7 c l first t first}
+  c 1
+  addUserKnob {7 b l Size t Size R 0 10}
+  b 1
+  addUserKnob {7 a l velocity t velocity}
+  a 0.5
+  addUserKnob {26 ""}
+  addUserKnob {7 d l "export Random" t "export Random"}
+  d {{(random(1,frame*(parent.Random_lin1.a))*(parent.Random_lin1.b))+(parent.Random_lin1.c)-(parent.Random_lin1.b)/2}}
+  addUserKnob {7 n l "export largen" t "export largen"}
+  n {{parent.Random_lin1.c+frame*parent.Random_lin1.a-(parent.Random_lin1.b*parent.Random_lin1.a)}}
+  addUserKnob {20 User}
+  addUserKnob {26 Wechat l Wechat: T "comp_linjy_v1_exr\n\n微信公众号：影视深井冰"}
+ }
+  Dot {
+   inputs 0
+   name Dot6
+   label 微信公众号：影视深井冰
+   note_font_size 60
+   xpos -35
+   ypos -311
+  }
+  Dot {
+   name Dot7
+   label 微信公众号：comp_linjy_v1_exr
+   note_font_size 60
+   xpos -35
+   ypos -160
+  }
+  Dot {
+   name Dot8
+   label "WeChat：4772491\nlinjy0454@icloud.com\nlinkedin.com/in/junyi-lin-a67bb1118"
+   note_font_size 50
+   xpos -35
+   ypos 23
+  }
+  Output {
+   name Output1
+   selected true
+   xpos -69
+   ypos 272
+  }
+ end_group
+ Output {
+  name Output1
+  xpos -140
+  ypos -22
+ }
+end_group

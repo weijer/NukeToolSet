@@ -1,0 +1,240 @@
+#! C:/Program Files/Nuke10.0v1/nuke-10.0.1.dll -nx
+version 10.0 v1
+Gizmo {
+ tile_color 0x88c3fff
+ lock_connections true
+ addUserKnob {20 User l IBKColor_lin}
+ addUserKnob {41 screen_type l "screen " T NoOp1.screen_type}
+ addUserKnob {41 off l darks T IBKColourV3_1.off}
+ addUserKnob {41 mult l lights T IBKColourV3_1.mult}
+ addUserKnob {26 ""}
+ addUserKnob {41 which l Level t 1-8 T Switch1.which}
+ addUserKnob {7 erode2 l Erode R 0 50}
+ addUserKnob {6 Keymix l "Raw Background" +STARTLINE}
+ Keymix true
+ addUserKnob {20 increase1 l increase n 1}
+ addUserKnob {41 StartSize T NoOp1.StartSize}
+ addUserKnob {41 Multiple1 l Largen T NoOp1.Multiple1}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 linjunyi l "linjunyi 林君义" n 1}
+ linjunyi 0
+ addUserKnob {26 ID2 l "" +STARTLINE T "WeChat：4772491\nlinjy0454@icloud.com\nlinkedin.com/in/junyi-lin-a67bb1118\n\n微信公众号：影视深井冰"}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 445
+  ypos -325
+ }
+ Dot {
+  name Dot6
+  xpos 479
+  ypos -142
+ }
+set N3b68000 [stack 0]
+ IBKColourV3 {
+  name IBKColourV3_1
+  xpos 445
+  ypos 26
+  screen_type {{NoOp1.screen_type x19 1}}
+  Size 0.5
+  erode {{parent.erode2}}
+ }
+set N722bc000 [stack 0]
+ Dot {
+  name Dot4
+  xpos 812
+  ypos 30
+ }
+push $N3b68000
+ Dot {
+  name Dot5
+  xpos 915
+  ypos -142
+ }
+ Dot {
+  name Dot1
+  label 微信公众号：影视深井冰
+  note_font_size 60
+  xpos 919
+  ypos 198
+ }
+ Dot {
+  name Dot2
+  label 微信公众号：comp_linjy_v1_exr
+  note_font_size 60
+  xpos 919
+  ypos 335
+ }
+ Dot {
+  name Dot8
+  label "WeChat：4772491\nlinjy0454@icloud.com\nlinkedin.com/in/junyi-lin-a67bb1118"
+  note_font_size 50
+  xpos 918
+  ypos 505
+ }
+ Dot {
+  name Dot7
+  xpos 915
+  ypos 723
+ }
+push $N722bc000
+ IBKColourV3 {
+  name IBKColourV3_2
+  xpos -34
+  ypos 26
+  disable {{parent.Switch1.which>0?0:1}}
+  screen_type {{NoOp1.screen_type x19 1}}
+  Size 1
+  off {{parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off}}
+  mult {{parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult}}
+  multi {{parent.NoOp1.StartSize+1*(0.5*parent.NoOp1.Multiple1+1)*1-0.5}}
+ }
+set N722bf700 [stack 0]
+ IBKColourV3 {
+  name IBKColourV3_3
+  xpos -34
+  ypos 94
+  disable {{parent.Switch1.which>1?0:1}}
+  screen_type {{NoOp1.screen_type x19 1}}
+  Size 1
+  off {{parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off}}
+  mult {{parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult}}
+  multi {{parent.NoOp1.StartSize+1*(0.5*parent.NoOp1.Multiple1+1)*2-1}}
+ }
+set N722bf200 [stack 0]
+ IBKColourV3 {
+  name IBKColourV3_4
+  xpos -34
+  ypos 160
+  disable {{parent.Switch1.which>2?0:1}}
+  screen_type {{NoOp1.screen_type x19 1}}
+  Size 1
+  off {{parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off}}
+  mult {{parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult}}
+  multi {{parent.NoOp1.StartSize+1*(0.5*parent.NoOp1.Multiple1+1)*3-0.5}}
+ }
+set N722bed00 [stack 0]
+ IBKColourV3 {
+  name IBKColourV3_5
+  xpos -34
+  ypos 214
+  disable {{parent.Switch1.which>3?0:1}}
+  screen_type {{NoOp1.screen_type x19 1}}
+  Size 1
+  off {{parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off}}
+  mult {{parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult}}
+  multi {{parent.NoOp1.StartSize+1*(0.5*parent.NoOp1.Multiple1+1)*4}}
+ }
+set N722be800 [stack 0]
+ IBKColourV3 {
+  name IBKColourV3_6
+  xpos -34
+  ypos 262
+  disable {{parent.Switch1.which>4?0:1}}
+  screen_type {{NoOp1.screen_type x19 1}}
+  Size 1
+  off {{parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off}}
+  mult {{parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult}}
+  multi {{parent.NoOp1.StartSize+1*(0.5*parent.NoOp1.Multiple1+1)*8}}
+ }
+set N722be300 [stack 0]
+ IBKColourV3 {
+  name IBKColourV3_7
+  xpos -34
+  ypos 304
+  disable {{parent.Switch1.which>5?0:1}}
+  screen_type {{NoOp1.screen_type x19 1}}
+  Size 1
+  off {{parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off}}
+  mult {{parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult}}
+  multi {{parent.NoOp1.StartSize+1*(0.5*parent.NoOp1.Multiple1+1)*16}}
+ }
+set N722bde00 [stack 0]
+ IBKColourV3 {
+  name IBKColourV3_8
+  xpos -34
+  ypos 364
+  disable {{parent.Switch1.which>06?0:1}}
+  screen_type {{NoOp1.screen_type x19 1}}
+  Size 1
+  off {{parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off}}
+  mult {{parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult}}
+  multi {{parent.NoOp1.StartSize+1*(0.5*parent.NoOp1.Multiple1+1)*32}}
+ }
+set N69846300 [stack 0]
+ IBKColourV3 {
+  name IBKColourV3_9
+  xpos -34
+  ypos 412
+  disable {{parent.Switch1.which>7?0:1}}
+  screen_type {{NoOp1.screen_type x19 1}}
+  Size 1
+  off {{parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off}}
+  mult {{parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult}}
+  multi {{parent.NoOp1.StartSize+1*(0.5*parent.NoOp1.Multiple1+1)*100}}
+ }
+set N69845e00 [stack 0]
+ IBKColourV3 {
+  name IBKColourV3_10
+  xpos -34
+  ypos 467
+  disable {{parent.Switch1.which>8?0:1}}
+  screen_type {{NoOp1.screen_type x19 1}}
+  Size 1
+  off {{parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off} {parent.IBKColourV3_1.off}}
+  mult {{parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult} {parent.IBKColourV3_1.mult}}
+  multi {{parent.NoOp1.StartSize+1*(0.5*parent.NoOp1.Multiple1+1)*300}}
+ }
+push $N69845e00
+push $N69846300
+push $N722bde00
+push $N722be300
+push $N722be800
+push $N722bed00
+push $N722bf200
+push $N722bf700
+push $N722bc000
+ Switch {
+  inputs 10
+  name Switch1
+  xpos 445
+  ypos 467
+  hide_input true
+ }
+set N695a0880 [stack 0]
+ Keymix {
+  inputs 3
+  name Keymix4
+  xpos 568
+  ypos 713
+  hide_input true
+  disable {{1-parent.Keymix}}
+ }
+push $N695a0880
+ Switch {
+  inputs 2
+  which {{parent.Keymix}}
+  name Switch2
+  xpos 445
+  ypos 719
+ }
+ Output {
+  name Output1
+  xpos 445
+  ypos 854
+ }
+ NoOp {
+  inputs 0
+  name NoOp1
+  xpos -347
+  ypos -146
+  addUserKnob {20 User}
+  addUserKnob {7 StartSize R 0 5}
+  addUserKnob {7 Multiple1 l largen R 1 15}
+  Multiple1 1
+  addUserKnob {4 screen_type l "screen " M {green blue "" "" "" "" "" ""}}
+ }
+end_group

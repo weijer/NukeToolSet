@@ -1,0 +1,220 @@
+#! C:/Program Files/Nuke10.0v1/nuke-10.0.1.dll -nx
+version 10.0 v1
+Gizmo {
+ knobChanged "\nprint 1\n\n"
+ note_font_color 0x37771ff
+ lock_connections true
+ addUserKnob {20 EdgeAlpha_lin t EdgeAlpha_lin}
+ addUserKnob {4 cs l Erode M {Filter Blur ""}}
+ addUserKnob {7 n l in R 0 100}
+ n 1
+ addUserKnob {7 w l out R 0 100}
+ w 1
+ addUserKnob {26 ""}
+ addUserKnob {7 bn l inBlur R 0 100}
+ addUserKnob {7 bw l outBlur R 0 100}
+ addUserKnob {26 ""}
+ addUserKnob {7 ng l inMultiply R -1 5}
+ addUserKnob {7 wg l outMultiply t wg R -1 5}
+ addUserKnob {26 ""}
+ addUserKnob {7 gz l EdgeMultiply R -1 5}
+ addUserKnob {7 bz l EdgeBlur R 0 100}
+ addUserKnob {20 name_1 l "linjunyi 林君义" n 1}
+ name_1 0
+ addUserKnob {26 ID1 l "" +STARTLINE T "WeChat：4772491\nlinjy0454@icloud.com\nlinkedin.com/in/junyi-lin-a67bb1118\n\n微信公众号：影视深井冰"}
+ addUserKnob {20 endGroup n -1}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -585
+  ypos -7
+ }
+ Dot {
+  name Dot1
+  xpos -551
+  ypos 57
+ }
+set N7a7f1800 [stack 0]
+ Invert {
+  name Invert1
+  xpos -720
+  ypos 97
+ }
+set N7a7f1400 [stack 0]
+ Erode {
+  size {{parent.n*-1}}
+  name Erode1n
+  xpos -783
+  ypos 215
+  hide_input true
+  disable {{1-parent.Switch1.which*parent.Switch1.which}}
+ }
+push $N7a7f1400
+ FilterErode {
+  channels alpha
+  size {{parent.n*-1}}
+  name FilterErode1n
+  xpos -666
+  ypos 217
+  hide_input true
+  disable {{parent.Switch1.which}}
+ }
+ Switch {
+  inputs 2
+  which {{cs}}
+  name Switch1
+  xpos -721
+  ypos 298
+  hide_input true
+ }
+ set C7a919f80 [stack 0]
+ Multiply {
+  channels alpha
+  value {{parent.ng+1}}
+  name Multiply2n
+  xpos -721
+  ypos 352
+  hide_input true
+  disable {{parent.ng==0?1:0}}
+ }
+ Clamp {
+  channels alpha
+  name Clamp2
+  xpos -721
+  ypos 426
+  hide_input true
+ }
+ Blur {
+  channels alpha
+  size {{parent.bn}}
+  name Blur1n
+  xpos -721
+  ypos 485
+  hide_input true
+  disable {{parent.bn==0?1:0}}
+ }
+push $N7a7f1800
+ Dot {
+  name Dot3
+  xpos -415
+  ypos 102
+ }
+set N7a4f3c00 [stack 0]
+ Erode {
+  size {{parent.w*-1}}
+  name Erode2w
+  xpos -523
+  ypos 211
+  hide_input true
+  disable {{1-parent.Switch1.which*parent.Switch1.which}}
+ }
+push $N7a4f3c00
+ FilterErode {
+  size {{parent.w*-1}}
+  name FilterErode2w
+  xpos -412
+  ypos 210
+  hide_input true
+  disable {{parent.Switch1.which}}
+ }
+clone $C7a919f80 {
+  inputs 2
+  xpos -463
+  ypos 296
+  selected false
+ }
+ Multiply {
+  channels alpha
+  value {{parent.wg+1}}
+  name Multiply1w
+  xpos -463
+  ypos 351
+  hide_input true
+  disable {{parent.wg==0?1:0}}
+ }
+ Clamp {
+  channels alpha
+  name Clamp3
+  xpos -463
+  ypos 425
+  hide_input true
+ }
+ Blur {
+  channels alpha
+  size {{parent.bw}}
+  name Blur2w
+  xpos -463
+  ypos 494
+  hide_input true
+  disable {{parent.bw==0?1:0}}
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge2
+  xpos -590
+  ypos 544
+  hide_input true
+ }
+ Multiply {
+  channels alpha
+  value {{parent.gz+1}}
+  name Multiply3z
+  xpos -590
+  ypos 594
+  hide_input true
+  disable {{parent.gz==0?1:0 x1 1}}
+ }
+ Clamp {
+  channels alpha
+  name Clamp1
+  xpos -590
+  ypos 655
+  hide_input true
+ }
+ Blur {
+  channels alpha
+  size {{parent.bz}}
+  name Blur3z
+  xpos -590
+  ypos 710
+  hide_input true
+  disable {{parent.bz>0?0:1}}
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  xpos -590
+  ypos 775
+ }
+ Output {
+  name Output1
+  xpos -590
+  ypos 833
+ }
+push $N7a4f3c00
+ Dot {
+  name Dot6
+  label 微信公众号：影视深井冰
+  note_font_size 60
+  xpos -127
+  ypos 102
+ }
+ Dot {
+  name Dot7
+  label 微信公众号：comp_linjy_v1_exr
+  note_font_size 60
+  xpos -127
+  ypos 232
+ }
+ Dot {
+  name Dot8
+  label "WeChat：4772491\nlinjy0454@icloud.com\nlinkedin.com/in/junyi-lin-a67bb1118"
+  note_font_size 50
+  xpos -127
+  ypos 415
+ }
+end_group

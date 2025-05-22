@@ -1,0 +1,969 @@
+Gizmo {
+ name expoglow1
+ selected true
+ xpos 100
+ ypos -150
+ addUserKnob {20 exponentialGlow l "Exponential Glow"}
+ addUserKnob {20 PreGrade n 1}
+ PreGrade 0
+ addUserKnob {6 preview t "Check this to preview the input image the glow will get to process." +STARTLINE}
+ addUserKnob {41 blackpoint T PreGradeNode.blackpoint}
+ addUserKnob {41 whitepoint T PreGradeNode.whitepoint}
+ addUserKnob {41 black l lift T PreGradeNode.black}
+ addUserKnob {41 white l gain T PreGradeNode.white}
+ addUserKnob {41 multiply T PreGradeNode.multiply}
+ addUserKnob {41 add l offset T PreGradeNode.add}
+ addUserKnob {41 gamma T PreGradeNode.gamma}
+ addUserKnob {41 black_clamp_1 l "black clamp" T PreGradeNode.black_clamp}
+ addUserKnob {41 white_clamp l "white clamp" -STARTLINE T PreGradeNode.white_clamp}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 GlowSettings l "Glow Settings" n 1}
+ addUserKnob {7 size l exponent t "Gradually dials in exponential levels of glow. Defaults to 7 (2^7 = 128px glow), max is 13 (2^13 = 8192px glow)." R 0 13}
+ size 6.5
+ addUserKnob {7 stretch t "Positive values will stretch the glow horizontally, negative values vertically." R -10 10}
+ addUserKnob {14 glowstretch l INVISIBLE t "Lets you stretch the blur horizontally/vertically. Works as a multiplier." +INVISIBLE R 0 100}
+ glowstretch {1 1}
+ addUserKnob {6 subtract_input l "subtract input" t "Will subtract the pre-graded image from the glow result, making for less hot highlights." +STARTLINE}
+ subtract_input true
+ addUserKnob {6 screen t "Will use blending mode 'screen' instead of 'plus' for softer highlights." +STARTLINE}
+ addUserKnob {6 ignore_alpha l "ignore alpha" t "Will apply the glow only to rgb and keep the original alpha intact." +STARTLINE}
+ ignore_alpha true
+ addUserKnob {4 cropbehavior l "crop to" t "Lets you select different crop behaviors." M {"incoming bbox" "incoming format" glow "" ""}}
+ addUserKnob {20 endGroup_4 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 PostGrade n 1}
+ PostGrade 0
+ addUserKnob {41 blackpoint_1 l blackpoint T PostGradeNode.blackpoint}
+ addUserKnob {41 whitepoint_1 l whitepoint T PostGradeNode.whitepoint}
+ addUserKnob {41 black_1 l lift T PostGradeNode.black}
+ addUserKnob {41 white_1 l gain T PostGradeNode.white}
+ addUserKnob {41 multiply_1 l multiply T PostGradeNode.multiply}
+ addUserKnob {41 add_1 l offset T PostGradeNode.add}
+ addUserKnob {41 gamma_1 l gamma T PostGradeNode.gamma}
+ addUserKnob {41 black_clamp l "black clamp" T PostGradeNode.black_clamp}
+ addUserKnob {41 white_clamp_1 l "white clamp" -STARTLINE T PostGradeNode.white_clamp}
+ addUserKnob {41 enable_mix_luminance l "mix luminance" T PostGradeNode.enable_mix_luminance}
+ addUserKnob {41 mix_luminance l "" -STARTLINE T PostGradeNode.mix_luminance}
+ addUserKnob {41 saturation T PostSaturation.saturation}
+ addUserKnob {41 mode l "luminance math" T PostSaturation.mode}
+ addUserKnob {20 endGroup_5 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_6 l endGroup n -1}
+ addUserKnob {41 maskChannelMask l "" -STARTLINE T Dissolve1.maskChannelMask}
+ addUserKnob {41 inject -STARTLINE T Dissolve1.inject}
+ addUserKnob {41 fringe -STARTLINE T Dissolve1.fringe}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Dissolve1.invert_mask}
+ addUserKnob {7 mix t "Adjust how much of the glow gets added to the image."}
+ mix 1
+ addUserKnob {6 previewPost l "effect only" t "See the glow result with PostGrade. Useful when you want to keep the glow outside of the main tree to do fancy awesome stuff with it before bringing it back in." -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 whodunnit l "" t "\nIt wasn't me! ... oh, that? Yeah, that was me.\nShoot me a mail:\njulian\[at]yellow-ant\[dot]net \n\nfirst released august 2013\nv1.4 released july 2017\n" +STARTLINE T "expoglow 1.4 - julian lojek\n"}
+ addUserKnob {20 ColorShift_1 l "Color Shift"}
+ addUserKnob {20 ShiftRed l "Shift Red" n 1}
+ addUserKnob {41 white_2 l gain T TintRed123.white}
+ addUserKnob {41 translate T ShiftRed123.translate}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 ShiftGreen l "Shift Green" n 1}
+ addUserKnob {41 white_3 l gain T TintGreen123.white}
+ addUserKnob {41 translate_1 l translate T ShiftGreen123.translate}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 ShiftBlue l "Shift Blue" n 1}
+ addUserKnob {41 white_4 l gain T TintBlue123.white}
+ addUserKnob {41 translate_2 l translate T ShiftBlue123.translate}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x272727ff
+  label PreGrade
+  note_font "Arial"
+  note_font_size 100
+  xpos -1145
+  ypos 612
+  bdwidth 1353
+  bdheight 176
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode10
+  tile_color 0x272727ff
+  label Shift
+  note_font "Arial"
+  note_font_size 100
+  xpos -1143
+  ypos 2119
+  bdwidth 1354
+  bdheight 249
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode11
+  tile_color 0x272727ff
+  label Crop
+  note_font "Arial"
+  note_font_size 100
+  xpos -1142
+  ypos 2408
+  bdwidth 1353
+  bdheight 176
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode12
+  tile_color 0x272727ff
+  label Format
+  note_font "Arial"
+  note_font_size 100
+  xpos -1143
+  ypos 829
+  bdwidth 1346
+  bdheight 279
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x272727ff
+  label Blur
+  note_font "Arial"
+  note_font_size 100
+  xpos -1141
+  ypos 1164
+  bdwidth 1351
+  bdheight 699
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x272727ff
+  label PostGrade
+  note_font "Arial"
+  note_font_size 100
+  xpos -1142
+  ypos 1906
+  bdwidth 1353
+  bdheight 176
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0x272727ff
+  label BlendMode
+  note_font "Arial"
+  note_font_size 100
+  xpos -1144
+  ypos 2636
+  bdwidth 1353
+  bdheight 176
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x272727ff
+  label Preview
+  note_font "Arial"
+  note_font_size 100
+  xpos -1145
+  ypos 2856
+  bdwidth 1353
+  bdheight 176
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x272727ff
+  label IgnoreA
+  note_font "Arial"
+  note_font_size 100
+  xpos -1144
+  ypos 3078
+  bdwidth 1353
+  bdheight 176
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode7
+  tile_color 0x272727ff
+  label Input
+  note_font "Arial"
+  note_font_size 100
+  xpos -1145
+  ypos 179
+  bdwidth 1353
+  bdheight 176
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x272727ff
+  label Output
+  note_font "Arial"
+  note_font_size 100
+  xpos -1144
+  ypos 3297
+  bdwidth 1353
+  bdheight 176
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode9
+  tile_color 0x272727ff
+  label Mask
+  note_font "Arial"
+  note_font_size 100
+  xpos -1145
+  ypos 390
+  bdwidth 1353
+  bdheight 176
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos -384
+  ypos 230
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels2
+  xpos -384
+  ypos 273
+ }
+set N53654400 [stack 0]
+ Dot {
+  name Dot16
+  xpos -616
+  ypos 276
+ }
+ Dot {
+  name Dot18
+  xpos -616
+  ypos 2497
+ }
+set N53655c00 [stack 0]
+ Dot {
+  name Dot7
+  xpos -616
+  ypos 2728
+ }
+set N53675c00 [stack 0]
+ Dot {
+  name Dot13
+  xpos -616
+  ypos 3174
+ }
+ AddChannels {
+  channels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  name AddChannels1
+  xpos -376
+  ypos 3165
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -160
+  ypos 494
+  number 1
+ }
+push $N53654400
+ Dot {
+  name Dot8
+  xpos -350
+  ypos 432
+ }
+set N53674c00 [stack 0]
+push $N53674c00
+ Dot {
+  name Dot10
+  xpos -435
+  ypos 432
+ }
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle1
+  xpos -469
+  ypos 460
+ }
+ Dot {
+  name Dot11
+  xpos -435
+  ypos 497
+ }
+ Dissolve {
+  inputs 2+1
+  which 1
+  maskChannelMask -rgba.alpha
+  maskChannelInput -rgba.alpha
+  name Dissolve1
+  xpos -384
+  ypos 488
+ }
+ Grade {
+  channels rgba
+  name PreGradeNode
+  xpos -384
+  ypos 675
+ }
+ Dot {
+  name Dot20
+  xpos -350
+  ypos 711
+ }
+set N5b737400 [stack 0]
+ Dot {
+  name Dot17
+  xpos -480
+  ypos 711
+ }
+ Dot {
+  name Dot12
+  xpos -480
+  ypos 2964
+ }
+push $N5b737400
+ Dot {
+  name Dot29
+  xpos -350
+  ypos 917
+ }
+set N5b736800 [stack 0]
+ Dot {
+  name Dot30
+  xpos -194
+  ypos 917
+ }
+set N5b736400 [stack 0]
+ Dot {
+  name Dot31
+  xpos -59
+  ypos 917
+ }
+ Dot {
+  name Dot32
+  xpos -59
+  ypos 1048
+ }
+push $N5b736400
+ Reformat {
+  type "to box"
+  box_width {{width}}
+  box_height {{height}}
+  box_pixel_aspect {{pixel_aspect}}
+  resize none
+  black_outside true
+  name Reformat2
+  xpos -228
+  ypos 947
+ }
+ AdjBBox {
+  numpixels 100
+  name AdjBBox2
+  label "grow bbox to avoid errors with color shift"
+  xpos -228
+  ypos 985
+  disable {{parent.cropbehavior==2}}
+ }
+push $N5b736800
+ AdjBBox {
+  numpixels 100
+  name AdjBBox1
+  label "grow bbox to avoid errors with color shift"
+  xpos -384
+  ypos 959
+  disable {{parent.cropbehavior==2}}
+ }
+ Switch {
+  inputs 3
+  which {{parent.cropbehavior}}
+  name Switch2
+  xpos -384
+  ypos 1044
+ }
+ Dot {
+  name Dot146
+  xpos -350
+  ypos 1254
+ }
+set N5b758800 [stack 0]
+ Dot {
+  name Dot150
+  xpos -350
+  ypos 1290
+ }
+set N5b758400 [stack 0]
+ Dot {
+  name Dot149
+  xpos -350
+  ypos 1326
+ }
+set N5b758000 [stack 0]
+ Dot {
+  name Dot148
+  xpos -350
+  ypos 1362
+ }
+set N5b785c00 [stack 0]
+ Dot {
+  name Dot152
+  xpos -350
+  ypos 1398
+ }
+set N5b785800 [stack 0]
+ Dot {
+  name Dot151
+  xpos -350
+  ypos 1434
+ }
+set N5b785400 [stack 0]
+ Dot {
+  name Dot153
+  xpos -350
+  ypos 1470
+ }
+set N5b785000 [stack 0]
+ Dot {
+  name Dot147
+  xpos -350
+  ypos 1506
+ }
+set N5b784c00 [stack 0]
+ Dot {
+  name Dot1
+  xpos -350
+  ypos 1542
+ }
+set N5b784800 [stack 0]
+ Dot {
+  name Dot2
+  xpos -350
+  ypos 1578
+ }
+set N5b784400 [stack 0]
+ Dot {
+  name Dot3
+  xpos -350
+  ypos 1613
+ }
+set N5b784000 [stack 0]
+ Dot {
+  name Dot4
+  xpos -350
+  ypos 1650
+ }
+set N5b79fc00 [stack 0]
+ Dot {
+  name Dot5
+  xpos -350
+  ypos 1688
+ }
+set N5b79f800 [stack 0]
+ Dot {
+  name Dot6
+  xpos -350
+  ypos 1726
+ }
+set N5b79f400 [stack 0]
+ Dot {
+  name Dot154
+  xpos -350
+  ypos 1803
+ }
+push $N5b79f400
+ Blur {
+  channels rgba
+  size {{"parent.stretch > 0 ? (1+parent.stretch)*8192:8192"} {"stretch < 0 ? (1-stretch)*8192:8192"}}
+  crop false
+  name blur_8192
+  xpos -298
+  ypos 1723
+  disable {{parent.Merge6.disable}}
+ }
+push $N5b79f800
+ Blur {
+  channels rgba
+  size {{"parent.stretch > 0 ? (1+parent.stretch)*4096:4096"} {"stretch < 0 ? (1-stretch)*4096:4096"}}
+  crop false
+  name blur_4096
+  xpos -298
+  ypos 1685
+  disable {{parent.Merge5.disable}}
+ }
+push $N5b79fc00
+ Blur {
+  channels rgba
+  size {{"parent.stretch > 0 ? (1+parent.stretch)*2048:2048"} {"stretch < 0 ? (1-stretch)*2048:2048"}}
+  crop false
+  name blur_2048
+  xpos -298
+  ypos 1647
+  disable {{parent.Merge4.disable}}
+ }
+push $N5b784000
+ Blur {
+  channels rgba
+  size {{"parent.stretch > 0 ? (1+parent.stretch)*1024:1024"} {"stretch < 0 ? (1-stretch)*1024:1024"}}
+  crop false
+  name blur_1024
+  xpos -298
+  ypos 1610
+  disable {{parent.Merge3.disable}}
+ }
+push $N5b784400
+ Blur {
+  channels rgba
+  size {{"parent.stretch > 0 ? (1+parent.stretch)*512:512"} {"stretch < 0 ? (1-stretch)*512:512"}}
+  crop false
+  name blur_512
+  xpos -298
+  ypos 1575
+  disable {{parent.Merge2.disable}}
+ }
+push $N5b784800
+ Blur {
+  channels rgba
+  size {{"parent.stretch > 0 ? (1+parent.stretch)*256:256"} {"stretch < 0 ? (1-stretch)*256:256"}}
+  crop false
+  name blur_256
+  xpos -298
+  ypos 1539
+  disable {{parent.Merge1.disable}}
+ }
+push $N5b784c00
+ Blur {
+  channels rgba
+  size {{"parent.stretch > 0 ? (1+parent.stretch)*128:128"} {"stretch < 0 ? (1-stretch)*128:128" 128}}
+  crop false
+  name blur_128
+  xpos -298
+  ypos 1503
+  disable {{parent.Merge23.disable}}
+ }
+push $N5b785000
+ Blur {
+  channels rgba
+  size {{"parent.stretch > 0 ? (1+parent.stretch)*64:64"} {"stretch < 0 ? (1-stretch)*64:64"}}
+  crop false
+  name blur_64
+  xpos -298
+  ypos 1467
+  disable {{parent.Merge22.disable}}
+ }
+push $N5b785400
+ Blur {
+  channels rgba
+  size {{"parent.stretch > 0 ? (1+parent.stretch)*32:32"} {"stretch < 0 ? (1-stretch)*32:32"}}
+  crop false
+  name blur_32
+  xpos -298
+  ypos 1431
+  disable {{parent.Merge21.disable}}
+ }
+push $N5b785800
+ Blur {
+  channels rgba
+  size {{"parent.stretch > 0 ? (1+parent.stretch)*16:16"} {"stretch < 0 ? (1-stretch)*16:16"}}
+  crop false
+  name blur_16
+  xpos -298
+  ypos 1395
+  disable {{parent.Merge20.disable}}
+ }
+push $N5b785c00
+ Blur {
+  channels rgba
+  size {{"parent.stretch > 0 ? (1+parent.stretch)*8:8"} {"stretch < 0 ? (1-stretch)*8:8"}}
+  crop false
+  name blur_8
+  xpos -298
+  ypos 1359
+  disable {{parent.Merge19.disable}}
+ }
+push $N5b758000
+ Blur {
+  channels rgba
+  size {{"parent.stretch > 0 ? (1+parent.stretch)*4 : 4"} {"stretch < 0 ? (1-stretch)*4:4"}}
+  crop false
+  name blur_4
+  xpos -298
+  ypos 1323
+  disable {{parent.Plus3.disable}}
+ }
+push $N5b758400
+ Blur {
+  channels rgba
+  size {{"parent.stretch > 0 ? (1+parent.stretch)*2 : 2"} {"stretch < 0 ? (1-stretch)*2:2"}}
+  crop false
+  name blur_2
+  xpos -298
+  ypos 1287
+  disable {{parent.Plus2.disable}}
+ }
+push $N5b758800
+ Blur {
+  channels rgba
+  size {{"parent.stretch > 0 ? (1+parent.stretch)*1 : 1"} {"stretch < 0 ? (1-stretch)*1 : 1"}}
+  crop false
+  mix {{parent.size}}
+  name blur_1
+  xpos -296
+  ypos 1250
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox {{parent.cropbehavior==2?0:3}}
+  mix {{parent.size}}
+  name Plus2
+  xpos -185
+  ypos 1287
+  disable {{"this.mix <= 0 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox {{parent.cropbehavior==2?0:3}}
+  mix {{parent.size-1}}
+  name Plus3
+  xpos -185
+  ypos 1323
+  disable {{"this.mix <= 0 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox {{parent.cropbehavior==2?0:3}}
+  mix {{parent.size-2}}
+  name Merge19
+  xpos -185
+  ypos 1359
+  disable {{"this.mix <= 0 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox {{parent.cropbehavior==2?0:3}}
+  mix {{parent.size-3}}
+  name Merge20
+  xpos -185
+  ypos 1395
+  disable {{"this.mix <= 0 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox {{parent.cropbehavior==2?0:3}}
+  mix {{parent.size-4}}
+  name Merge21
+  xpos -185
+  ypos 1431
+  disable {{"this.mix <= 0 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox {{parent.cropbehavior==2?0:3}}
+  mix {{parent.size-5}}
+  name Merge22
+  xpos -185
+  ypos 1467
+  disable {{"this.mix <= 0 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox {{parent.cropbehavior==2?0:3}}
+  mix {{parent.size-6}}
+  name Merge23
+  xpos -185
+  ypos 1503
+  disable {{"this.mix <= 0 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox {{parent.cropbehavior==2?0:3}}
+  mix {{parent.size-7}}
+  name Merge1
+  xpos -185
+  ypos 1539
+  disable {{"this.mix <= 0 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox {{parent.cropbehavior==2?0:3}}
+  mix {{parent.size-8}}
+  name Merge2
+  xpos -185
+  ypos 1575
+  disable {{"this.mix <= 0 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox {{parent.cropbehavior==2?0:3}}
+  mix {{parent.size-9}}
+  name Merge3
+  xpos -185
+  ypos 1610
+  disable {{"this.mix <= 0 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox {{parent.cropbehavior==2?0:3}}
+  mix {{parent.size-10}}
+  name Merge4
+  xpos -185
+  ypos 1647
+  disable {{"this.mix <= 0 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox {{parent.cropbehavior==2?0:3}}
+  mix {{parent.size-11}}
+  name Merge5
+  xpos -185
+  ypos 1685
+  disable {{"this.mix <= 0 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox {{parent.cropbehavior==2?0:3}}
+  mix {{parent.size-12}}
+  name Merge6
+  xpos -185
+  ypos 1723
+  disable {{"this.mix <= 0 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  mix {{parent.subtract_input i}}
+  name Merge24
+  xpos -185
+  ypos 1799
+ }
+ Grade {
+  channels rgba
+  enable_mix_luminance false
+  name PostGradeNode
+  xpos -185
+  ypos 1981
+ }
+ Saturation {
+  name PostSaturation
+  xpos -185
+  ypos 2007
+ }
+ Dot {
+  name Dot23
+  xpos -151
+  ypos 2161
+ }
+set N5c8a5400 [stack 0]
+ Dot {
+  name Dot25
+  xpos -12
+  ypos 2161
+ }
+ Shuffle {
+  red blue
+  green blue
+  alpha black
+  name Shuffle4
+  xpos -46
+  ypos 2215
+ }
+ Grade {
+  white {0 0 1 0}
+  name TintBlue123
+  xpos -46
+  ypos 2239
+ }
+ Transform {
+  center {960 540}
+  name ShiftBlue123
+  xpos -46
+  ypos 2263
+ }
+ Dot {
+  name Dot27
+  xpos -12
+  ypos 2314
+ }
+push 0
+push $N5c8a5400
+ Dot {
+  name Dot24
+  xpos -299
+  ypos 2161
+ }
+ Shuffle {
+  green red
+  blue red
+  alpha black
+  name Shuffle2
+  xpos -333
+  ypos 2212
+ }
+ Grade {
+  white {1 0 0 0}
+  name TintRed123
+  xpos -333
+  ypos 2236
+ }
+ Transform {
+  center {960 540}
+  name ShiftRed123
+  xpos -333
+  ypos 2260
+ }
+ Dot {
+  name Dot26
+  xpos -299
+  ypos 2314
+ }
+push $N5c8a5400
+ Shuffle {
+  red green
+  blue green
+  name Shuffle3
+  xpos -185
+  ypos 2214
+ }
+ Grade {
+  white {0 1 0 0}
+  name TintGreen123
+  xpos -185
+  ypos 2238
+ }
+ Transform {
+  center {960 540}
+  name ShiftGreen123
+  xpos -185
+  ypos 2262
+ }
+ Merge2 {
+  inputs 3+1
+  operation plus
+  name Merge8
+  xpos -185
+  ypos 2310
+ }
+ Dot {
+  name Dot28
+  xpos -151
+  ypos 2473
+ }
+set N5c921800 [stack 0]
+ Dot {
+  name Dot9
+  xpos -53
+  ypos 2473
+ }
+set N5c921400 [stack 0]
+ Dot {
+  name Dot19
+  xpos 46
+  ypos 2473
+ }
+ Dot {
+  name Dot21
+  xpos 46
+  ypos 2513
+ }
+push $N5c921400
+ Reformat {
+  type "to box"
+  box_width {{Input.width}}
+  box_height {{Input.height}}
+  box_pixel_aspect {{Input.pixel_aspect}}
+  resize none
+  filter Impulse
+  black_outside true
+  name Reformat1
+  xpos -87
+  ypos 2496
+ }
+push $N53655c00
+push $N5c921800
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos -185
+  ypos 2494
+ }
+ Switch {
+  inputs 3
+  which {{parent.cropbehavior}}
+  name Switch1
+  xpos -185
+  ypos 2536
+ }
+ Dot {
+  name Dot22
+  xpos -151
+  ypos 2689
+ }
+set N5c945c00 [stack 0]
+ Dot {
+  name Dot15
+  xpos 101
+  ypos 2689
+ }
+ Dot {
+  name Dot14
+  xpos 101
+  ypos 2940
+ }
+push $N5c945c00
+push $N53675c00
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox A
+  maskChannelMask -rgba.alpha
+  mix {{parent.mix}}
+  name Merge7
+  xpos -185
+  ypos 2724
+ }
+ Switch {
+  inputs 2
+  which {{parent.previewPost i x1 0}}
+  name PreviewPost
+  xpos -185
+  ypos 2937
+ }
+ Switch {
+  inputs 2
+  which {{parent.preview}}
+  name PreviewPre
+  xpos -185
+  ypos 2961
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  bbox B
+  name ignoreAlpha
+  xpos -185
+  ypos 3165
+  disable {{"parent.ignore_alpha == 1 ? 0 : 1"}}
+ }
+set N5c944c00 [stack 0]
+ Output {
+  name Output1
+  xpos -185
+  ypos 3389
+ }
+end_group

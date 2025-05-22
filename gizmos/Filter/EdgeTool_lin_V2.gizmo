@@ -1,0 +1,363 @@
+#! C:/Program Files/Nuke11.0v1/nuke-11.0.1.dll -nx
+version 11.0 v1
+Gizmo {
+ inputs 3
+ tile_color 0x4c6bff
+ note_font "Arial Bold Bold"
+ note_font_color 0x40d26ff
+ lock_connections true
+ addUserKnob {20 EdgeTool_lin}
+ addUserKnob {41 size l "outside Erode" T narrow1.size}
+ addUserKnob {41 disable_2 l only -STARTLINE T Switch2.disable}
+ addUserKnob {7 sizeerode2 l "edge extend" R -10 10}
+ addUserKnob {6 erode2final l only -STARTLINE}
+ addUserKnob {7 Erode2 l "inside Erode" R -10 10}
+ addUserKnob {41 disable_1 l on/off t " inside " -STARTLINE T Switch1.disable}
+ addUserKnob {26 ""}
+ addUserKnob {41 size_4 l "inside Blur" T EdgeBlur2.size}
+ addUserKnob {41 size_1 l "outside Blur" T Blur1.size}
+ addUserKnob {26 ""}
+ addUserKnob {41 white l gain T Grade6.white}
+ addUserKnob {41 black l lift T Grade6.black}
+ addUserKnob {20 l l "super skills" n 1}
+ l 0
+ addUserKnob {41 disable_3 l texture T Switch3.disable}
+ addUserKnob {7 sizetex l size -STARTLINE R 0 10}
+ sizetex 4
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {41 amount l INVISIBLE +INVISIBLE T Denoise2.amount}
+ addUserKnob {20 name1 l "linjunyi 林君义" n 1}
+ name1 0
+ addUserKnob {26 id1 l "" +STARTLINE T "WeChat：4772491\nlinjy0454@icloud.com\nlinkedin.com/in/junyi-lin-a67bb1118\n\n微信公众号：影视深井冰"}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode10
+  tile_color 0x71c67100
+  label "还原大小  3"
+  note_font_size 42
+  xpos 142
+  ypos 155
+  bdwidth 219
+  bdheight 182
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode11
+  tile_color 0x388e8e00
+  label "4 拿回内部细节"
+  note_font_size 42
+  xpos 122
+  ypos 496
+  bdwidth 156
+  bdheight 123
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode12
+  tile_color 0x8e8e3800
+  label "缩边 去掉 完全黑白边   1"
+  note_font_size 42
+  xpos 676
+  ypos -468
+  bdwidth 440
+  bdheight 169
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode13
+  tile_color 0xaaaaaa00
+  label 修颜色
+  note_font_size 42
+  xpos 793
+  ypos -32
+  bdwidth 123
+  bdheight 133
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode14
+  tile_color 0x71c67100
+  label 内部保护范围
+  note_font_size 42
+  xpos 1210
+  ypos -458
+  bdwidth 263
+  bdheight 172
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode9
+  tile_color 0x71c67100
+  label "做假边  2  "
+  note_font_size 42
+  xpos 773
+  ypos -257
+  bdwidth 128
+  bdheight 177
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -134
+  ypos -643
+  number 2
+ }
+ Dot {
+  name Dot4
+  xpos -100
+  ypos 779
+ }
+ Invert {
+  name Invert1
+  xpos -46
+  ypos 769
+ }
+ Input {
+  inputs 0
+  name Source
+  xpos 179
+  ypos -668
+ }
+ Dot {
+  name Dot36
+  xpos 213
+  ypos -501
+ }
+set N98d5ee00 [stack 0]
+ Dot {
+  name Dot1
+  xpos 56
+  ypos 679
+ }
+push $N98d5ee00
+ Blur {
+  size 2
+  name Blur1
+  xpos 179
+  ypos -35
+ }
+push $N98d5ee00
+ Dot {
+  name Dot39
+  xpos 837
+  ypos -499
+ }
+set N98d5e380 [stack 0]
+ FilterErode {
+  size 3
+  name narrow1
+  xpos 803
+  ypos -395
+ }
+ Premult {
+  name Premult11
+  xpos 803
+  ypos -335
+ }
+set N98d5fc00 [stack 0]
+ Blur {
+  size {{parent.narrow1.size+3+parent.sizeerode2 x1001 17}}
+  name extend
+  xpos 803
+  ypos -209
+ }
+ Unpremult {
+  name Unpremult5
+  xpos 803
+  ypos -131
+ }
+ Grade {
+  name Grade6
+  xpos 803
+  ypos 39
+ }
+ Dot {
+  name Dot41
+  xpos 837
+  ypos 144
+ }
+set N98d8b500 [stack 0]
+ Input {
+  inputs 0
+  name raw
+  xpos 626
+  ypos -661
+  number 1
+ }
+ Denoise2 {
+  model Constant
+  output Noise
+  enable_temporal true
+  analysisRegion {1311.5 620.5 1426.5 696.5}
+  analysisFrame 33
+  needsAnalyzing false
+  hasMotion true
+  profileCurve {profile {curve 0 x0.125 0 0 0 0 0 0 0 0}}
+  serializeKnob "9.879649878e-01 3.157939911e-01 6.174809933e-01
+4.824799951e-03 3.721189918e-03 7.153389975e-03
+4.824799951e-03 3.721189918e-03 7.153389975e-03
+3.526750021e-03 2.666990040e-03 4.989780020e-03
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+2.107759938e-03 1.555330004e-03 2.922930056e-03
+2.107759938e-03 1.555330004e-03 2.922930056e-03
+1.277460018e-03 1.043890021e-03 1.864959951e-03
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+1.060780021e-03 7.267330075e-04 1.432989957e-03
+1.060780021e-03 7.267330075e-04 1.432989957e-03
+5.975720123e-04 5.088699982e-04 9.739400120e-04
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+3.918269940e-04 4.780300078e-04 5.263239727e-04
+3.918269940e-04 4.780300078e-04 5.263239727e-04
+2.771469881e-04 2.471919870e-04 4.755129921e-04
+0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 
+16759241013164336733"
+  name Denoise2
+  xpos 626
+  ypos -192
+ }
+ Multiply {
+  value {{parent.sizetex*0.5}}
+  name Multiply1
+  xpos 626
+  ypos -87
+ }
+ ColorCorrect {
+  saturation 1.0000000000e-01
+  name ColorCorrect1
+  xpos 626
+  ypos 51
+ }
+push $N98d8b500
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge1
+  xpos 626
+  ypos 152
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Switch3
+  xpos 626
+  ypos 236
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy6
+  xpos 179
+  ypos 230
+ }
+set Ncb371c00 [stack 0]
+ Dot {
+  name Dot6
+  xpos 421
+  ypos 494
+ }
+push $Ncb371c00
+ Premult {
+  name Premult12
+  xpos 179
+  ypos 288
+ }
+set Ncb371500 [stack 0]
+push $N98d5e380
+ Dot {
+  name Dot38
+  xpos 1267
+  ypos -499
+ }
+ FilterErode {
+  size {{parent.narrow1.size+2-parent.Erode2 x1.0010000000e+03 8.0000000000e-01}}
+  name narrow2
+  xpos 1233
+  ypos -375
+ }
+ Premult {
+  name Premult13
+  xpos 1233
+  ypos -323
+ }
+ EdgeBlur {
+  name EdgeBlur2
+  xpos 1233
+  ypos -236
+ }
+ Dot {
+  name Dot2
+  label 微信公众号：影视深井冰
+  note_font_size 60
+  xpos 1273
+  ypos 9
+ }
+ Dot {
+  name Dot7
+  label 微信公众号：comp_linjy_v1_exr
+  note_font_size 60
+  xpos 1269
+  ypos 155
+ }
+ Dot {
+  name Dot8
+  label "WeChat：4772491\nlinjy0454@icloud.com\nlinkedin.com/in/junyi-lin-a67bb1118"
+  note_font_size 50
+  xpos 1269
+  ypos 326
+ }
+ Dot {
+  name Dot40
+  xpos 1267
+  ypos 580
+ }
+push $Ncb371500
+ Merge2 {
+  inputs 2
+  name Merge12
+  xpos 570
+  ypos 562
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Switch1
+  xpos 179
+  ypos 562
+  disable true
+ }
+push $N98d5fc00
+ Dot {
+  name Dot5
+  xpos 1097
+  ypos 296
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Switch2
+  xpos 179
+  ypos 653
+ }
+ Switch {
+  inputs 2
+  which {{parent.erode2final}}
+  name Switch4
+  xpos 179
+  ypos 709
+ }
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 179
+  ypos 769
+ }
+ Output {
+  name Output1
+  xpos 180
+  ypos 866
+ }
+end_group

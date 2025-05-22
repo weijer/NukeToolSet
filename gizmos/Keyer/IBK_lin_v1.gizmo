@@ -1,0 +1,230 @@
+#! C:/Program Files/Nuke10.0v1/nuke-10.0.1.dll -nx
+version 10.0 v1
+Gizmo {
+ inputs 2
+ tile_color 0x287028ff
+ lock_connections true
+ addUserKnob {20 User l IBK_lin_v1}
+ addUserKnob {4 Screen M {Green Blue}}
+ addUserKnob {41 Size l size T IBKColourV3_4.Size}
+ addUserKnob {41 mult l lights T IBKColourV3_4.mult}
+ addUserKnob {41 off l darks T IBKColourV3_4.off}
+ addUserKnob {41 multi l "patch black" T IBKColourV3_4.multi}
+ addUserKnob {26 ""}
+ addUserKnob {41 size_1 l size T Blur2g.size}
+ addUserKnob {41 size T FilterErode2g.size}
+ addUserKnob {26 ""}
+ addUserKnob {41 red_weight l "red weight" T IBKGizmoV3_2.red_weight}
+ addUserKnob {41 blue_green_weight l "blue/green weight" T IBKGizmoV3_2.blue_green_weight}
+ addUserKnob {41 ubcr l "use bkg chroma" T IBKGizmoV3_2.ubcr}
+ addUserKnob {41 ublu l "use bkg luminance" -STARTLINE T IBKGizmoV3_2.ublu}
+ addUserKnob {41 ss l "screen subtraction" -STARTLINE T IBKGizmoV3_2.ss}
+ addUserKnob {20 name1 l "linjunyi 林君义" n 1}
+ name1 0
+ addUserKnob {26 id1 l "" +STARTLINE T "WeChat：4772491\nlinjy0454@icloud.com\nlinkedin.com/in/junyi-lin-a67bb1118\n\n微信公众号：影视深井冰"}
+ addUserKnob {20 endGroup n -1}
+}
+ Input {
+  inputs 0
+  name BG
+  xpos -287
+  ypos -56
+  number 1
+ }
+ Dot {
+  name Dot9
+  xpos -253
+  ypos -5
+ }
+set N6ed13c00 [stack 0]
+ Dot {
+  name Dot1
+  xpos -853
+  ypos 129
+ }
+ Dot {
+  name Dot2
+  xpos -853
+  ypos 468
+ }
+ Input {
+  inputs 0
+  name FG
+  xpos -25
+  ypos -57
+ }
+ Dot {
+  name Dot10
+  xpos 9
+  ypos -6
+ }
+set N6ed12c00 [stack 0]
+ Dot {
+  name Dot3
+  xpos -591
+  ypos 119
+ }
+set N6ed12800 [stack 0]
+ IBKColourV3 {
+  name IBKColourV3_1
+  xpos -631
+  ypos 266
+  Size 1
+  off {{parent.IBKColourV3_2.off} {parent.IBKColourV3_2.off} {parent.IBKColourV3_2.off}}
+  mult {{parent.IBKColourV3_2.mult} {parent.IBKColourV3_2.mult} {parent.IBKColourV3_2.mult}}
+ }
+set N35ef7e00 [stack 0]
+ FilterErode {
+  size {{parent.FilterErode2g.size}}
+  name FilterErode1
+  xpos -631
+  ypos 344
+ }
+ Blur {
+  size {{parent.Blur2g.size}}
+  name Blur1
+  xpos -631
+  ypos 382
+ }
+push $N35ef7e00
+push $N6ed12800
+ IBKColourV3 {
+  name IBKColourV3_2
+  xpos -485
+  ypos 270
+  Size {{parent.IBKColourV3_4.Size}}
+  off {{parent.IBKColourV3_4.off} {parent.IBKColourV3_4.off} {parent.IBKColourV3_4.off}}
+  mult {{parent.IBKColourV3_4.mult} {parent.IBKColourV3_4.mult} {parent.IBKColourV3_4.mult}}
+  multi {{parent.IBKColourV3_4.multi}}
+ }
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos -485
+  ypos 382
+ }
+push $N6ed12800
+ Dot {
+  name Dot8
+  xpos -719
+  ypos 131
+ }
+ IBKGizmoV3 {
+  inputs 3
+  name IBKGizmoV3_1
+  selected false
+  xpos -753
+  ypos 507
+  red_weight {{parent.parent.IBKGizmoV3_2.IBK1.red_weight}}
+  blue_green_weight {{parent.parent.IBKGizmoV3_2.IBK1.blue_green_weight}}
+  ss {{parent.parent.IBKGizmoV3_2.IBK1.ss}}
+  ublu {{parent.IBKGizmoV3_2.ublu}}
+  ubcr {{parent.IBKGizmoV3_2.ubcr}}
+ }
+push $N6ed13c00
+ Dot {
+  name Dot5
+  xpos -253
+  ypos 83
+ }
+ Dot {
+  name Dot6
+  xpos -253
+  ypos 422
+ }
+push $N6ed12c00
+ Dot {
+  name Dot4
+  xpos 9
+  ypos 73
+ }
+set N7228c800 [stack 0]
+ IBKColourV3 {
+  name IBKColourV3_3
+  xpos -31
+  ypos 226
+  screen_type green
+  Size 1
+  off {{parent.IBKColourV3_4.off} {parent.IBKColourV3_4.off} {parent.IBKColourV3_4.off}}
+  mult {{parent.IBKColourV3_4.mult} {parent.IBKColourV3_4.mult} {parent.IBKColourV3_4.mult}}
+ }
+set N35ef9200 [stack 0]
+ FilterErode {
+  size 12.5
+  name FilterErode2g
+  xpos -31
+  ypos 298
+ }
+ Blur {
+  size 13.5
+  name Blur2g
+  xpos -31
+  ypos 336
+ }
+push $N35ef9200
+push $N7228c800
+ IBKColourV3 {
+  name IBKColourV3_4
+  xpos 149
+  ypos 230
+  screen_type green
+  Size 1
+  off {0 0 0.01}
+  mult {1 1.58 1}
+  multi 100
+ }
+ Keymix {
+  inputs 3
+  name Keymix2
+  xpos 115
+  ypos 336
+ }
+push $N7228c800
+ Dot {
+  name Dot7
+  xpos -119
+  ypos 85
+ }
+ IBKGizmoV3 {
+  inputs 3
+  name IBKGizmoV3_2
+  selected false
+  xpos -153
+  ypos 426
+  st C-green
+ }
+ Switch {
+  inputs 2
+  which {{Screen}}
+  name Switch1
+  xpos -153
+  ypos 507
+ }
+ Output {
+  name Output1
+  xpos -153
+  ypos 584
+ }
+push $N7228c800
+ Dot {
+  name Dot11
+  label 微信公众号：影视深井冰
+  note_font_size 60
+  xpos 300
+  ypos 73
+ }
+ Dot {
+  name Dot12
+  label 微信公众号：comp_linjy_v1_exr
+  note_font_size 60
+  xpos 300
+  ypos 203
+ }
+ Dot {
+  name Dot13
+  label "WeChat：4772491\nlinjy0454@icloud.com\nlinkedin.com/in/junyi-lin-a67bb1118"
+  note_font_size 50
+  xpos 300
+  ypos 386
+ }
+end_group

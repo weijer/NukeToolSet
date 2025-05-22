@@ -1,0 +1,1295 @@
+#! /Applications/Nuke9.0v4/Nuke9.0v4.app/Contents/MacOS//libnuke-9.0.4.dylib -nx
+version 9.0 v4
+Gizmo {
+ help "Originally designed to help discover keyable channels for trickier shots, this gizmo creates a colorspace contact sheet.\n\nClick on \"Setup Region of Interest\" to crop the input to only the desired area. Click \"View Contact Sheet\" to jump back.\n\nIf you find something usable, pick out the corresponding colorspace and channel and then click \"Create\" for a quick node setup.\n\n\n# Comments? Questions? Reach out, and I'll try to... well, try to fix what probably should have worked in the first place.\n\n// Tyler Lockard // 2014 // lockardvfx@gmail.com // tylerlockard.com"
+ addUserKnob {20 ChannelContactSheet l "Channel Contact Sheet"}
+ addUserKnob {22 viewContactSheet l "View Contact Sheet" t "Switches the view back to the channel contact sheet and applies the region of interest crop if any." T "with nuke.thisNode():\n    nuke.toNode('Output_View_Toggle')\['which'].setValue(0)\n    nuke.toNode('Region_of_Interest')\['disable'].setValue(0)\n    nuke.toNode('Region_of_Interest')\['box'].setVisible(False)\n    nuke.toNode('Region_of_Interest')\['reformat'].setValue(1)" +STARTLINE}
+ addUserKnob {22 setupCrop l "Setup Region of Interest" t "Switches the view to a region of interest crop. Set the bounding box to the region that we're trying to key." -STARTLINE T "with nuke.thisNode():\n    nuke.toNode('Output_View_Toggle')\['which'].setValue(1)\n    nuke.thisGroup()\['box'].setVisible(True)\n    nuke.toNode('Region_of_Interest')\['disable'].setValue(0)\n    nuke.toNode('Region_of_Interest')\['reformat'].setValue(0)"}
+ addUserKnob {26 div1 l "" +STARTLINE}
+ addUserKnob {41 box l "Region of Interest" t "This will crop the input to only the selected bounding box" T Region_of_Interest.box}
+ addUserKnob {41 reset l Reset -STARTLINE T Region_of_Interest.reset}
+ addUserKnob {7 downRes l "DownRes Input" t "If dealing with high resolution footage, use this to speed up the processing." R 0.1 1}
+ downRes 1
+ addUserKnob {26 div2 l "" +STARTLINE}
+ addUserKnob {4 Colorspace l "Create Node Setup" M {RGB HSV HSL YPbPr YCbCr CIE-XYZ CIE-Yxy CIE-LAB CIE-LCH Pannalog "" "" ""}}
+ Colorspace YPbPr
+ addUserKnob {4 Channel l "" -STARTLINE M {red green blue luminance "" "" ""}}
+ Channel blue
+ addUserKnob {22 Create t "Creates a small node setup for the chosen colorspace and channel. " -STARTLINE T "# Declare some stuff\nspace = nuke.thisNode()\['Colorspace'].value()\nchannel = nuke.thisNode()\['Channel'].value()\ngizmo = nuke.thisNode()\n\n# Select this gizmo in the DAG (for when we create the nodes)\ngizmo\['selected'].setValue(1)\n\n# Pop focus to the Root group for node creation\nwith nuke.root():\n    if space != 'RGB':\n        n = nuke.createNode(\"Colorspace\")\n        n\['colorspace_out'].setValue(space)\n\n    if channel != \"luminance\":\n        s = nuke.createNode(\"Keyer\")\n        if 'red' in channel:\n            s\['operation'].setValue('red keyer')\n        if 'green' in channel:\n            s\['operation'].setValue('green keyer')\n        if 'blue' in channel:\n            s\['operation'].setValue('blue keyer')\n    else:\n        nuke.createNode(\"Keyer\")\n\n# Cleanup\nnuke.delete(gizmo)"}
+ addUserKnob {26 div l "    " T "    "}
+ addUserKnob {26 footer l "    " T "<span style=\"color:#444\">// Tyler Lockard // 2014 // lockardvfx@gmail.com // tylerlockard.com //"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0xff000001
+  label "<center><img src=\"CheckerBoard.png\"> Legacy Text Nodes"
+  note_font_size 30
+  xpos -684
+  ypos 301
+  bdwidth 236
+  bdheight 383
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos 101
+  ypos -1213
+ }
+ Crop {
+  box {0 0 1920 1080}
+  name Region_of_Interest
+  xpos 101
+  ypos -1137
+  disable true
+ }
+set N6a0c1f50 [stack 0]
+ Dot {
+  name Dot2
+  label " Back to Reformatted Input"
+  note_font_size 35
+  xpos 226
+  ypos 1107
+  hide_input true
+ }
+ Text2 {
+  inputs 0
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message RGB
+  old_message {{82 71 66}
+    }
+  box {4.5 2832.5 724.5 3324.5}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81}
+    }
+  cursor_position 1
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  name Text15
+  xpos -399
+  ypos 367
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message HSV
+  old_message {{72 83 86}
+    }
+  box {5 2247 725 2739}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81}
+    }
+  cursor_position 3
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  name Text16
+  xpos -399
+  ypos 391
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message HSL
+  old_message {{72 83 76}
+    }
+  box {5 2247 725 2739}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81}
+    }
+  cursor_position 3
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  translate {0 -545}
+  scale {1 1}
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 960 540 0 -545 1 1 0 0 0 0}
+    }
+  name Text17
+  xpos -399
+  ypos 415
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message YPbPr
+  old_message {{89 80 98 80 114}
+    }
+  box {5 2247 725 2739}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81 3 81 4 81}
+    }
+  cursor_position 5
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  translate {0 -1100}
+  scale {1 1}
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 960 540 0 -1100 1 1 0 0 0 0}
+    }
+  name Text18
+  xpos -399
+  ypos 439
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message YCbCr
+  old_message {{89 67 98 67 114}
+    }
+  box {5 2247 725 2739}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81 3 81 4 81}
+    }
+  cursor_position 5
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  translate {0 -1650}
+  scale {1 1}
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 960 540 0 -1650 1 1 0 0 0 0}
+    }
+  name Text19
+  xpos -399
+  ypos 463
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message CIE-XYZ
+  old_message {{67 73 69 45 88 89 90}
+    }
+  box {5 2247 725 2739}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81 3 81 4 81 5 81 6 81}
+    }
+  cursor_position 2
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  translate {0 -2205}
+  scale {1 1}
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 960 540 0 -2205 1 1 0 0 0 0}
+    }
+  name Text20
+  xpos -399
+  ypos 487
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message CIE-Yxy
+  old_message {{67 73 69 45 89 120 121}
+    }
+  box {5 2247 725 2739}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81 3 81 4 81 5 81 6 81}
+    }
+  cursor_position 7
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  translate {0 -2725}
+  scale {1 1}
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 960 540 0 -2725 1 1 0 0 0 0}
+    }
+  name Text21
+  xpos -399
+  ypos 511
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message CIE-LAB
+  old_message {{67 73 69 45 76 65 66}
+    }
+  box {5 2247 725 2739}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81 3 81 4 81 5 81 6 81}
+    }
+  cursor_position 7
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  translate {0 -3265}
+  scale {1 1}
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 960 540 0 -3265 1 1 0 0 0 0}
+    }
+  name Text22
+  xpos -399
+  ypos 535
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message CIE-LCH
+  old_message {{67 73 69 45 76 67 72}
+    }
+  box {5 2247 725 2739}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81 3 81 4 81 5 81 6 81}
+    }
+  cursor_position 7
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  translate {0 -3842}
+  scale {1 1}
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 960 540 0 -3842 1 1 0 0 0 0}
+    }
+  name Text23
+  xpos -399
+  ypos 559
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message Pannalog
+  old_message {{80 97 110 110 97 108 111 103}
+    }
+  box {5 2247 725 2739}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81 3 81 4 81 5 81 6 81 7 81}
+    }
+  cursor_position 8
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  translate {0 -4347}
+  scale {1 1}
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 960 540 0 -4347 1 1 0 0 0 0}
+    }
+  name Text24
+  xpos -399
+  ypos 583
+ }
+ Text2 {
+  inputs 0
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  cliptype none
+  message R
+  old_message {{82}
+    }
+  box {713.8000488 3173 1433.800049 3665}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81}
+    }
+  cursor_position 1
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  name Text25
+  xpos -275
+  ypos 486
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  output {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  cliptype none
+  message G
+  old_message {{71}
+    }
+  box {1667.599975 3173 2387.599976 3665}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81}
+    }
+  cursor_position 1
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  name Text26
+  xpos -275
+  ypos 518
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  output {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  cliptype none
+  message B
+  old_message {{66}
+    }
+  box {2642.600097 3173 3362.600098 3665}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81}
+    }
+  cursor_position 1
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  name Text27
+  xpos -275
+  ypos 550
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message Lum
+  old_message {{76 117 109}
+    }
+  box {3565.600097 3173 4285.600098 3665}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81}
+    }
+  cursor_position 3
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  name Text28
+  xpos -275
+  ypos 582
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos -336
+  ypos 645
+ }
+ Transform {
+  translate {-160 2265}
+  center {1075 1950}
+  shutteroffset centred
+  name Transform2
+  xpos -336
+  ypos 689
+ }
+push $N6a0c1f50
+ Reformat {
+  type scale
+  format "1920 1080 0 0 1920 1080 1 HD_1080"
+  scale {{parent.downRes}}
+  name Proxy_Scale
+  xpos 101
+  ypos -1091
+ }
+ Dot {
+  name Dot1
+  xpos 135
+  ypos -948
+ }
+set N6c4b26b0 [stack 0]
+ Colorspace {
+  colorspace_out Panalog
+  name Colorspace9
+  label "\[value colorspace_out]"
+  xpos 2065
+  ypos -504
+ }
+set N6c4b6930 [stack 0]
+ Keyer {
+  operation "luminance key"
+  name Keyer10
+  xpos 2319
+  ypos -473
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle36
+  xpos 2319
+  ypos -439
+ }
+push $N6c4b6930
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle35
+  xpos 2184
+  ypos -440
+ }
+push $N6c4b6930
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle34
+  xpos 2065
+  ypos -439
+ }
+push $N6c4b6930
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle33
+  xpos 1943
+  ypos -438
+ }
+push $N6c4b26b0
+ Colorspace {
+  colorspace_out CIE-LCH
+  name Colorspace8
+  label "\[value colorspace_out]"
+  xpos 1520
+  ypos -497
+ }
+set N6c811590 [stack 0]
+ Keyer {
+  operation "luminance key"
+  name Keyer9
+  xpos 1774
+  ypos -467
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle32
+  xpos 1774
+  ypos -433
+ }
+push $N6c811590
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle31
+  xpos 1639
+  ypos -434
+ }
+push $N6c811590
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle30
+  xpos 1520
+  ypos -431
+ }
+push $N6c811590
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle29
+  xpos 1398
+  ypos -432
+ }
+push $N6c4b26b0
+ Colorspace {
+  colorspace_out CIE-Lab
+  name Colorspace7
+  label "\[value colorspace_out]"
+  xpos 975
+  ypos -494
+ }
+set N708356e0 [stack 0]
+ Keyer {
+  operation "luminance key"
+  name Keyer8
+  xpos 1229
+  ypos -465
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle28
+  xpos 1229
+  ypos -431
+ }
+push $N708356e0
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle27
+  xpos 1094
+  ypos -432
+ }
+push $N708356e0
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle26
+  xpos 975
+  ypos -431
+ }
+push $N708356e0
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle25
+  xpos 853
+  ypos -430
+ }
+push $N6c4b26b0
+ Colorspace {
+  colorspace_out CIE-Yxy
+  name Colorspace6
+  label "\[value colorspace_out]"
+  xpos 417
+  ypos -490
+ }
+set N70882340 [stack 0]
+ Keyer {
+  operation "luminance key"
+  name Keyer7
+  xpos 671
+  ypos -461
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle24
+  xpos 671
+  ypos -427
+ }
+push $N70882340
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle23
+  xpos 536
+  ypos -428
+ }
+push $N70882340
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle22
+  xpos 417
+  ypos -427
+ }
+push $N70882340
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle21
+  xpos 295
+  ypos -426
+ }
+push $N6c4b26b0
+ Colorspace {
+  colorspace_out CIE-XYZ
+  name Colorspace5
+  label "\[value colorspace_out]"
+  xpos -132
+  ypos -492
+ }
+set N708cf090 [stack 0]
+ Keyer {
+  operation "luminance key"
+  name Keyer6
+  xpos 122
+  ypos -462
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle20
+  xpos 122
+  ypos -428
+ }
+push $N708cf090
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle14
+  xpos -13
+  ypos -429
+ }
+push $N708cf090
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle13
+  xpos -132
+  ypos -428
+ }
+push $N708cf090
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle15
+  xpos -254
+  ypos -427
+ }
+push $N6c4b26b0
+ Colorspace {
+  colorspace_out YCbCr
+  name Colorspace4
+  label "\[value colorspace_out]"
+  xpos -634
+  ypos -490
+ }
+set Nb381fd70 [stack 0]
+ Keyer {
+  operation "luminance key"
+  name Keyer5
+  xpos -410
+  ypos -460
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle19
+  xpos -410
+  ypos -426
+ }
+push $Nb381fd70
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle12
+  xpos -515
+  ypos -426
+ }
+push $Nb381fd70
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle11
+  xpos -634
+  ypos -425
+ }
+push $Nb381fd70
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle10
+  xpos -756
+  ypos -424
+ }
+push $N6c4b26b0
+ Colorspace {
+  colorspace_out YPbPr
+  name Colorspace3
+  label "\[value colorspace_out]"
+  xpos -1145
+  ypos -488
+ }
+set Nb385f9a0 [stack 0]
+ Keyer {
+  operation "luminance key"
+  name Keyer4
+  xpos -918
+  ypos -458
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle18
+  xpos -918
+  ypos -424
+ }
+push $Nb385f9a0
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle9
+  xpos -1033
+  ypos -426
+ }
+push $Nb385f9a0
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle8
+  xpos -1145
+  ypos -428
+ }
+push $Nb385f9a0
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle7
+  xpos -1269
+  ypos -428
+ }
+push $N6c4b26b0
+ Colorspace {
+  colorspace_out HSL
+  name Colorspace2
+  label "\[value colorspace_out]"
+  xpos -1637
+  ypos -483
+ }
+set Nb38b9440 [stack 0]
+ Keyer {
+  operation "luminance key"
+  name Keyer3
+  xpos -1418
+  ypos -461
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle17
+  xpos -1418
+  ypos -427
+ }
+push $Nb38b9440
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle6
+  xpos -1525
+  ypos -425
+ }
+push $Nb38b9440
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle5
+  xpos -1637
+  ypos -427
+ }
+push $Nb38b9440
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle4
+  xpos -1761
+  ypos -427
+ }
+push $N6c4b26b0
+ Colorspace {
+  colorspace_out HSV
+  name Colorspace1
+  label "\[value colorspace_out]"
+  xpos -2111
+  ypos -487
+ }
+set Nb3909ec0 [stack 0]
+ Keyer {
+  operation "luminance key"
+  name Keyer2
+  xpos -1901
+  ypos -466
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle16
+  xpos -1901
+  ypos -432
+ }
+push $Nb3909ec0
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle3
+  xpos -1999
+  ypos -430
+ }
+push $Nb3909ec0
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle2
+  xpos -2111
+  ypos -432
+ }
+push $Nb3909ec0
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle1
+  xpos -2235
+  ypos -432
+ }
+push $N6c4b26b0
+ Keyer {
+  operation "luminance key"
+  name Keyer1
+  xpos -2394
+  ypos -460
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle40
+  xpos -2394
+  ypos -426
+ }
+push $N6c4b26b0
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle37
+  xpos -2492
+  ypos -424
+ }
+push $N6c4b26b0
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle38
+  xpos -2604
+  ypos -426
+ }
+push $N6c4b26b0
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle39
+  xpos -2728
+  ypos -426
+ }
+ ContactSheet {
+  inputs 40
+  width 3800
+  height 5600
+  rows 10
+  gap 40
+  roworder TopBottom
+  name ChannelContactSheet
+  xpos -13
+  ypos 102
+ }
+ Transform {
+  translate {425 56}
+  center {1024 778}
+  shutteroffset centred
+  name Transform1
+  xpos -13
+  ypos 666
+ }
+ Reformat {
+  type "to box"
+  box_width 4300
+  box_height 5800
+  box_fixed true
+  resize none
+  center false
+  name Reformat1
+  xpos -13
+  ypos 690
+ }
+ Merge2 {
+  inputs 2
+  name Merge3
+  label "'Text Overlays'"
+  xpos -163
+  ypos 817
+ }
+ Crop {
+  box {0 0 4300 5800}
+  name Crop2
+  xpos -163
+  ypos 849
+ }
+ Dot {
+  name Dot3
+  xpos -129
+  ypos 1113
+ }
+ Switch {
+  inputs 2
+  name Output_View_Toggle
+  xpos 5
+  ypos 1258
+ }
+ Output {
+  name Output1
+  xpos 5
+  ypos 1464
+ }
+ Text {
+  inputs 0
+  cliptype none
+  message RGB
+  font /Volumes/ol03/dive_rsrc/_assets/fonts/Arial.ttf
+  size 80
+  xjustify center
+  yjustify center
+  Transform 1
+  box {663 530 1385 1026}
+  translate {-660 2305}
+  center {1025 775}
+  name Text14
+  xpos -669
+  ypos 427
+  disable true
+ }
+ Text {
+  cliptype none
+  message HSV
+  font /Volumes/ol03/dive_rsrc/_assets/fonts/Arial.ttf
+  size 80
+  xjustify center
+  yjustify center
+  box {663 530 1385 1026}
+  translate {-660 1725}
+  center {1025 775}
+  name Text4
+  xpos -669
+  ypos 451
+  disable true
+ }
+ Text {
+  cliptype none
+  message HSL
+  font /Volumes/ol03/dive_rsrc/_assets/fonts/Arial.ttf
+  size 80
+  xjustify center
+  yjustify center
+  box {663 530 1385 1026}
+  translate {-660 1180}
+  center {1025 775}
+  name Text6
+  xpos -669
+  ypos 475
+  disable true
+ }
+ Text {
+  cliptype none
+  message YPbPr
+  font /Volumes/ol03/dive_rsrc/_assets/fonts/Arial.ttf
+  size 80
+  xjustify center
+  yjustify center
+  box {663 530 1385 1026}
+  translate {-660 625}
+  center {1025 775}
+  name Text7
+  xpos -669
+  ypos 499
+  disable true
+ }
+ Text {
+  cliptype none
+  message YCbCr
+  font /Volumes/ol03/dive_rsrc/_assets/fonts/Arial.ttf
+  size 80
+  xjustify center
+  yjustify center
+  box {663 530 1385 1026}
+  translate {-660 75}
+  center {1025 775}
+  name Text8
+  xpos -669
+  ypos 523
+  disable true
+ }
+ Text {
+  cliptype none
+  message CIE-XYZ
+  font /Volumes/ol03/dive_rsrc/_assets/fonts/Arial.ttf
+  size 80
+  xjustify center
+  yjustify center
+  box {663 530 1385 1026}
+  translate {-660 -480}
+  center {1025 775}
+  name Text9
+  xpos -669
+  ypos 547
+  disable true
+ }
+ Text {
+  cliptype none
+  message CIE-Yxy
+  font /Volumes/ol03/dive_rsrc/_assets/fonts/Arial.ttf
+  size 80
+  xjustify center
+  yjustify center
+  box {663 530 1385 1026}
+  translate {-660 -1000}
+  center {1025 775}
+  name Text10
+  xpos -669
+  ypos 571
+  disable true
+ }
+ Text {
+  cliptype none
+  message CIE-LAB
+  font /Volumes/ol03/dive_rsrc/_assets/fonts/Arial.ttf
+  size 80
+  xjustify center
+  yjustify center
+  box {663 530 1385 1026}
+  translate {-660 -1540}
+  center {1025 775}
+  name Text11
+  xpos -669
+  ypos 595
+  disable true
+ }
+ Text {
+  cliptype none
+  message CIE-LCH
+  font /Volumes/ol03/dive_rsrc/_assets/fonts/Arial.ttf
+  size 80
+  xjustify center
+  yjustify center
+  box {663 530 1385 1026}
+  translate {-660 -2078}
+  center {1025 775}
+  name Text12
+  xpos -669
+  ypos 619
+  disable true
+ }
+ Text {
+  cliptype none
+  message Pannalog
+  font /Volumes/ol03/dive_rsrc/_assets/fonts/Arial.ttf
+  size 80
+  xjustify center
+  yjustify center
+  box {663 530 1385 1026}
+  translate {-660 -2623}
+  center {1025 775}
+  name Text13
+  xpos -669
+  ypos 643
+  disable true
+ }
+ Text {
+  inputs 0
+  output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  cliptype none
+  message R
+  font /Volumes/ol03/dive_rsrc/_assets/fonts/Arial.ttf
+  size 80
+  xjustify center
+  yjustify center
+  Transform 1
+  box {462 736 715 822}
+  translate {484 2650}
+  center {588 426}
+  name Text1
+  xpos -542
+  ypos 543
+  disable true
+ }
+ Text {
+  output {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  cliptype none
+  message G
+  font /Volumes/ol03/dive_rsrc/_assets/fonts/Arial.ttf
+  size 80
+  xjustify center
+  yjustify center
+  Transform 1
+  box {462 736 715 822}
+  translate {1438 2650}
+  center {588 426}
+  name Text2
+  xpos -542
+  ypos 575
+  disable true
+ }
+ Text {
+  output {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  cliptype none
+  message B
+  font /Volumes/ol03/dive_rsrc/_assets/fonts/Arial.ttf
+  size 80
+  xjustify center
+  yjustify center
+  Transform 1
+  box {462 736 715 822}
+  translate {2414 2650}
+  center {588 426}
+  name Text3
+  xpos -542
+  ypos 607
+  disable true
+ }
+ Text {
+  cliptype none
+  message L
+  font /Volumes/ol03/dive_rsrc/_assets/fonts/Arial.ttf
+  size 80
+  xjustify center
+  yjustify center
+  Transform 1
+  box {462 736 715 822}
+  translate {3340 2650}
+  center {588 426}
+  name Text5
+  xpos -542
+  ypos 639
+  disable true
+ }
+end_group

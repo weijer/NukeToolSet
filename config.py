@@ -24,6 +24,27 @@ nuke_config = {
                     "icon": "",
                     "type": "gizmo"
                 },
+                {
+                    "name": "Image/BlacksMatch",
+                    "command": "BlacksMatch",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Image/ChannelContactSheet",
+                    "command": "ChannelContactSheet",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Image/NoiseAdvanced",
+                    "command": "NoiseAdvanced",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
                 # Image icon
                 {
                     "name": "Image",
@@ -154,7 +175,16 @@ nuke_config = {
                 # 8、DilateErodeFine
                 # 9、Lightwarp
                 # 10、Glow_hub
-                #
+                # 11. HeatDistortion_lin 来源林君义
+                # 12. FoldKiller_lin 来源林君义
+                # 13. EdgeTool_lin_V2 来源林君义
+                # 14. EdgeAlpha_lin 来源林君义
+                # 15. Random_lin 来源林君义
+                # 16. RealGlow
+                # 17. HeatWave
+                # 18. Chromatik
+                # 19. AdvancedGrain
+                # 20. bm_Despill
                 {
                     "name": "Filter/RealHeatDistortion",
                     "command": "RealHeatDist",
@@ -225,6 +255,118 @@ nuke_config = {
                     "icon": "",
                     "type": "gizmo"
                 },
+                {
+                    "name": "Filter/HeatDistortion_lin",
+                    "command": "HeatDistortion_lin",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Filter/EdgeTool_lin_V2",
+                    "command": "EdgeTool_lin_V2",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Filter/EdgeAlpha_lin",
+                    "command": "EdgeAlpha_lin",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Filter/Random_lin",
+                    "command": "Random_lin",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Filter/RealGlow",
+                    "command": "RealGlow",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Filter/HeatWave",
+                    "command": "HeatWave",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Filter/Chromatik",
+                    "command": "Chromatik",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Filter/AdvancedGrain",
+                    "command": "AdvancedGrain",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Filter/bm_Despill",
+                    "command": "bm_Despill",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Filter/bm_OpticalGlow",
+                    "command": "bm_OpticalGlow",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Filter/DasGrain",
+                    "command": "DasGrain",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Filter/DirectionalBlur",
+                    "command": "DirectionalBlur",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Filter/expoglow",
+                    "command": "expoglow",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Filter/fxT_chromaticAberration",
+                    "command": "fxT_chromaticAberration",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Filter/OpticalZDefocus",
+                    "command": "OpticalZDefocus",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Filter/W_CatsEye",
+                    "command": "W_CatsEye",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
                 # Filter icon
                 {
                     "name": "Filter",
@@ -246,6 +388,10 @@ nuke_config = {
                 # 9、EdgeKey
                 # 10、Spill_Tool
                 # 11、RemoveSkyEdge
+                # 12. IBKColor_lin 来源林君义
+                # 13. IBK_lin_v3 来源林君义
+                # 14. IBK_lin_v1 来源林君义
+                # 15. Colour_Smear
                 #
                 {
                     "name": "Keyer/AdditiveKeyer",
@@ -324,6 +470,34 @@ nuke_config = {
                     "icon": "",
                     "type": "gizmo"
                 },
+                {
+                    "name": "Keyer/IBKColor_lin",
+                    "command": "IBKColor_lin",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Keyer/IBK_lin_v3",
+                    "command": "IBK_lin_v3",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Keyer/IBK_lin_v1",
+                    "command": "IBK_lin_v1",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Keyer/Colour_Smear",
+                    "command": "Colour_Smear",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
                 # Keyer icon
                 {
                     "name": "Keyer",
@@ -340,7 +514,8 @@ nuke_config = {
                 # 4、FallingLeaves
                 # 5、RainMaker
                 # 6、TX_Fog
-                # 6、3D/Tangent_Space_Normals
+                # 7、3D/Tangent_Space_Normals
+                # 8、bm_CameraShake
                 #
                 {
                     "name": "3D/CameraProjection",
@@ -468,6 +643,13 @@ nuke_config = {
                     "icon": "",
                     "type": "gizmo"
                 },
+                {
+                    "name": "3D/bm_CameraShake",
+                    "command": "bm_CameraShake",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
                 # Channel icon
                 {
                     "name": "3D",
@@ -497,6 +679,7 @@ nuke_config = {
                 # 10、ReProject3D
                 # 11、PP_Mask_hub
                 # 12、DepthSlice
+                # 13、DespillMadness from Rebelway
                 #
                 {
                     "name": "Lighting/Mask3D_RS",
@@ -585,6 +768,13 @@ nuke_config = {
                 {
                     "name": "Lighting/Final Flare",
                     "command": "final_flare_tool",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Lighting/DespillMadness",
+                    "command": "DespillMadness",
                     "shortcut": "",
                     "icon": "",
                     "type": "gizmo"

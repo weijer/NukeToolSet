@@ -1,0 +1,330 @@
+#! C:/Program Files/Nuke12.1v1/nuke-12.1.1.dll -nx
+version 12.1 v1
+Gizmo {
+ inputs 2
+ help "<b>OpticalZDefocus</b> is a physically accurate ZDefocus, which controls circle of confusion (coc) size based on lens geometry using the depth of field equation. \n\nSet your lens and film-back characteristics, your focus distance, and adjust the size of your bokeh with the aperture size, just like a real lens."
+ tile_color 0xcc804eef
+ addUserKnob {20 OpticalZDefocus}
+ addUserKnob {41 channels T _ZDEFOCUS_.channels}
+ addUserKnob {41 useGPUIfAvailable l "Use GPU if available" T _ZDEFOCUS_.useGPUIfAvailable}
+ addUserKnob {26 ""}
+ addUserKnob {41 depth_channel l "depth channel" t "Choose the channel that contains your Z-Depth" T CHANNEL_CHOOSER_DEPTH.Zchan}
+ addUserKnob {26 spacer l " &nbsp;  &nbsp;  " -STARTLINE T " "}
+ addUserKnob {6 unpremult_z l " &nbsp;  &nbsp; <b>unpremult</b> by" t "Unpremultiply the depth layer by the selected channel" -STARTLINE}
+ addUserKnob {41 depth_alpha l "" -STARTLINE T CHANNEL_CHOOSER_ALPHA.Zchan}
+ addUserKnob {22 set_z l "Sample Z" t "Sets the focal distance to the Z channel value at the current focal point on the current frame." T "from __future__ import with_statement\n\nn = nuke.thisNode()\ns = n\['s']\nz_coord = n\['sample_z']\n\nwith n:\n    ds = nuke.toNode('DepthSampler')\n    zsample = ds.sample('red', z_coord.getValue(0), z_coord.getValue(1))\n\nif s.isAnimated():\n    s.setValueAt(zsample, nuke.frame())\nelse:\n    s.setValue(zsample)" +STARTLINE}
+ addUserKnob {12 sample_z l "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; sample position: " t "Allows you to sample the Z channel at a specific 2d position." -STARTLINE}
+ sample_z {3418 1254}
+ addUserKnob {4 depth_unit l "depth unit" t "Set the unit of your zdepth." M {mm cm dm m inch ft}}
+ depth_unit dm
+ addUserKnob {26 spacer2 l "" t " " -STARTLINE T "  "}
+ addUserKnob {6 show_coc l "show coc" t "Output the calculated direct circle of confusion size map that is used to drive the ZDefocus in direct mode.\n\nUseful for troubleshooting." -STARTLINE}
+ addUserKnob {6 invert_depth l depth=1/z t "Invert the depth if your input is Nuke ScanlineRender style 1/Z" -STARTLINE}
+ addUserKnob {26 divider l " " T "  "}
+ addUserKnob {26 ""}
+ addUserKnob {26 dof_control_label l " " T "<font color=#ddd><b>Depth of Field Control"}
+ addUserKnob {41 constant_defocus l "constant defocus" t "If enabled, depth-varying defocus is disabled and defocus amount is controlled directly by the max defocus slider." T _ghost_whisper_.constant_defocus}
+ addUserKnob {7 s l "focus distance" t "Set the focus distance" R 10 1000}
+ s 15
+ addUserKnob {7 N l f-stop t "Controls the aperture of your lens.\n\nBigger number = greater depth of field. \n\nSmaller numbers = shallower depth of field." R 0.8 44}
+ N 4
+ addUserKnob {41 max_size l "max defocus" t "Set the max defocus size allowed" T _ZDEFOCUS_.max_size}
+ addUserKnob {26 ""}
+ addUserKnob {26 lens_geometry_label l " " T "<font color=#ddd><b>Lens Geometry"}
+ addUserKnob {22 get_selected_camera l "Get Selected Camera" t "Set the parameters using the selected camera." T "from __future__ import with_statement\n\ndef get_camera():\n    ozdef = nuke.thisNode()\n    with nuke.root():\n        root_par = nuke.root().format().pixelAspect()\n        cam = nuke.selectedNodes()\n        if len(cam) != 1:\n            nuke.message('Please select a single camera node.')\n            return\n        elif len(cam) == 0:\n            nuke.message('Please select a single camera node.')\n            return\n        else:\n            cam = cam\[0]\n        if 'Camera2' not in cam.Class():\n            nuke.message('Please select a camera node.')\n            return\n        ozdef\['f'].setValue(cam\['focal'].getValue())\n        ozdef\['N'].setValue(cam\['fstop'].getValue())\n        # Assuming anamorphic shows have physical haperture*2\n        ozdef\['haperture'].setValue(cam\['haperture'].getValue()/root_par)\n\nif __name__ == \"__main__\":\n    get_camera()" +STARTLINE}
+ addUserKnob {41 use_camera_input l "use camera input" -STARTLINE T _ghost_whisper_.use_camera_input}
+ addUserKnob {7 f l "focal length" t "Set the focal length of the camera" R 0 500}
+ addUserKnob {7 haperture t "Horizontal aperture of the film-back / sensor" R 0 50}
+ addUserKnob {26 ""}
+ addUserKnob {7 min_zdepth l "min zdepth" t "If ZDepth = 0, ZDepth will be set to the specified value.\n\nThe ZDefocus node can be very slow to calculate if you have zero values in your zdepth, for example if you have areas that have transparent alpha. \n\nSet min zdepth to a value slightly smaller than the nearest object in your scene to speed up processing time." R 0 20}
+ min_zdepth 1
+ addUserKnob {41 autoLayerSpacing l "automatic layer spacing" T _ZDEFOCUS_.autoLayerSpacing}
+ addUserKnob {41 layers l "depth layers" T _ZDEFOCUS_.layers}
+ addUserKnob {41 layerCurve l "layer curve" T _ZDEFOCUS_.layerCurve}
+ addUserKnob {26 ""}
+ addUserKnob {20 Filter}
+ addUserKnob {41 filter_type_1 l "filter type" T _ZDEFOCUS_.filter_type}
+ addUserKnob {7 aspect_ratio R 0 2}
+ aspect_ratio 0.5
+ addUserKnob {7 filter_shape}
+ filter_shape 1
+ addUserKnob {3 blades}
+ blades 9
+ addUserKnob {7 roundness}
+ roundness 0.2
+}
+ ZBlur {
+  inputs 0
+  channels rgba
+  shape 1
+  name CHANNEL_CHOOSER_DEPTH
+  xpos -442
+  ypos 230
+  disable true
+ }
+ ZBlur {
+  channels rgba
+  Zchan rgba.alpha
+  shape 1
+  name CHANNEL_CHOOSER_ALPHA
+  xpos -442
+  ypos 270
+  disable true
+ }
+ Input {
+  inputs 0
+  name Input
+  label "\[value number]"
+  xpos -308
+  ypos -16
+ }
+ Dot {
+  name _ghost_whisper_
+  knobChanged "\n\n\nthisknob = nuke.thisKnob()\nnode = nuke.thisNode()\nnuke.root().begin()\nparent_node = nuke.toNode(node.fullName().split('.')\[0])\nparent_node.begin()\n\ndef enable_knobs(enabled=True, caminput=False):\n    if caminput:\n        knobs = \['get_selected_camera', 'f', 'haperture']\n    else:\n        knobs = \['min_zdepth', 'get_selected_camera', 'f', 's', 'N', 'haperture']\n    for knob in knobs:\n        parent_node\[knob].setEnabled(enabled)\n\nif thisknob.name() == 'constant_defocus':\n    is_const = node\['constant_defocus'].getValue()\n    if is_const:\n        enable_knobs(False)\n    else:\n        enable_knobs()\n\nif thisknob.name() == 'use_camera_input':\n    if thisknob.getValue():\n        enable_knobs(False, True)\n        cam_input = nuke.nodes.Input(name='InputCamera', xpos=228, ypos=-16)\n        parent_node\['f'].setExpression('\[topnode input2].focal')\n        parent_node\['haperture'].setExpression('\[topnode input2].haperture')\n    if not thisknob.getValue():\n        if not parent_node\['constant_defocus'].getValue():\n            enable_knobs(True, True)\n        parent_node.setInput(2, None)\n        nuke.delete(nuke.toNode('InputCamera'))\n        parent_node\['f'].clearAnimated()\n        parent_node\['haperture'].clearAnimated()\n\n\n"
+  tile_color 0x129000ff
+  note_font_size 42
+  note_font_color 0x7f7f7f01
+  xpos -274
+  ypos 114
+  addUserKnob {20 User}
+  addUserKnob {6 constant_defocus t "Disables depth-varying defocus. \nBokeh size is directly controlled by max defocus." +STARTLINE}
+  addUserKnob {6 use_camera_input l "use camera input" t "Creates a camera input pipe instead so that no user action is required." +STARTLINE}
+ }
+set N7e976000 [stack 0]
+ Dot {
+  name Dot7
+  note_font_size 42
+  note_font_color 0x7f7f7f01
+  xpos -542
+  ypos 114
+ }
+ AddChannels {
+  channels depth
+  channels2 rgba
+  name AddChannels1
+  xpos -576
+  ypos 144
+ }
+set N7e933c00 [stack 0]
+push $N7e933c00
+ Copy {
+  inputs 2
+  from0 {{{CHANNEL_CHOOSER_DEPTH.Zchan}}}
+  to0 rgba.red
+  from1 {{{CHANNEL_CHOOSER_ALPHA.Zchan}}}
+  to1 rgba.alpha
+  bbox B
+  name _CHOOSE_CHANNELS_
+  xpos -576
+  ypos 218
+  disable {{hasError}}
+ }
+ Unpremult {
+  name _UNPREMULT_Z_
+  xpos -576
+  ypos 310
+  disable {{!parent.unpremult_z}}
+ }
+ Expression {
+  temp_name3 max_dist
+  temp_expr3 100000
+  expr0 "r == 0 ? max_dist : 1/r"
+  channel1 none
+  channel2 none
+  name DepthInvert
+  xpos -576
+  ypos 350
+  disable {{!parent.invert_depth}}
+ }
+set N7e9aa800 [stack 0]
+ Multiply {
+  channels rgb
+  value {{"parent.depth_unit == 1 ? 10 : parent.depth_unit == 2 ? 100 : parent.depth_unit == 3 ? 1000 : parent.depth_unit == 4 ? 25.4 : parent.depth_unit == 5 ? 304.8 : 1"}}
+  name _UNIT_MULTIPLIER_
+  xpos -576
+  ypos 390
+  addUserKnob {20 User}
+  addUserKnob {7 depth_unit_divider R 0 500}
+  depth_unit_divider {{"parent.depth_unit == 1 ? 10 : parent.depth_unit == 2 ? 100 : parent.depth_unit == 3 ? 1000 : parent.depth_unit == 4 ? 25.4 : parent.depth_unit == 5 ? 304.8 : 1"}}
+ }
+ Expression {
+  temp_name0 zdepth
+  temp_expr0 "r < parent.min_zdepth* _UNIT_MULTIPLIER_.value ? parent.min_zdepth* _UNIT_MULTIPLIER_.value : r"
+  temp_name1 focus_dist
+  temp_expr1 "s * _UNIT_MULTIPLIER_.value"
+  temp_name2 coc
+  temp_expr2 "(fabs(focus_dist - zdepth) * pow(f,2) / (N * zdepth * (focus_dist - f)))"
+  temp_name3 coc_px
+  temp_expr3 "fabs(coc / haperture * input.width / 2)"
+  channel0 rgba
+  expr0 "parent.constant_defocus ? parent.max_size : coc_px"
+  channel1 none
+  name Generate_Direct_Z
+  xpos -576
+  ypos 430
+  addUserKnob {20 Optical l "Optical Characteristics"}
+  addUserKnob {7 f l "focal length" R 0 500}
+  f {{parent.f}}
+  addUserKnob {7 N l f-stop R 0 44}
+  N {{parent.N}}
+  addUserKnob {7 haperture R 0 50}
+  haperture {{parent.haperture}}
+  addUserKnob {7 s l "focus distance" R 0 1000}
+  s {{parent.s}}
+ }
+ Dot {
+  name Dot3
+  note_font_size 42
+  note_font_color 0x7f7f7f01
+  xpos -542
+  ypos 514
+ }
+set N7ab42c00 [stack 0]
+ Dot {
+  name Dot2
+  note_font_size 42
+  note_font_color 0x7f7f7f01
+  xpos -542
+  ypos 1034
+ }
+ Input {
+  inputs 0
+  name InputFilter
+  label "\[value number]"
+  xpos 94
+  ypos -16
+  number 1
+ }
+ Reformat {
+  type scale
+  scale {1 {1/parent.aspect_ratio}}
+  resize distort
+  name _aspect_ratio_1
+  xpos 94
+  ypos 390
+ }
+ Dot {
+  inputs 0
+  name Dot1
+  label " Default Filter Input"
+  note_font "Helvetica Bold"
+  note_font_size 24
+  note_font_color 0xff000000
+  xpos 262
+  ypos 314
+ }
+ Reformat {
+  type "to box"
+  box_fixed true
+  name Reformat1
+  xpos 228
+  ypos 390
+ }
+ Flare {
+  position {{width/2} {height/2}}
+  radius {75 88 91}
+  inner_color 1
+  name Flare3
+  xpos 228
+  ypos 430
+ }
+ Reformat {
+  type scale
+  scale {1 {1/parent.aspect_ratio}}
+  resize distort
+  name _aspect_ratio_2
+  xpos 228
+  ypos 470
+ }
+ Shuffle {
+  alpha red
+  name Shuffle1
+  label "\[value in]"
+  xpos 228
+  ypos 504
+ }
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input1]"}}
+  name Switch3
+  xpos 94
+  ypos 510
+ }
+ Dot {
+  name Dot6
+  label " "
+  note_font "Helvetica Bold"
+  note_font_size 24
+  note_font_color 0xff000000
+  xpos 128
+  ypos 594
+ }
+push $N7ab42c00
+push $N7e976000
+ Dot {
+  name Dot4
+  label " "
+  note_font "Helvetica Bold"
+  note_font_size 24
+  note_font_color 0xa5a5a501
+  xpos -274
+  ypos 434
+ }
+add_layer {opticalzdefocus opticalzdefocus.Z}
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 opticalzdefocus.Z
+  bbox B
+  name _Copy_ZDepth_
+  xpos -308
+  ypos 504
+ }
+ ZDefocus2 {
+  inputs 2
+  channels rgba
+  z_channel opticalzdefocus.Z
+  math direct
+  focal_point {16540 12700}
+  size 1
+  max_size 100
+  filter_type image
+  legacy_resize_mode false
+  show_legacy_resize_mode false
+  use_input_channels true
+  aspect {{parent.aspect_ratio}}
+  blades {{parent.blades}}
+  roundness {{parent.roundness}}
+  inner_feather 0.28
+  catadioptric_size 0.375
+  name _ZDEFOCUS_
+  xpos -308
+  ypos 584
+ }
+ Remove {
+  channels opticalzdefocus
+  name Remove1
+  xpos -308
+  ypos 659
+ }
+ Switch {
+  inputs 2
+  which {{parent.show_coc}}
+  name _SHOW_COC_
+  xpos -308
+  ypos 1030
+ }
+ Output {
+  name Output1
+  xpos -308
+  ypos 1230
+ }
+push $N7e9aa800
+ NoOp {
+  name DepthSampler
+  xpos -710
+  ypos 350
+  addUserKnob {20 User}
+  addUserKnob {7 sval R 0 1000}
+ }
+end_group
