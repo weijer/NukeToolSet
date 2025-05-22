@@ -1,0 +1,578 @@
+#! C:/Program Files/Nuke10.0v1/nuke-10.0.1.dll -nx
+version 10.0 v1
+Gizmo {
+ inputs 2
+ tile_color 0xa500ff
+ note_font Verdana
+ note_font_color 0x2622ff
+ lock_connections true
+ addUserKnob {20 User l FoldKiller_lin}
+ addUserKnob {4 aaa l screen M {Green Blue Pick "" "" ""}}
+ addUserKnob {18 asd l "Screen Colour"}
+ asd {0.04 0.3 0.15}
+ addUserKnob {6 asd_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 asd_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {20 name_1 l "linjunyi 林君义" n 1}
+ addUserKnob {26 ID l "" +STARTLINE T "WeChat：4772491\nlinjy0454@icloud.com\nlinkedin.com/in/junyi-lin-a67bb1118\n\n微信公众号：影视深井冰"}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {6 asd_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+}
+ Input {
+  inputs 0
+  name C
+  selected true
+  xpos -251
+  ypos -627
+  number 1
+ }
+ Dot {
+  name Dot2
+  selected true
+  xpos -217
+  ypos -215
+ }
+set N7a83fc00 [stack 0]
+ Dot {
+  name Dot4
+  selected true
+  xpos 116
+  ypos -215
+ }
+set N7a83f800 [stack 0]
+ Expression {
+  expr0 0
+  expr1 0
+  expr2 0
+  expr3 0
+  name Expression8
+  tile_color 0xff
+  selected true
+  xpos 82
+  ypos -157
+ }
+ Clamp {
+  channels rgb
+  minimum {{parent.asd.r} {parent.asd.g} {parent.asd.b} 1}
+  maximum_enable false
+  name Clamp2
+  selected true
+  xpos 82
+  ypos -111
+ }
+ Multiply {
+  value 0.84
+  name Multiply1
+  selected true
+  xpos 82
+  ypos -64
+ }
+set N7a83e800 [stack 0]
+push $N7a83f800
+ Dot {
+  name Dot9
+  selected true
+  xpos 271
+  ypos -215
+ }
+set N7a83e400 [stack 0]
+ Dot {
+  name Dot12
+  selected true
+  xpos 511
+  ypos -215
+ }
+set N7a83e000 [stack 0]
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge9
+  selected true
+  xpos 347
+  ypos 230
+  hide_input true
+  disable {{parent.aaa==2?0:1}}
+ }
+ Input {
+  inputs 0
+  name Source
+  selected true
+  xpos -715
+  ypos -619
+ }
+ Dot {
+  name Dot15
+  selected true
+  xpos -681
+  ypos -407
+ }
+set N2db9400 [stack 0]
+ Dot {
+  name Dot13
+  selected true
+  xpos 689
+  ypos -407
+ }
+set N2db9000 [stack 0]
+ OFXuk.co.thefoundry.keylight.keylight_v201 {
+  show "Final Result"
+  unPreMultiply false
+  screenColour {{parent.Clamp2.minimum.r} {parent.Clamp2.minimum.g} {parent.Clamp2.minimum.b}}
+  screenGain 1
+  screenBalance 0.5
+  alphaBias {0.5 0.5 0.5}
+  despillBias {0.5 0.5 0.5}
+  gangBiases true
+  preBlur 0
+  "Screen Matte" 0
+  screenClipMin 0
+  screenClipMax 1
+  screenClipRollback 0
+  screenGrowShrink 0
+  screenSoftness 0
+  screenDespotBlack 0
+  screenDespotWhite 0
+  screenReplaceMethod "Soft Colour"
+  screenReplaceColour {0.5 0.5 0.5}
+  Tuning 0
+  midPoint 0.5
+  lowGain 1
+  midGain 1
+  highGain 1
+  "Inside Mask" 0
+  sourceAlphaHandling Ignore
+  insideReplaceMethod "Soft Colour"
+  insideReplaceColour {0.5 0.5 0.5}
+  Crops 0
+  SourceXMethod Colour
+  SourceYMethod Colour
+  SourceEdgeColour 0
+  SourceCropL 0
+  SourceCropR 1
+  SourceCropB 0
+  SourceCropT 1
+  balanceSet false
+  insideComponent None
+  outsideComponent None
+  cacheBreaker true
+  name Keylight2
+  selected true
+  xpos 655
+  ypos -161
+  hide_input true
+  disable {{parent.aaa==2?0:1}}
+ }
+ set C2db8c00 [stack 0]
+ Expression {
+  expr0 0
+  expr1 0
+  expr2 0
+  name Expression9
+  tile_color 0x464646ff
+  selected true
+  xpos 655
+  ypos -24
+  disable {{parent.aaa==2?0:1}}
+ }
+ Invert {
+  name Invert3
+  selected true
+  xpos 655
+  ypos 31
+  disable {{parent.aaa==2?0:1}}
+ }
+push $N7a83e000
+clone $C2db8c00 {
+  xpos 477
+  ypos -101
+  selected true
+ }
+ Expression {
+  expr0 0
+  expr1 0
+  expr2 0
+  name Expression10
+  tile_color 0x464646ff
+  selected true
+  xpos 477
+  ypos -31
+  disable {{parent.aaa==2?0:1}}
+ }
+ Invert {
+  name Invert4
+  selected true
+  xpos 477
+  ypos 32
+  disable {{parent.aaa==2?0:1}}
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge10
+  selected true
+  xpos 655
+  ypos 125
+  hide_input true
+  disable {{parent.aaa==2?0:1}}
+ }
+ Expression {
+  expr0 a
+  expr1 a
+  expr2 a
+  expr3 a
+  name Expression11
+  selected true
+  xpos 655
+  ypos 176
+  disable {{parent.aaa==2?0:1}}
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge11
+  selected true
+  xpos 655
+  ypos 230
+  disable {{parent.aaa==2?0:1}}
+ }
+push $N2db9000
+ Dot {
+  name Dot14
+  selected true
+  xpos 955
+  ypos -407
+ }
+set N3fafc00 [stack 0]
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge12
+  selected true
+  xpos 921
+  ypos 230
+  disable {{parent.aaa==2?0:1}}
+ }
+ Dot {
+  name Dot16
+  selected true
+  xpos 955
+  ypos 702
+ }
+push $N2db9400
+ Dot {
+  name Dot1
+  selected true
+  xpos -681
+  ypos -204
+ }
+set N3faf000 [stack 0]
+ Expression {
+  expr0 g
+  expr1 g
+  expr2 g
+  expr3 0
+  name Expression3
+  tile_color 0x68ff74ff
+  selected true
+  xpos -838
+  ypos -130
+  hide_input true
+  disable {{parent.aaa<2?0:1}}
+ }
+set N3faec00 [stack 0]
+push $N3faf000
+ Expression {
+  expr0 r
+  expr1 r
+  expr2 r
+  expr3 0
+  name Expression1
+  tile_color 0xff4949ff
+  selected true
+  xpos -715
+  ypos -129
+  hide_input true
+  disable {{parent.aaa<2?0:1}}
+ }
+set N3fae400 [stack 0]
+ Switch {
+  inputs 2
+  which {{parent.aaa}}
+  name Switch1
+  selected true
+  xpos -715
+  ypos -30
+  hide_input true
+ }
+push $N3fae400
+push $N3faf000
+ Expression {
+  expr0 b
+  expr1 b
+  expr2 b
+  expr3 0
+  name Expression4
+  tile_color 0x2696ffff
+  selected true
+  xpos -600
+  ypos -124
+  hide_input true
+  disable {{parent.aaa<2?0:1}}
+ }
+set N7a89fc00 [stack 0]
+ Switch {
+  inputs 2
+  which {{parent.aaa}}
+  name Switch2
+  selected true
+  xpos -600
+  ypos -32
+  hide_input true
+ }
+ Merge2 {
+  inputs 2
+  operation max
+  name Merge1
+  selected true
+  xpos -600
+  ypos 43
+  hide_input true
+  disable {{parent.aaa<2?0:1}}
+ }
+push $N7a89fc00
+push $N3faec00
+ Switch {
+  inputs 2
+  which {{parent.aaa}}
+  name Switch3
+  selected true
+  xpos -838
+  ypos -32
+  hide_input true
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge2
+  selected true
+  xpos -710
+  ypos 43
+  hide_input true
+  disable {{parent.aaa<2?0:1}}
+ }
+ Dot {
+  name Dot10
+  selected true
+  xpos -676
+  ypos 202
+ }
+push $N7a83fc00
+ Expression {
+  expr0 g
+  expr1 g
+  expr2 g
+  expr3 0
+  name Expression6
+  tile_color 0x68ff74ff
+  selected true
+  xpos -375
+  ypos -123
+  hide_input true
+  disable {{parent.aaa<2?0:1}}
+ }
+set N7a89e800 [stack 0]
+push $N7a83fc00
+ Expression {
+  expr0 r
+  expr1 r
+  expr2 r
+  expr3 0
+  name Expression5
+  tile_color 0xff4949ff
+  selected true
+  xpos -251
+  ypos -120
+  hide_input true
+  disable {{parent.aaa<2?0:1}}
+ }
+set N7a89e000 [stack 0]
+ Switch {
+  inputs 2
+  which {{parent.aaa}}
+  name Switch5
+  selected true
+  xpos -251
+  ypos -26
+  hide_input true
+ }
+push $N7a89e000
+push $N7a83fc00
+ Expression {
+  expr0 b
+  expr1 b
+  expr2 b
+  expr3 0
+  name Expression7
+  tile_color 0x2696ffff
+  selected true
+  xpos -127
+  ypos -119
+  hide_input true
+  disable {{parent.aaa<2?0:1}}
+ }
+set N6a56b800 [stack 0]
+ Switch {
+  inputs 2
+  which {{parent.aaa}}
+  name Switch6
+  selected true
+  xpos -127
+  ypos -22
+  hide_input true
+ }
+ Merge2 {
+  inputs 2
+  operation max
+  name Merge4
+  selected true
+  xpos -127
+  ypos 36
+  hide_input true
+  disable {{parent.aaa<2?0:1}}
+ }
+push $N6a56b800
+push $N7a89e800
+ Switch {
+  inputs 2
+  which {{parent.aaa}}
+  name Switch4
+  selected true
+  xpos -375
+  ypos -20
+  hide_input true
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge5
+  selected true
+  xpos -246
+  ypos 36
+  hide_input true
+  disable {{parent.aaa<2?0:1}}
+ }
+ Dot {
+  name Dot11
+  selected true
+  xpos -212
+  ypos 202
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge3
+  selected true
+  xpos -464
+  ypos 198
+  disable {{parent.aaa<2?0:1}}
+ }
+ Expression {
+  expr0 r>1?1:r+r<0?0:r
+  expr1 g>1?1:g+g<0?0:g
+  expr2 b>1?1:b+b<0?0:b
+  expr3 0
+  name Expression2
+  selected true
+  xpos -464
+  ypos 255
+  disable {{parent.aaa<2?0:1}}
+ }
+push $N7a83e800
+push $N7a83e400
+ Dot {
+  name Dot3
+  selected true
+  xpos 271
+  ypos 7
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge6
+  selected true
+  xpos 82
+  ypos 3
+  disable {{parent.aaa<2?0:1}}
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge7
+  selected true
+  xpos 103
+  ypos 593
+  hide_input true
+  disable {{parent.aaa<2?0:1}}
+ }
+push $N3faf000
+ Dot {
+  name Dot5
+  selected true
+  xpos -881
+  ypos -204
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge8
+  selected true
+  xpos -915
+  ypos 593
+  disable {{parent.aaa<2?0:1}}
+ }
+ Switch {
+  inputs 2
+  which {{parent.aaa==2?1:0}}
+  name Switch7
+  selected true
+  xpos -915
+  ypos 698
+ }
+ Output {
+  name Output1
+  selected true
+  xpos -915
+  ypos 788
+ }
+push $N3fafc00
+ Dot {
+  name Dot17
+  selected true
+  xpos 1121
+  ypos -407
+ }
+ Dot {
+  name Dot6
+  label 微信公众号：影视深井冰
+  note_font_size 60
+  selected true
+  xpos 1121
+  ypos 23
+ }
+ Dot {
+  name Dot7
+  label 微信公众号：comp_linjy_v1_exr
+  note_font_size 60
+  selected true
+  xpos 1121
+  ypos 153
+ }
+ Dot {
+  name Dot8
+  label "WeChat：4772491\nlinjy0454@icloud.com\nlinkedin.com/in/junyi-lin-a67bb1118"
+  note_font_size 50
+  selected true
+  xpos 1121
+  ypos 336
+ }
+end_group

@@ -1,0 +1,907 @@
+#! C:/Program Files/Nuke10.0v1/nuke-10.0.1.dll -nx
+version 10.0 v1
+Gizmo {
+ inputs 2
+ knobChanged "\ntn = nuke.thisNode()\ntk = nuke.thisKnob()\nif tk.name() == \"pickup_colour\":\n    if tk.value() == 1:\n        tn.knob(\"vvv\").setEnabled(True)\n        tn.knob(\"cb\").setEnabled(True)\n        tn.knob(\"cw\").setEnabled(True)\n        tn.knob(\"off\").setEnabled(False)\n        tn.knob(\"mult\").setEnabled(False)\n        tn.knob(\"Size\").setEnabled(False)\n\n    else:\n        tn.knob(\"vvv\").setEnabled(False)\n        tn.knob(\"cb\").setEnabled(False)\n        tn.knob(\"cw\").setEnabled(False)\n        tn.knob(\"off\").setEnabled(True)\n        tn.knob(\"mult\").setEnabled(True)\n        tn.knob(\"Size\").setEnabled(True)\n\n"
+ tile_color 0x2e6b49ff
+ gl_color 0x1a18ffff
+ note_font "Arial Bold Bold"
+ note_font_color 0x101023ff
+ lock_connections true
+ addUserKnob {20 User l IBK_lin_v2.0}
+ addUserKnob {41 which l INVISIBLE +INVISIBLE T Switch1.which}
+ addUserKnob {4 Screen M {Green Blue "" "" "" "" ""}}
+ addUserKnob {41 disable_1 l "Test pattern" -STARTLINE T Switch2.disable}
+ addUserKnob {41 off l darks T IBKColourV8.off}
+ addUserKnob {41 mult l lights T IBKColourV8.mult}
+ addUserKnob {20 Clip l pickup_Clip n 1}
+ Clip 0
+ addUserKnob {6 pickup_colour +STARTLINE}
+ addUserKnob {41 disable_2 l INVISIBLE +INVISIBLE T Switch3.disable}
+ addUserKnob {41 vvv l pickup T Keylight.screenColour}
+ addUserKnob {41 cb l "Clip Black" T Keylight.screenClipMin}
+ addUserKnob {41 cw l "Clip White" T Keylight.screenClipMax}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {7 patchblack1 l "patch black" R 0 200}
+ addUserKnob {41 size l Erode T FilterErode6.size}
+ addUserKnob {6 onofferode l show -STARTLINE}
+ addUserKnob {41 size_1 l Blur T Blur6.size}
+ addUserKnob {20 catoutside2 l "cat outside" n 1}
+ catoutside2 0
+ addUserKnob {6 Cutoutside3 l "Cut Outside" +STARTLINE}
+ addUserKnob {7 CutOutside l "Cut Outside" R -10 10}
+ addUserKnob {6 onoffcut l show -STARTLINE}
+ addUserKnob {7 cutSize l "cut Mask" R 0 5}
+ addUserKnob {6 onoffcut2 l show -STARTLINE}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {41 rgb_weight l "RGB weight" T IBK6.red_weight}
+ addUserKnob {41 lm_enable l "luminance match" T IBK6.lm_enable}
+ addUserKnob {41 autolevels -STARTLINE T IBK6.autolevels}
+ addUserKnob {41 ubl l "use BG lum" -STARTLINE T IBK6.ubl}
+ addUserKnob {41 ubc l "use BG chroma" -STARTLINE T IBK6.ubc}
+ addUserKnob {6 Despill1 l Spill1 -STARTLINE}
+ Despill1 true
+ addUserKnob {20 spillcontrol l "spill control" n 1}
+ spillcontrol 0
+ addUserKnob {6 Despill2 l Spill2 +STARTLINE}
+ addUserKnob {6 luminance00 l luminance -STARTLINE}
+ luminance00 true
+ addUserKnob {7 DespillSize1 l "Despill Size" -STARTLINE R 0 1.5}
+ DespillSize1 1
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 name1 l "linjunyi 林君义" n 1}
+ name1 0
+ addUserKnob {26 id1 l "" +STARTLINE T "WeChat：4772491\nlinjy0454@icloud.com\nlinkedin.com/in/junyi-lin-a67bb1118\n\n微信公众号：影视深井冰"}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {52 fff T "nuke.thisNode().knob(\"knobChanged\").setValue('''\nprint 1\n\n''')\n" +STARTLINE}
+ addUserKnob {52 pp T "nuke.thisNode().knob(\"knobChanged\").setValue('''\ntn = nuke.thisNode()\ntk = nuke.thisKnob()\nif tk.name() == \"pickup_colour\":\n    if tk.value() == 1:\n        tn.knob(\"vvv\").setEnabled(True)\n        tn.knob(\"cb\").setEnabled(True)\n        tn.knob(\"cw\").setEnabled(True)\n        tn.knob(\"off\").setEnabled(False)\n        tn.knob(\"mult\").setEnabled(False)\n        tn.knob(\"Size\").setEnabled(False)\n\n    else:\n        tn.knob(\"vvv\").setEnabled(False)\n        tn.knob(\"cb\").setEnabled(False)\n        tn.knob(\"cw\").setEnabled(False)\n        tn.knob(\"off\").setEnabled(True)\n        tn.knob(\"mult\").setEnabled(True)\n        tn.knob(\"Size\").setEnabled(True)\n\n''')\n" +STARTLINE}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x317f49ff
+  gl_color 0x7ff03ff
+  note_font_size 42
+  xpos -890
+  ypos -313
+  bdwidth 685
+  bdheight 277
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0x317a7fff
+  gl_color 0x7ff03ff
+  note_font_size 42
+  xpos -1760
+  ypos -322
+  bdwidth 685
+  bdheight 277
+ }
+ Input {
+  inputs 0
+  name FG
+  xpos -488
+  ypos -992
+ }
+ Dot {
+  name Dot19
+  xpos -455
+  ypos -323
+ }
+set N7bfa5400 [stack 0]
+ Dot {
+  name Dot23
+  xpos 532
+  ypos -340
+ }
+set N7bfa5000 [stack 0]
+ Dot {
+  name Dot24
+  xpos 676
+  ypos -341
+ }
+set N7bfa4c00 [stack 0]
+ OFXuk.co.thefoundry.keylight.keylight_v201 {
+  show "Final Result"
+  unPreMultiply false
+  screenColour {0 0 0}
+  screenGain 1
+  screenBalance 0.5
+  alphaBias {0.5 0.5 0.5}
+  despillBias {0.5 0.5 0.5}
+  gangBiases true
+  preBlur 0
+  "Screen Matte" 1
+  screenClipMin 0
+  screenClipMax 1
+  screenClipRollback 0
+  screenGrowShrink 0
+  screenSoftness 0
+  screenDespotBlack 0
+  screenDespotWhite 0
+  screenReplaceMethod "Soft Colour"
+  screenReplaceColour {0.5 0.5 0.5}
+  Tuning 0
+  midPoint 0.5
+  lowGain 1
+  midGain 1
+  highGain 1
+  "Inside Mask" 0
+  sourceAlphaHandling Ignore
+  insideReplaceMethod "Soft Colour"
+  insideReplaceColour {0.5 0.5 0.5}
+  Crops 0
+  SourceXMethod Colour
+  SourceYMethod Colour
+  SourceEdgeColour 0
+  SourceCropL 0
+  SourceCropR 1
+  SourceCropB 0
+  SourceCropT 1
+  balanceSet false
+  insideComponent None
+  outsideComponent None
+  cacheBreaker true
+  name Keylight
+  xpos 808
+  ypos -345
+  disable {{parent.Switch3.which+1-parent.Switch3.which*2}}
+ }
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle4
+  xpos 808
+  ypos -260
+  disable {{parent.Switch3.which+1-parent.Switch3.which*2}}
+ }
+ Invert {
+  name Invert2
+  xpos 808
+  ypos -221
+  disable {{parent.Switch3.which+1-parent.Switch3.which*2}}
+ }
+push $N7bfa4c00
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos 642
+  ypos -221
+  disable {{parent.Switch3.which+1-parent.Switch3.which*2}}
+ }
+ Premult {
+  name Premult3
+  xpos 642
+  ypos -166
+  disable {{parent.Switch3.which+1-parent.Switch3.which*2}}
+ }
+ Dot {
+  name Dot25
+  xpos 676
+  ypos -115
+ }
+ FilterErode {
+  size {{parent.FilterErode6.size}}
+  name FilterErode4
+  xpos 642
+  ypos -81
+  disable {{parent.Switch3.which+1-parent.Switch3.which*2}}
+ }
+ Premult {
+  name Premult4
+  xpos 642
+  ypos -20
+  disable {{parent.Switch3.which+1-parent.Switch3.which*2}}
+ }
+set N6ebf4c00 [stack 0]
+ Dot {
+  name Dot13
+  xpos 816
+  ypos -16
+ }
+ Shuffle {
+  red black
+  green alpha
+  blue black
+  name Shuffle6
+  xpos 782
+  ypos 198
+  disable {{parent.Switch3.which+1-parent.Switch3.which*2}}
+ }
+ Input {
+  inputs 0
+  name BG
+  xpos -293
+  ypos -1040
+  number 1
+ }
+ Dot {
+  name Dot3
+  label 微信公众号：影视深井冰
+  note_font_size 60
+  xpos -259
+  ypos -898
+ }
+ Dot {
+  name Dot2
+  label 微信公众号：comp_linjy_v1_exr
+  note_font_size 60
+  xpos -259
+  ypos -768
+ }
+ Dot {
+  name Dot17
+  xpos -260
+  ypos -643
+ }
+set N695fd400 [stack 0]
+ Dot {
+  name Dot18
+  xpos 329
+  ypos -643
+ }
+set N695fd000 [stack 0]
+push $N6ebf4c00
+ EdgeBlur {
+  size {{parent.Blur6.size}}
+  name EdgeBlur2
+  xpos 642
+  ypos 18
+  disable {{parent.Switch3.which+1-parent.Switch3.which*2}}
+ }
+push $N6ebf4c00
+ Clamp {
+  channels alpha
+  name Clamp1
+  xpos 532
+  ypos -26
+  disable {{parent.Switch3.which+1-parent.Switch3.which*2}}
+ }
+ Blur {
+  size {{parent.IBKColourV8.multi}}
+  name Blur4
+  xpos 532
+  ypos 23
+  disable {{parent.Switch3.which+1-parent.Switch3.which*2}}
+ }
+ Unpremult {
+  name Unpremult2
+  xpos 532
+  ypos 70
+  disable {{parent.Switch3.which+1-parent.Switch3.which*2}}
+ }
+ Merge2 {
+  inputs 2
+  name Merge3
+  xpos 642
+  ypos 82
+  disable {{parent.Switch3.which+1-parent.Switch3.which*2}}
+ }
+ Dot {
+  name Dot14
+  xpos 676
+  ypos 156
+ }
+set N6948d800 [stack 0]
+push $N7bfa5000
+ Dot {
+  name Dot26
+  xpos 532
+  ypos -89
+ }
+set N6948d400 [stack 0]
+push $N6948d400
+ IBK {
+  inputs 4
+  red_weight {{parent.IBK6.red_weight}}
+  blue_green_weight {{parent.IBK6.blue_green_weight}}
+  lm_enable {{parent.IBK6.lm_enable x1 0}}
+  level {{parent.IBK6.level}}
+  luma {{parent.IBK6.luma}}
+  ll_enable {{parent.IBK6.ll_enable}}
+  autolevels {{parent.IBK6.autolevels x1 0}}
+  yellow {{parent.IBK6.yellow}}
+  cyan {{parent.IBK6.cyan}}
+  magenta {{parent.IBK6.magenta}}
+  ss {{parent.IBK6.ss}}
+  clamp_alpha {{parent.IBK6.clamp_alpha}}
+  rgbal {{parent.IBK6.rgbal}}
+  nokey {{parent.IBK6.nokey}}
+  ubl {{parent.IBK6.ubl}}
+  ubc {{parent.IBK6.ubc}}
+  name IBK2
+  note_font_color 0xffffffff
+  xpos 249
+  ypos 54
+  disable {{(parent.Switch3.which*parent.Switch1.which)+1-(parent.Switch3.which*parent.Switch1.which)*2}}
+ }
+push $N695fd000
+push $N6948d800
+push $N6948d400
+push $N6948d400
+ IBK {
+  inputs 4
+  screen_type green
+  red_weight {{parent.IBK6.red_weight}}
+  blue_green_weight {{parent.IBK6.blue_green_weight}}
+  lm_enable {{parent.IBK6.lm_enable x1 0}}
+  level {{parent.IBK6.level}}
+  luma {{parent.IBK6.luma}}
+  ll_enable {{parent.IBK6.ll_enable}}
+  autolevels {{parent.IBK6.autolevels x1 0}}
+  yellow {{parent.IBK6.yellow}}
+  cyan {{parent.IBK6.cyan}}
+  magenta {{parent.IBK6.magenta}}
+  ss {{parent.IBK6.ss}}
+  clamp_alpha {{parent.IBK6.clamp_alpha}}
+  rgbal {{parent.IBK6.rgbal}}
+  nokey {{parent.IBK6.nokey}}
+  ubl {{parent.IBK6.ubl}}
+  ubc {{parent.IBK6.ubc}}
+  name IBK1
+  note_font_color 0xffffffff
+  xpos 409
+  ypos 151
+  disable {{(parent.Switch3.which+1-parent.Switch3.which*2)+parent.Switch1.which}}
+ }
+ Switch {
+  inputs 2
+  which {{Screen}}
+  name Switch1
+  xpos 249
+  ypos 151
+ }
+ set C2e49180 [stack 0]
+ Merge2 {
+  inputs 2
+  mix {{(parent.onofferode-0.6)*parent.onofferode}}
+  name Merge7
+  xpos 249
+  ypos 212
+  disable {{parent.Switch3.which+1-parent.Switch3.which*2}}
+ }
+push $N6948d800
+ Dot {
+  name Dot1
+  xpos 676
+  ypos 269
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Switch2
+  xpos 249
+  ypos 265
+  hide_input true
+ }
+ set C2e48d00 [stack 0]
+push $N7bfa5400
+ Dot {
+  name Dot29
+  xpos -1279
+  ypos -336
+ }
+set N6948c000 [stack 0]
+ IBKColourV3 {
+  name IBKColourV5
+  xpos -1722
+  ypos -252
+  disable {{parent.Switch1.which+1-parent.Switch1.which*2}}
+  Size 1
+  off {{parent.IBKColourV6.off} {parent.IBKColourV6.off} {parent.IBKColourV6.off}}
+  mult {{parent.IBKColourV6.mult} {parent.IBKColourV6.mult} {parent.IBKColourV6.mult}}
+ }
+set N722bd400 [stack 0]
+ FilterErode {
+  size {{parent.FilterErode6.size}}
+  name FilterErode5
+  xpos -1722
+  ypos -193
+  disable {{parent.Switch1.which+1-parent.Switch1.which*2}}
+ }
+ Blur {
+  channels alpha
+  size {{parent.Blur6.size}}
+  name Blur5
+  xpos -1722
+  ypos -134
+  disable {{parent.Switch1.which+1-parent.Switch1.which*2}}
+ }
+set N720e0400 [stack 0]
+ Dot {
+  name Dot11
+  xpos -1581
+  ypos -52
+ }
+ Shuffle {
+  red black
+  green alpha
+  blue black
+  name Shuffle5
+  xpos -1525
+  ypos -56
+  disable {{parent.Switch1.which+1-parent.Switch1.which*2}}
+ }
+push $N695fd400
+ Dot {
+  name Dot27
+  xpos -1129
+  ypos -643
+ }
+ Dot {
+  name Dot28
+  xpos -1129
+  ypos -124
+ }
+push $N720e0400
+push $N722bd400
+push $N6948c000
+ IBKColourV3 {
+  name IBKColourV6
+  xpos -1520
+  ypos -261
+  disable {{parent.Switch1.which+1-parent.Switch1.which*2}}
+  Size {{parent.IBKColourV8.Size}}
+  off {{parent.IBKColourV8.off} {parent.IBKColourV8.off} {parent.IBKColourV8.off}}
+  mult {{parent.IBKColourV8.mult} {parent.IBKColourV8.mult} {parent.IBKColourV8.mult}}
+  erode {{parent.IBKColourV8.erode}}
+  multi {{parent.IBKColourV8.multi}}
+ }
+set N722bcf00 [stack 0]
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos -1520
+  ypos -134
+  disable {{parent.Switch1.which+1-parent.Switch1.which*2}}
+ }
+push $N6948c000
+ Dot {
+  name Dot30
+  xpos -1279
+  ypos -278
+ }
+set N729e1800 [stack 0]
+push $N729e1800
+ Dot {
+  name Dot31
+  xpos -1225
+  ypos -227
+ }
+ IBK {
+  inputs 4
+  red_weight {{parent.IBK6.red_weight}}
+  blue_green_weight {{parent.IBK6.blue_green_weight}}
+  lm_enable {{parent.IBK6.lm_enable x1 0}}
+  level {{parent.IBK6.level}}
+  luma {{parent.IBK6.luma}}
+  ll_enable {{parent.IBK6.ll_enable}}
+  autolevels {{parent.IBK6.autolevels x1 0}}
+  yellow {{parent.IBK6.yellow}}
+  cyan {{parent.IBK6.cyan}}
+  magenta {{parent.IBK6.magenta}}
+  ss {{parent.IBK6.ss}}
+  clamp_alpha {{parent.IBK6.clamp_alpha}}
+  rgbal {{parent.IBK6.rgbal}}
+  nokey {{parent.IBK6.nokey}}
+  ubl {{parent.IBK6.ubl}}
+  ubc {{parent.IBK6.ubc}}
+  name IBK5
+  note_font_color 0xffffffff
+  xpos -1313
+  ypos -122
+  disable {{parent.Switch1.which+1-parent.Switch1.which*2}}
+ }
+ Merge2 {
+  inputs 2
+  mix {{(parent.onofferode-0.6)*parent.onofferode}}
+  name Merge6
+  xpos -1313
+  ypos -56
+  disable {{parent.Switch1.which+1-parent.Switch1.which*2 x28 1}}
+ }
+push $N722bcf00
+clone $C2e48d00 {
+  inputs 2
+  xpos -1309
+  ypos 105
+  selected false
+ }
+push $N7bfa5400
+ IBKColourV3 {
+  name IBKColourV7
+  xpos -872
+  ypos -285
+  disable {{parent.Switch1.which}}
+  screen_type green
+  Size 1
+  off {{parent.IBKColourV8.off} {parent.IBKColourV8.off} {parent.IBKColourV8.off}}
+  mult {{parent.IBKColourV8.mult} {parent.IBKColourV8.mult} {parent.IBKColourV8.mult}}
+ }
+set N722bca00 [stack 0]
+ FilterErode {
+  size 3
+  name FilterErode6
+  xpos -872
+  ypos -214
+  disable {{parent.Switch1.which}}
+ }
+ Blur {
+  channels alpha
+  size 3
+  name Blur6
+  xpos -872
+  ypos -151
+  disable {{parent.Switch1.which}}
+ }
+ Dot {
+  name Dot5
+  xpos -838
+  ypos -76
+ }
+set N2ebac00 [stack 0]
+ Dot {
+  name Dot4
+  xpos -761
+  ypos 8
+ }
+ Shuffle {
+  red black
+  green alpha
+  blue black
+  name Shuffle3
+  xpos -705
+  ypos 4
+  disable {{parent.Switch1.which}}
+ }
+push $N695fd400
+ Dot {
+  name Dot32
+  xpos -260
+  ypos -200
+ }
+push $N2ebac00
+push $N722bca00
+push $N7bfa5400
+ IBKColourV3 {
+  name IBKColourV8
+  xpos -696
+  ypos -226
+  disable {{parent.Switch1.which}}
+  screen_type green
+  Size 0.5
+  multi {{parent.patchblack1}}
+ }
+set N722bc500 [stack 0]
+ Keymix {
+  inputs 3
+  name Keymix3
+  xpos -696
+  ypos -84
+  disable {{parent.Switch1.which}}
+ }
+push $N7bfa5400
+ Dot {
+  name Dot33
+  xpos -455
+  ypos -254
+ }
+set N3df6400 [stack 0]
+push $N3df6400
+ Dot {
+  name Dot34
+  xpos -401
+  ypos -213
+ }
+ IBK {
+  inputs 4
+  screen_type green
+  red_weight 0.5
+  blue_green_weight {{red_weight}}
+  luma 0
+  yellow true
+  cyan true
+  magenta true
+  ss {{parent.Switch4.which x77 1}}
+  rgbal true
+  name IBK6
+  note_font_color 0xffffffff
+  xpos -489
+  ypos -80
+  disable {{parent.Switch1.which}}
+ }
+ Merge2 {
+  inputs 2
+  mix {{(parent.onofferode-0.6)*parent.onofferode}}
+  name Merge2
+  xpos -489
+  ypos 4
+  disable {{parent.Switch1.which}}
+ }
+push $N722bc500
+clone $C2e48d00 {
+  inputs 2
+  xpos -489
+  ypos 119
+  selected false
+ }
+clone $C2e49180 {
+  inputs 2
+  xpos -946
+  ypos 135
+  selected false
+ }
+ Switch {
+  inputs 2
+  which {{parent.pickup_colour}}
+  name Switch3
+  xpos -407
+  ypos 265
+  hide_input true
+ }
+ Dot {
+  name Dot8
+  xpos -373
+  ypos 383
+ }
+set N79dbd400 [stack 0]
+ Dot {
+  name Dot15
+  label 微信公众号：影视深井冰
+  note_font_size 60
+  xpos 87
+  ypos 621
+ }
+ Dot {
+  name Dot16
+  label 微信公众号：comp_linjy_v1_exr
+  note_font_size 60
+  xpos 87
+  ypos 751
+ }
+ Dot {
+  name Dot21
+  label "WeChat：4772491\nlinjy0454@icloud.com\nlinkedin.com/in/junyi-lin-a67bb1118"
+  note_font_size 50
+  xpos 87
+  ypos 934
+ }
+push $N79dbd400
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle2
+  xpos -699
+  ypos 379
+  disable {{parent.Switch6.which+1-parent.Switch6.which*2}}
+ }
+ Grade {
+  channels alpha
+  black {{white*-1/4+0.25}}
+  white {{parent.cutSize+1}}
+  multiply {{white x77 2.75}}
+  white_clamp true
+  name Grade1
+  xpos -699
+  ypos 425
+  disable {{parent.Switch6.which+1-parent.Switch6.which*2}}
+ }
+ Invert {
+  name Invert1
+  xpos -699
+  ypos 483
+  disable {{parent.Switch6.which+1-parent.Switch6.which*2}}
+ }
+ FilterErode {
+  size {{parent.CutOutside}}
+  name FilterErode1
+  xpos -699
+  ypos 545
+  disable {{parent.Switch6.which+1-parent.Switch6.which*2}}
+ }
+ Blur {
+  channels alpha
+  size {{parent.Blur6.size}}
+  name Blur1
+  xpos -699
+  ypos 609
+  disable {{parent.Switch6.which+1-parent.Switch6.which*2}}
+ }
+set N74f21400 [stack 0]
+ Shuffle {
+  red alpha
+  green black
+  blue black
+  name Shuffle1
+  xpos -699
+  ypos 684
+  disable {{parent.Switch6.which+1-parent.Switch6.which*2}}
+ }
+push $N74f21400
+push $N79dbd400
+ Multiply {
+  inputs 1+1
+  value 0
+  name Multiply1
+  xpos -556
+  ypos 609
+  disable {{parent.Switch6.which+1-parent.Switch6.which*2}}
+ }
+ Merge2 {
+  inputs 2
+  mix {{parent.onoffcut*0.5+parent.onoffcut2*0.5-((parent.onoffcut*parent.onoffcut2)*0.5)}}
+  name Merge1
+  xpos -556
+  ypos 684
+  disable {{parent.Switch6.which+1-parent.Switch6.which*2}}
+ }
+push $N79dbd400
+ Switch {
+  inputs 2
+  which {{parent.Cutoutside3}}
+  name Switch6
+  xpos -407
+  ypos 684
+ }
+ Dot {
+  name Dot20
+  xpos -373
+  ypos 892
+ }
+set N74f20400 [stack 0]
+ Dot {
+  name Dot9
+  xpos -1129
+  ypos 892
+ }
+set N74f20000 [stack 0]
+ Dot {
+  name Dot10
+  xpos -1558
+  ypos 892
+ }
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue none}
+  expr0 0
+  channel1 {-rgba.red -rgba.green -rgba.blue none}
+  expr1 0
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  expr2 0
+  channel3 {rgba.alpha none none rgba.alpha}
+  expr3 a==0?0:a
+  name AlphaFix
+  label "To avid Gizmo being in state of\nerror without something plugged in input."
+  xpos -1592
+  ypos 1318
+ }
+set N69f43800 [stack 0]
+push $N69f43800
+push $N74f20000
+ Dot {
+  name Dot12
+  xpos -1129
+  ypos 1007
+ }
+set N69f43000 [stack 0]
+ Expression {
+  expr2 b>(g+r)/2*LimitPercentage?(g+r)/2*LimitPercentage:b
+  expr3 b-(r+g)*LimitPercentage/2
+  name RedAndGreenLimitBlue
+  tile_color 0xffff
+  xpos -1032
+  ypos 1003
+  disable {{parent.Switch1.which*parent.Despill2+1-(parent.Switch1.which*parent.Despill2*2)}}
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{parent.DespillSize1}}
+ }
+push $N69f43000
+ Expression {
+  expr1 g>(b+r)/2*LimitPercentage?(b+r)/2*LimitPercentage:g
+  expr3 g-(r+b)*LimitPercentage/2
+  name RedAveBlueLimitsGreen
+  tile_color 0xff00ff
+  xpos -1312
+  ypos 1009
+  disable {{parent.Switch1.which+(parent.Despill2+1-parent.Despill2*2)}}
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{parent.DespillSize1}}
+ }
+clone $C2e49180 {
+  inputs 2
+  xpos -1170
+  ypos 1187
+  selected false
+ }
+ Clamp {
+  channels alpha
+  name Clamp2
+  xpos -1170
+  ypos 1255
+  disable {{parent.Despill2+1-parent.Despill2*2}}
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  from3 rgba.alpha
+  to3 rgba.alpha
+  name CopyAlpha
+  xpos -1170
+  ypos 1318
+  disable {{parent.Despill2+1-parent.Despill2*2}}
+ }
+set N69883800 [stack 0]
+ Merge2 {
+  inputs 2
+  operation difference
+  name Merge4
+  xpos -1592
+  ypos 1433
+  disable {{parent.luminance00*parent.Despill2+1-(parent.luminance00*parent.Despill2*2)}}
+ }
+ Clamp {
+  name Clamp3
+  xpos -1592
+  ypos 1497
+  disable {{parent.luminance00*parent.Despill2+1-(parent.luminance00*parent.Despill2*2)}}
+ }
+ Saturation {
+  saturation 0
+  name Saturation1
+  xpos -1592
+  ypos 1572
+  disable {{parent.luminance00*parent.Despill2+1-(parent.luminance00*parent.Despill2*2)}}
+ }
+push $N69883800
+ Merge2 {
+  inputs 2
+  operation plus
+  mix {{parent.luminance00}}
+  name Merge5
+  xpos -1170
+  ypos 1572
+  disable {{parent.luminance00*parent.Despill2+1-(parent.luminance00*parent.Despill2*2)}}
+ }
+push $N74f20400
+ Switch {
+  inputs 2
+  which {{parent.Despill2}}
+  name Switch5
+  xpos -407
+  ypos 1572
+ }
+set N68d98900 [stack 0]
+ Dot {
+  name Dot7
+  xpos -322
+  ypos 1637
+ }
+push $N68d98900
+ Dot {
+  name Dot6
+  xpos -418
+  ypos 1633
+ }
+ Switch {
+  inputs 2
+  which {{parent.Despill1*(parent.Despill2+1-parent.Despill2*2)}}
+  name Switch4
+  xpos -410
+  ypos 1681
+ }
+ Output {
+  name Output1
+  xpos -410
+  ypos 1773
+ }
+end_group

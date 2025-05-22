@@ -1,0 +1,933 @@
+#! C:/Program Files/Nuke12.1v1/nuke-12.1.1.dll -nx
+version 12.1 v1
+Gizmo {
+ onCreate "n=nuke.thisNode()\nn\['defocus'].setFlag(0x0000000000000004)\nn\['ratio'].setFlag(0x0000000000000004)\nn\['gammacorrect'].setFlag(0x0000000000000004)\nn\['bloomgain'].setFlag(0x0000000000000004)\nn\['gradfalloff'].setFlag(0x0000000000000004)\nn\['dist0'].clearFlag(0x00000002)\nn\['dist1'].clearFlag(0x00000002)\nn\['dist2'].clearFlag(0x00000002)\nn\['dist3'].clearFlag(0x00000002)\nn\['dist4'].clearFlag(0x00000002)\nn\['dist0'].setFlag(0x10000000)\nn\['dist1'].setFlag(0x10000000)\nn\['dist2'].setFlag(0x10000000)\nn\['dist3'].setFlag(0x10000000)\nn\['dist4'].setFlag(0x10000000)\nn\['stackinfo'].setFlag(0x10000000)\nn\['dist0'].setFlag(0x00000100)\nn\['dist1'].setFlag(0x00000100)\nn\['dist2'].setFlag(0x00000100)\nn\['dist3'].setFlag(0x00000100)\nn\['dist4'].setFlag(0x00000100)"
+ knobChanged "n=nuke.thisNode()\nk1=nuke.thisKnob()\nif k1.name() in \['catsync']:\n    if k1.value() == 1:\n        n\['catsize'].setLabel(\"Amount\")\n        n\['catsize2'].setVisible(False)        \n    else:\n        n\['catsize'].setLabel(\"Inner Amount\")\n        n\['catsize2'].setVisible(True)\nif k1.name() in \['bloomgain']:\n    if k1.value() == 1:\n        n\['bloommax'].setEnabled(False)\n        n\['bloommin'].setEnabled(False)        \n    else:\n        n\['bloommax'].setEnabled(True)\n        n\['bloommin'].setEnabled(True)\nif k1.name() in \['gammacorrect']:\n    if k1.value() == 1:\n        n\['gammablack'].setEnabled(False)\n    else:\n        n\['gammablack'].setEnabled(True)\nif k1.name() in \['userlock']:\n    if k1.value() == 1:\n        n\['storedist'].setEnabled(False)\n    else:\n        n\['storedist'].setEnabled(True)"
+ tile_color 0xff7f32ff
+ addUserKnob {20 User l "Cat's Eye"}
+ addUserKnob {26 outputtext l "             Output" T ""}
+ addUserKnob {22 output0 l "<font color=gray>Result</font>" t "Distortion applied to the input image." -STARTLINE T "n=nuke.thisNode()\nk=n.knob\nk(\"output0\").setLabel(\"<b>Result</b>\")\nk(\"output1\").setLabel(\"<font color=gray>Preview</font>\")\nk(\"output2\").setLabel(\"<font color=gray>Distort ST</font>\")\nk(\"output3\").setLabel(\"<font color=gray>Undistort ST</font>\")\nnuke.toNode(\"Switch2\")\[\"which\"].setValue(0)\nnuke.toNode(\"Switch4\")\[\"which\"].setValue(0)\nn.knobs()\['stmap'].setVisible(False)\nn.knobs()\['preview'].setVisible(False)"}
+ addUserKnob {22 output1 l <b>Preview</b> t "Preview with dots distributed over the frame to help define the look. There is also a yellow border that will appear if there isn't enough overscan." -STARTLINE T "n=nuke.thisNode()\nk=n.knob\nk(\"output0\").setLabel(\"<font color=gray>Result</font>\")\nk(\"output1\").setLabel(\"<b>Preview</b>\")\nk(\"output2\").setLabel(\"<font color=gray>Distort ST</font>\")\nk(\"output3\").setLabel(\"<font color=gray>Undistort ST</font>\")\nnuke.toNode(\"Switch2\")\[\"which\"].setValue(1)\nnuke.toNode(\"Switch4\")\[\"which\"].setValue(0)\nn.knobs()\['stmap'].setVisible(False)\nn.knobs()\['preview'].setVisible(True)"}
+ addUserKnob {22 output2 l "<font color=gray>Distort ST</font>" t "Render out a single frame and plug it in for faster processing." -STARTLINE T "n=nuke.thisNode()\nk=n.knob\nk(\"output0\").setLabel(\"<font color=gray>Result</font>\")\nk(\"output1\").setLabel(\"<font color=gray>Preview</font>\")\nk(\"output2\").setLabel(\"<b>Distort ST</b>\")\nk(\"output3\").setLabel(\"<font color=gray>Undistort ST</font>\")\nnuke.toNode(\"Switch4\")\[\"which\"].setValue(1)\nn.knobs()\['stmap'].setVisible(True)\nn.knobs()\['preview'].setVisible(False)"}
+ addUserKnob {22 output3 l "<font color=gray>Undistort ST</font>" t "Render out a single frame and plug it in for faster processing" -STARTLINE T "n=nuke.thisNode()\nk=n.knob\nk(\"output0\").setLabel(\"<font color=gray>Result</font>\")\nk(\"output1\").setLabel(\"<font color=gray>Preview</font>\")\nk(\"output2\").setLabel(\"<font color=gray>Distort ST</font>\")\nk(\"output3\").setLabel(\"<b>Undistort ST</b>\")\nnuke.toNode(\"Switch4\")\[\"which\"].setValue(2)\nn.knobs()\['stmap'].setVisible(True)\nn.knobs()\['preview'].setVisible(False)"}
+ addUserKnob {26 spacer l "" -STARTLINE T "  "}
+ addUserKnob {6 autobbox l "Auto BBox" t "Sets BBox automatically. Otherwise output will be input format." -STARTLINE}
+ autobbox true
+ addUserKnob {26 sttext_1 l "ST Map" T ""}
+ addUserKnob {22 st0 l <b>Internal</b> t "Uses ST Map inside of the setup. Once you are happy with the distortion it is recommended that you set the output to the (Un)Distort ST maps and render out single frames to be plugged back in." -STARTLINE T "n=nuke.thisNode()\nk=n.knob\nk(\"st0\").setLabel(\"<b>Internal</b>\")\nk(\"st1\").setLabel(\"<font color=gray>Rendered Out</font>\")\nn\[\"st1\"].setEnabled(True)\nn.knobs()\['distort'].setVisible(True)\nnuke.toNode(\"Switch5\")\[\"which\"].setValue(0)\nnuke.toNode(\"Switch6\")\[\"which\"].setValue(0)\ninputnode=nuke.toNode(\"Distort_ST\")\nnuke.delete(inputnode)\ninputnode=nuke.toNode(\"Undistort_ST\")\nnuke.delete(inputnode)"}
+ addUserKnob {22 st1 l "<font color=gray>Rendered Out</font>" t "Once you have rendered out the ST maps turn this button on and plug them in accordingly." -STARTLINE T "n=nuke.thisNode()\nk=n.knob\nk(\"st0\").setLabel(\"<font color=gray>Internal</font>\")\nk(\"st1\").setLabel(\"<b>Rendered Out</b>\")\nn\[\"st1\"].setEnabled(False)\nn.knobs()\['distort'].setVisible(False)\nnuke.toNode(\"Switch5\")\[\"which\"].setValue(1)\nnuke.toNode(\"Switch6\")\[\"which\"].setValue(1)\ninputnode=nuke.nodes.Input()\ninputnode\[\"name\"].setValue(\"Distort_ST\")\ninputnode\[\"xpos\"].setValue(-1364)\ninputnode\[\"ypos\"].setValue(582)\ninputnode2=nuke.nodes.Input()\ninputnode2\[\"name\"].setValue(\"Undistort_ST\")\ninputnode2\[\"xpos\"].setValue(-1612)\ninputnode2\[\"ypos\"].setValue(582)\nnuke.toNode(\"Switch5\").setInput(1,inputnode)\nnuke.toNode(\"Switch6\").setInput(1,inputnode2)"}
+ addUserKnob {26 spacer_1 l "" -STARTLINE T "  "}
+ addUserKnob {6 bypasss l "Distortion OFF  " t "Turns off distortion." -STARTLINE}
+ addUserKnob {6 nocat l "Cat's Eye OFF" t "Turns off cat's eye." -STARTLINE}
+ addUserKnob {20 stmap l "ST Map Instructions" +HIDDEN n 1}
+ addUserKnob {26 sttext l "" +STARTLINE T "Once you are happy with the distortion values, rendering out\na single frame of the Distort and Undistort St maps and\nplugging those in is recommended to speed up workflow.\n\nIt is also advisable to store the values with the 'Store Current'\nbutton before rendering to avoid situations where the sliders\nhave been changed and you can't match to the previously\nrendered ST maps.\n\nThis tool uses input image size as the base format, NOT the\nproject format. Therefore, you cannot use the same ST maps\nfor different input image sizes.\n\nMake sure to set your Write nodes to 32 bit EXR."}
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_4 l endGroup n -1}
+ addUserKnob {20 preview l "Preview Settings" n 1}
+ addUserKnob {6 dots l "Show Dots Only" t "Disables the effect to change dot arrangements quickly." +STARTLINE}
+ addUserKnob {7 column l "# of columns" t "The number of dots horizontally across the frame." R 3 20}
+ column 9
+ addUserKnob {7 margin l Margin t "How far the corner dots are from the edge of the frame." R 10 100}
+ margin 50
+ addUserKnob {14 dotsize l Size R 1 50}
+ dotsize 5
+ addUserKnob {7 oswarning l "Crop Warning" t "Thickness of the outside crop warning line. If you see any yellow in the preview increase the Overscan under Distortion Settings." R 1 10}
+ oswarning 1
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {20 distort l "Distortion Settings" n 1}
+ addUserKnob {26 distortpresets l Presets T ""}
+ addUserKnob {22 distreset l "Pretty Normal" t "A moderate amount of distortion." -STARTLINE T "n=nuke.thisNode()\nk=n.knob\nk(\"overscan\").setValue(1.2)\nk(\"distortion1\").setValue(0.1)\nk(\"distortion2\").setValue(0.01)\nk(\"distoffx\").setValue(0)\nk(\"distoffy\").setValue(0)\nk(\"diststack\").setValue(0)"}
+ addUserKnob {22 distpreset1 l "A Little Off" t "A little more distortion with offset center." -STARTLINE T "n=nuke.thisNode()\nk=n.knob\nk(\"overscan\").setValue(1.4)\nk(\"distortion1\").setValue(0.2)\nk(\"distortion2\").setValue(-0.025)\nk(\"distoffx\").setValue(0.15)\nk(\"distoffy\").setValue(-0.175)\nk(\"diststack\").setValue(0)"}
+ addUserKnob {22 distpreset2 l "The Other Way" t "Pincushion bokeh distortion" -STARTLINE T "n=nuke.thisNode()\nk=n.knob\nk(\"overscan\").setValue(1)\nk(\"distortion1\").setValue(-0.12)\nk(\"distortion2\").setValue(0)\nk(\"distoffx\").setValue(0.102)\nk(\"distoffy\").setValue(0)\nk(\"diststack\").setValue(0)"}
+ addUserKnob {22 distpreset3 l "Lensbaby Almost" t "Getting pretty extreme. Watch for loss of detail in the corners." -STARTLINE T "n=nuke.thisNode()\nk=n.knob\nk(\"overscan\").setValue(1)\nk(\"distortion1\").setValue(-0.175)\nk(\"distortion2\").setValue(-0.1)\nk(\"distoffx\").setValue(-0.16)\nk(\"distoffy\").setValue(-0.14)\nk(\"diststack\").setValue(1)"}
+ addUserKnob {26 userstored l "User Stored" T ""}
+ addUserKnob {22 distset l "Set To Stored" t "Sets distortion sliders to the user-stored values." -STARTLINE T "n=nuke.thisNode()\nk=n.knob\nd0=k(\"dist0\").getValue()\nd1=k(\"dist1\").getValue()\nd2=k(\"dist2\").getValue()\nd3=k(\"dist3\").getValue()\nd4=k(\"dist4\").getValue()\nd5=k(\"dist5\").getValue()\nk(\"overscan\").setValue(d0)\nk(\"distortion1\").setValue(d1)\nk(\"distortion2\").setValue(d2)\nk(\"distoffx\").setValue(d3)\nk(\"distoffy\").setValue(d4)\nk(\"diststack\").setValue(d5)"}
+ addUserKnob {26 userlock1 l "" -STARTLINE T "              "}
+ addUserKnob {6 userlock l Lock t "Locks 'Store Current' button to prevent accidental overwriting." -STARTLINE}
+ userlock true
+ addUserKnob {22 storedist l "Store Current" t "Stores current values, which can be retreived later even if the sliders have been moved." -STARTLINE +DISABLED T "n=nuke.thisNode()\nk=n.knob\nd0=k(\"overscan\").getValue()\nd1=k(\"distortion1\").getValue()\nd2=k(\"distortion2\").getValue()\nd3=k(\"distoffx\").getValue()\nd4=k(\"distoffy\").getValue()\nd5=k(\"diststack\").getValue()\nk(\"dist0\").setValue(d0)\nk(\"dist1\").setValue(d1)\nk(\"dist2\").setValue(d2)\nk(\"dist3\").setValue(d3)\nk(\"dist4\").setValue(d4)\nk(\"dist5\").setValue(d5)\nif d5==0:\n    k(\"stackinfo\").setValue(\"Stacking OFF\")\nelse:\n    k(\"stackinfo\").setValue(\"Stacking ON\")"}
+ addUserKnob {22 distshow l "Show Stored" t "Shows/hides stored values." -STARTLINE T "n=nuke.thisNode()\nk=n.knob\nd=k(\"distcheck\").getValue()\nif d==0:\n    k(\"distshow\").setLabel(\"Hide Stored\")\n    k(\"dist0\").setVisible(True)\n    k(\"dist1\").setVisible(True)\n    k(\"dist2\").setVisible(True)\n    k(\"dist3\").setVisible(True)\n    k(\"dist4\").setVisible(True)\n    k(\"stackinfo\").setVisible(True)\n    k(\"distcheck\").setValue(1)\nelse:\n    k(\"distshow\").setLabel(\"Show Stored\")\n    k(\"dist0\").setVisible(False)\n    k(\"dist1\").setVisible(False)\n    k(\"dist2\").setVisible(False)\n    k(\"dist3\").setVisible(False)\n    k(\"dist4\").setVisible(False)\n    k(\"stackinfo\").setVisible(False)\n    k(\"distcheck\").setValue(0)"}
+ addUserKnob {3 distcheck l INVISIBLE -STARTLINE +INVISIBLE}
+ addUserKnob {6 test_3_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 overscan l Overscan t "Increase until you don't see any yellow corners in the preview. \nIf both Radial Distort 1 and 2 are negative values, there is no need to add any overscan." R 1 2}
+ overscan 1.2
+ addUserKnob {7 dist0 l "" -STARTLINE +HIDDEN}
+ dist0 1.35
+ addUserKnob {41 distortion1 l "Radial Distort 1" t "Positive values for barrel bokeh distortion look and negative for pincushion." T LensDistortion1.distortion1}
+ addUserKnob {7 dist1 l "" -STARTLINE +HIDDEN}
+ dist1 0.2
+ addUserKnob {41 distortion2 l "Radial Distort 2" T LensDistortion1.distortion2}
+ addUserKnob {7 dist2 l "" -STARTLINE +HIDDEN}
+ dist2 0.01
+ addUserKnob {7 distoffx l "Center Offset X" t "Offsets the distortion center in X." R -0.3 0.3}
+ addUserKnob {7 dist3 l "" -STARTLINE +HIDDEN}
+ addUserKnob {7 distoffy l "Center Offset Y" t "Offsets the distortion center in Y." R -0.3 0.3}
+ addUserKnob {7 dist4 l "" -STARTLINE +HIDDEN}
+ addUserKnob {6 diststack l "Distortion Stacking (use only for extreme cases)" +STARTLINE}
+ addUserKnob {3 dist5 l INVISIBLE -STARTLINE +INVISIBLE}
+ addUserKnob {1 stackinfo l "" -STARTLINE +HIDDEN}
+ stackinfo "Stacking OFF"
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_5 l endGroup n -1}
+ addUserKnob {20 cat l "Cat's Eye Settings" n 1}
+ addUserKnob {14 catsize l "Inner Amount" t "Amount of Cat's Eye effect." R 0 100}
+ catsize 40
+ addUserKnob {6 catsync l Sync t "Inner and outer amounts can be synced or controlled independently." -STARTLINE}
+ addUserKnob {14 catsize2 l "Outer Amount" R 0 100}
+ catsize2 40
+ addUserKnob {7 catoffsetx l "Center Offset X" t "Offsets the scale center in X." R -1 1}
+ addUserKnob {7 catoffsety l Y t "Offsets the scale center in Y." -STARTLINE R -1 1}
+ addUserKnob {20 endGroup_7 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 methodtext l Method T ""}
+ addUserKnob {22 method0 l "<font color=gray>Defocus</font>" t "Uses Defocus node." -STARTLINE T "n=nuke.thisNode()\nk=n.knob\nk(\"method0\").setLabel(\"<b>Defocus</b>\")\nk(\"method1\").setLabel(\"<font color=gray>Disc</font>\")\nk(\"method2\").setLabel(\"<font color=gray>Filter</font>\")\nnuke.toNode(\"Switch1\")\[\"which\"].setValue(0)\nnuke.toNode(\"Switch7\")\[\"disable\"].setValue(1)\nn\[\"method2\"].setEnabled(True)\nn.knobs()\['shape'].setVisible(False)\nn.knobs()\['advanced'].setVisible(False)\nn.knobs()\['filter0'].setVisible(False)\nn.knobs()\['filterpreview'].setVisible(False)\nn.knobs()\['extfilter'].setVisible(False)"}
+ addUserKnob {22 method1 l "<font color=gray>Disc</font>" t "0 = Gaussian, 1 = Solid" -STARTLINE T "n=nuke.thisNode()\nk=n.knob\nk(\"method0\").setLabel(\"<font color=gray>Defocus</font>\")\nk(\"method1\").setLabel(\"<b>Disc</b>\")\nk(\"method2\").setLabel(\"<font color=gray>Filter</font>\")\nnuke.toNode(\"ZDefocus1\")\[\"filter_type\"].setValue(\"disc\")\nnuke.toNode(\"Switch1\")\[\"which\"].setValue(1)\nnuke.toNode(\"Switch7\")\[\"disable\"].setValue(1)\nn\[\"method2\"].setEnabled(True)\nn.knobs()\['shape'].setVisible(True)\nn.knobs()\['advanced'].setVisible(False)\nn.knobs()\['filter0'].setVisible(False)\nn.knobs()\['filterpreview'].setVisible(False)\nn.knobs()\['extfilter'].setVisible(False)"}
+ addUserKnob {22 method2 l <b>Filter</b> t "Uses a filter for the bokeh shape. Pick either internal or external." -STARTLINE +DISABLED T "n=nuke.thisNode()\nk=n.knob\nk(\"method0\").setLabel(\"<font color=gray>Defocus</font>\")\nk(\"method1\").setLabel(\"<font color=gray>Disc</font>\")\nk(\"method2\").setLabel(\"<b>Filter</b>\")\nnuke.toNode(\"ZDefocus1\")\[\"filter_type\"].setValue(\"image\")\nnuke.toNode(\"Switch1\")\[\"which\"].setValue(1)\nnuke.toNode(\"Switch7\")\[\"disable\"].setValue(0)\nn\[\"method2\"].setEnabled(False)\nn.knobs()\['shape'].setVisible(False)\nn.knobs()\['filter0'].setVisible(True)\nn.knobs()\['filterpreview'].setVisible(True)\nfilter=k(\"filtercheck\").getValue()\nif filter==1:\n    n.knobs()\['advanced'].setVisible(True)\n    n.knobs()\['advanced'].clearFlag(nuke.INVISIBLE)\nelse:\n    n.knobs()\['extfilter'].setVisible(True)"}
+ addUserKnob {22 filter0 l "<b>Internal</b><font color=gray>/External</font>" t "External filter option was mainly added in order for interesting internal filter shapes to be rendered out for later use.\n\nYou may use your own image as the filter, but make sure to format it to 255x255 square for it to work correctly." -STARTLINE T "n=nuke.thisNode()\nk=n.knob\nfilter=k(\"filtercheck\").getValue()\nif filter==0:\n    k(\"filter0\").setLabel(\"<b>Internal</b><font color=gray>/External</font>\")\n    n.knobs()\['advanced'].setVisible(True)\n    n.knobs()\['advanced'].clearFlag(nuke.INVISIBLE)\n    n.knobs()\['extfilter'].setVisible(False)\n    nuke.toNode(\"Switch8\")\[\"which\"].setValue(0)\n    inputnode=nuke.toNode(\"filter\")\n    nuke.delete(inputnode)\n    k(\"filtercheck\").setValue(1)\nelse:\n    k(\"filter0\").setLabel(\"<font color=gray>Internal/</font><b>External</b>\")\n    n.knobs()\['advanced'].setVisible(False)\n    n.knobs()\['extfilter'].setVisible(True)\n    nuke.toNode(\"Switch8\")\[\"which\"].setValue(1)\n    inputnode3=nuke.nodes.Input()\n    inputnode3\[\"name\"].setValue(\"filter\")\n    inputnode3\[\"xpos\"].setValue(-959)\n    inputnode3\[\"ypos\"].setValue(1196)\n    nuke.toNode(\"Switch8\").setInput(1,inputnode3)\n    k(\"filtercheck\").setValue(0)"}
+ addUserKnob {6 filtercheck l INVISIBLE -STARTLINE +INVISIBLE}
+ filtercheck true
+ addUserKnob {26 spacer_2 l "" -STARTLINE T "   "}
+ addUserKnob {6 filterpreview l "Filter Preview" -STARTLINE}
+ addUserKnob {26 extfilter l "" +STARTLINE +HIDDEN T "             Format external filter to 255x255 square\n"}
+ addUserKnob {7 defocus l Defocus R 0 100}
+ defocus 40
+ addUserKnob {7 ratio l "Aspect Ratio" t "This works like the aspect ratio in ZDefocus rather than the normal Defocus." R 0.2 5}
+ ratio 1
+ addUserKnob {7 shape l Hardness t "0 = Gaussian, 1 = disc" +HIDDEN}
+ shape 1
+ addUserKnob {20 bloom l "Bloom Settings" n 1}
+ addUserKnob {7 gammacorrect l "Gamma Correct" t "Amount of gamma correction to enhance highlights." R 0.5 2}
+ gammacorrect 1
+ addUserKnob {6 gammablack l "Black Clamp" -STARTLINE +DISABLED}
+ gammablack true
+ addUserKnob {7 bloomgain l "Bloom Gain" t "Values above Bloom Threshold are multiplied by this." R 1 4}
+ bloomgain 1
+ addUserKnob {7 bloommax l "Bloom Threshold" t "Values above this are multiplied by Bloom Gain" +DISABLED R 0 2}
+ bloommax 0.8
+ addUserKnob {7 bloommin l "Threshold Min" t "Ramp between 0 and Bloom Threshold to prevent flickering. This is a relative scale, not the absolute value." +DISABLED}
+ bloommin 0.5
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 advanced l "Filter Settings" n 1}
+ addUserKnob {26 presets l Presets T " "}
+ addUserKnob {22 preset0 l "So CG" t "Just some procedural looking filter." -STARTLINE T "n=nuke.thisNode()\nk=n.knob\n#filter_shape\nk(\"blades\").setValue(7)\nk(\"brotate\").setValue(0)\nk(\"round\").setValue(0.5)\nk(\"innerr\").setValue(0.9)\nk(\"ringcenter\").setValue(0.5)\n#filter_colors\nk(\"ring_color\").setValue(1)\nk(\"inner_color\").setValue(0.5)\nk(\"outer_falloff\").setValue(1)\nk(\"inner_falloff\").setValue(1)\n#color_shifts\nk(\"chroma_spread\").setValue(0)\nk(\"chroma_shift\").setValue(0)\nk(\"chroma_shift_angle\").setValue(0)\n#switches\nk(\"speckswitch\").setValue(1)\nk(\"gradswitch\").setValue(1)\nk(\"ringswitch\").setValue(0)\n#speck\nk(\"size\").setValue(100)\nk(\"translatex\").setValue(40)\nk(\"translatey\").setValue(-115)\nk(\"rotates\").setValue(0)\nk(\"zoffset\").setValue(2)\nk(\"gain\").setValue(0.8)\nk(\"speckedge\").setValue(1)\nk(\"specksoftness\").setValue(0.25)\nk(\"mix\").setValue(1)\n#gradation\nk(\"rotate\").setValue(0)\nk(\"coreoffset\").setValue(0)\nk(\"corehard\").setValue(0)\nk(\"gradfalloff\").setValue(1)\nk(\"gradmix\").setValue(0.6)\n#rings\nk(\"ringsize\").setValue(5)\nk(\"ringoffsetx\").setValue(0)\nk(\"ringoffsety\").setValue(0)\nk(\"thickness\").setValue(0.5)\nk(\"soften\").setValue(0.3)\nk(\"squiggles\").setValue(0.6)\nk(\"ringedge\").setValue(0.95)\nk(\"softness\").setValue(0.15)\nk(\"ringmix\").setValue(1)"}
+ addUserKnob {22 preset1 l "\$50 Lens" t "Harsh edge and color contamination" -STARTLINE T "n=nuke.thisNode()\nk=n.knob\n#filter_shape\nk(\"blades\").setValue(9)\nk(\"brotate\").setValue(-8)\nk(\"round\").setValue(0.3)\nk(\"innerr\").setValue(0.9)\nk(\"ringcenter\").setValue(0.9)\n#filter_colors\nk(\"ring_color\").setValue(1.8,0)\nk(\"ring_color\").setValue(2.5,1)\nk(\"ring_color\").setValue(1.5,2)\nk(\"inner_color\").setValue(1.2,0)\nk(\"inner_color\").setValue(1.5,1)\nk(\"inner_color\").setValue(0.96,2)\nk(\"outer_falloff\").setValue(1)\nk(\"inner_falloff\").setValue(3)\n#color_shifts\nk(\"chroma_spread\").setValue(-0.035)\nk(\"chroma_shift\").setValue(1.3)\nk(\"chroma_shift_angle\").setValue(45)\n#switches\nk(\"speckswitch\").setValue(1)\nk(\"gradswitch\").setValue(1)\nk(\"ringswitch\").setValue(1)\n#speck\nk(\"size\").setValue(20)\nk(\"translatex\").setValue(-20)\nk(\"translatey\").setValue(-115)\nk(\"rotates\").setValue(0)\nk(\"zoffset\").setValue(1)\nk(\"gain\").setValue(0.5)\nk(\"speckedge\").setValue(1)\nk(\"specksoftness\").setValue(0)\nk(\"mix\").setValue(0.3)\n#gradation\nk(\"rotate\").setValue(-45)\nk(\"coreoffset\").setValue(0)\nk(\"corehard\").setValue(0)\nk(\"gradfalloff\").setValue(2)\nk(\"gradmix\").setValue(0.7)\n#rings\nk(\"ringsize\").setValue(0.7)\nk(\"ringoffsetx\").setValue(-0.1)\nk(\"ringoffsety\").setValue(-0.05)\nk(\"thickness\").setValue(0.1)\nk(\"soften\").setValue(1)\nk(\"squiggles\").setValue(0.5)\nk(\"ringedge\").setValue(0.7)\nk(\"softness\").setValue(0.5)\nk(\"ringmix\").setValue(0.25)"}
+ addUserKnob {22 preset2 l Creamy t "If you like that creamy smooth bokeh, but probably too boring for vfx people." -STARTLINE T "n=nuke.thisNode()\nk=n.knob\n#filter_shape\nk(\"blades\").setValue(11)\nk(\"brotate\").setValue(0)\nk(\"round\").setValue(0.3)\nk(\"innerr\").setValue(0.8)\nk(\"ringcenter\").setValue(0.5)\n#filter_colors\nk(\"ring_color\").setValue(1.5)\nk(\"inner_color\").setValue(1.7)\nk(\"outer_falloff\").setValue(1.5)\nk(\"inner_falloff\").setValue(1)\n#color_shifts\nk(\"chroma_spread\").setValue(0.004)\nk(\"chroma_shift\").setValue(0)\nk(\"chroma_shift_angle\").setValue(0)\n#switches\nk(\"speckswitch\").setValue(0)\nk(\"gradswitch\").setValue(1)\nk(\"ringswitch\").setValue(0)\n#speck\nk(\"size\").setValue(100)\nk(\"translatex\").setValue(40)\nk(\"translatey\").setValue(-115)\nk(\"rotates\").setValue(0)\nk(\"zoffset\").setValue(2)\nk(\"gain\").setValue(0.8)\nk(\"speckedge\").setValue(1)\nk(\"specksoftness\").setValue(0.25)\nk(\"mix\").setValue(1)\n#gradation\nk(\"rotate\").setValue(180)\nk(\"coreoffset\").setValue(0)\nk(\"corehard\").setValue(0)\nk(\"gradfalloff\").setValue(1)\nk(\"gradmix\").setValue(0.75)\n#rings\nk(\"ringsize\").setValue(5)\nk(\"ringoffsetx\").setValue(0)\nk(\"ringoffsety\").setValue(0)\nk(\"thickness\").setValue(0.5)\nk(\"soften\").setValue(0.3)\nk(\"squiggles\").setValue(0.6)\nk(\"ringedge\").setValue(0.95)\nk(\"softness\").setValue(0.15)\nk(\"ringmix\").setValue(1)"}
+ addUserKnob {22 preset3 l "Onion Rings" t "Google onion ring bokeh for some references." -STARTLINE T "n=nuke.thisNode()\nk=n.knob\n#filter_shape\nk(\"blades\").setValue(11)\nk(\"brotate\").setValue(9)\nk(\"round\").setValue(0.6)\nk(\"innerr\").setValue(1)\nk(\"ringcenter\").setValue(1)\n#filter_colors\nk(\"ring_color\").setValue(1)\nk(\"inner_color\").setValue(2)\nk(\"outer_falloff\").setValue(1)\nk(\"inner_falloff\").setValue(3)\n#color_shifts\nk(\"chroma_spread\").setValue(0)\nk(\"chroma_shift\").setValue(1)\nk(\"chroma_shift_angle\").setValue(0)\n#switches\nk(\"speckswitch\").setValue(1)\nk(\"gradswitch\").setValue(1)\nk(\"ringswitch\").setValue(1)\n#speck\nk(\"size\").setValue(5)\nk(\"translatex\").setValue(-20)\nk(\"translatey\").setValue(-115)\nk(\"rotates\").setValue(0)\nk(\"zoffset\").setValue(1)\nk(\"gain\").setValue(1)\nk(\"speckedge\").setValue(0.9)\nk(\"specksoftness\").setValue(0.2)\nk(\"mix\").setValue(0.7)\n#gradation\nk(\"rotate\").setValue(45)\nk(\"coreoffset\").setValue(0)\nk(\"corehard\").setValue(0)\nk(\"gradfalloff\").setValue(0.5)\nk(\"gradmix\").setValue(0.7)\n#rings\nk(\"ringsize\").setValue(9)\nk(\"ringoffsetx\").setValue(0.08)\nk(\"ringoffsety\").setValue(-0.06)\nk(\"thickness\").setValue(0.35)\nk(\"soften\").setValue(1)\nk(\"squiggles\").setValue(0.7)\nk(\"ringedge\").setValue(0.975)\nk(\"softness\").setValue(0.05)\nk(\"ringmix\").setValue(1)"}
+ addUserKnob {22 preset4 l Stars t "Just because." -STARTLINE T "n=nuke.thisNode()\nk=n.knob\n#filter_shape\nk(\"blades\").setValue(5)\nk(\"brotate\").setValue(0)\nk(\"round\").setValue(7)\nk(\"innerr\").setValue(0.7)\nk(\"ringcenter\").setValue(0.6)\n#filter_colors\nk(\"ring_color\").setValue(2,0)\nk(\"ring_color\").setValue(1.9,1)\nk(\"ring_color\").setValue(1.8,2)\nk(\"inner_color\").setValue(2,0)\nk(\"inner_color\").setValue(1.6,1)\nk(\"inner_color\").setValue(1.2,2)\nk(\"outer_falloff\").setValue(2.5)\nk(\"inner_falloff\").setValue(2.5)\n#color_shifts\nk(\"chroma_spread\").setValue(0.05)\nk(\"chroma_shift\").setValue(1.2)\nk(\"chroma_shift_angle\").setValue(-72)\n#switches\nk(\"speckswitch\").setValue(1)\nk(\"gradswitch\").setValue(1)\nk(\"ringswitch\").setValue(1)\n#speck\nk(\"size\").setValue(6)\nk(\"translatex\").setValue(0)\nk(\"translatey\").setValue(0)\nk(\"rotates\").setValue(0)\nk(\"zoffset\").setValue(1)\nk(\"gain\").setValue(0.5)\nk(\"speckedge\").setValue(1)\nk(\"specksoftness\").setValue(0.6)\nk(\"mix\").setValue(0.6)\n#gradation\nk(\"rotate\").setValue(-144)\nk(\"coreoffset\").setValue(0)\nk(\"corehard\").setValue(0)\nk(\"gradfalloff\").setValue(0.4)\nk(\"gradmix\").setValue(1)\n#rings\nk(\"ringsize\").setValue(0.06)\nk(\"ringoffsetx\").setValue(0)\nk(\"ringoffsety\").setValue(0)\nk(\"thickness\").setValue(0.52)\nk(\"soften\").setValue(0.35)\nk(\"squiggles\").setValue(0)\nk(\"ringedge\").setValue(1.6)\nk(\"softness\").setValue(0.35)\nk(\"ringmix\").setValue(0.8)"}
+ addUserKnob {20 filtershape l "  Filter Shape" n 1}
+ addUserKnob {7 blades l Blades t "The number of blades of the filter." R 3 11}
+ blades 9
+ addUserKnob {7 brotate l Rotation t "The rotation of the filter." -STARTLINE R -25 25}
+ brotate -8
+ addUserKnob {7 round l Roundness R 0 1.5}
+ round 0.3
+ addUserKnob {7 innerr l "Inner Radius"}
+ innerr 0.9
+ addUserKnob {7 ringcenter l "Ring Center"}
+ ringcenter 0.9
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 color l "  Filter Colors" n 1}
+ addUserKnob {41 ring_color l "Ring Color" T Flare1.ring_color}
+ addUserKnob {41 inner_color l "Inner Color" T Flare1.inner_color}
+ addUserKnob {41 outer_falloff l "Outer Falloff" T Flare1.outer_falloff}
+ addUserKnob {41 inner_falloff l "Inner Falloff" T Flare1.inner_falloff}
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_8 l endGroup n -1}
+ addUserKnob {20 shift l "  Color Shifts" n 1}
+ addUserKnob {41 chroma_spread l "Chroma Spread" T Flare1.chroma_spread}
+ addUserKnob {41 chroma_shift l "Chroma Shift" T Flare1.chroma_shift}
+ addUserKnob {41 chroma_shift_angle l Angle T Flare1.chroma_shift_angle}
+ addUserKnob {20 endGroup_9 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 extrat l "" t "Switches for extra options are placed here together for quicker access." +STARTLINE T "      Extra Detail Switches:     "}
+ addUserKnob {6 speckswitch l "Speck    " -STARTLINE}
+ speckswitch true
+ addUserKnob {6 gradswitch l "Gradation  " -STARTLINE}
+ gradswitch true
+ addUserKnob {6 ringswitch l Rings -STARTLINE}
+ ringswitch true
+ addUserKnob {26 ""}
+ addUserKnob {20 speck l "  Speck Imperfections" n 1}
+ addUserKnob {41 size l Size T Noise1.size}
+ addUserKnob {7 translatex l "Translate X" R -200 200}
+ translatex -20
+ addUserKnob {7 translatey l Y -STARTLINE R -200 200}
+ translatey -115
+ addUserKnob {7 rotates l Rotate R -180 180}
+ addUserKnob {7 zoffset l Seed -STARTLINE R 0 5}
+ zoffset 1
+ addUserKnob {41 gain l Detail T Noise1.gain}
+ addUserKnob {7 speckedge l "Outer Edge"}
+ speckedge 1
+ addUserKnob {41 specksoftness l "Inner Falloff" T Radial2.softness}
+ addUserKnob {41 mix l Mix T Merge3.mix}
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_10 l endGroup n -1}
+ addUserKnob {20 grad l "  Gradation" n 1}
+ addUserKnob {7 rotate l Angle R -180 180}
+ rotate -45
+ addUserKnob {7 coreoffset l "Grad to Slice" t "Turns gradient to a slice. 0 is the original, 1 becomes the inverse."}
+ addUserKnob {7 corehard l "Core Hardness"}
+ addUserKnob {7 gradfalloff l Falloff R 0 4}
+ gradfalloff 2
+ addUserKnob {41 gradmix l Mix T Merge4.mix}
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_11 l endGroup n -1}
+ addUserKnob {20 rings l Rings n 1}
+ addUserKnob {7 ringsize l "Ring Count" t "Number of rings from the center to the edge" R 0 20}
+ ringsize 0.7
+ addUserKnob {7 ringoffsetx l "Center Offset X" R -0.2 0.2}
+ ringoffsetx -0.1
+ addUserKnob {7 ringoffsety l Y -STARTLINE R -0.2 0.2}
+ ringoffsety -0.05
+ addUserKnob {7 thickness l Thickness}
+ thickness 0.1
+ addUserKnob {7 soften l Soften}
+ soften 1
+ addUserKnob {7 squiggles l Squiggles t "Irregularity of the rings"}
+ squiggles 0.5
+ addUserKnob {7 ringedge l "Outer Edge"}
+ ringedge 0.7
+ addUserKnob {41 softness l "Inner Falloff" T Radial1.softness}
+ addUserKnob {41 ringmix l Mix T Merge6.mix}
+ addUserKnob {20 endGroup_13 l endGroup n -1}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 Info}
+ addUserKnob {26 infotext l "" +STARTLINE T "This tool is for mimicking elliptical \"cat's eye\" bokeh that changes shape \ndepending on the location within the picture frame. \n\nThis is the constant version which applies the same amount of defocus to \nthe entire image. To apply varying depth of field, use W_CatsEye_Z instead.\n\nUpdates:\n"}
+ addUserKnob {20 v2_1group l "v2.1 - 2019" n 1}
+ addUserKnob {26 v2_1text l "" +STARTLINE T "-Cat's Eye feature added to give the bokeh the \"eye\" look.\n-Switched the filter from Zdefocus' internal module to the Flare node\n in order to add extra features in between.\n-Bloom settinngs are accessible regardless of defocus method:\n  -Gamma Correction amount can be changed.\n  -Bloom threshold has a minimum cutoff to prevent flickering.\n-Added distortion and and filter presets which can be used as starting\n points.\n"}
+ addUserKnob {20 endGroup_12 l endGroup n -1}
+ addUserKnob {20 v2group l "v2.0 - 2019" n 1}
+ v2group 0
+ addUserKnob {26 v2text l "" +STARTLINE T "-Complete overhaul of features and interface:\n-Interface only displays relevant information\n-Preview feature added to make it easier to define the look as\n well as check overscan cropping\n-Now uses STMap for applying distortions which can be rendered\n out and plugged back in for faster processing\n"}
+ addUserKnob {20 endGroup_6 l endGroup n -1}
+ addUserKnob {26 credit l "" +STARTLINE T "   v1.0 - 2016"}
+ addUserKnob {26 ""}
+ addUserKnob {26 spacer_3 l "" -STARTLINE T "   "}
+ addUserKnob {26 copyright l "&#169;" -STARTLINE T " Wes Heo"}
+}
+ Reformat {
+  inputs 0
+  type "to box"
+  box_width 255
+  box_height 255
+  box_fixed true
+  resize none
+  name Reformat1
+  xpos -775
+  ypos 663
+ }
+set N7e6c2400 [stack 0]
+ Radial {
+  output alpha
+  area {{-border} {-border} {input.width+border} {input.height+border}}
+  softness 0.5
+  name Radial1
+  onCreate "nuke.thisNode()\['area'].setFlag(0x00008000)"
+  xpos -534
+  ypos 807
+  addUserKnob {20 User}
+  addUserKnob {7 border l Border R -500 500}
+  border {{-input.width/2*(1-parent.ringedge)}}
+ }
+push $N7e6c2400
+ Noise {
+  output alpha
+  type turbulence
+  size {{max(0.5,1/parent.ringsize*100)}}
+  gain 0.65
+  gamma 1
+  center {127.5 127.5}
+  name Noise2
+  onCreate "nuke.thisNode()\['center'].setFlag(0x00008000)"
+  xpos -1135
+  ypos 801
+ }
+push $N7e6c2400
+ Expression {
+  temp_name0 centerx
+  temp_expr0 input.width/2*(1+parent.ringoffsetx)
+  temp_name1 centery
+  temp_expr1 input.height/2*(1+parent.ringoffsety)
+  channel0 rgba
+  expr0 "(sin( (hypot(x-centerx, y-centery )/ size))+1)/2"
+  channel1 none
+  channel2 none
+  name Expression5
+  label rings
+  xpos -1394
+  ypos 800
+  addUserKnob {20 User}
+  addUserKnob {7 size l Size R 0 50}
+  size {{1/parent.ringsize*18}}
+ }
+push $N7e6c2400
+ Expression {
+  temp_name0 centerx
+  temp_expr0 input.width/2*(1+parent.ringoffsetx)
+  temp_name1 centery
+  temp_expr1 input.height/2*(1+parent.ringoffsety)
+  channel0 rgba
+  expr0 "(sin( (hypot(x-centerx, y-centery )/ size) + freq)+1)/2"
+  channel1 none
+  channel2 none
+  name Expression4
+  label rings
+  xpos -1262
+  ypos 804
+  addUserKnob {20 User}
+  addUserKnob {7 freq l Frequency}
+  freq {{parent.squiggles*3}}
+  addUserKnob {7 size l Size R 0 50}
+  size {{1/parent.ringsize*18}}
+ }
+ Keymix {
+  inputs 3
+  name Keymix2
+  label squiggles
+  xpos -1262
+  ypos 896
+  disable {{parent.squiggles==0}}
+ }
+ Grade {
+  channels alpha
+  blackpoint {{parent.thickness-parent.soften/2}}
+  whitepoint {{parent.thickness+parent.soften/2}}
+  white_clamp true
+  name Grade2
+  xpos -1262
+  ypos 1028
+ }
+push $N7e6c2400
+ Ramp {
+  p0 {0 {input.width}}
+  p1 {0 0}
+  name Ramp1
+  xpos -995
+  ypos 810
+ }
+ Keyer {
+  operation "luminance key"
+  range {0 {tempB-coreB} {tempB+coreC} 1}
+  name Keyer1
+  xpos -995
+  ypos 851
+  disable {{parent.coreoffset==0&&parent.corehard==0}}
+  addUserKnob {20 User}
+  addUserKnob {7 coreB}
+  coreB {{tempB*parent.corehard}}
+  addUserKnob {7 coreC}
+  coreC {{(1-tempB)*parent.corehard}}
+  addUserKnob {7 tempB}
+  tempB {{1-parent.coreoffset}}
+ }
+ Gamma {
+  channels alpha
+  value {{parent.gradfalloff}}
+  name Gamma3
+  xpos -995
+  ypos 902
+ }
+ Transform {
+  rotate {{parent.rotate}}
+  center {{input.width/2} {input.height/2}}
+  black_outside false
+  name Transform1
+  xpos -995
+  ypos 956
+ }
+push $N7e6c2400
+ Radial {
+  output alpha
+  area {{-border} {-border} {input.width+border} {input.height+border}}
+  softness 0
+  name Radial2
+  onCreate "nuke.thisNode()\['area'].setFlag(0x00008000)"
+  xpos -658
+  ypos 807
+  addUserKnob {20 User}
+  addUserKnob {7 border l Border R -500 500}
+  border {{-input.width/2*(1-parent.speckedge*1.1)}}
+ }
+push $N7e6c2400
+ Noise {
+  size 20
+  zoffset {{parent.zoffset}}
+  gamma 1
+  translate {{parent.translatex} {parent.translatey}}
+  rotate {{parent.rotates}}
+  center {{input.width/2-parent.translatex} {input.height/2-parent.translatey}}
+  name Noise1
+  onCreate "nuke.thisNode()\['center'].setFlag(0x00008000)\nnuke.thisNode()\['translate'].setFlag(0x00008000)\nnuke.thisNode()\['rotate'].setFlag(0x00008000)"
+  selected true
+  xpos -884
+  ypos 811
+ }
+push $N7e6c2400
+ Flare {
+  position {{input.width/2} {input.height/2}}
+  radius {{parent.innerr*100} {(115-(parent.innerr+0.05)*100)*parent.ringcenter+((parent.innerr+0.05)*100)} 120}
+  size_mult 1.1
+  ring_color {1.8 2.5 1.5}
+  inner_color {1.2 1.5 0.96}
+  inner_falloff 3
+  chroma_spread -0.035
+  chroma_shift 1.3
+  chroma_shift_angle 45
+  corners {{parent.blades}}
+  flattening {{parent.round}}
+  sharpness {{flattening}}
+  corners_angle {{parent.brotate}}
+  name Flare1
+  onCreate "nuke.thisNode()\['position'].setFlag(0x00008000)"
+  xpos -775
+  ypos 812
+ }
+ Merge2 {
+  inputs 2+1
+  operation stencil
+  bbox B
+  mix 0.3
+  name Merge3
+  xpos -775
+  ypos 895
+  disable {{!parent.speckswitch}}
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  bbox B
+  mix 0.7
+  name Merge4
+  xpos -775
+  ypos 956
+  disable {{!parent.gradswitch}}
+ }
+ Merge2 {
+  inputs 2+1
+  operation stencil
+  mix 0.25
+  name Merge6
+  xpos -775
+  ypos 1034
+  disable {{!parent.ringswitch}}
+ }
+ Transform {
+  scale {{parent.ratio} 1}
+  center {{input.width/2} {input.height/2}}
+  name Transform4
+  xpos -775
+  ypos 1099
+  disable {{parent.filterpreview}}
+ }
+ Switch {
+  name Switch8
+  label "do not touch"
+  xpos -775
+  ypos 1190
+ }
+set N76d05c00 [stack 0]
+ Dot {
+  name Dot8
+  label "filter preview"
+  xpos 228
+  ypos 2182
+  hide_input true
+ }
+ Input {
+  inputs 0
+  name img
+  xpos 56
+  ypos -234
+ }
+set N7efb8c00 [stack 0]
+ Remove {
+  operation keep
+  channels rgba
+  name Remove1
+  xpos -357
+  ypos -234
+ }
+set N7f625800 [stack 0]
+ Remove {
+  name Remove2
+  xpos -1826
+  ypos -240
+ }
+ Crop {
+  box {{ceil(parent.margin)} {ceil(parent.margin)} {input.width-ceil(parent.margin)} {input.height-ceil(parent.margin)}}
+  reformat true
+  crop false
+  name Crop1
+  xpos -1826
+  ypos -173
+ }
+set N7f625400 [stack 0]
+ Grid {
+  number {0 {floor(parent.column/input.width*input.height)}}
+  size {0 {parent.dotsize.h}}
+  name Grid2
+  xpos -1745
+  ypos -121
+ }
+push $N7f625400
+ Grid {
+  number {{floor(parent.column)-1} 0}
+  size {{parent.dotsize} 0}
+  name Grid1
+  xpos -1896
+  ypos -120
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge1
+  xpos -1824
+  ypos -68
+ }
+ BlackOutside {
+  name BlackOutside1
+  xpos -1824
+  ypos -29
+ }
+ Blur {
+  channels rgba
+  size {{parent.Grid1.size} {parent.Grid2.size.h}}
+  name Blur1
+  label "\[value size]"
+  xpos -1824
+  ypos 12
+ }
+ Grade {
+  channels rgba
+  blackpoint 0.05
+  whitepoint 0.1
+  gamma 0.35
+  white_clamp true
+  name Grade1
+  xpos -1824
+  ypos 63
+ }
+ Crop {
+  box {{-parent.Crop1.box} {-parent.Crop1.box} {width-box.x} {height-box.y}}
+  reformat true
+  crop false
+  name Crop2
+  xpos -1824
+  ypos 109
+ }
+set N7f627400 [stack 0]
+push $N7f625800
+ Switch {
+  inputs 2
+  which 1
+  name Switch2
+  label preview
+  xpos -357
+  ypos 103
+ }
+ Reformat {
+  type scale
+  scale {{parent.overscan}}
+  resize none
+  name Reformat3
+  xpos -357
+  ypos 216
+  disable {{parent.bypasss}}
+ }
+set N7f627c00 [stack 0]
+ Expression {
+  expr0 (x+0.5)/input.width
+  expr1 (y+0.5)/input.height
+  expr2 0
+  name Expression1
+  label STMap
+  xpos -1237
+  ypos 210
+ }
+set N7f627000 [stack 0]
+ LensDistortion {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 16 0 0 0 0 0 0 0 0 0 0 0 0"
+  distortion1 {{parent.LensDistortion1.distortion1}}
+  distortion2 {{parent.LensDistortion1.distortion2}}
+  distortionCenter {{parent.LensDistortion1.distortionCenter} {parent.LensDistortion1.distortionCenter}}
+  invertDistortion true
+  cardScale {0.858369112 0.858369112 1}
+  a 0.0465247035
+  b 0.06831350178
+  c 0.03311881796
+  name LensDistortion2
+  label Undistort
+  xpos -1488
+  ypos 290
+  disable {{parent.bypasss}}
+ }
+ LensDistortion {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 16 0 0 0 0 0 0 0 0 0 0 0 0"
+  distortion1 {{parent.LensDistortion4.distortion1}}
+  distortion2 {{parent.LensDistortion4.distortion2}}
+  distortionCenter {{parent.LensDistortion4.distortionCenter} {parent.LensDistortion4.distortionCenter}}
+  invertDistortion true
+  cardScale {0.858369112 0.858369112 1}
+  a 0.0465247035
+  b 0.06831350178
+  c 0.03311881796
+  name LensDistortion3
+  label Undistort
+  xpos -1488
+  ypos 340
+  disable {{parent.bypasss||!parent.diststack}}
+ }
+ Crop {
+  box {{curve} {curve} {input.width} {input.height}}
+  reformat true
+  crop false
+  name Crop4
+  xpos -1488
+  ypos 439
+ }
+ FrameHold {
+  first_frame 1001
+  name FrameHold2
+  xpos -1488
+  ypos 502
+ }
+set N7dcf5080 [stack 0]
+ Dot {
+  name Dot6
+  label "undistort ST"
+  xpos 225
+  ypos 2096
+  hide_input true
+ }
+push $N7f627000
+ LensDistortion {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 16 0 0 0 0 0 0 0 0 0 0 0 0"
+  distortion1 0.1
+  distortion2 0.01
+  distortionCenter {{parent.distoffx} {parent.distoffy}}
+  cardScale {1.194778681 1.194778681 1}
+  a 0.1560806036
+  b -0.3558642864
+  c -0.04520283267
+  name LensDistortion1
+  label Distort
+  xpos -1237
+  ypos 291
+  disable {{parent.bypasss}}
+ }
+ LensDistortion {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 16 0 0 0 0 0 0 0 0 0 0 0 0"
+  distortion1 {{parent.LensDistortion1.distortion1}}
+  distortion2 {{parent.LensDistortion1.distortion2}}
+  distortionCenter {{parent.distoffx} {parent.distoffy}}
+  cardScale {0.8962159157 0.8962159157 1}
+  a -0.01652843319
+  b 0.1152025163
+  c 0.01142393239
+  name LensDistortion4
+  label Distort
+  xpos -1237
+  ypos 342
+  disable {{parent.bypasss||!parent.diststack}}
+ }
+ Crop {
+  box {{curve} {curve} {input.width} {input.height}}
+  reformat true
+  crop false
+  name Crop3
+  xpos -1237
+  ypos 442
+ }
+ FrameHold {
+  first_frame 1001
+  name FrameHold1
+  xpos -1237
+  ypos 499
+ }
+set N7b7d6c00 [stack 0]
+ Dot {
+  name Dot7
+  label "distort ST"
+  xpos 205
+  ypos 2018
+  hide_input true
+ }
+push $N7f627400
+ Dot {
+  name Dot5
+  xpos -1790
+  ypos 1949
+ }
+push $N7dcf5080
+ Switch {
+  name Switch6
+  label "do not touch"
+  xpos -1488
+  ypos 576
+ }
+ Dot {
+  name Dot4
+  xpos -1454
+  ypos 1719
+ }
+push $N76d05c00
+push $N7b7d6c00
+ Switch {
+  name Switch5
+  label "do not touch"
+  xpos -1237
+  ypos 576
+ }
+push $N7f627c00
+ STMap {
+  inputs 2
+  uv rgb
+  name STMap1
+  label Distort
+  xpos -357
+  ypos 569
+  disable {{parent.bypasss}}
+ }
+ Gamma {
+  value {{1/parent.Gamma1.value}}
+  name Gamma2
+  xpos -357
+  ypos 709
+  disable {{parent.gammacorrect==1}}
+ }
+ Clamp {
+  maximum_enable false
+  name Clamp1
+  xpos -357
+  ypos 780
+  disable {{parent.gammacorrect==1||!parent.gammablack}}
+ }
+set N7f8fc800 [stack 0]
+ Keyer {
+  operation "luminance key"
+  range {{parent.bloommax*parent.bloommin} {parent.bloommax} {parent.bloommax+1} {parent.bloommax+1}}
+  name Keyer2
+  xpos -216
+  ypos 834
+ }
+push $N7f8fc800
+ Multiply {
+  inputs 1+1
+  value {{parent.bloomgain}}
+  name Multiply1
+  label bloom
+  xpos -357
+  ypos 913
+  disable {{parent.bloomgain==1}}
+ }
+ Dot {
+  name Dot3
+  xpos -323
+  ypos 1084
+ }
+set N784e1800 [stack 0]
+add_layer {DepthTemp DepthTemp.Z}
+ Shuffle {
+  red black
+  out DepthTemp
+  name Shuffle1
+  label "in \[value in]-->out \[value out]"
+  xpos -500
+  ypos 1074
+  disable {{1-Switch1.which}}
+ }
+ ZDefocus2 {
+  inputs 2
+  z_channel DepthTemp.Z
+  focal_point {0 0}
+  size {{parent.defocus}}
+  max_size {{size.w}}
+  filter_type image
+  legacy_resize_mode false
+  show_legacy_resize_mode false
+  filter_channel rgba.red
+  use_input_channels true
+  shape {{parent.shape}}
+  aspect {{parent.Defocus2.ratio}}
+  name ZDefocus1
+  onCreate "nuke.thisNode()\['focal_point'].setFlag(0x00008000)"
+  label "size \[value size] max \[value max_size]"
+  xpos -500
+  ypos 1183
+  disable {{1-Switch1.which}}
+ }
+ Dot {
+  name Dot1
+  xpos -466
+  ypos 1310
+ }
+push $N784e1800
+ Defocus {
+  defocus {{ratio>1?parent.defocus/ratio:parent.defocus}}
+  ratio {{parent.ratio}}
+  name Defocus2
+  label "size \[value defocus]"
+  xpos -357
+  ypos 1190
+  disable {{Switch1.which}}
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Switch1
+  xpos -357
+  ypos 1306
+ }
+set N7f3bd800 [stack 0]
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle3
+  label "\[value in] -&gt; \[value out]"
+  xpos -89
+  ypos 1357
+ }
+ Expression {
+  channel0 {rgba.red rgba.green -rgba.blue none}
+  expr0 x<thickness||y<thickness||x>input.width-thickness-1||y>input.height-thickness-1
+  name Expression2
+  label "overscan guide"
+  xpos -89
+  ypos 1446
+  addUserKnob {20 User}
+  addUserKnob {14 thickness R 0 100}
+  thickness {{max(1,parent.oswarning)}}
+ }
+ Crop {
+  box {0 0 {input.width} {input.height}}
+  reformat true
+  crop false
+  name Crop6
+  xpos -89
+  ypos 1516
+ }
+push $N7f3bd800
+ Gamma {
+  value {{parent.gammacorrect}}
+  name Gamma1
+  xpos -356
+  ypos 1369
+  disable {{parent.gammacorrect==1}}
+ }
+set N7f3bd000 [stack 0]
+ Transform {
+  scale {{parent.catsync?1-parent.catsize/10000:1-parent.catsize2/10000} {parent.catsync?1-parent.catsize/10000:1-parent.catsize2/10000}}
+  center {{input.width/2+parent.catoffsetx*0.5*input.width/2} {input.height/2+parent.catoffsety*0.5*input.height/2}}
+  name Transform3
+  label "CatsEye Outer"
+  xpos -235
+  ypos 1434
+  disable {{parent.nocat}}
+ }
+push $N7f3bd000
+ Transform {
+  scale {{1+parent.catsize/10000} {1+parent.catsize/10000}}
+  center {{input.width/2+parent.catoffsetx*0.5*input.width/2} {input.height/2+parent.catoffsety*0.5*input.height/2}}
+  name Transform2
+  label "CatsEye Inner"
+  xpos -356
+  ypos 1435
+  disable {{parent.nocat}}
+ }
+ Merge2 {
+  inputs 2
+  operation min
+  output rgb
+  name Merge5
+  xpos -356
+  ypos 1510
+  disable {{parent.nocat}}
+ }
+ Merge2 {
+  inputs 2
+  bbox A
+  mix 0.5
+  name Merge2
+  xpos -356
+  ypos 1621
+  disable {{!parent.Switch2.which+parent.bypasss}}
+ }
+ STMap {
+  inputs 2
+  uv rgb
+  name STMap2
+  label Undistort
+  xpos -356
+  ypos 1702
+  disable {{parent.bypasss}}
+ }
+ Reformat {
+  type "to box"
+  format "1920 1080 0 0 1920 1080 1 HD_1080"
+  box_width {{parent.Remove1.width}}
+  box_height {{parent.Remove1.height}}
+  box_pixel_aspect {{parent.Remove1.pixel_aspect}}
+  resize none
+  pbb {{clamp(parent.autobbox-parent.Switch2.which)}}
+  name Reformat4
+  xpos -356
+  ypos 1819
+  disable {{parent.bypasss}}
+ }
+ Crop {
+  box {{"max(0, \n\nparent.Remove1.bbox.x)-ceil(parent.defocus*outsidecheck*parent.ratio)"} {"max(0, parent.Remove1.bbox.y)-ceil(parent.defocus*outsidecheck)"} {"min(parent.Remove1.width, \n\nparent.Remove1.bbox.r)+ceil(parent.defocus*outsidecheck*parent.ratio)"} {"min(parent.Remove1.height, \n\nparent.Remove1.bbox.t)+ceil(parent.defocus*outsidecheck)"}}
+  crop false
+  name Crop5
+  label "auto bbox"
+  xpos -356
+  ypos 1883
+  disable {{clamp(!parent.autobbox+parent.Switch2.which)}}
+  addUserKnob {20 User}
+  addUserKnob {15 outsidecheck}
+  outsidecheck {{parent.Remove1.bbox.x!=0} {parent.Remove1.bbox.y!=0} {parent.Remove1.bbox.r!=parent.Remove1.width} {parent.Remove1.bbox.t!=parent.Remove1.height}}
+ }
+ Switch {
+  inputs 2
+  which {{parent.dots}}
+  name Switch3
+  xpos -356
+  ypos 1945
+  disable {{!parent.Switch2.which}}
+ }
+push $N7efb8c00
+ Copy {
+  inputs 2
+  channels rgba
+  name Copy1
+  xpos 56
+  ypos 1932
+ }
+ Switch {
+  inputs 3
+  name Switch4
+  xpos 56
+  ypos 2092
+ }
+ Switch {
+  inputs 2
+  which {{parent.filterpreview}}
+  name Switch7
+  xpos 56
+  ypos 2178
+ }
+ Output {
+  name Output1
+  xpos 56
+  ypos 2280
+ }
+end_group

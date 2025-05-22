@@ -1,0 +1,385 @@
+#! C:/Program Files/Nuke13.2v1/nuke-13.2.1.dll -nx
+version 13.2 v1
+Gizmo {
+ inputs 2
+ tile_color 0xffff00ff
+ addUserKnob {20 realGlow}
+ addUserKnob {41 output T Plus.output}
+ addUserKnob {41 tint T Multiply_tint.value}
+ addUserKnob {7 brightness R 0 5}
+ brightness 0.36
+ addUserKnob {7 falloff R 1 5}
+ falloff 0.9
+ addUserKnob {7 saturation}
+ saturation 1
+ addUserKnob {6 effect_only l "effect only" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {7 size R 0 100}
+ size 3.6
+ addUserKnob {41 mix T Plus.mix}
+ addUserKnob {6 mask +STARTLINE}
+}
+ Input {
+  inputs 0
+  name Inputmask
+  xpos -231
+  ypos 629
+  number 1
+ }
+set Ne7cc9000 [stack 0]
+ Input {
+  inputs 0
+  name Inputimage
+  xpos -542
+  ypos 482
+ }
+ Dot {
+  name Dot127
+  xpos -508
+  ypos 571
+ }
+set Ne7cc8800 [stack 0]
+ Shuffle {
+  in {{{parent.Plus.output}}}
+  name Shuffle1
+  label "\[value in]"
+  xpos -441
+  ypos 562
+ }
+set Ne7cc8400 [stack 0]
+ Multiply {
+  channels rgb
+  value 0.37
+  name Multiply_tint
+  xpos -348
+  ypos 568
+ }
+ Saturation {
+  saturation {{parent.saturation}}
+  name Saturation3
+  xpos -348
+  ypos 592
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge1
+  xpos -348
+  ypos 629
+  disable {{1-parent.mask}}
+ }
+ Dot {
+  name Dot128
+  xpos -314
+  ypos 667
+ }
+set Ne7bc3000 [stack 0]
+ Dot {
+  name Dot140
+  xpos -223
+  ypos 667
+ }
+set Ne7bc2c00 [stack 0]
+ Dot {
+  name Dot141
+  xpos -130
+  ypos 667
+ }
+set Ne7bc2800 [stack 0]
+ Dot {
+  name Dot142
+  xpos -34
+  ypos 667
+ }
+set Ne7bc2400 [stack 0]
+ Dot {
+  name Dot143
+  xpos 57
+  ypos 667
+ }
+set Ne7bc2000 [stack 0]
+ Dot {
+  name Dot144
+  xpos 146
+  ypos 667
+ }
+set Ne7bc1c00 [stack 0]
+ Dot {
+  name Dot145
+  xpos 238
+  ypos 667
+ }
+set Ne7bc1800 [stack 0]
+ Dot {
+  name Dot146
+  xpos 329
+  ypos 667
+ }
+ Blur {
+  channels rgba
+  size {{parent.size*128}}
+  name Blur8
+  label "\[value size]"
+  xpos 295
+  ypos 685
+ }
+ Multiply {
+  channels rgba
+  value {{parent.brightness/(pow(parent.falloff,7))}}
+  name Multiply82
+  label "\[value value]"
+  xpos 295
+  ypos 721
+ }
+ Dot {
+  name Dot218
+  xpos 329
+  ypos 925
+ }
+push $Ne7bc1800
+ Blur {
+  channels rgba
+  size {{parent.size*64}}
+  name Blur7
+  label "\[value size]"
+  xpos 204
+  ypos 685
+ }
+ Multiply {
+  channels rgba
+  value {{parent.brightness/(pow(parent.falloff,6))}}
+  name Multiply78
+  label "\[value value]"
+  xpos 204
+  ypos 721
+ }
+ Dot {
+  name Dot204
+  xpos 238
+  ypos 901
+ }
+push $Ne7bc1c00
+ Blur {
+  channels rgba
+  size {{parent.size*32}}
+  name Blur6
+  label "\[value size]"
+  xpos 112
+  ypos 685
+ }
+ Multiply {
+  channels rgba
+  value {{parent.brightness/(pow(parent.falloff,5))}}
+  name Multiply77
+  label "\[value value]"
+  xpos 112
+  ypos 721
+ }
+ Dot {
+  name Dot189
+  xpos 146
+  ypos 877
+ }
+push $Ne7bc2000
+ Blur {
+  channels rgba
+  size {{parent.size*16}}
+  name Blur5
+  label "\[value size]"
+  xpos 23
+  ypos 685
+ }
+ Multiply {
+  channels rgba
+  value {{parent.brightness/(pow(parent.falloff,4))}}
+  name Multiply76
+  label "\[value value]"
+  xpos 23
+  ypos 721
+ }
+ Dot {
+  name Dot176
+  xpos 57
+  ypos 853
+ }
+push $Ne7bc2400
+ Blur {
+  channels rgba
+  size {{parent.size*8}}
+  name Blur4
+  label "\[value size]"
+  xpos -68
+  ypos 685
+ }
+ Multiply {
+  channels rgba
+  value {{parent.brightness/(pow(parent.falloff,3))}}
+  name Multiply2
+  label "\[value value]"
+  xpos -68
+  ypos 721
+ }
+ Dot {
+  name Dot160
+  xpos -34
+  ypos 829
+ }
+push $Ne7bc2800
+ Blur {
+  channels rgba
+  size {{parent.size*4}}
+  name Blur3
+  label "\[value size]"
+  xpos -164
+  ypos 685
+ }
+ Multiply {
+  channels rgba
+  value {{parent.brightness/(pow(parent.falloff,2))}}
+  name Multiply74
+  label "\[value value]"
+  xpos -164
+  ypos 721
+ }
+ Dot {
+  name Dot151
+  xpos -130
+  ypos 805
+ }
+push $Ne7bc2c00
+ Blur {
+  channels rgba
+  size {{parent.size*2}}
+  name Blur2
+  label "\[value size]"
+  xpos -257
+  ypos 685
+ }
+ Multiply {
+  channels rgba
+  value {{parent.brightness/parent.falloff}}
+  name Multiply1
+  label "\[value value]"
+  xpos -257
+  ypos 721
+ }
+ Dot {
+  name Dot150
+  xpos -223
+  ypos 781
+ }
+push $Ne7bc3000
+ Blur {
+  channels rgba
+  size {{parent.size}}
+  name Blur1
+  label "\[value size]"
+  xpos -348
+  ypos 685
+ }
+ Multiply {
+  channels rgba
+  value {{parent.brightness}}
+  name Multiply73
+  label "\[value value]"
+  xpos -348
+  ypos 719
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Plus21
+  xpos -348
+  ypos 778
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Plus23
+  xpos -348
+  ypos 802
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Plus24
+  xpos -348
+  ypos 826
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Plus25
+  xpos -348
+  ypos 850
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Plus26
+  xpos -348
+  ypos 874
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Plus32
+  xpos -348
+  ypos 898
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Plus33
+  xpos -348
+  ypos 922
+ }
+push $Ne7cc8400
+ Multiply {
+  channels rgba
+  value {{1-parent.effect_only}}
+  name Multiply3
+  xpos -441
+  ypos 683
+ }
+push $Ne7cc8800
+ ShuffleCopy {
+  inputs 2
+  in2 none
+  red red
+  green green
+  blue blue
+  out {{{parent.Plus.output}}}
+  name ShuffleCopy1
+  xpos -542
+  ypos 683
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Bchannels {{{parent.Plus.output}}}
+  output rgb
+  name Plus
+  xpos -542
+  ypos 922
+ }
+set N94680800 [stack 0]
+ Output {
+  name Output
+  xpos -542
+  ypos 1043
+ }
+push $Ne7cc9000
+push $N94680800
+ Viewer {
+  inputs 2
+  frame 1045
+  frame_range 976-1050
+  fps 30
+  input_process false
+  monitorOutOutputTransform rec709
+  name Viewer1
+  xpos -542
+  ypos 1119
+ }
+end_group

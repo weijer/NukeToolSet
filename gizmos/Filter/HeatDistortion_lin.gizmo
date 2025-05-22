@@ -1,0 +1,274 @@
+#! C:/Program Files/Nuke10.0v1/nuke-10.0.1.dll -nx
+version 10.0 v1
+Gizmo {
+ inputs 2
+ knobChanged "\ntn = nuke.thisNode()\ntk = nuke.thisKnob()\nif tk.name() == \"Manual\":\n    if tk.value() == 1:\n        tn.knob(\"translate1a\").setEnabled(True)\n        tn.knob(\"Velocity2\").setEnabled(False)\n    else:\n        tn.knob(\"translate1a\").setEnabled(False)\n        tn.knob(\"Velocity2\").setEnabled(True)\n"
+ tile_color 0xd63b1bff
+ lock_connections true
+ addUserKnob {20 HeatDistortion_lin}
+ addUserKnob {41 uv_scale l Distortion T IDistort1.uv_scale}
+ addUserKnob {7 Velocity1 l "Distort Velocity" R 0 10}
+ Velocity1 1
+ addUserKnob {41 size_2 l "Noise Size" T N1.size}
+ addUserKnob {41 size_1 l "Blur Size" T Blur3.size}
+ addUserKnob {26 ""}
+ addUserKnob {7 Velocity2 l "Heat velocity" R 0 50}
+ Velocity2 10
+ addUserKnob {6 Manual +STARTLINE}
+ addUserKnob {41 translate1a l translate -STARTLINE T N1.translate}
+ addUserKnob {20 name1 l "linjunyi 林君义" n 1}
+ addUserKnob {26 id1 l "" +STARTLINE T "WeChat：4772491\nlinjy0454@icloud.com\nlinkedin.com/in/junyi-lin-a67bb1118\n\n微信公众号：影视深井冰"}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {52 aa T "nuke.thisNode().knob(\"knobChanged\").setValue('''\nprint 1\n\n''')" +STARTLINE}
+ addUserKnob {52 bb T "nuke.thisNode().knob(\"knobChanged\").setValue('''\ntn = nuke.thisNode()\ntk = nuke.thisKnob()\nif tk.name() == \"Manual\":\n    if tk.value() == 1:\n        tn.knob(\"translate1a\").setEnabled(True)\n        tn.knob(\"Velocity2\").setEnabled(False)\n    else:\n        tn.knob(\"translate1a\").setEnabled(False)\n        tn.knob(\"Velocity2\").setEnabled(True)\n''')" +STARTLINE}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos 354
+  ypos -38
+  number 1
+ }
+ Dot {
+  name Dot2
+  label 微信公众号：影视深井冰
+  note_font_size 60
+  xpos 388
+  ypos 102
+ }
+ Dot {
+  name Dot7
+  label 微信公众号：comp_linjy_v1_exr
+  note_font_size 60
+  xpos 383
+  ypos 238
+ }
+ Dot {
+  name Dot8
+  label "WeChat：4772491\nlinjy0454@icloud.com\nlinkedin.com/in/junyi-lin-a67bb1118"
+  note_font_size 50
+  xpos 389
+  ypos 412
+ }
+ Dot {
+  name Dot1
+  xpos 388
+  ypos 793
+ }
+ Invert {
+  name Invert1
+  xpos -391
+  ypos 783
+ }
+ Input {
+  inputs 0
+  name Source
+  xpos -563
+  ypos -42
+ }
+ Dot {
+  name Dot4
+  xpos -529
+  ypos 90
+ }
+set N72473400 [stack 0]
+ Dot {
+  name Dot6
+  xpos -706
+  ypos 521
+ }
+ Dot {
+  name Dot5
+  xpos -706
+  ypos 793
+ }
+ Noise {
+  inputs 0
+  output alpha
+  size {{parent.N1.size}}
+  zoffset {{parent.N1.zoffset}}
+  lacunarity 1
+  gain 0.7
+  gamma 0.25
+  translate {{parent.N1.translate} {parent.N1.translate}}
+  center {1024 778}
+  name N_B2
+  xpos 142
+  ypos 363
+ }
+ Noise {
+  inputs 0
+  output alpha
+  size {{parent.NT1.size}}
+  zoffset {{parent.NT1.zoffset}}
+  lacunarity 1
+  gain 0.7
+  gamma 0.25
+  translate {{parent.NT1.translate} {parent.NT1.translate}}
+  center {1024 778}
+  name N_B1
+  xpos -66
+  ypos 363
+ }
+ Switch {
+  inputs 2
+  which {{parent.Switch3.which}}
+  name Switch4
+  xpos -66
+  ypos 453
+ }
+ Dot {
+  name Dot11
+  xpos -303
+  ypos 457
+ }
+set N72472000 [stack 0]
+ Blur {
+  channels alpha
+  size 40
+  name Blur4
+  xpos -337
+  ypos 499
+ }
+set N7c13bc00 [stack 0]
+push $N7c13bc00
+push $N72472000
+ Noise {
+  inputs 0
+  size 60
+  zoffset {{1+frame*0.05*(parent.Velocity1)}}
+  lacunarity 1.5
+  gain 0.45
+  gamma 0.2
+  center {1024 778}
+  name N1
+  xpos 53
+  ypos 145
+ }
+ Noise {
+  inputs 0
+  output rgb
+  size {{parent.N1.size+10}}
+  zoffset {{parent.N1.zoffset}}
+  lacunarity 1.5
+  gain 0.35
+  gamma 0.25
+  translate {{parent.N1.translate} {parent.N1.translate}}
+  center {1024 778}
+  name NI2
+  xpos 202
+  ypos 140
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.red
+  name Copy3
+  xpos 53
+  ypos 215
+ }
+ Noise {
+  inputs 0
+  output rgb
+  size {{parent.N1.size}}
+  zoffset {{parent.N1.zoffset}}
+  lacunarity 1.5
+  gain 0.45
+  gamma 0.2
+  translate {0 {frame*parent.Velocity2}}
+  center {1024 778}
+  name NT1
+  xpos -351
+  ypos 11
+ }
+ Noise {
+  inputs 0
+  output rgb
+  size {{parent.N1.size+10}}
+  zoffset {{parent.N1.zoffset}}
+  lacunarity 1.5
+  gain 0.35
+  gamma 0.25
+  translate {{parent.NT1.translate} {parent.NT1.translate}}
+  center {1024 778}
+  name NT2
+  xpos -173
+  ypos 14
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.red
+  name Copy2
+  xpos -279
+  ypos 106
+ }
+ Switch {
+  inputs 2
+  which {{parent.Manual}}
+  name Switch3
+  xpos -279
+  ypos 221
+ }
+push $N72473400
+add_layer {idistortlin idistortlin.u idistortlin.v}
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 idistortlin.u
+  from1 rgba.green
+  to1 idistortlin.v
+  name Copy1
+  xpos -563
+  ypos 208
+ }
+ Blur {
+  inputs 1+1
+  size 30
+  name Blur3
+  xpos -563
+  ypos 447
+ }
+ Multiply {
+  inputs 1+1
+  channels rgb
+  value 0.95
+  name Multiply1
+  xpos -563
+  ypos 505
+ }
+ Gamma {
+  inputs 1+1
+  channels rgb
+  value 0.99
+  name Gamma1
+  xpos -563
+  ypos 551
+ }
+ IDistort {
+  uv idistortlin
+  uv_scale 50
+  maskChannel -rgba.alpha
+  name IDistort1
+  xpos -563
+  ypos 623
+ }
+ Remove {
+  channels idistortlin
+  name Remove1
+  xpos -563
+  ypos 700
+ }
+ Keymix {
+  inputs 3
+  name Keymix1
+  selected true
+  xpos -563
+  ypos 783
+ }
+ Output {
+  name Output1
+  xpos -563
+  ypos 872
+ }
+end_group

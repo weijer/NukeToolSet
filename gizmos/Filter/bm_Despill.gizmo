@@ -1,0 +1,721 @@
+#! C:/Program Files/Nuke7.0v6/Nuke7.0.exe -nx
+version 7.0 v6
+Gizmo {
+inputs 3
+help "A collection of despill algorithms. Based off Andreas Frickinger's \"DespillMadness\" gizmo, but with tweaks and extra features.\n\n\nCreated by Ben McEwan\nwww.benmcewan.com"
+knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\n\nif k.name() in ('replacementChoice', 'showPanel'):\n    replacementChoice = n\['replacementChoice'].value()\n    if replacementChoice == 'Auto':\n        n\['bgColour'].setVisible(False)\n        n\['lumaBoost'].setVisible(False)\n        n\['gammaCorrect'].setVisible(False)\n        n\['bgBlur'].setVisible(False)\n\n    elif replacementChoice == 'Colour':\n        n\['bgColour'].setVisible(True)\n        n\['lumaBoost'].setVisible(True)\n        n\['gammaCorrect'].setVisible(True)\n        n\['bgBlur'].setVisible(False)\n    \n    elif replacementChoice == 'Background':\n\n        n\['bgColour'].setVisible(False)\n        n\['lumaBoost'].setVisible(False)\n        n\['gammaCorrect'].setVisible(False)\n        n\['bgBlur'].setVisible(True)"
+tile_color 0x252525ff
+note_font Verdana
+mapsize {0.15 0.15}
+addUserKnob {20 Options}
+addUserKnob {26 ""}
+addUserKnob {4 colourChoice l Despill M {Green Blue}}
+addUserKnob {4 colorSpace l "   Colourspace" -STARTLINE M {Log Lin "" ""}}
+addUserKnob {4 algorithmChoice l Algorithm M {Average Max "Limit to Red" "Limit to Blue/Green" "" "" ""}}
+addUserKnob {4 replacementChoice l Replacement M {Auto Colour Background}}
+addUserKnob {26 ""}
+addUserKnob {41 mixCtrl l "Despill Amount" T CONTROLLER.mixCtrl}
+addUserKnob {26 ""}
+addUserKnob {19 bgColour l Colour +HIDDEN}
+bgColour {1 0 0 1}
+addUserKnob {7 lumaBoost l "Boost Luminance" +HIDDEN}
+addUserKnob {7 gammaCorrect l "Gamma Correct" +HIDDEN R 0 2}
+gammaCorrect 1
+addUserKnob {14 bgBlur l "Background Blur" +HIDDEN R 0 100}
+bgBlur 35
+addUserKnob {26 BgDiv l "" +STARTLINE}
+addUserKnob {20 grp_fineTune l "F I N E   T U N E" n 1}
+addUserKnob {26 spacer_01 l "" +STARTLINE T " "}
+addUserKnob {19 Grade2_multiply l multiply R 0 4}
+Grade2_multiply 1
+addUserKnob {19 Grade2_gamma l gamma R 0.2 5}
+Grade2_gamma 1
+addUserKnob {19 Grade2_add l offset R -1 1}
+Grade2_add {0 0 0 0}
+addUserKnob {26 ""}
+addUserKnob {20 endGroup n -1}
+addUserKnob {6 outputAlpha l "Output Alpha" +STARTLINE}
+}
+BackdropNode {
+inputs 0
+name " "
+tile_color 0x444444ff
+label " ALPHA"
+note_font "Arial Black"
+note_font_size 42
+xpos 733
+ypos -989
+bdwidth 983
+bdheight 610
+}
+BackdropNode {
+inputs 0
+name " 1"
+tile_color 0x444444ff
+label " RGB"
+note_font "Arial Black"
+note_font_size 42
+xpos -534
+ypos -993
+bdwidth 1113
+bdheight 624
+}
+NoOp {
+inputs 0
+name CONTROLLER
+xpos 893
+ypos 21
+addUserKnob {20 User}
+addUserKnob {7 mixCtrl}
+mixCtrl 1
+}
+Input {
+inputs 0
+name mask
+xpos 156
+ypos 485
+number 1
+}
+Input {
+inputs 0
+name Input
+xpos 23
+ypos -853
+}
+set Nf569d1f0 [stack 0]
+Dot {
+name Dot30
+label "  "
+note_font "Arial Black"
+note_font_size 16
+xpos 1194
+ypos -849
+}
+Dot {
+name Dot16
+xpos 1194
+ypos -762
+}
+set Nf569d8d0 [stack 0]
+Dot {
+name Dot17
+xpos 1293
+ypos -718
+}
+set Nf569dc40 [stack 0]
+Dot {
+name Dot21
+xpos 1388
+ypos -718
+}
+set Nf569dfb0 [stack 0]
+Dot {
+name Dot23
+xpos 1498
+ypos -718
+}
+set Nf569e320 [stack 0]
+Dot {
+name Dot24
+xpos 1600
+ypos -717
+}
+Expression {
+temp_name0 spill
+temp_expr0 b>g?g:b
+expr2 spill
+expr3 b-spill
+mix {{parent.replacementChoice==0?CONTROLLER.mixCtrl:1}}
+name blueLimitGreen1
+xpos 1566
+ypos -628
+}
+push $Nf569e320
+Expression {
+temp_name0 spill
+temp_expr0 b>r?r:b
+expr2 spill
+expr3 b-spill
+mix {{parent.replacementChoice==0?CONTROLLER.mixCtrl:1}}
+name blueLimitRed1
+xpos 1464
+ypos -633
+}
+push $Nf569dfb0
+Expression {
+temp_name0 spill
+temp_expr0 b>max(r,g)?max(r,g):b
+expr2 spill
+expr3 b-spill
+mix {{parent.replacementChoice==0?CONTROLLER.mixCtrl:1}}
+name blueMax1
+xpos 1354
+ypos -630
+}
+push $Nf569dc40
+Expression {
+temp_name0 spill
+temp_expr0 b>((r+g)/2)?((r+g)/2):b
+expr2 spill
+expr3 b-spill
+mix {{parent.replacementChoice==0?CONTROLLER.mixCtrl:1}}
+name blueAverage1
+xpos 1259
+ypos -629
+}
+Switch {
+inputs 4
+which {{algorithmChoice i}}
+name algorithmChoice2
+xpos 1406
+ypos -552
+}
+push $Nf569d8d0
+Dot {
+name Dot25
+xpos 1118
+ypos -712
+}
+set Nf569f7c0 [stack 0]
+Expression {
+temp_name0 spill
+temp_expr0 g>b?b:g
+expr1 spill
+expr3 g-spill
+mix {{parent.replacementChoice==0?CONTROLLER.mixCtrl:1}}
+name greenLimitBlue1
+xpos 1084
+ypos -632
+}
+push $Nf569f7c0
+Dot {
+name Dot26
+xpos 1027
+ypos -712
+}
+set Nf569fea0 [stack 0]
+Expression {
+temp_name0 spill
+temp_expr0 g>r?r:g
+expr1 spill
+expr3 g-spill
+mix {{parent.replacementChoice==0?CONTROLLER.mixCtrl:1}}
+name greenLimitRed1
+xpos 993
+ypos -633
+}
+push $Nf569fea0
+Dot {
+name Dot28
+xpos 930
+ypos -712
+}
+set Nf56a0580 [stack 0]
+Expression {
+temp_name0 spill
+temp_expr0 g>max(r,b)?max(r,b):g
+expr1 spill
+expr3 g-spill
+mix {{parent.replacementChoice==0?CONTROLLER.mixCtrl:1}}
+name greenMax1
+xpos 896
+ypos -630
+}
+push $Nf56a0580
+Dot {
+name Dot29
+xpos 837
+ypos -712
+}
+Expression {
+temp_name0 spill
+temp_expr0 g>((r+b)/2)?((r+b)/2):g
+expr1 spill
+expr3 g-spill
+mix {{parent.replacementChoice==0?CONTROLLER.mixCtrl:1}}
+name greenAverage1
+xpos 803
+ypos -624
+}
+Switch {
+inputs 4
+which {{algorithmChoice i}}
+name algorithmChoice3
+xpos 944
+ypos -558
+}
+Switch {
+inputs 2
+which {{colourChoice i}}
+name colourChoice1
+xpos 1158
+ypos -496
+}
+Dot {
+name Dot31
+label "  "
+note_font "Arial Black"
+note_font_size 16
+xpos 1192
+ypos -461
+}
+push $Nf569d1f0
+OCIOLogConvert {
+operation "lin to log"
+name OCIOLogConvert1
+xpos 23
+ypos -807
+disable {{colorSpace==0?0:1}}
+}
+Dot {
+name Dot1
+xpos 57
+ypos -763
+}
+set Nf56a1a20 [stack 0]
+Dot {
+name Dot9
+xpos 156
+ypos -719
+}
+set Nf56a1d90 [stack 0]
+Dot {
+name Dot7
+xpos 251
+ypos -719
+}
+set Nf56a2100 [stack 0]
+Dot {
+name Dot6
+xpos 361
+ypos -719
+}
+set Nf56a2470 [stack 0]
+Dot {
+name Dot5
+xpos 463
+ypos -718
+}
+Expression {
+temp_name0 spill
+temp_expr0 b>g?g:b
+expr2 spill
+expr3 b-spill
+mix {{parent.replacementChoice==0?CONTROLLER.mixCtrl:1}}
+name blueLimitGreen
+xpos 429
+ypos -628
+}
+push $Nf56a2470
+Expression {
+temp_name0 spill
+temp_expr0 b>r?r:b
+expr2 spill
+expr3 b-spill
+mix {{parent.replacementChoice==0?CONTROLLER.mixCtrl:1}}
+name blueLimitRed
+xpos 327
+ypos -634
+}
+push $Nf56a2100
+Expression {
+temp_name0 spill
+temp_expr0 b>max(r,g)?max(r,g):b
+expr2 spill
+expr3 b-spill
+mix {{parent.replacementChoice==0?CONTROLLER.mixCtrl:1}}
+name blueMax
+xpos 217
+ypos -632
+}
+push $Nf56a1d90
+Expression {
+temp_name0 spill
+temp_expr0 b>((r+g)/2)?((r+g)/2):b
+expr2 spill
+expr3 b-spill
+mix {{parent.replacementChoice==0?CONTROLLER.mixCtrl:1}}
+name blueAverage
+xpos 122
+ypos -631
+}
+Switch {
+inputs 4
+which {{algorithmChoice i}}
+name algorithmChoice1
+xpos 269
+ypos -553
+}
+push $Nf56a1a20
+Dot {
+name Dot8
+xpos -19
+ypos -713
+}
+set Nf5935990 [stack 0]
+Expression {
+temp_name0 spill
+temp_expr0 g>b?b:g
+expr1 spill
+expr3 g-spill
+mix {{parent.replacementChoice==0?CONTROLLER.mixCtrl:1}}
+name greenLimitBlue
+xpos -53
+ypos -631
+}
+push $Nf5935990
+Dot {
+name Dot4
+xpos -110
+ypos -713
+}
+set Nf5936070 [stack 0]
+Expression {
+temp_name0 spill
+temp_expr0 g>r?r:g
+expr1 spill
+expr3 g-spill
+mix {{parent.replacementChoice==0?CONTROLLER.mixCtrl:1}}
+name greenLimitRed
+xpos -144
+ypos -634
+}
+push $Nf5936070
+Dot {
+name Dot3
+xpos -207
+ypos -713
+}
+set Nf5936750 [stack 0]
+Expression {
+temp_name0 spill
+temp_expr0 g>max(r,b)?max(r,b):g
+expr1 spill
+expr3 g-spill
+mix {{parent.replacementChoice==0?CONTROLLER.mixCtrl:1}}
+name greenMax
+xpos -241
+ypos -626
+}
+push $Nf5936750
+Dot {
+name Dot2
+xpos -300
+ypos -713
+}
+Expression {
+temp_name0 spill
+temp_expr0 g>((r+b)/2)?((r+b)/2):g
+expr1 spill
+expr3 g-spill
+mix {{parent.replacementChoice==0?CONTROLLER.mixCtrl:1}}
+name greenAverage
+xpos -334
+ypos -625
+}
+Switch {
+inputs 4
+which {{algorithmChoice i}}
+name algorithmChoice
+xpos -209
+ypos -510
+}
+Switch {
+inputs 2
+which {{colourChoice i}}
+name colourChoice
+xpos 21
+ypos -497
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy4
+xpos 21
+ypos -471
+}
+set Nf5937510 [stack 0]
+Dot {
+name Dot19
+label "  "
+note_font "Arial Black"
+note_font_size 16
+xpos -308
+ypos -387
+}
+Dot {
+name Dot20
+label "  "
+note_font "Arial Black"
+note_font_size 16
+xpos -308
+ypos -46
+}
+set Nf5937bf0 [stack 0]
+Dot {
+name Dot22
+label "  "
+note_font "Arial Black"
+note_font_size 16
+xpos -308
+ypos 125
+}
+push $Nf5937510
+Grade {
+channels alpha
+whitepoint {{parent.lumaBoost*-1+1}}
+gamma {{parent.gammaCorrect}}
+black_clamp false
+name Grade1
+xpos 21
+ypos -393
+}
+set Nf59382d0 [stack 0]
+Dot {
+name Dot18
+label "  "
+note_font "Arial Black"
+note_font_size 16
+xpos 55
+ypos -256
+}
+set Nf59389b0 [stack 0]
+Input {
+inputs 0
+name bg
+xpos 247
+ypos -393
+number 2
+}
+Blur {
+channels rgba
+size {{parent.bgBlur} {parent.bgBlur}}
+name Blur1
+xpos 247
+ypos -367
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy2
+xpos 247
+ypos -266
+}
+Premult {
+name Premult1
+xpos 247
+ypos -228
+}
+push $Nf59389b0
+Merge2 {
+inputs 2
+operation plus
+name Multiply1
+xpos 247
+ypos -50
+}
+push $Nf56a1a20
+Dissolve {
+inputs 2
+channels rgba
+which {{parent.replacementChoice==0?0:CONTROLLER.mixCtrl}}
+name Dissolve3
+xpos 130
+ypos -51
+}
+push $Nf59389b0
+push $Nf59382d0
+Shuffle {
+red white
+green white
+blue white
+alpha white
+name Shuffle2
+xpos -146
+ypos -345
+}
+Grade {
+white {{parent.bgColour} {parent.bgColour} {parent.bgColour} {parent.bgColour}}
+black_clamp false
+name Grade3
+selected true
+xpos -146
+ypos -319
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy3
+xpos -146
+ypos -266
+}
+Premult {
+name Premult2
+xpos -146
+ypos -228
+}
+push $Nf59389b0
+Merge2 {
+inputs 2
+operation plus
+name Multiply
+xpos 21
+ypos -162
+}
+push $Nf56a1a20
+Dissolve {
+inputs 2
+channels rgba
+which {{parent.replacementChoice==0?0:CONTROLLER.mixCtrl}}
+name Dissolve2
+xpos -33
+ypos -97
+}
+push $Nf5937bf0
+Switch {
+inputs 3
+which {{parent.replacementChoice}}
+name Switch2
+xpos 21
+ypos -50
+}
+Grade {
+inputs 1+1
+multiply {{parent.Grade2_multiply.r} {parent.Grade2_multiply.g} {parent.Grade2_multiply.b} {parent.Grade2_multiply.a}}
+add {{parent.Grade2_add.r} {parent.Grade2_add.g} {parent.Grade2_add.b} {parent.Grade2_add.a}}
+gamma {{parent.Grade2_gamma.r} {parent.Grade2_gamma.g} {parent.Grade2_gamma.b} {parent.Grade2_gamma.a}}
+black_clamp false
+unpremult -rgba.alpha
+name Grade2
+xpos 21
+ypos 121
+}
+OCIOLogConvert {
+operation "log to lin"
+name OCIOLogConvert2
+xpos 21
+ypos 310
+disable {{colorSpace==0?0:1}}
+}
+set Nf593b660 [stack 0]
+Remove {
+name Remove2
+xpos 304
+ypos 429
+}
+Shuffle {
+red white
+green white
+blue white
+alpha white
+name Shuffle1
+xpos 304
+ypos 536
+}
+Switch {
+inputs 2
+which {{"\[exists parent.input1] "}}
+name Switch1
+xpos 156
+ypos 536
+}
+Expression {
+channel0 {-rgba.red -rgba.green -rgba.blue none}
+expr0 0
+channel1 {-rgba.red -rgba.green -rgba.blue none}
+expr1 0
+channel2 {-rgba.red -rgba.green -rgba.blue none}
+expr2 0
+channel3 {rgba.alpha none none rgba.alpha}
+expr3 a==0?0:a
+name AlphaError1
+xpos 156
+ypos 567
+}
+push $Nf593b660
+Dot {
+name Dot14
+xpos 55
+ypos 407
+}
+set Nf593c420 [stack 0]
+push $Nf569d1f0
+Dot {
+name Dot11
+xpos -439
+ypos -849
+}
+Dot {
+name Dot27
+label "  "
+note_font "Arial Black"
+note_font_size 16
+xpos -464
+ypos -824
+}
+Dot {
+name Dot10
+xpos -464
+ypos 456
+}
+set Nf593ce70 [stack 0]
+Expression {
+channel0 {-rgba.red -rgba.green -rgba.blue none}
+expr0 0
+channel1 {-rgba.red -rgba.green -rgba.blue none}
+expr1 0
+channel2 {-rgba.red -rgba.green -rgba.blue none}
+expr2 0
+channel3 {rgba.alpha none none rgba.alpha}
+expr3 a==0?0:a
+name AlphaError
+xpos -257
+ypos 453
+}
+push $Nf593c420
+Dot {
+name Dot13
+xpos -52
+ypos 407
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy1
+xpos -86
+ypos 447
+}
+Dot {
+name Dot12
+xpos -52
+ypos 513
+}
+Switch {
+inputs 2
+which {{outputAlpha i x1 0}}
+name outputAlpha
+xpos 21
+ypos 509
+}
+push $Nf593ce70
+Dot {
+name Dot15
+xpos -464
+ypos 570
+}
+Keymix {
+inputs 3
+name Keymix1
+xpos 21
+ypos 561
+}
+Output {
+name Output1
+xpos 21
+ypos 714
+}
+end_group
