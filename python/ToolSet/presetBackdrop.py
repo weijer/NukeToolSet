@@ -53,7 +53,13 @@ def presetBackdrop():
         r = presetColor[0]
         g = presetColor[1]
         b = presetColor[2]
-        hexColour = int('%02x%02x%02x%02x' % (r * 255, g * 255, b * 255, 1), 16)
+        # 显式转换为整数
+        hexColour = int('%02x%02x%02x%02x' % (
+            int(r * 255),
+            int(g * 255),
+            int(b * 255),
+            1
+        ), 16)
 
         if presetIcon == '':
             icon = ''
