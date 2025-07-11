@@ -793,6 +793,13 @@ nuke_config = {
                     "icon": "",
                     "type": "gizmo"
                 },
+                {
+                    "name": "Lighting/LensFlare",
+                    "command": "LensFlare",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
                 # Lighting icon
                 {
                     "name": "Lighting",
