@@ -779,6 +779,20 @@ nuke_config = {
                     "icon": "",
                     "type": "gizmo"
                 },
+                {
+                    "name": "Lighting/FlareFactory",
+                    "command": "FlareFactory",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Lighting/FlareSuperStar",
+                    "command": "FlareSuperStar",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
                 # Lighting icon
                 {
                     "name": "Lighting",
