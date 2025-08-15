@@ -288,3 +288,35 @@ def run_releaseNotes():
     nuke.message('<p style="color:#99CCFF;font-weight:600">Nuke ToolSet Ver1.0</p>'
                  '<p  style="color:#6699cc;font-weight:600">By weijer</p>'
                  '<p  style="color:#99CCFF;font-weight:600">联系QQ：250557277</p>')
+
+
+def run_setAcesColorspace():
+    """
+    run set_acescg_colorspace script
+    :return:
+    """
+    ToolSet.set_acescg_colorspace.main()
+
+
+def run_setSrgbColorspace():
+    """
+    run set_srgb_colorspace script
+    :return:
+    """
+    ToolSet.set_srgb_colorspace.main()
+
+
+def run_createAcesEXRWriteNode():
+    """
+    run create_acescg_exr_write_node script
+    :return:
+    """
+    ToolSet.create_acescg_exr_write_node.main()
+
+
+def run_createAcesMovWriteNode():
+    """
+    run create_acescg_mov_write_node script
+    :return:
+    """
+    ToolSet.create_acescg_mov_write_node.main()
