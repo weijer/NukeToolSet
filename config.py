@@ -896,10 +896,38 @@ nuke_config = {
                     "icon": "NukeFXSExporter.png",
                     "type": "python"
                 },
-                 {
+                {
                     "name": "ToolSet/readFromWrite",
                     "command": "command.run_readFromWrite()",
                     "shortcut": "shift+r",
+                    "icon": "",
+                    "type": "python"
+                },
+                {
+                    "name": "ToolSet/setAcesColorspace",
+                    "command": "command.run_setAcesColorspace()",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "python"
+                },
+                {
+                    "name": "ToolSet/setSrgbColorspace",
+                    "command": "command.run_setSrgbColorspace()",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "python"
+                },
+                {
+                    "name": "ToolSet/createAcesEXRWriteNode",
+                    "command": "command.run_createAcesEXRWriteNode()",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "python"
+                },
+                {
+                    "name": "ToolSet/createAcesMovWriteNode",
+                    "command": "command.run_createAcesMovWriteNode()",
+                    "shortcut": "",
                     "icon": "",
                     "type": "python"
                 },
