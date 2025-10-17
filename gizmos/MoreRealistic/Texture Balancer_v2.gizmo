@@ -1,0 +1,76 @@
+#! D:/NUKE/NUKE11.3/Nuke11.3v1/nuke-11.3.1.dll -nx
+
+Group {
+ name TextureBalancer
+ tile_color 0x20a7dbff
+ addUserKnob {20 User l Parameters}
+ addUserKnob {20 SampleGroup l Sample n 1}
+ addUserKnob {12 positions}
+ positions {100 100}
+ addUserKnob {26 text l "" -STARTLINE T "   "}
+ addUserKnob {41 go l Analysis！ -STARTLINE T CurveTool1.go}
+ addUserKnob {26 text5_1 l "" +STARTLINE}
+ addUserKnob {26 text5 l "" +STARTLINE T " "}
+ addUserKnob {41 sample l "Sample color" T NoOp1.sample}
+ addUserKnob {41 Maxcolor l "Max color" T NoOp1.Maxcolor}
+ addUserKnob {41 Mincolor l "Min color" T NoOp1.Mincolor}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 text2 l "" +STARTLINE}
+ addUserKnob {41 ROI T CurveTool1.ROI}
+ addUserKnob {26 text3 l "" -STARTLINE T "      "}
+ addUserKnob {41 resetROI l Reset -STARTLINE T CurveTool1.resetROI}
+}
+ Input {
+  inputs 0
+  name Textures
+  xpos -135
+  ypos -130
+ }
+ CurveTool {
+  operation "Max Luma Pixel"
+  ROI {{curve} {curve} {input.width} {input.height}}
+  intensitydata {0 0 0 0}
+  maxlumapixdata {{curve} {curve}}
+  maxlumapixvalue {{curve} {curve} 0}
+  minlumapixdata {{curve} {curve}}
+  minlumapixvalue {{curve} {curve} 0}
+  name CurveTool1
+  xpos -135
+  ypos -64
+ }
+ NoOp {
+  name NoOp1
+  xpos -135
+  ypos -12
+  addUserKnob {20 User}
+  addUserKnob {19 sample l "Sample color"}
+  sample {{"\[sample this red positions.x positions.y]"} {"\[sample this green positions.x positions.y]"} {"\[sample this blue positions.x positions.y]"} 0}
+  addUserKnob {6 sample_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 sample_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 sample_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 sample_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 sample_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 sample_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 sample_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 simple_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {7 Maxcolor l "Max color"}
+  Maxcolor {{parent.CurveTool1.maxlumapixvalue}}
+  addUserKnob {7 Mincolor l "Min color"}
+  Mincolor {{parent.CurveTool1.minlumapixvalue}}
+ }
+ Expression {
+  temp_name0 factor
+  temp_expr0 0.5/max(abs(NoOp1.sample.r-NoOp1.Maxcolor),abs(NoOp1.sample.r-NoOp1.Mincolor))
+  expr0 r>NoOp1.sample.r?(0.5+(r-NoOp1.sample.r)*factor):(0.5-(NoOp1.sample.r-r)*factor)
+  expr1 g>NoOp1.sample.r?(0.5+(g-NoOp1.sample.r)*factor):(0.5-(NoOp1.sample.r-g)*factor)
+  expr2 b>NoOp1.sample.r?(0.5+(b-NoOp1.sample.r)*factor):(0.5-(NoOp1.sample.r-b)*factor)
+  name Expression1
+  xpos -135
+  ypos 47
+ }
+ Output {
+  name Output1
+  xpos -135
+  ypos 147
+ }
+end_group

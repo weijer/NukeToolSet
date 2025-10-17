@@ -1,0 +1,223 @@
+set cut_paste_input [stack 0]
+push $cut_paste_input
+Group {
+ name RGBsaparate1
+ selected true
+ xpos 2024
+ ypos 2099
+ addUserKnob {20 Paramaters}
+ addUserKnob {6 On +STARTLINE}
+ On true
+ addUserKnob {6 UseRadialMode l "Radial Mode" -STARTLINE}
+ UseRadialMode true
+ addUserKnob {6 showMatte l "Show matte" -STARTLINE}
+ addUserKnob {7 radius l Radius}
+ radius 1
+ addUserKnob {41 softness T Radial1.softness}
+ addUserKnob {20 Horizontal2 l Horizontal n 1}
+ addUserKnob {7 red_h R -50 50}
+ addUserKnob {7 green_h R -50 50}
+ addUserKnob {7 blue_h R -50 50}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 Vertical_1 l Vertical n 1}
+ addUserKnob {7 red_v R -50 50}
+ addUserKnob {7 green_v R -50 50}
+ addUserKnob {7 blue_v R -50 50}
+ addUserKnob {20 endGroup_5 l endGroup n -1}
+ addUserKnob {20 scale l Scale n 1}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {7 red_scale}
+ red_scale 0.185
+ addUserKnob {7 green_scale}
+ green_scale 0.03
+ addUserKnob {7 blue_scale}
+}
+ NoOp {
+  inputs 0
+  name NoOp1
+  xpos 83
+  ypos -463
+  addUserKnob {20 Paramaters}
+  addUserKnob {20 X_slider n 1}
+  addUserKnob {7 red_h R -50 50}
+  red_h {{parent.red_h}}
+  addUserKnob {7 green_h R -50 50}
+  green_h {{parent.green_h}}
+  addUserKnob {7 blue_h R -50 50}
+  blue_h {{parent.blue_h}}
+  addUserKnob {20 endGroup_3 l endGroup n -1}
+  addUserKnob {20 Y_slider n 1}
+  addUserKnob {7 red_v R -50 50}
+  red_v {{parent.red_v}}
+  addUserKnob {7 green_v R -50 50}
+  green_v {{parent.green_v}}
+  addUserKnob {7 blue_v R -50 50}
+  blue_v {{parent.blue_v}}
+  addUserKnob {20 endGroup_4 l endGroup n -1}
+ }
+ Reformat {
+  inputs 0
+  type "to box"
+  box_width {{root.width}}
+  box_height {{root.height}}
+  box_fixed true
+  name Reformat1
+  selected true
+  xpos 111
+  ypos -103
+ }
+ set C631fd170 [stack 0]
+ Radial {
+  area {{input.width/2-radius/2*input.width} {input.height/2+radius/2*input.width} {input.width/2+radius/2*input.width} {input.height/2-radius/2*input.width}}
+  name Radial1
+  xpos 111
+  ypos -72
+ }
+ Invert {
+  name Invert1
+  xpos 111
+  ypos -25
+ }
+set N5e6ba890 [stack 0]
+push $N5e6ba890
+ Shuffle {
+  alpha white
+  name Shuffle1
+  xpos 227
+  ypos -19
+  disable {{parent.UseRadialMode}}
+ }
+ Input {
+  inputs 0
+  name Img
+  xpos 558
+  ypos -540
+ }
+set N66f7e160 [stack 0]
+ Dot {
+  name Dot2
+  xpos 592
+  ypos -470
+ }
+set N9881a280 [stack 0]
+ Dot {
+  name Dot4
+  xpos 265
+  ypos -470
+ }
+ Dot {
+  name Dot1
+  xpos 265
+  ypos -363
+ }
+set Nc42f8490 [stack 0]
+ Shuffle {
+  red black
+  blue black
+  name green
+  xpos 83
+  ypos -300
+ }
+ Transform {
+  translate {{parent.NoOp1.green_h} {parent.NoOp1.green_v}}
+  center {{input.width/2} {input.height/2}}
+  name green_transform
+  xpos 83
+  ypos -248
+ }
+ GodRays {
+  scale {{1+0.1*parent.green_scale}}
+  name GodRays3
+  xpos 83
+  ypos -216
+ }
+push 0
+push $Nc42f8490
+ Shuffle {
+  green black
+  blue black
+  name red
+  xpos 368
+  ypos -303
+ }
+ Transform {
+  translate {{parent.NoOp1.red_h} {parent.NoOp1.red_v}}
+  center {{parent.green_transform.center} {parent.green_transform.center}}
+  name red_transform
+  xpos 368
+  ypos -239
+ }
+ GodRays {
+  scale {{1+0.1*parent.red_scale x1032 0 x1034 0}}
+  name GodRays1
+  xpos 368
+  ypos -210
+ }
+push $Nc42f8490
+ Shuffle {
+  red black
+  green black
+  name blue
+  xpos 231
+  ypos -299
+ }
+ Transform {
+  translate {{parent.NoOp1.blue_h} {parent.NoOp1.blue_v}}
+  center {{parent.green_transform.center} {parent.green_transform.center}}
+  name blue_transform
+  xpos 231
+  ypos -243
+ }
+ GodRays {
+  scale {{1+0.1*parent.blue_scale}}
+  name GodRays2
+  xpos 231
+  ypos -210
+ }
+ Merge2 {
+  inputs 3+1
+  operation max
+  name Merge1
+  xpos 231
+  ypos -122
+ }
+push $Nc42f8490
+ Dot {
+  name Dot3
+  xpos 466
+  ypos -363
+ }
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 432
+  ypos -25
+ }
+push $N9881a280
+ Switch {
+  inputs 2
+  which {{parent.On}}
+  name Switch1
+  xpos 558
+  ypos -19
+ }
+ Switch {
+  inputs 2
+  which {{showMatte}}
+  name Switch2
+  xpos 558
+  ypos 84
+ }
+ Output {
+  name Output1
+  xpos 558
+  ypos 152
+ }
+push $N66f7e160
+clone $C631fd170 {
+  xpos 700
+  ypos -472
+  selected false
+ }
+end_group
+

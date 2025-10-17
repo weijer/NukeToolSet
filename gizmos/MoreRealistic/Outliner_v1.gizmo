@@ -1,0 +1,149 @@
+#! D:/NUKE/Nuke10.5v1/nuke-10.5.1.dll -nx
+
+Group {
+ name Outliner
+ inputs 2
+ addUserKnob {20 properties}
+ addUserKnob {6 SubtractMatte l "Subtract Matte" +STARTLINE}
+ addUserKnob {41 filter T FilterErode1.filter}
+ addUserKnob {7 innersize l "Inner size" R -100 100}
+ addUserKnob {7 outsize l "Outer size" R -100 100}
+ addUserKnob {41 size_3 l "inner blur size" T Blur8.size}
+ addUserKnob {41 size_2 l "out blur size" T Blur1.size}
+ addUserKnob {6 Premult l "Premult RGB" +STARTLINE}
+ addUserKnob {41 color T Constant1.color}
+}
+ Input {
+  inputs 0
+  name Image
+  xpos 138
+  ypos 490
+ }
+set N90576000 [stack 0]
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle20
+  xpos 72
+  ypos 581
+ }
+ FilterErode {
+  size {{-outsize}}
+  filter gaussian
+  name FilterErode1
+  xpos 66
+  ypos 633
+ }
+ Blur {
+  name Blur1
+  xpos 66
+  ypos 719
+ }
+push $N90576000
+ Shuffle {
+  in alpha
+  red black
+  green black
+  blue black
+  name Shuffle21
+  xpos 218
+  ypos 582
+ }
+ FilterErode {
+  size {{-innersize}}
+  filter {{FilterErode1.filter}}
+  name FilterErode2
+  selected true
+  xpos 218
+  ypos 635
+ }
+ Blur {
+  name Blur8
+  xpos 218
+  ypos 715
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge8
+  xpos 148
+  ypos 809
+ }
+set N6c6cec00 [stack 0]
+push $N6c6cec00
+ Input {
+  inputs 0
+  name Matte
+  xpos 345
+  ypos 817
+  number 1
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge1
+  xpos 273
+  ypos 889
+ }
+ Dot {
+  name Dot1
+  xpos 307
+  ypos 952
+ }
+ Switch {
+  inputs 2
+  which {{!parent.SubtractMatte}}
+  name Switch1
+  xpos 148
+  ypos 948
+ }
+set Na9cd5a80 [stack 0]
+ Dot {
+  name Dot2
+  xpos 38
+  ypos 952
+ }
+push $Na9cd5a80
+ Constant {
+  inputs 0
+  channels rgb
+  color {0.124274 0.76689 1 0}
+  color_panelDropped true
+  name Constant1
+  xpos 319
+  ypos 1034
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 148
+  ypos 1051
+ }
+ Premult {
+  name Premult1
+  xpos 148
+  ypos 1138
+ }
+ Switch {
+  inputs 2
+  which {{!parent.Premult}}
+  name Switch2
+  xpos 6
+  ypos 1138
+ }
+ Output {
+  name Output1
+  xpos 6
+  ypos 1243
+ }
+push $N6c6cec00
+ Viewer {
+  frame_range 1-151
+  name Viewer1
+  xpos 375
+  ypos 695
+ }
+end_group

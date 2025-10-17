@@ -1,0 +1,121 @@
+#! C:/Program Files/Nuke13.2v1/nuke-13.2.1.dll -nx
+version 13.2 v1
+Gizmo {
+ inputs 2
+ knobChanged "n = nuke.thisNode()\nif n\['type'].value() == \"Linear Blur\":\n    n\['center'].setVisible(False)\n    n\['angle'].setVisible(True)\nelse:\n    n\['center'].setVisible(True)\n    n\['angle'].setVisible(False)"
+ tile_color 0x895623ff
+ addUserKnob {20 User}
+ addUserKnob {4 type M {"Radial Blur" "Rotation Blur" "Linear Blur"}}
+ addUserKnob {7 angle +HIDDEN R 0 90}
+ angle 90
+ addUserKnob {12 center}
+ center {968 430}
+ addUserKnob {14 amout R 0 100}
+ amout 1
+}
+ Input {
+  inputs 0
+  name mask
+  xpos -146
+  number 1
+ }
+ Expression {
+  inputs 0
+  expr0 sin((PI/180)*angle_in+PI/2)
+  expr1 cos((PI/180)*angle_in+PI/2)
+  name linear_blur
+  xpos -264
+  ypos -28
+  addUserKnob {20 User}
+  addUserKnob {7 angle_in R 0 90}
+  angle_in {{angle}}
+ }
+ Multiply {
+  channels rgb
+  value 200
+  name Multiply1
+  xpos -264
+  ypos 12
+ }
+ Expression {
+  inputs 0
+  expr0 -(y-pos.y)
+  expr1 x-pos.x
+  name rotate_blur
+  xpos -525
+  ypos 12
+  addUserKnob {20 User}
+  addUserKnob {12 pos}
+  pos {{center.x} {center.y}}
+ }
+ Expression {
+  inputs 0
+  expr0 x-pos.x
+  expr1 y-pos.y
+  name radial_blur
+  xpos -404
+  ypos -66
+  addUserKnob {20 User}
+  addUserKnob {12 pos}
+  pos {{center.x} {center.y}}
+ }
+ Switch {
+  inputs 3
+  which {{type}}
+  name Switch1
+  xpos -404
+  ypos 12
+ }
+ Dot {
+  name Dot1
+  xpos -370
+  ypos 103
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge1
+  xpos -146
+  ypos 99
+  disable {{"!\[exists parent.input1]"}}
+ }
+ Input {
+  inputs 0
+  name image
+  xpos 0
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 forward.u
+  from1 rgba.green
+  to1 forward.v
+  name Copy1
+  xpos 0
+  ypos 86
+ }
+ VectorBlur2 {
+  channels rgba
+  uv forward
+  mv_presets PRMan
+  blur_uv uniform
+  scale {{amout/20}}
+  soft_lines true
+  blur_inside false
+  name VectorBlur1
+  selected true
+  xpos 0
+  ypos 159
+ }
+ Remove {
+  channels forward
+  name Remove1
+  xpos 0
+  ypos 209
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 300
+ }
+end_group

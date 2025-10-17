@@ -1,0 +1,71 @@
+#! C:/Program Files/Nuke7.0v4/Nuke7.0.exe -nx
+version 7.0 v4
+Gizmo {
+ addUserKnob {20 getZ}
+ addUserKnob {41 depth T Shuffle4.in}
+ addUserKnob {41 white l gain T Grade2.white}
+ addUserKnob {41 gamma T Grade2.gamma}
+ addUserKnob {41 white_1 l 2_gain T Grade3.white}
+ addUserKnob {41 gamma_1 l 2_gamma T Grade3.gamma}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 686
+  ypos -313
+ }
+ Dot {
+  name Dot3
+  xpos 720
+  ypos -273
+ }
+set N2654e2e0 [stack 0]
+ Dot {
+  name Dot4
+  xpos 847
+  ypos -273
+ }
+push $N2654e2e0
+ Shuffle {
+  in depth
+  name Shuffle4
+  xpos 686
+  ypos -241
+ }
+ Grade {
+  white 0.001
+  white_clamp true
+  name Grade2
+  xpos 686
+  ypos -193
+ }
+ Invert {
+  name Invert1
+  xpos 686
+  ypos -152
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos 813
+  ypos -152
+ }
+ Grade {
+  white_clamp true
+  name Grade3
+  xpos 813
+  ypos -97
+ }
+ Premult {
+  name Premult1
+  xpos 813
+  ypos -43
+ }
+ Output {
+  name Output1
+  xpos 813
+  ypos 57
+ }
+end_group

@@ -1,0 +1,74 @@
+#! /mnt/work/software/nuke/Nuke12.1v1/libnuke-12.1.1.so -nx
+
+Group {
+ name RemoveNoise
+ inputs 2
+ addUserKnob {20 User}
+ addUserKnob {6 mask l "Subtract mask" +STARTLINE}
+ addUserKnob {41 filter T FilterErode1.filter}
+ addUserKnob {41 size T FilterErode1.size}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos -31
+  ypos 201
+  number 1
+ }
+ Input {
+  inputs 0
+  name Image
+  xpos -50
+  ypos 40
+ }
+ Dot {
+  name Dot1
+  xpos -16
+  ypos 129
+ }
+set N1dc70650 [stack 0]
+ Dot {
+  name Dot3
+  xpos 122
+  ypos 129
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  xpos 88
+  ypos 226
+ }
+ FilterErode {
+  size 0
+  name FilterErode1
+  xpos 88
+  ypos 290
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge1
+  selected true
+  xpos -31
+  ypos 296
+  disable {{!parent.mask}}
+ }
+push $N1dc70650
+ Dot {
+  name Dot2
+  xpos -117
+  ypos 129
+ }
+ Multiply {
+  inputs 1+1
+  value 0
+  name Multiply1
+  xpos -151
+  ypos 290
+ }
+ Output {
+  name Output1
+  xpos -151
+  ypos 390
+ }
+end_group

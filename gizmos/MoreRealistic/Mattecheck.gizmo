@@ -1,0 +1,183 @@
+#! D:/NUKE/Nuke10.0v4/nuke-10.0.4.dll -nx
+
+Group {
+ inputs 3
+ name Mattecheck
+ tile_color 0xff5107ff
+ addUserKnob {20 User l Parameters}
+ addUserKnob {20 Type n 1}
+ addUserKnob {6 Check_roto l "Check roto" +STARTLINE}
+ addUserKnob {6 combine t "It will combine the source image with the BG image." +STARTLINE}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 BG_Color l "BG Color" n 1}
+ addUserKnob {41 color l "BG color" T Constant1.color}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 Devideline l "" +STARTLINE}
+ addUserKnob {20 Gain n 1}
+ addUserKnob {6 Gain_roto_area l "Gain roto area" +STARTLINE}
+ addUserKnob {41 white l "Color gain" T Grade1.white}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 Switch n 1}
+ addUserKnob {6 Premult_only l "Premult only" +STARTLINE}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+}
+ Input {
+  inputs 0
+  name roto
+  xpos -190
+  ypos -730
+  number 1
+ }
+ Dot {
+  name Dot4
+  xpos -156
+  ypos -655
+ }
+set N1d7e000 [stack 0]
+ Dot {
+  name Dot5
+  xpos -156
+  ypos -612
+ }
+set N8aa62000 [stack 0]
+ Input {
+  inputs 0
+  name source
+  xpos 21
+  ypos -726
+ }
+set N70103000 [stack 0]
+ Dot {
+  name Dot6
+  xpos 264
+  ypos -722
+ }
+ Shuffle {
+  alpha black
+  name Shuffle2
+  xpos 230
+  ypos -654
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos 230
+  ypos -622
+ }
+ Premult {
+  name Premult2
+  xpos 230
+  ypos -527
+ }
+set N8a87b400 [stack 0]
+ Dot {
+  name Dot3
+  xpos 264
+  ypos -180
+ }
+push $N8aa62000
+ Dot {
+  name Dot1
+  xpos -156
+  ypos -534
+ }
+push $N1d7e000
+push $N70103000
+ Grade {
+  inputs 1+1
+  white {0 0.485629 2.5 1.12}
+  white_panelDropped true
+  name Grade1
+  xpos 21
+  ypos -659
+  disable {{!parent.Gain_roto_area}}
+ }
+ Shuffle {
+  alpha black
+  name Shuffle1
+  xpos 21
+  ypos -595
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 21
+  ypos -544
+ }
+ Premult {
+  name Premult1
+  xpos 21
+  ypos -478
+  disable {{!parent.Check_roto}}
+ }
+set N70102000 [stack 0]
+ Dot {
+  name Dot7
+  xpos -73
+  ypos -474
+ }
+push $N70102000
+ Constant {
+  inputs 0
+  channels rgb
+  color {0.95 0.203835 0.129983 0}
+  name Constant1
+  xpos 157
+  ypos -386
+ }
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos 21
+  ypos -363
+ }
+ Switch {
+  inputs 2
+  which {{parent.Premult1.disable x1 0}}
+  name Switch1
+  xpos -107
+  ypos -363
+ }
+push $N8a87b400
+ Input {
+  inputs 0
+  name BG
+  xpos 361
+  ypos -631
+  number 2
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos 361
+  ypos -538
+ }
+ Dot {
+  name Dot2
+  xpos 395
+  ypos -249
+ }
+ Switch {
+  inputs 2
+  which {{!parent.combine}}
+  name Switch2
+  xpos -107
+  ypos -253
+ }
+ Switch {
+  inputs 2
+  which {{parent.Premult_only}}
+  name Switch3
+  xpos -107
+  ypos -184
+ }
+ Output {
+  name Output1
+  xpos -107
+  ypos -118
+ }
+end_group

@@ -1,0 +1,208 @@
+#! D:/NUKE/NUKE11.3/Nuke11.3v1/nuke-11.3.1.dll -nx
+Group {
+ name DEMO
+ tile_color 0xff0000ff
+ addUserKnob {20 User}
+ addUserKnob {1 Text t "Set a word for your demo, and hit the Change Text button, the text will be changed into yours! 'DEMO' by default"}
+ Text DEMO
+ addUserKnob {26 TEXTLABEL l "" -STARTLINE T "            "}
+ addUserKnob {22 enter l "Change Text" t "Change the text to yours" -STARTLINE T "v =nuke.thisNode()\['Text'].value()\nfor i in nuke.allNodes():\n    if i.Class() in \['Text2']:\n        i\['message'].setValue(v)\n"}
+ addUserKnob {26 TEXTLABEL2 l "" -STARTLINE T "  "}
+ addUserKnob {7 TextScale t "Change your text scale, range from 0-3" R 0 3}
+ TextScale 2.5
+ addUserKnob {7 Opacity t "Change your text scale, range from 0-1"}
+ Opacity 0.2
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -199
+  ypos 372
+ }
+set N100a4400 [stack 0]
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle1
+  xpos -356
+  ypos 482
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity {{parent.Opacity}}
+  message MORE
+  old_message {{77 79 82 69}
+    }
+  box {{curve} {curve} {input.width} {input.height}}
+  xjustify center
+  yjustify bottom
+  transforms {{0 2}
+    }
+  cursor_position 2
+  global_font_scale {{parent.TextScale}}
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{1036 280}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 0 0 0 0 1 1 0 0 0 0}
+    }
+  name Text1
+  xpos -356
+  ypos 654
+ }
+ Reformat {
+  inputs 0
+  format "1920 1080 0 0 1920 1080 1 HD_1080"
+  name Reformat1
+  xpos 13
+  ypos 434
+ }
+ Roto {
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t 1}
+    {a opc
+     {=parent.Opacity x3f733333}    pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Bezier1 512 bezier
+     {{cc
+       {f 8192}
+       {px x43240000
+        {{{0 -}}
+      {{0 -}}}
+        {{{xc25e3e50 -}}
+      {{xc180d419 -}}}
+        {{{0 -}}
+      {{0 -}}}
+        {{{xc0fffe00 -}}
+      {{x39000000 xb547ce0c 1 0 1}}}
+        {{{x44fd58a5 x3d53ad45 1 0 1}}
+      {{x448efee8 x3d74c31f 1 0 1}}}
+        {{{x41000000 -}}
+      {{xb9000000 xb547ce0c 1 0 1}}}
+        {{{0 -}}
+      {{x40c00200 -}}}
+        {{{x44ff2659 x3d53ac7d 1 0 1}}
+      {{x448ea8f0 x3d74c31f 1 0 1}}}
+        {{{x39800000 -}}
+      {{xc0bffd00 xb547ce0c 1 0 1}}}
+        {{{0 -}}
+      {{x41600002 -}}}
+        {{{xc2263e40 -}}
+      {{xc1bfb0fb -}}}
+        {{{0 -}}
+      {{xc1600002 -}}}}}     idem}
+     {tx x41100000 x447d4000 x43d80000}
+     {a osw x41200000 osf 0 str 1 spx x44800000 spy x43d68000 sb 1 ltn x41100000 ltm x41100000 tt x40800000}}
+    {curvegroup Bezier2 512 bezier
+     {{cc
+       {f 8192}
+       {px x43240000
+        {{{0 -}}
+      {{0 -}}}
+        {{{xc2c78432 xbea7d9bf 1 0 1}}
+      {{x448ef0d8 x3e8fd9a9 1 0 1}}}
+        {{{0 -}}
+      {{0 -}}}
+        {{{xc0b50400 -}}
+      {{x40b50500 -}}}
+        {{{x44f446c2 xbf26a087 1 0 1}}
+      {{xc1311740 x3e9e7390 1 0 1}}}
+        {{{x40b50400 -}}
+      {{xc0b50500 -}}}
+        {{{x4087c400 -}}
+      {{x4087c400 -}}}
+        {{{x44f49073 xbf33884d 1 0 1}}
+      {{xc1b95c60 x3e9e7391 1 0 1}}}
+        {{{xc087c200 -}}
+      {{xc087c380 -}}}
+        {{{x411e645c -}}
+      {{x411e6400 xb59a90e8 1 0 1}}}
+        {{{xc2cad47a xbec1a973 1 0 1}}
+      {{x448d0242 x3e8fd9d0 1 0 1}}}
+        {{{xc11e6450 -}}
+      {{xc11e6440 -}}}}}     idem}
+     {tx x41100000 x447d4000 x43d80000}
+     {a osw x41200000 osf 0 str 1 spx x44800000 spy x43d68000 sb 1 ltn x41100000 ltm x41100000 tt x40800000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {1024 429}
+  colorOverlay {0 0 0 0}
+  lifetime_type "all frames"
+  lifetime_start 9
+  lifetime_end 9
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  name Roto19
+  selected true
+  xpos 13
+  ypos 505
+ }
+ Transform {
+  scale {{parent.Transform1.scale} {parent.Transform1.scale}}
+  name Transform2
+  xpos 13
+  ypos 551
+ }
+push $N100a4400
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos -199
+  ypos 551
+ }
+set N2266e800 [stack 0]
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge2
+  xpos -199
+  ypos 654
+ }
+ Output {
+  name Output1
+  xpos -199
+  ypos 762
+ }
+push $N100a4400
+ Transform {
+  scale {{input.width/1920} {input.height/1080}}
+  name Transform1
+  xpos -98
+  ypos 412
+ }
+push $N2266e800
+ Viewer {
+  frame 58
+  frame_range 1-34
+  name Viewer1
+  xpos 76
+  ypos 753
+ }
+end_group

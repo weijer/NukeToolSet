@@ -1,0 +1,52 @@
+#! E:/nuke12.1/Nuke12.1v1/nuke-12.1.1.dll -nx
+
+add_layer {P P.red P.green P.blue P.alpha P.X P.Y P.Z}
+Group {
+ name P2Noise
+ addUserKnob {20 User}
+ addUserKnob {41 in l Channel T Shuffle1.in}
+ addUserKnob {41 white l size T Grade4.white}
+ addUserKnob {41 Octaves T Expression1.Octaves}
+ addUserKnob {41 Lacunarity T Expression1.Lacunarity}
+ addUserKnob {41 Gain T Expression1.Gain}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 674
+  ypos -418
+ }
+ Shuffle {
+  in P
+  name Shuffle1
+  xpos 674
+  ypos -374
+ }
+ Grade {
+  white 1.3
+  black_clamp false
+  name Grade4
+  xpos 674
+  ypos -332
+ }
+ Expression {
+  expr0 fBm(r,g,b,Octaves,Lacunarity,Gain)
+  expr1 fBm(r,g,b,Octaves,Lacunarity,Gain)
+  expr2 fBm(r,g,b,Octaves,Lacunarity,Gain)
+  name Expression1
+  xpos 674
+  ypos -284
+  addUserKnob {20 User}
+  addUserKnob {7 Octaves R 2 5}
+  Octaves 3.98
+  addUserKnob {7 Lacunarity R 0 10}
+  Lacunarity 6.7
+  addUserKnob {7 Gain}
+  Gain 0.945
+ }
+ Output {
+  name Output1
+  xpos 674
+  ypos -226
+ }
+end_group

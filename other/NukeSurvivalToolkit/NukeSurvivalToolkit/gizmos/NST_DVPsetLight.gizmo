@@ -1,0 +1,93 @@
+Group {
+ name DVPsetLight
+ tile_color 0x597fff
+ label "<font color=cyan>Deep Output</font>"
+ addUserKnob {20 t_VERSION l Version}
+ addUserKnob {26 l_VERSION l <b>Version</b> T 4.0}
+ addUserKnob {26 l_DATE l "<b>Date Modified</b>" T 2021-02-13}
+ addUserKnob {22 btn_CHANGELOG l <b>Changlelog</b> T "log = \"Deep2VPosition&nbsp;(Deep2VP)<br>-&nbsp;added&nbsp;camera&nbsp;setting&nbsp;to&nbsp;metadata<br>-&nbsp;remove&nbsp;bake&nbsp;and&nbsp;copy&nbsp;buttons<br>-&nbsp;rename&nbsp;to&nbsp;Deep2VP<br>-&nbsp;generate/select/import&nbsp;deepNormal&nbsp;in&nbsp;this&nbsp;node<br>-&nbsp;added&nbsp;generate&nbsp;normal&nbsp;in&nbsp;deep,&nbsp;still&nbsp;keep&nbsp;the&nbsp;previous&nbsp;one.<br><br>DVPort&nbsp;(DVPortal)<br>-&nbsp;renamed&nbsp;to&nbsp;DVPortal<br><br>DVPmatte<br>-&nbsp;removed&nbsp;'option'&nbsp;knob,&nbsp;2D&nbsp;matte&nbsp;can&nbsp;use&nbsp;'open&nbsp;matte'&nbsp;instead<br>-&nbsp;open&nbsp;matte&nbsp;can&nbsp;choose&nbsp;show&nbsp;matte&nbsp;or&nbsp;color<br><br>DVPattern<br>-&nbsp;internal&nbsp;setup&nbsp;same&nbsp;as&nbsp;DVPmatte<br>-&nbsp;added&nbsp;rotation&nbsp;knob<br>-&nbsp;support&nbsp;'open&nbsp;matte'<br><br>DVProjection<br>-&nbsp;remove&nbsp;bake&nbsp;and&nbsp;copy&nbsp;buttons<br>-&nbsp;remove&nbsp;all&nbsp;metadata&nbsp;created&nbsp;from&nbsp;Deep2VP<br><br>DVPsetLight<br>-&nbsp;added&nbsp;shader&nbsp;setting&nbsp;and&nbsp;input&nbsp;shader<br>-&nbsp;not&nbsp;required&nbsp;link&nbsp;camera&nbsp;anymore<br>-&nbsp;removed&nbsp;deepNormal&nbsp;setup,&nbsp;moved&nbsp;to&nbsp;Deep2VP&nbsp;node<br><br>DVPscene<br>-&nbsp;added&nbsp;multiple&nbsp;output&nbsp;options<br>-&nbsp;remove&nbsp;all&nbsp;metadata&nbsp;created&nbsp;from&nbsp;DVP's&nbsp;lighting&nbsp;system<br><br>DVPrelight<br>-&nbsp;added&nbsp;specular&nbsp;setup<br>-&nbsp;added&nbsp;toon&nbsp;shade&nbsp;setup<br>-&nbsp;fix&nbsp;pointcloud&nbsp;preview&nbsp;with&nbsp;effects<br><br>DVPrelightPT<br>-&nbsp;split&nbsp;up&nbsp;point&nbsp;light&nbsp;from&nbsp;DVPrelight<br>-&nbsp;fix&nbsp;point&nbsp;light&nbsp;duplicated&nbsp;algorithm<br><br>DVPfresnel<br>-&nbsp;not&nbsp;required&nbsp;link&nbsp;camera&nbsp;anymore<br>-&nbsp;fix&nbsp;unpremult&nbsp;process,&nbsp;the&nbsp;result&nbsp;was&nbsp;too&nbsp;dark<br><br>DVPToImage<br>-&nbsp;remove&nbsp;all&nbsp;metadata&nbsp;created&nbsp;from&nbsp;Deep2VP<br>-&nbsp;same&nbsp;as&nbsp;Deep2VP&nbsp;node&nbsp;color<br><br>new&nbsp;nodes&nbsp;:<br>DVPColorCorrect<br><br>added&nbsp;shaders&nbsp;:<br>DVP&nbsp;Shader<br>DVP&nbsp;Toon&nbsp;Shader\"\nnuke.message( log )" +STARTLINE}
+ addUserKnob {26 l_DEV l "<b>Developed by</b>" T "<a href='https://youtube.com/c/MJTLab'><font color='orange'>Mark Joey Tang</font></a>"}
+}
+ Input {
+  inputs 0
+  name shader
+  xpos -162
+  ypos 164
+  number 1
+ }
+add_layer {DVPshader DVPshader.red DVPshader.green DVPshader.blue DVPshader.alpha}
+ AddChannels {
+  inputs 0
+  channels DVPshader
+  name AddChannels4
+  xpos -153
+  ypos -24
+ }
+add_layer {deepRawColor deepRawColor.red deepRawColor.green deepRawColor.blue deepRawColor.alpha}
+ AddChannels {
+  inputs 0
+  channels deepRawColor
+  name AddChannels2
+  xpos -154
+  ypos -208
+ }
+ Input {
+  inputs 0
+  name deep
+  xpos 0
+  ypos -290
+ }
+ DeepRecolor {
+  inputs 2
+  channels {{{parent.AddChannels2.channels}}}
+  name DeepRecolor4
+  xpos 0
+  ypos -208
+ }
+ DeepExpression {
+  chans0 deepRawColor
+  chans1 rgb
+  rgba.red 0
+  rgba.green 0
+  rgba.blue 0
+  deepRawColor.red red
+  deepRawColor.green green
+  deepRawColor.blue blue
+  deepRawColor.alpha alpha
+  name DeepExpression6
+  label "store original color data"
+  xpos 0
+  ypos -116
+ }
+ DeepRecolor {
+  inputs 2
+  channels {{{AddChannels4.channels}}}
+  name DeepRecolor7
+  xpos 0
+  ypos -24
+ }
+ ModifyMetaData {
+  metadata {
+   {set DVPshader 0}
+   {set sStatus 0}
+   {set sDiffuse "\[value diffuseRGB]"}
+  }
+  name stShaderData
+  xpos 0
+  ypos 84
+  addUserKnob {20 User}
+  addUserKnob {13 diffuseRGB}
+  diffuseRGB {0.18 0.18 0.18}
+ }
+ CopyMetaData {
+  inputs 2
+  name CopyMetaData1
+  xpos 0
+  ypos 164
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 244
+ }
+end_group

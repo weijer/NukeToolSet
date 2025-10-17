@@ -1,0 +1,1169 @@
+Group {
+ name HeatWave
+ knobChanged "n = nuke.thisNode()\n\nif n.input(2) !=None :\n    n\['evolutionspeed'].setEnabled(False)\n    n\['Base'].setEnabled(False)\n    n\['Detail'].setEnabled(False)\n    n\['basesize'].setEnabled(False)\n    n\['basedistortion'].setEnabled(False)\n    n\['detailsize'].setEnabled(False)\n    n\['detaildistortion'].setEnabled(False)\n    n\['windstrength'].setEnabled(False)\nelse:\n    n\['evolutionspeed'].setEnabled(True)\n    n\['Base'].setEnabled(True)\n    n\['Detail'].setEnabled(True)\n    n\['basesize'].setEnabled(True)\n    n\['basedistortion'].setEnabled(True)\n    n\['detailsize'].setEnabled(True)\n    n\['detaildistortion'].setEnabled(True)\n    n\['windstrength'].setEnabled(True)"
+ tile_color 0xe0000ff
+ gl_color 0xff5b5bff
+ note_font_color 0xe24a4aff
+ selected true
+ addUserKnob {20 User l HeatWave}
+ addUserKnob {41 channels l Channels T STMap1.channels}
+ addUserKnob {41 POS l Position T Ramp1.POS}
+ addUserKnob {41 WIND l "Wind Angle" T Ramp1.WIND}
+ addUserKnob {26 __________________________ l "<b><span style=\"color:#E44747;\">Distortion"}
+ addUserKnob {7 globaldistortion l "Global Distortion" R 0 100}
+ globaldistortion 50
+ addUserKnob {7 distortionresponse l Response R 0 2}
+ distortionresponse 1
+ addUserKnob {7 evolutionspeed l "Turbulence Speed" t "Noise Z offset speed over time." R 0 100}
+ evolutionspeed 50
+ addUserKnob {20 Base l BASE n 1}
+ addUserKnob {7 basesize l "Base Size" R 0 100}
+ basesize 50
+ addUserKnob {7 basedistortion l "Base Distortion" R 0 100}
+ basedistortion 50
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 Detail l DETAIL n 1}
+ addUserKnob {7 detailsize l "Detail Size" R 0 100}
+ detailsize 50
+ addUserKnob {7 detaildistortion l "Detail Distortion" R 0 100}
+ detaildistortion 50
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 ________________________________ l "<b><span style=\"color:#E44747;\">Haze Blur"}
+ addUserKnob {7 hazeamount l "Blur Size" R 0 100}
+ hazeamount 50
+ addUserKnob {7 hazeresponse l Response R 0 2}
+ hazeresponse 1
+ addUserKnob {26 ___________________________ l "<b><span style=\"color:#E44747;\">Wind"}
+ addUserKnob {41 useslider l "Use slider instead of point" T Ramp1.useslider}
+ addUserKnob {41 rotation l "Wind Angle" T Ramp1.rotation}
+ addUserKnob {7 windstrength l Strength R 0 100}
+ windstrength 50
+ addUserKnob {26 ""}
+ addUserKnob {7 mix l Mix}
+ mix 1
+ addUserKnob {6 limittobb l "Limit to Bounding Box    " t "Limits distortion and blur calculations to 'Mask' or 'Custom' inputs bounding boxes." +STARTLINE}
+ limittobb true
+ addUserKnob {6 fillframeedges l "Fill Frame Edges   " t "Adds a fake overscan to avoid black borders around the frame.\n\nEnable this if your input image has no overscan.\n\nOverscan size can be adjusted with the Overscan slider located in the \"Extras\" tab.\n\nIf a Roto is being used for the Mask input, remember to set it to \"no clip\" in the Roto's \"clip to\" knob to avoid bounding box cropping." -STARTLINE}
+ addUserKnob {6 previewnoisemap l "Preview Noise Map         " -STARTLINE}
+ addUserKnob {26 credits l " " T "<font size=\"5\"><span style=\"color:#575757;\">HeatWave <font size=\"2\"><span style=\"color:#5a5a5a;\"> v4.0 &nbsp; │ &nbsp; <font size=\"1\">B Y &nbsp; D A M I A N &nbsp; B I N D E R"}
+ addUserKnob {20 Extras}
+ addUserKnob {26 ______________________ l <b>Extras}
+ addUserKnob {7 ca l "Chromatic Aberration" R -1 1}
+ addUserKnob {7 detailwindmult l "Detail Wind Strength Mult" t "Wind strength multiplier that affects only the DETAIL noise. Can be used to reduce flickering or add parallax between BASE and DETAIL noise." R 0 2}
+ detailwindmult 1
+ addUserKnob {7 overscan l Overscan t "Check \"Fill Frame Edges\" in the main tab." R 0 400}
+ overscan 200
+}
+ Ramp {
+  inputs 0
+  output none
+  p0 {{POS} {POS}}
+  p1 {{"parent.useslider==0 ? WIND : p0.x + (p0.x - p0.x) * cos(rotation*pi/-180) - ((p0.y+(Image.width/8)) - p0.y) * sin(rotation*pi/-180)"} {"parent.useslider==0 ? WIND : p0.y + (p0.x - p0.x) * sin(rotation*pi/-180) + ((p0.y+(Image.width/8)*Image.pixel_aspect) - p0.y) * cos(rotation*pi/-180)"}}
+  name Ramp1
+  knobChanged "n = nuke.thisNode()\n\nif n\['useslider'].getValue() == 1:\n    n\['WIND'].setEnabled(False)\n    n\['rotation'].setEnabled(True)\nelse:\n    n\['WIND'].setEnabled(True)\n    n\['rotation'].setEnabled(False)\n    \nn.knob('p0').setEnabled(False)\nn.knob('p1').setEnabled(False)"
+  gl_color 0xff5b5bff
+  xpos 1770
+  ypos 175
+  hide_input true
+  addUserKnob {20 User}
+  addUserKnob {12 POS}
+  POS {500 300}
+  addUserKnob {12 WIND}
+  WIND {500 800}
+  addUserKnob {7 rotation +DISABLED R -360 360}
+  addUserKnob {6 useslider +STARTLINE}
+ }
+ Input {
+  inputs 0
+  name Mask
+  xpos 2292
+  ypos -456
+  number 1
+ }
+ BlackOutside {
+  name BlackOutside5
+  xpos 2292
+  ypos -428
+ }
+ AdjBBox {
+  numpixels 24
+  name AdjBBox1
+  xpos 2292
+  ypos -402
+ }
+ Input {
+  inputs 0
+  name Image
+  xpos 82
+  ypos -464
+ }
+ Dot {
+  name Dot14
+  xpos 116
+  ypos -401
+ }
+set N6c835c00 [stack 0]
+ Crop {
+  box {0 0 {width} {height}}
+  crop false
+  name Crop2
+  xpos 82
+  ypos -370
+  disable {{!fillframeedges}}
+ }
+set N6c835800 [stack 0]
+ Crop {
+  box {{-parent.overscan} {-parent.overscan} {width+parent.overscan} {height+parent.overscan}}
+  name Crop3
+  xpos 190
+  ypos -370
+  disable {{!fillframeedges}}
+ }
+ Dot {
+  name Dot15
+  xpos 224
+  ypos -137
+ }
+set N6c835000 [stack 0]
+ Remove {
+  name Remove2
+  xpos 1929
+  ypos -147
+ }
+set N6c834c00 [stack 0]
+ Merge2 {
+  inputs 2
+  bbox intersection
+  name Merge10
+  xpos 2292
+  ypos -141
+ }
+ Dot {
+  name Dot10
+  xpos 2326
+  ypos -13
+ }
+set N6c834400 [stack 0]
+ Dot {
+  name Dot13
+  xpos 2326
+  ypos 651
+ }
+set N6c7e7c00 [stack 0]
+ Dot {
+  name Dot34
+  xpos 2326
+  ypos 798
+ }
+set N6c7e7800 [stack 0]
+ Dot {
+  name Dot33
+  xpos 2327
+  ypos 1720
+ }
+set N6c7e7400 [stack 0]
+push $N6c835000
+ Dot {
+  name Dot51
+  xpos 224
+  ypos 51
+ }
+ Input {
+  inputs 0
+  name Custom
+  xpos 765
+  ypos -457
+  number 2
+ }
+ AdjBBox {
+  numpixels 24
+  name AdjBBox2
+  xpos 765
+  ypos -431
+ }
+ Merge2 {
+  inputs 2
+  bbox A
+  output none
+  name Merge11
+  xpos 765
+  ypos 41
+  disable {{parent.limittobb}}
+ }
+ Dot {
+  name Dot40
+  xpos 799
+  ypos 158
+ }
+set N6c7e6000 [stack 0]
+ Dot {
+  name Dot42
+  xpos 1061
+  ypos 158
+ }
+set N6c7e5c00 [stack 0]
+ Multiply {
+  value 0.1
+  name Multiply6
+  xpos 1027
+  ypos 402
+ }
+ Gamma {
+  value {{parent.distortionresponse}}
+  name Gamma1
+  xpos 1027
+  ypos 440
+ }
+ Dot {
+  name Dot41
+  xpos 1061
+  ypos 723
+ }
+push $N6c834400
+push $N6c834c00
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 1929
+  ypos -17
+  disable {{"!parent.limittobb+!\[exists parent.input1]*!\[exists parent.input2]"}}
+ }
+ AdjBBox {
+  numpixels 1
+  name AdjBBox3
+  xpos 1929
+  ypos 55
+ }
+ Dot {
+  name Dot5
+  xpos 1963
+  ypos 133
+ }
+set N6c7e4400 [stack 0]
+ Dot {
+  name Dot3
+  xpos 1637
+  ypos 133
+ }
+ Noise {
+  cliptype bbox
+  size 1000
+  zoffset {{(frame-root.first_frame)*(evolutionspeed/400)}}
+  octaves 1
+  gain 0.1
+  translate {{(frame-root.first_frame)*(windstrength*4)+Ramp1.p0} {Ramp1.p0}}
+  rotate {{atan2((Ramp1.p1.y/pixel_aspect)-Ramp1.p0.y/pixel_aspect,(Ramp1.p1.x)-Ramp1.p0.x)*(180/pi)}}
+  scale {{parent.basesize/32} {parent.basesize/32*pixel_aspect}}
+  center {{Ramp1.p0.x-translate} {Ramp1.p0.y-translate}}
+  name Noise10
+  xpos 1603
+  ypos 181
+ }
+ Clamp {
+  maximum_enable false
+  name Clamp2
+  xpos 1603
+  ypos 207
+ }
+ Dot {
+  name Dot8
+  xpos 1637
+  ypos 275
+ }
+set N6c79f000 [stack 0]
+ Gamma {
+  value {{parent.distortionresponse}}
+  name Gamma2
+  xpos 1603
+  ypos 407
+ }
+set N6c79ec00 [stack 0]
+push $N6c7e4400
+ Noise {
+  cliptype bbox
+  size {{parent.detailsize*20}}
+  zoffset {{(frame-root.first_frame)*evolutionspeed/20000}}
+  octaves 8
+  gain 0.55
+  translate {{(frame-root.first_frame)*(windstrength*detailwindmult)+Ramp1.p0} {Ramp1.p0}}
+  rotate {{atan2((Ramp1.p1.y/pixel_aspect)-Ramp1.p0.y/pixel_aspect,(Ramp1.p1.x)-Ramp1.p0.x)*(180/pi)}}
+  scale {1 {pixel_aspect}}
+  center {{Ramp1.p0.x-translate} {Ramp1.p0.y-translate}}
+  name Noise3
+  xpos 1929
+  ypos 181
+ }
+ Clamp {
+  maximum_enable false
+  name Clamp1
+  xpos 1929
+  ypos 209
+ }
+ Multiply {
+  value {{(parent.detailsize/100)*(parent.detaildistortion/100*2)}}
+  name Multiply4
+  xpos 1929
+  ypos 355
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge5
+  xpos 1929
+  ypos 413
+ }
+ Dot {
+  name Dot6
+  xpos 1963
+  ypos 510
+ }
+push $N6c79ec00
+ Multiply {
+  value {{(parent.basedistortion/2)*pow(parent.basesize/100,1.5)}}
+  name Multiply3
+  xpos 1603
+  ypos 455
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge3
+  xpos 1603
+  ypos 506
+ }
+ BlackOutside {
+  name BlackOutside6
+  xpos 1603
+  ypos 549
+ }
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input2]"}}
+  name Switch4
+  xpos 1603
+  ypos 719
+ }
+ Dot {
+  name Dot7
+  xpos 1637
+  ypos 937
+ }
+set N6c79c800 [stack 0]
+ Multiply {
+  value 0.08
+  name Multiply2
+  xpos 1374
+  ypos 927
+  disable {{"\[exists parent.input2]"}}
+ }
+ Dot {
+  name Dot30
+  xpos 1188
+  ypos 937
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge9
+  xpos 1154
+  ypos 1716
+  disable {{"!\[exists parent.input1]"}}
+ }
+ Dot {
+  name Dot29
+  xpos 1188
+  ypos 3060
+ }
+ Shuffle {
+  in alpha
+  name Shuffle1
+  xpos 249
+  ypos 3056
+ }
+push $N6c7e5c00
+ Dot {
+  name Dot9
+  xpos 1275
+  ypos 158
+ }
+push $N6c7e7800
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos 1241
+  ypos 794
+ }
+ Dot {
+  name Dot35
+  xpos 1004
+  ypos 798
+ }
+set N6c73a400 [stack 0]
+ Dot {
+  name Dot37
+  xpos 1004
+  ypos 2940
+ }
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue none}
+  channel1 {-rgba.red -rgba.green -rgba.blue none}
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  expr3 !a>0
+  name Expression2
+  xpos 247
+  ypos 2936
+ }
+push $N6c835000
+push $N6c835800
+ Mirror {
+  Horizontal true
+  Vertical true
+  name Mirror1
+  xpos 82
+  ypos -344
+  disable {{!fillframeedges}}
+ }
+ Reformat {
+  type scale
+  scale 3
+  filter impulse
+  name Reformat11
+  xpos 82
+  ypos -318
+  disable {{!fillframeedges}}
+ }
+ Tile {
+  rows 3
+  mirrorRows true
+  columns 3
+  mirrorCols true
+  filter impulse
+  name Tile2
+  xpos 82
+  ypos -292
+  disable {{!fillframeedges}}
+ }
+ Reformat {
+  type "to box"
+  box_width {{Image.width}}
+  box_height {{Image.height}}
+  box_fixed true
+  box_pixel_aspect {{Image.pixel_aspect}}
+  filter impulse
+  name Reformat12
+  xpos 82
+  ypos -266
+  disable {{!fillframeedges}}
+ }
+ Transform {
+  translate {-1 -1}
+  scale 3
+  center {{"width / 2"} {"height / 2"}}
+  filter impulse
+  black_outside false
+  name Transform4
+  xpos 82
+  ypos -240
+  disable {{!fillframeedges}}
+ }
+push $N6c835c00
+ Dot {
+  name Dot22
+  xpos 36
+  ypos -401
+ }
+ Dot {
+  name Dot24
+  xpos 36
+  ypos -189
+ }
+ Dissolve {
+  inputs 2
+  which 1
+  name Dissolve3
+  xpos 82
+  ypos -199
+  disable {{!fillframeedges}}
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox3
+  xpos 82
+  ypos -141
+  disable {{!fillframeedges}}
+ }
+ Dot {
+  name Dot39
+  xpos 116
+  ypos 575
+ }
+set N6c6f2800 [stack 0]
+ Dot {
+  name Dot38
+  xpos -191
+  ypos 575
+ }
+ Dot {
+  name Dot36
+  xpos -191
+  ypos 2940
+ }
+push $N6c7e7400
+ Dot {
+  name Dot12
+  xpos 2327
+  ypos 1876
+ }
+push $N6c79c800
+ Dot {
+  name Dot11
+  xpos 1637
+  ypos 1247
+ }
+set N6c6f1800 [stack 0]
+ Position {
+  translate {0 1}
+  name Position2
+  xpos 1715
+  ypos 1243
+ }
+push $N6c6f1800
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge6
+  xpos 1656
+  ypos 1303
+ }
+ Multiply {
+  value {{pixel_aspect**2}}
+  name Multiply8
+  xpos 1656
+  ypos 1345
+ }
+ Dot {
+  name Dot60
+  xpos 1690
+  ypos 1407
+ }
+push $N6c6f1800
+ Position {
+  translate {1 0}
+  name Position1
+  xpos 1491
+  ypos 1243
+ }
+push $N6c6f1800
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge4
+  xpos 1548
+  ypos 1303
+ }
+ Dot {
+  name Dot61
+  xpos 1582
+  ypos 1407
+ }
+ ShuffleCopy {
+  inputs 2
+  red alpha2
+  green alpha
+  blue black
+  alpha black
+  name ShuffleCopy1
+  xpos 1604
+  ypos 1403
+ }
+ Multiply {
+  value {{2*(globaldistortion/50)*parent.mix}}
+  name Multiply1
+  xpos 1604
+  ypos 1438
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge7
+  xpos 1604
+  ypos 1872
+  disable {{"!\[exists parent.input1]"}}
+ }
+set N6c69ec00 [stack 0]
+ Dot {
+  name Dot50
+  xpos 1097
+  ypos 1876
+ }
+ Dot {
+  name Dot49
+  xpos 1097
+  ypos 2327
+ }
+ Multiply {
+  value {{parent.ca>0?parent.ca:-parent.ca}}
+  name Multiply5
+  xpos 852
+  ypos 2317
+ }
+ Dot {
+  name Dot52
+  xpos 732
+  ypos 2327
+ }
+set N6c69dc00 [stack 0]
+ Dot {
+  name Dot48
+  xpos 642
+  ypos 2327
+ }
+push $N6c73a400
+push $N6c6f2800
+ CopyBBox {
+  inputs 2
+  name CopyBBox5
+  xpos 82
+  ypos 794
+  disable {{"!parent.limittobb+!\[exists parent.input1]*!\[exists parent.input2]"}}
+ }
+ Dot {
+  name Dot27
+  xpos 116
+  ypos 1388
+ }
+set N6c69d000 [stack 0]
+ Dot {
+  name Dot31
+  xpos 763
+  ypos 1388
+ }
+ Dot {
+  name Dot32
+  xpos 763
+  ypos 2076
+ }
+set N6c69c800 [stack 0]
+ Remove {
+  name Remove1
+  xpos 1294
+  ypos 2066
+ }
+ Expression {
+  expr0 (x+0.5)/width
+  expr1 (y+0.5)/height
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  name Expression1
+  xpos 1447
+  ypos 2049
+  postage_stamp true
+ }
+push $N6c69ec00
+ Merge2 {
+  inputs 2
+  operation plus
+  bbox B
+  name Merge1
+  xpos 1604
+  ypos 2072
+ }
+ BlackOutside {
+  name BlackOutside4
+  xpos 1604
+  ypos 2139
+ }
+ Dot {
+  name Dot28
+  xpos 1638
+  ypos 2499
+ }
+ Dot {
+  name Dot45
+  xpos 923
+  ypos 2499
+ }
+set N6c662c00 [stack 0]
+ Dot {
+  name Dot47
+  xpos 923
+  ypos 2440
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge12
+  xpos 608
+  ypos 2436
+ }
+push $N6c69c800
+push $N6c7e7c00
+push $N6c7e6000
+push $N6c79f000
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input2]"}}
+  name Switch3
+  xpos 765
+  ypos 271
+ }
+ Dot {
+  name Dot4
+  xpos 569
+  ypos 275
+ }
+ BlackOutside {
+  name BlackOutside2
+  xpos 535
+  ypos 407
+ }
+ Gamma {
+  value {{parent.hazeresponse}}
+  name Gamma3
+  xpos 535
+  ypos 433
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge8
+  xpos 535
+  ypos 647
+  disable {{"!\[exists parent.input1]"}}
+ }
+ Dot {
+  name Dot2
+  xpos 569
+  ypos 1525
+ }
+set N6c661000 [stack 0]
+ Dot {
+  name Dot16
+  xpos 569
+  ypos 1570
+ }
+set N6c660c00 [stack 0]
+ Dot {
+  name Dot17
+  xpos 569
+  ypos 1617
+ }
+set N6c660800 [stack 0]
+ Dot {
+  name Dot18
+  xpos 569
+  ypos 1664
+ }
+set N6c660400 [stack 0]
+ Dot {
+  name Dot19
+  xpos 569
+  ypos 1709
+ }
+set N6c607c00 [stack 0]
+ Dot {
+  name Dot20
+  xpos 569
+  ypos 1754
+ }
+set N6c607800 [stack 0]
+ Dot {
+  name Dot21
+  xpos 569
+  ypos 1801
+ }
+set N6c607400 [stack 0]
+ Dot {
+  name Dot23
+  xpos 569
+  ypos 1847
+ }
+set N6c607000 [stack 0]
+ Dot {
+  name Dot25
+  xpos 569
+  ypos 1896
+ }
+set N6c606c00 [stack 0]
+ Dot {
+  name Dot26
+  xpos 569
+  ypos 1946
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.9
+  white_clamp true
+  name Grade12
+  xpos 312
+  ypos 1936
+ }
+push $N6c606c00
+ Grade {
+  channels alpha
+  blackpoint 0.7
+  whitepoint 0.9
+  white_clamp true
+  name Grade11
+  xpos 312
+  ypos 1886
+ }
+push $N6c607000
+ Grade {
+  channels alpha
+  blackpoint 0.5
+  whitepoint 0.7
+  white_clamp true
+  name Grade8
+  xpos 312
+  ypos 1837
+ }
+push $N6c607400
+ Grade {
+  channels alpha
+  blackpoint 0.3
+  whitepoint 0.5
+  white_clamp true
+  name Grade6
+  xpos 312
+  ypos 1791
+ }
+push $N6c607800
+ Grade {
+  channels alpha
+  blackpoint 0.25
+  whitepoint 0.3
+  white_clamp true
+  name Grade5
+  xpos 312
+  ypos 1744
+ }
+push $N6c607c00
+ Grade {
+  channels alpha
+  blackpoint 0.2
+  whitepoint 0.25
+  white_clamp true
+  name Grade15
+  xpos 312
+  ypos 1699
+ }
+push $N6c660400
+ Grade {
+  channels alpha
+  blackpoint 0.15
+  whitepoint 0.2
+  white_clamp true
+  name Grade10
+  xpos 312
+  ypos 1654
+ }
+push $N6c660800
+ Grade {
+  channels alpha
+  blackpoint 0.1
+  whitepoint 0.15
+  white_clamp true
+  name Grade18
+  xpos 311
+  ypos 1607
+ }
+push $N6c660c00
+ Grade {
+  channels alpha
+  blackpoint 0.05
+  whitepoint 0.1
+  white_clamp true
+  name Grade17
+  xpos 311
+  ypos 1560
+ }
+push $N6c661000
+ Grade {
+  channels alpha
+  whitepoint 0.05
+  white_clamp true
+  name Grade14
+  xpos 311
+  ypos 1515
+ }
+push $N6c69d000
+ Blur {
+  inputs 1+1
+  channels {{{STMap1.channels}}}
+  size {{parent.hazeamount*parent.mix*0.05}}
+  name Blur2
+  xpos 82
+  ypos 1521
+ }
+ Blur {
+  inputs 1+1
+  channels {{{STMap1.channels}}}
+  size {{parent.hazeamount*parent.mix*0.1}}
+  name Blur3
+  xpos 82
+  ypos 1566
+ }
+ Blur {
+  inputs 1+1
+  channels {{{STMap1.channels}}}
+  size {{parent.hazeamount*parent.mix*0.15}}
+  name Blur4
+  xpos 82
+  ypos 1613
+ }
+ Blur {
+  inputs 1+1
+  channels {{{STMap1.channels}}}
+  size {{parent.hazeamount*parent.mix*0.2}}
+  name Blur5
+  xpos 82
+  ypos 1660
+ }
+ Blur {
+  inputs 1+1
+  channels {{{STMap1.channels}}}
+  size {{parent.hazeamount*parent.mix*0.25}}
+  quality 8
+  name Blur6
+  xpos 82
+  ypos 1705
+ }
+ Blur {
+  inputs 1+1
+  channels {{{STMap1.channels}}}
+  size {{parent.hazeamount*parent.mix*0.3}}
+  quality 8
+  name Blur7
+  xpos 82
+  ypos 1750
+ }
+ Blur {
+  inputs 1+1
+  channels {{{STMap1.channels}}}
+  size {{parent.hazeamount*parent.mix*0.4}}
+  quality 8
+  name Blur8
+  xpos 82
+  ypos 1797
+ }
+ Blur {
+  inputs 1+1
+  channels {{{STMap1.channels}}}
+  size {{parent.hazeamount*parent.mix*0.6}}
+  quality 8
+  name Blur10
+  xpos 82
+  ypos 1843
+ }
+ Blur {
+  inputs 1+1
+  channels {{{STMap1.channels}}}
+  size {{parent.hazeamount*parent.mix*0.8}}
+  quality 8
+  name Blur12
+  xpos 82
+  ypos 1892
+ }
+ Blur {
+  inputs 1+1
+  channels {{{STMap1.channels}}}
+  size {{parent.hazeamount*parent.mix*0.9}}
+  quality 8
+  name Blur13
+  xpos 82
+  ypos 1942
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox4
+  xpos 82
+  ypos 2072
+ }
+ BlackOutside {
+  name BlackOutside3
+  xpos 82
+  ypos 2147
+ }
+ Dot {
+  name Dot59
+  xpos 116
+  ypos 2261
+ }
+set N6ad04800 [stack 0]
+ Dot {
+  name Dot56
+  xpos 381
+  ypos 2261
+ }
+ Dot {
+  name Dot1
+  xpos 381
+  ypos 2327
+ }
+set N6ac9fc00 [stack 0]
+ Dot {
+  name Dot44
+  xpos 508
+  ypos 2327
+ }
+ Remove {
+  operation keep
+  channels {-rgba.red -rgba.green rgba.blue none}
+  name Remove5
+  xpos 474
+  ypos 2377
+ }
+ STMap {
+  inputs 2
+  channels {{{STMap1.channels}}}
+  uv rgb
+  name STMap3
+  xpos 474
+  ypos 2436
+ }
+ Dot {
+  name Dot54
+  xpos 508
+  ypos 2613
+ }
+push 0
+push $N6c69dc00
+ Multiply {
+  value 0.5
+  name Multiply7
+  xpos 698
+  ypos 2374
+ }
+set N6ac9e800 [stack 0]
+ Dot {
+  name Dot58
+  xpos 834
+  ypos 2384
+ }
+push $N6c662c00
+ Dot {
+  name Dot46
+  xpos 923
+  ypos 2556
+ }
+set N6ac9e000 [stack 0]
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge15
+  xpos 800
+  ypos 2552
+  disable {{-parent.ca<0}}
+ }
+push $N6ac9fc00
+ Dot {
+  name Dot43
+  xpos 248
+  ypos 2327
+ }
+ Remove {
+  operation keep
+  channels {rgba.red -rgba.green -rgba.blue none}
+  name Remove3
+  xpos 214
+  ypos 2377
+ }
+ STMap {
+  inputs 2
+  channels {{{STMap1.channels}}}
+  uv rgb
+  name STMap2
+  xpos 214
+  ypos 2552
+ }
+ Dot {
+  name Dot53
+  xpos 248
+  ypos 2613
+ }
+push $N6ac9e800
+push $N6c662c00
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge13
+  xpos 698
+  ypos 2495
+  disable {{parent.ca<0}}
+ }
+push $N6ac9fc00
+ Remove {
+  operation keep
+  channels {-rgba.red rgba.green -rgba.blue none}
+  name Remove4
+  xpos 347
+  ypos 2378
+ }
+ STMap {
+  inputs 2
+  channels {{{STMap1.channels}}}
+  uv rgb
+  name STMap4
+  xpos 347
+  ypos 2495
+ }
+ Merge2 {
+  inputs 3+1
+  operation plus
+  name Merge14
+  xpos 347
+  ypos 2609
+ }
+ Dot {
+  name Dot55
+  xpos 381
+  ypos 2768
+ }
+push $N6ac9e000
+ Dot {
+  name Dot57
+  xpos 923
+  ypos 2665
+ }
+push $N6ad04800
+ STMap {
+  inputs 2
+  channels rgb
+  uv rgb
+  name STMap1
+  xpos 82
+  ypos 2661
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.red
+  from1 rgba.green
+  to1 rgba.green
+  from2 rgba.blue
+  to2 rgba.blue
+  name Copy1
+  xpos 82
+  ypos 2745
+  disable {{parent.ca==0}}
+ }
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 82
+  ypos 2930
+  disable {{"!parent.limittobb+!\[exists parent.input1]*!\[exists parent.input2]"}}
+ }
+ Switch {
+  inputs 2
+  which {{parent.previewnoisemap}}
+  name Switch2
+  xpos 82
+  ypos 3056
+ }
+ Output {
+  name Output1
+  xpos 82
+  ypos 3184
+ }
+end_group
