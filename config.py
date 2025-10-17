@@ -367,6 +367,27 @@ nuke_config = {
                     "icon": "",
                     "type": "gizmo"
                 },
+                {
+                    "name": "Filter/SS_BlitzDefocus",
+                    "command": "SS_BlitzDefocus",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Filter/SS_Blur",
+                    "command": "SS_Blur",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "Filter/SS_Glow",
+                    "command": "SS_Glow",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
                 # Filter icon
                 {
                     "name": "Filter",
@@ -538,7 +559,7 @@ nuke_config = {
                     "icon": "ReLighting.png",
                     "type": "gizmo"
                 },
-                 {
+                {
                     "name": "3D/CreatedPointCloud",
                     "command": "command.run_createdPointCloud()",
                     "shortcut": "",
@@ -800,12 +821,184 @@ nuke_config = {
                     "icon": "",
                     "type": "gizmo"
                 },
+                {
+                    "name": "Lighting/SS_AutoFlare",
+                    "command": "SS_AutoFlare",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
                 # Lighting icon
                 {
                     "name": "Lighting",
                     "command": "",
                     "shortcut": "",
                     "icon": "icon_toolbar_light.png",
+                    "type": "toolbar"
+                },
+                # MoreRealistic
+                #
+                #
+                {
+                    "name": "MoreRealistic/akromatism_stRub",
+                    "command": "akromatism_stRub",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/Anamophic Flare_v2",
+                    "command": "Anamophic Flare_v2",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/bm_Lightwrap",
+                    "command": "bm_Lightwrap",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/DEMO",
+                    "command": "DEMO",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/getz",
+                    "command": "getz",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/Glow_Exponential",
+                    "command": "Glow_Exponential",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/Green_Spill_Depression",
+                    "command": "Green_Spill_Depression",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/heatwave",
+                    "command": "heatwave",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/HUD",
+                    "command": "HUD",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/Mattecheck",
+                    "command": "Mattecheck",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/MoreGlow_v3",
+                    "command": "MoreGlow_v3",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/Normal_Light",
+                    "command": "Normal_Light",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/normal_PPI",
+                    "command": "normal_PPI",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/Outliner_v1",
+                    "command": "Outliner_v1",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/P2Noise",
+                    "command": "P2Noise",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/realGlow",
+                    "command": "realGlow",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/Remove Noise_v1",
+                    "command": "Remove Noise_v1",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/RGBseparate_v3",
+                    "command": "RGBseparate_v3",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/Roto_to_matte_v1",
+                    "command": "RGBseparate_v3",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/Texture Balancer_v2",
+                    "command": "Texture Balancer_v2",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/Wiggler",
+                    "command": "Wiggler",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                {
+                    "name": "MoreRealistic/X_Aton",
+                    "command": "X_Aton",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
+                # MoreRealistic icon
+                {
+                    "name": "MoreRealistic",
+                    "command": "",
+                    "shortcut": "",
+                    "icon": "icon_toolbar_MR.jpg",
                     "type": "toolbar"
                 },
                 #
@@ -931,6 +1124,13 @@ nuke_config = {
                     "icon": "",
                     "type": "python"
                 },
+                {
+                    "name": "ToolSet/fixLocateFilesPaths",
+                    "command": "command.run_fixLocateFilesPaths()",
+                    "shortcut": "alt+/",
+                    "icon": "",
+                    "type": "python"
+                },
                 # ToolSet icon
                 {
                     "name": "ToolSet",
@@ -943,7 +1143,7 @@ nuke_config = {
                 # Mamoworld
                 #
                 #
-                #MochaImport+
+                # MochaImport+
                 {
                     "name": "Mamoworld/MochaImport+/Stabilized View+",
                     "command": "command.run_createStabilizedView()",
@@ -1021,7 +1221,7 @@ nuke_config = {
                     "icon": "MiSettings.png",
                     "type": "python"
                 },
-                #Workflow
+                # Workflow
                 {
                     "name": "Mamoworld/Workflow/Relative file path",
                     "command": "command.run_relativeFilePath()",
@@ -1074,6 +1274,12 @@ nuke_config = {
         "ScriptEditor": {
             "name": "Multi Script Editor",
             "command": "command.run_ScriptEditor()"
+        }
+    },
+    "others": {
+        # 其他第三方完整插件包
+        "NukeSurvivalToolkit": {
+            "path": "other/NukeSurvivalToolkit",
         }
     }
 }

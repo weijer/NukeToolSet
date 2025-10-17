@@ -1,0 +1,120 @@
+#! D:/NUKE/Nuke13.1v1/Nuke13.1/nuke-13.1.1.dll -nx
+
+Group {
+ name Wiggler
+ addUserKnob {20 Parameters}
+ addUserKnob {20 Xaxis l "X axis" n 1}
+ addUserKnob {41 Frequency T Transform28.Frequency}
+ addUserKnob {7 offsetx l Offsetx R -2 2}
+ addUserKnob {41 b l Min T Transform28.b}
+ addUserKnob {41 a l Max T Transform28.a}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 y l "Y axis" n 1}
+ addUserKnob {41 Frequency2 l Frequency T Transform28.Frequency2}
+ addUserKnob {7 offsety l Offsety R -2 2}
+ addUserKnob {41 b2 l Min T Transform28.b2}
+ addUserKnob {41 a2 l Max T Transform28.a2}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 Switch n 1}
+ addUserKnob {41 Horizontal T Transform28.Horizontal}
+ addUserKnob {41 Vertical T Transform28.Vertical}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 Motionblur l "Motion blur" n 1}
+ addUserKnob {41 motionblur_1 l motionblur T Transform28.motionblur_1}
+ addUserKnob {41 shutter_1 l shutter T Transform28.shutter_1}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {20 output l Output n 1}
+ addUserKnob {41 translate T Transform28.translate}
+ addUserKnob {20 endGroup_4 l endGroup n -1}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 231
+  ypos -514
+ }
+set N54a18800 [stack 0]
+ Transform {
+  translate {{((random(frame*Frequency*10))*(a-b)+offsetx+b)*Horizontal+offsetx} {((random(frame*Frequency2*10+999))*(a2-b2)+offsety+b2)*Vertical+offsety}}
+  center {960 540}
+  name Transform28
+  selected true
+  xpos 231
+  ypos -459
+  addUserKnob {20 Parameters}
+  addUserKnob {20 Xaxis l "X axis" n 1}
+  addUserKnob {7 Frequency R 0 0.5}
+  Frequency 0.054
+  addUserKnob {7 Offsetx R 0 10}
+  Offsetx 5.5
+  addUserKnob {7 b l Min R -1 1}
+  b -1
+  addUserKnob {7 a l Max R -1 1}
+  a 1
+  addUserKnob {20 endGroup n -1}
+  addUserKnob {20 y l "Y axis" n 1}
+  addUserKnob {7 Frequency2 R 0 0.5}
+  Frequency2 0.054
+  addUserKnob {7 Offsety}
+  Offsety 0.08
+  addUserKnob {7 b2 l Min R -1 1}
+  b2 -1
+  addUserKnob {7 a2 l Max R -1 1}
+  a2 1
+  addUserKnob {20 endGroup_1 l endGroup n -1}
+  addUserKnob {20 Switch n 1}
+  addUserKnob {7 Horizontal R 0 100}
+  Horizontal 26
+  addUserKnob {7 Vertical R 0 100}
+  Vertical 26
+  addUserKnob {20 endGroup_2 l endGroup n -1}
+  addUserKnob {20 Motionblur l "Motion blur" n 1}
+  addUserKnob {41 motionblur_1 l motionblur T Transform28.motionblur}
+  addUserKnob {41 shutter_1 l shutter T Transform28.shutter}
+  addUserKnob {20 endGroup_3 l endGroup n -1}
+ }
+set N54a18400 [stack 0]
+ Log2Lin {
+  operation lin2log
+  name Log2Lin1
+  xpos 231
+  ypos -398
+ }
+ Reformat {
+  type "to box"
+  format {{{nuke.root()['format']}}}
+  box_width {{input.width}}
+  box_height {{input.height}}
+  box_fixed true
+  filter Keys
+  name Reformat1
+  xpos 231
+  ypos -338
+ }
+ set Cdb2db800 [stack 0]
+ Log2Lin {
+  name Log2Lin2
+  xpos 231
+  ypos -286
+ }
+ Output {
+  name Output1
+  xpos 231
+  ypos -223
+ }
+push $N54a18400
+ Viewer {
+  frame 3
+  frame_range 1-90
+  fps 25
+  name Viewer1
+  xpos 109
+  ypos -229
+ }
+push $N54a18800
+clone $Cdb2db800 {
+  xpos 340
+  ypos -462
+  selected false
+ }
+end_group

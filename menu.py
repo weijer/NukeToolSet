@@ -23,6 +23,7 @@ class NukeMenu(object):
          add folder path
         """
         base_dir = os.path.dirname(__file__)
+        self.root_base_dir = base_dir
         self.libs_dir = self.replace_path(os.path.join(base_dir, "libs"))
         self.luts_dir = self.replace_path(os.path.join(base_dir, "luts"))
         self.python_dir = self.replace_path(os.path.join(base_dir, "python"))
@@ -166,6 +167,14 @@ class NukeMenu(object):
                                        toolMenu_config[tools]["command"]
                                        )
 
+    def add_other_tools(self):
+        """
+        加载第三方完整工具包
+        """
+        others_config = self.config["others"]
+        for item in others_config:
+            nuke.pluginAddPath(self.replace_path(os.path.join(self.root_base_dir, others_config[item]["path"])))
+
     def replace_path(self, path):
         """
         replace path
@@ -204,5 +213,6 @@ if __name__ == '__main__':
     run = NukeMenu()
     run.add_bar_tools()
     run.add_menu_tools()
+    run.add_other_tools()
     run.knob_show_frame()
     run.knob_after_render()

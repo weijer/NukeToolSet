@@ -1,0 +1,329 @@
+#! D:/NUKE/NUKE11.3/Nuke11.3v1/nuke-11.3.1.dll -nx
+
+Group {
+ name Anamophic_Flare
+ inputs 3
+ tile_color 0x37d5ffff
+ addUserKnob {20 Parameter}
+ addUserKnob {20 check l Check n 1}
+ addUserKnob {6 UseMask l "Use Mask" t "It determines if you use the mask to add flare in  certain area " +STARTLINE}
+ addUserKnob {6 UseMatte l "Use Matte" +STARTLINE}
+ addUserKnob {6 CustomizeColor l "Customize color" t "Enable to customize the color of the flare" +STARTLINE}
+ CustomizeColor true
+ addUserKnob {6 JustFlare l "Just flare" t "Switch this on, you will get only the flare" +STARTLINE}
+ addUserKnob {4 alphaMode l "Alpha Mode" t "There are four modes to choose:\nOriginal: Copy the alpha from the original plate, if the original plate didn't has an alpha channel, it will be white solid\nBlack: Change the output alpha to 0\nWhite: Change the output alpha to 1\nFlare: Change the output alpha to Flares' alpha" M {Original Black White Flare "" "" ""}}
+ alphaMode Flare
+ addUserKnob {7 FlareLength l "Flare Length" t "It determines the length of the flare" R 0 10}
+ FlareLength 10
+ addUserKnob {41 multiply T Grade1.multiply}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 Range n 1}
+ addUserKnob {41 range -STARTLINE T Keyer1.range}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 Color n 1}
+ addUserKnob {41 color T Constant1.color}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 Texture}
+ addUserKnob {6 UseNoise l "Use Noise" t "Switch this on could add a little bit of noise to your flares" +STARTLINE}
+ UseNoise true
+ addUserKnob {41 type T Noise1.type}
+ addUserKnob {41 size l x/ysize T Noise1.size}
+ addUserKnob {41 zoffset l z T Noise1.zoffset}
+ addUserKnob {41 octaves T Noise1.octaves}
+ addUserKnob {41 nyquist l "clip at Nyquist limit" T Noise1.nyquist}
+ addUserKnob {41 lacunarity T Noise1.lacunarity}
+ addUserKnob {41 gain T Noise1.gain}
+ addUserKnob {41 gamma T Noise1.gamma}
+}
+ Reformat {
+  inputs 0
+  type "to box"
+  box_width {{input.width}}
+  box_height {{input.height}}
+  box_fixed true
+  name Reformat2
+  xpos -74
+  ypos -308
+ }
+ set C893b3c00 [stack 0]
+ Noise {
+  size 16
+  zoffset 1.04
+  gain 1
+  translate {-284.5 103.5}
+  center {960 540}
+  name Noise1
+  selected true
+  xpos -74
+  ypos -282
+ }
+ Constant {
+  inputs 0
+  color {0 0 0 1}
+  name Constant2
+  xpos -123
+  ypos -442
+ }
+clone $C893b3c00 {
+  xpos -123
+  ypos -370
+  selected false
+ }
+ Input {
+  inputs 0
+  name Mask
+  xpos -35
+  ypos -401
+  number 1
+ }
+ Switch {
+  inputs 2
+  which {{!parent.UseMask}}
+  name Switch3
+  xpos -75
+  ypos -334
+ }
+ Input {
+  inputs 0
+  name Matte
+  xpos -48
+  ypos -606
+  number 2
+ }
+ Input {
+  inputs 0
+  name Source
+  xpos -311
+  ypos -758
+ }
+ Crop {
+  box {0 0 {input.width} {input.height}}
+  name Crop2
+  xpos -311
+  ypos -696
+ }
+set Nb2f5f800 [stack 0]
+ Multiply {
+  inputs 1+1
+  value 0
+  name Multiply1
+  xpos -311
+  ypos -612
+  disable {{!parent.UseMatte}}
+ }
+ Dot {
+  name Dot1
+  label SOURCE
+  note_font_size 41
+  xpos -277
+  ypos -494
+ }
+set N93f4a800 [stack 0]
+ Keyer {
+  operation "luminance key"
+  name Keyer1
+  xpos -220
+  ypos -408
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge1
+  xpos -220
+  ypos -334
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  mix {{parent.UseNoise}}
+  name Merge3
+  xpos -220
+  ypos -282
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {0 0.30075 1 0}
+  color_panelDropped true
+  name Constant1
+  xpos -453
+  ypos -514
+ }
+clone $C893b3c00 {
+  xpos -453
+  ypos -431
+  selected false
+ }
+push $N93f4a800
+ Switch {
+  inputs 2
+  which {{parent.CustomizeColor}}
+  name Switch1
+  xpos -386
+  ypos -403
+ }
+ Dot {
+  name Dot8
+  xpos -352
+  ypos -278
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -312
+  ypos -288
+ }
+ Grade {
+  multiply 4
+  name Grade1
+  xpos -312
+  ypos -237
+ }
+ Premult {
+  name Premult1
+  xpos -312
+  ypos -198
+ }
+ Blur {
+  size {{FlareLength*100} 1}
+  crop false
+  name Blur1
+  xpos -312
+  ypos -172
+ }
+clone $C893b3c00 {
+  xpos -312
+  ypos -134
+  selected false
+ }
+set N320bbc00 [stack 0]
+ Dot {
+  name Dot9
+  xpos -278
+  ypos -80
+ }
+set N5b24400 [stack 0]
+ Dot {
+  name Dot5
+  xpos -278
+  ypos 78
+ }
+set Nee995c00 [stack 0]
+ Constant {
+  inputs 0
+  color {0 0 0 1}
+  name Constant3
+  xpos 268
+  ypos -38
+ }
+push $N5b24400
+push $N320bbc00
+push $N93f4a800
+ Dot {
+  name Dot2
+  xpos 47
+  ypos -494
+ }
+set N6eaa7c00 [stack 0]
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge2
+  xpos 13
+  ypos -134
+ }
+ Switch {
+  inputs 2
+  which {{parent.JustFlare}}
+  name Switch2
+  xpos 13
+  ypos -84
+ }
+set Nc88ee800 [stack 0]
+ Shuffle {
+  alpha black
+  name Shuffle1
+  xpos 165
+  ypos -84
+ }
+push $N6eaa7c00
+ Dot {
+  name Dot3
+  xpos 455
+  ypos -494
+ }
+ Dot {
+  name Dot6
+  xpos 455
+  ypos -109
+ }
+ Dot {
+  name Dot4
+  xpos 455
+  ypos 78
+ }
+ Expression {
+  expr3 Flags.flag?a:1
+  name Expression1
+  xpos 313
+  ypos 74
+ }
+ Switch {
+  inputs 4
+  which {{alphaMode}}
+  name Switch4
+  xpos 165
+  ypos 74
+ }
+ Dot {
+  name Dot7
+  xpos 199
+  ypos 190
+ }
+push $Nc88ee800
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos 13
+  ypos 180
+ }
+ Log2Lin {
+  operation lin2log
+  name Log2Lin1
+  xpos 13
+  ypos 259
+ }
+clone $C893b3c00 {
+  xpos 13
+  ypos 312
+  selected false
+ }
+ Log2Lin {
+  name Log2Lin2
+  xpos 13
+  ypos 371
+ }
+ Output {
+  name Output1
+  xpos 13
+  ypos 487
+ }
+push $Nee995c00
+ Viewer {
+  frame_range 1-90
+  fps 25
+  name Viewer1
+  xpos -646
+  ypos -553
+ }
+push $Nb2f5f800
+clone $C893b3c00 {
+  xpos -179
+  ypos -696
+  selected false
+ }
+end_group

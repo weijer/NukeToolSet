@@ -1,0 +1,1012 @@
+#! C:/Program Files/Nuke10.5v4/nuke-10.5.4.dll -nx
+version 10.5 v4
+Gizmo {
+ tile_color 0xfffd00ff
+ addUserKnob {20 shotHUD t "junvfx@foxmail.com\n2018/03/31"}
+ addUserKnob {52 py_filename t "#nuke.thisNode().knob(\"lefttext\").setValue(nuke.root().name().split(\"/\")\[-1].split(\".\")\[0])" T "\n\n" +STARTLINE}
+ addUserKnob {52 py_username t "nuke.thisNode().knob(\"user\").setValue(os.path.expanduser('~').split(\"\\\\\")\[-1])" T "nuke.thisNode().knob(\"user\").setValue(os.path.expanduser('~').split(\"\\\\\")\[-1])" +STARTLINE}
+ addUserKnob {26 about_me l "" +STARTLINE T "<font face=\"Segoe Print\" color=#00A600>junvfx@foxmail.com&nbsp;&nbsp;&nbsp;2018-03-31</font><br>\n<font face=\"Segoe Print\" color=#feb500>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;update  &nbsp;&nbsp;\t2020-12-21</font>\n"}
+ addUserKnob {4 fitmethon l Infomation M {"from input node" "from project setting" "" "" "" ""}}
+ addUserKnob {4 framerange l "Frame Range" -STARTLINE M {"from input node" "playback range" "timeline range" ""}}
+ framerange "timeline range"
+ addUserKnob {26 ""}
+ addUserKnob {4 usershow l "Center Text" M {hide show "" "" ""}}
+ addUserKnob {1 user l "User Name" -STARTLINE}
+ user lj0349
+ addUserKnob {7 csize l Size -STARTLINE}
+ csize 0.12
+ addUserKnob {1 lefttext l "Shot Text" t "top left information"}
+ lefttext "\[python os.path.basename( nuke.scriptName()\\\[:-\[expr \{int(\[value cut])\}]\\] )]"
+ addUserKnob {7 cut l Cut -STARTLINE R 0 50}
+ cut 3
+ addUserKnob {7 ver l Version R 1 15}
+ ver 1
+ addUserKnob {1 righttext l "Right Buttom" t "buttom right information"}
+ addUserKnob {26 ""}
+ addUserKnob {4 jwatermark l Watermark M {hide show "" "" "" "" "" "" ""}}
+ addUserKnob {1 marktext l "Mark Text" -STARTLINE}
+ marktext watermark
+ addUserKnob {7 fontsize l Size R 0 5}
+ fontsize 1
+ addUserKnob {7 opacity l Opacity R 0 0.5}
+ opacity 0.118
+ addUserKnob {26 ""}
+ addUserKnob {7 globalopacity l "Global Opacity"}
+ globalopacity 1
+ addUserKnob {41 fontcolor l "Font Color" T color.white}
+ addUserKnob {7 fsize l "Font Size" R 0 2}
+ fsize {{"\[value input.width]/960*0.5"}}
+}
+ Input {
+  inputs 0
+  name Input
+  label input
+  xpos 966
+  ypos -97
+ }
+set N62064c00 [stack 0]
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle1
+  xpos 966
+  ypos 17
+ }
+set N62064800 [stack 0]
+ Dot {
+  name Dot8
+  xpos 1183
+  ypos 21
+ }
+set N62064400 [stack 0]
+ Crop {
+  box {0 0 {"\[value root.format.width]"} {"\[value root.format.height]"}}
+  reformat true
+  crop false
+  name Crop2
+  xpos 1149
+  ypos 768
+ }
+push $N62064400
+ Dot {
+  name Dot4
+  xpos 1815
+  ypos 22
+ }
+set Nd4745c00 [stack 0]
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.marktext]"
+  old_message {{119 97 116 101 114 109 97 114 107}
+    }
+  old_expression_markers {{0 8}
+    }
+  box {0 0 {"\[value root.format.w]"} {"\[value root.format.h]"}}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale {{parent.fontsize}}
+  center {512 214.5}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 429}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 512 214.5 0 0 1 1 0 0 0 0}
+    }
+  name mark1
+  xpos 2055
+  ypos 275
+ }
+push $Nd4745c00
+ Text2 {
+  font_size_toolbar 25
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "\[value parent.user]"
+  old_message {{108 106 48 51 52 57}
+    }
+  old_expression_markers {{0 5}
+    }
+  box {0 0 {"\[value root.format.w]"} {"\[value root.format.h]"}}
+  xjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 25 1 25 2 25 3 25 4 25 5 25}
+    }
+  cursor_position 19
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale {{2*parent.csize}}
+  font_size 25
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0.8999996185 26.39999962}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 640 360 0 0 1 1 0 0 0 0}
+    }
+  name user1
+  xpos 2147
+  ypos 274
+ }
+ Transform {
+  translate {{parent.Transform7.translate} {parent.Transform7.translate}}
+  name Transform6
+  xpos 2147
+  ypos 517
+ }
+push 0
+ Switch {
+  inputs 2
+  which {{parent.usershow}}
+  name Switch3
+  xpos 2147
+  ypos 563
+ }
+push $Nd4745c00
+ Text2 {
+  font_size_toolbar 25
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "\[value root.format.w]x\[value root.format.h]"
+  old_message {{49 57 50 48 120 49 48 56 48}
+    }
+  old_expression_markers {{0 3 5 8}
+    }
+  box {0 0 {"\[value root.format.w]"} {"\[value root.format.h]"}}
+  xjustify center
+  yjustify bottom
+  transforms {{0 2}
+    }
+  font_size_values {{0 25 1 25 2 25 3 25 4 25 5 25 6 25 7 25 8 25}
+    }
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale 1.5
+  font_size 25
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0.8999996185 26.39999962}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 640 360 0 0 1 1 0 0 0 0}
+    }
+  name user2
+  xpos 1963
+  ypos 275
+ }
+ Transform {
+  translate {0 9}
+  scale {{parent.fsize}}
+  center {{"\[value root.format.w]/2"} 0}
+  name Transform9
+  xpos 1963
+  ypos 443
+ }
+ Dot {
+  name Dot11
+  xpos 1997
+  ypos 488
+ }
+push $Nd4745c00
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "\[value parent.righttext]"
+  old_expression_markers {{0 -1}
+    }
+  box {0 0 {"\[value input.width]"} {"\[value input.height]"}}
+  xjustify right
+  yjustify bottom
+  transforms {{0 2}
+    }
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale {{parent.fsize*0.55}}
+  center {512 214.5}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 429}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 512 214.5 0 0 1 1 0 0 0 0}
+    }
+  name production1
+  xpos 1868
+  ypos 275
+ }
+ Dot {
+  name Dot9
+  xpos 1902
+  ypos 488
+ }
+push $Nd4745c00
+ Text2 {
+  font_size_toolbar 30
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "\[value parent.lefttext]_v\[python (\"%03d\"%\[expr \{int(\[value parent.ver])\}])]"
+  old_message {{72 52 50 95 118 50 95 115 104 111 116 50 57 48 95 102 120 95 118 48 48 50}
+    }
+  old_expression_markers {{0 16 19 21}
+    }
+  box {10 7 1920 39}
+  transforms {{0 2}
+    }
+  font_size_values {{0 30 1 30 2 30 3 30 4 30 5 30 6 30 7 30 8 30 9 30 10 30 11 30 12 30 13 30 14 30 15 30 16 30 17 30 18 30 19 30 20 30 21 30}
+    }
+  cursor_position 41
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale 2.2
+  font_size 30
+  center {512 214.5}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 429}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 512 214.5 0 0 1 1 0 0 0 0}
+    }
+  name shot1
+  xpos 1772
+  ypos 276
+ }
+ Transform {
+  translate {{-center.x} {"\[value root.format.h]-center.y"}}
+  scale {{parent.Transform3.scale}}
+  center {{parent.Transform3.center} {parent.Transform3.center}}
+  name Transform11
+  xpos 1772
+  ypos 386
+ }
+push 0
+push $Nd4745c00
+ Text2 {
+  font_size_toolbar 20
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "Range:\nFrame:\nFPS:"
+  old_message {{82 97 110 103 101 58 10 70 114 97 109 101 58 10 70 80 83 58}
+    }
+  box {-135 9 35 79}
+  xjustify right
+  transforms {{0 2}
+    }
+  font_size_values {{0 20 1 20 2 20 3 20 4 20 5 20 6 20 7 20 8 20 9 20 10 20 11 20 12 20 13 20 14 20 15 20 16 20 17 20 0 19.5 1 19.5 2 19.5 3 19.5 4 19.5 5 19.5}
+    }
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale 2
+  font_size 20
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 429}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 512 214.5 0 0 1 1 0 0 0 0}
+    }
+  name frame1
+  xpos 1271
+  ypos 106
+ }
+push $Nd4745c00
+ Dot {
+  name Dot14
+  xpos 1719
+  ypos 121
+ }
+set N5c3ff400 [stack 0]
+ Text2 {
+  font_size_toolbar 20
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "\[python nuke.activeViewer().node().frameRange()]\n\[frame]\n\[python \{int(nuke.Root()\['fps'].getValue())\}]"
+  old_message {{49 48 49 54 45 49 48 54 48 10 49 48 52 50 10 50 53}
+    }
+  old_expression_markers {{0 8 10 13 15 16}
+    }
+  box {35.5 7.5 265.5 79}
+  transforms {{0 2}
+    }
+  font_size_values {{0 20 1 20 2 20 3 20 4 20 5 20 6 20 0 20 0 20 0 20 7 20 8 20 9 20 10 20 11 20 12 20 13 20 14 20 15 20 16 20 0 19.5}
+    }
+  cursor_position 47
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale 2
+  font_size 20
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 429}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 512 214.5 0 0 1 1 0 0 0 0}
+    }
+  name FPS_visablerange1
+  xpos 1570
+  ypos 300
+ }
+push $N5c3ff400
+ Text2 {
+  font_size_toolbar 20
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "\[python nuke.activeViewer().node().playbackRange()]\n\[frame]\n\[python \{int(nuke.Root()\['fps'].getValue())\}]"
+  old_message {{49 48 49 54 45 49 48 54 48 10 49 48 52 50 10 50 53}
+    }
+  old_expression_markers {{0 8 10 13 15 16}
+    }
+  box {35.5 7.5 265.5 79}
+  transforms {{0 2}
+    }
+  font_size_values {{0 20 1 20 2 20 3 20 4 20 5 20 6 20 7 20 8 20 0 20 0 20 0 20 9 20 10 20 11 20 12 20 13 20 14 20 15 20 16 20 0 19.5}
+    }
+  cursor_position 8
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale 2
+  font_size 20
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 429}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 512 214.5 0 0 1 1 0 0 0 0}
+    }
+  name FPS_playrange1
+  xpos 1546
+  ypos 215
+ }
+push $N5c3ff400
+ Text2 {
+  font_size_toolbar 20
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "\[python \{int(nuke.Root()\['first_frame'].getValue())\}]-\[python \{int(nuke.Root()\['last_frame'].getValue())\}]\n\[frame]\n\[python \{int(nuke.Root()\['fps'].getValue())\}]"
+  old_message {{49 48 49 54 45 49 48 54 48 10 49 48 52 50 10 50 53}
+    }
+  old_expression_markers {{0 3 5 8 10 13 15 16}
+    }
+  box {35.5 7.5 265.5 79}
+  transforms {{0 2}
+    }
+  font_size_values {{0 20 1 20 2 20 3 20 0 20 4 20 5 20 6 20 7 20 8 20 9 20 10 20 11 20 12 20 13 20 14 20 15 20 16 20 0 19.5 4 19.5 5 19.5 6 19.5}
+    }
+  cursor_position 114
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale 2
+  font_size 20
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 429}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 512 214.5 0 0 1 1 0 0 0 0}
+    }
+  name FPS1
+  xpos 1410
+  ypos 116
+ }
+ Switch {
+  inputs 2
+  which {{"parent.framerange == 1"}}
+  name Switch8
+  xpos 1410
+  ypos 215
+ }
+ Switch {
+  inputs 2
+  which {{"parent.framerange == 2"}}
+  name Switch9
+  xpos 1410
+  ypos 300
+ }
+ Merge2 {
+  inputs 2
+  name Merge7
+  xpos 1271
+  ypos 300
+ }
+ Transform {
+  translate {{"\[value root.format.w]-center.x"} {"\[value root.format.h]-center.y"}}
+  scale {{parent.Transform2.scale}}
+  center {{parent.Transform2.center} {parent.Transform2.center}}
+  name Transform12
+  xpos 1271
+  ypos 483
+ }
+push $Nd4745c00
+ Text2 {
+  font_size_toolbar 30
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "\[date %Y]-\[date %m]-\[date %d]"
+  old_message {{50 48 50 49 45 49 49 45 49 57}
+    }
+  old_expression_markers {{0 3 5 6 8 9}
+    }
+  box {16 12.5 1920 47.5}
+  yjustify bottom
+  transforms {{0 2}
+    }
+  font_size_values {{0 30 1 30 2 30 3 30 4 30 5 30 6 30 7 30 8 30 9 30 0 19.5}
+    }
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale 3
+  font_size 30
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 429}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 512 214.5 0 0 1 1 0 0 0 0}
+    }
+  name date1
+  xpos 1678
+  ypos 277
+ }
+ Transform {
+  translate {{parent.Transform5.translate} {parent.Transform5.translate}}
+  scale {{parent.Transform5.scale}}
+  name Transform1
+  xpos 1678
+  ypos 338
+ }
+ Merge2 {
+  inputs 5+1
+  name Merge8
+  xpos 1678
+  ypos 484
+ }
+ Merge2 {
+  inputs 2
+  name Merge10
+  xpos 1678
+  ypos 563
+ }
+ Grade {
+  white {{parent.color.white}}
+  name color1
+  xpos 1678
+  ypos 622
+ }
+set N2d517c00 [stack 0]
+ Merge2 {
+  inputs 2
+  mix {{parent.opacity}}
+  name Merge9
+  xpos 2055
+  ypos 622
+ }
+ Dot {
+  name Dot10
+  xpos 2089
+  ypos 696
+ }
+push $N2d517c00
+ Switch {
+  inputs 2
+  which {{parent.jwatermark x1002 0}}
+  name Switch4
+  xpos 1678
+  ypos 692
+ }
+ Merge2 {
+  inputs 2
+  bbox A
+  name Merge11
+  xpos 1678
+  ypos 769
+ }
+ Dot {
+  name Dot12
+  xpos 1712
+  ypos 860
+ }
+push $N62064800
+ Crop {
+  box {{curve} {curve} {"\[value input.width]"} {"\[value input.height]"}}
+  reformat true
+  crop false
+  name Crop1
+  xpos 966
+  ypos 772
+ }
+push $N62064800
+ Dot {
+  name Dot2
+  xpos 581
+  ypos 21
+ }
+set N2d516400 [stack 0]
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.marktext]"
+  old_message {{119 97 116 101 114 109 97 114 107}
+    }
+  old_expression_markers {{0 8}
+    }
+  box {{curve} {curve} {"\[value input.width]"} {"\[value input.height]"}}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale {{parent.fontsize}}
+  center {512 214.5}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 429}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 512 214.5 0 0 1 1 0 0 0 0}
+    }
+  name mark
+  xpos 816
+  ypos 278
+ }
+push $N2d516400
+ Text2 {
+  font_size_toolbar 25
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.user]"
+  old_message {{108 106 48 51 52 57}
+    }
+  old_expression_markers {{0 5}
+    }
+  box {{curve} {curve} {"\[value input.width]"} {"\[value input.height]"}}
+  xjustify center
+  transforms {{0 2}
+    }
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale {{2*parent.csize}}
+  font_size 25
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0.1000003815 26.19999981}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 640 360 0 0 1 1 0 0 0 0}
+    }
+  name user
+  xpos 913
+  ypos 279
+ }
+ Transform {
+  translate {0 -5}
+  name Transform7
+  xpos 913
+  ypos 515
+ }
+push 0
+ Switch {
+  inputs 2
+  which {{parent.usershow}}
+  name Switch2
+  xpos 913
+  ypos 566
+ }
+push $N2d516400
+ Text2 {
+  font_size_toolbar 25
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value input.width]x\[value input.height]"
+  old_message {{49 57 50 48 120 49 48 56 48}
+    }
+  old_expression_markers {{0 3 5 8}
+    }
+  box {{curve} {curve} {"\[value input.width]"} {"\[value input.height]"}}
+  xjustify center
+  yjustify bottom
+  transforms {{0 2}
+    }
+  font_size_values {{0 25 1 25 2 25 3 25 4 25 5 25 6 25 7 25 8 25}
+    }
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale 1.5
+  font_size 25
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0.1000003815 26.19999981}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 640 360 0 0 1 1 0 0 0 0}
+    }
+  name res
+  xpos 722
+  ypos 276
+ }
+ Transform {
+  translate {0 9}
+  scale {{parent.fsize}}
+  center {{"\[value input.width]/2"} 0}
+  name Transform8
+  xpos 722
+  ypos 439
+ }
+ Dot {
+  name Dot7
+  xpos 756
+  ypos 491
+ }
+push $N2d516400
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "\[value parent.righttext]"
+  old_expression_markers {{0 -1}
+    }
+  box {0 0 {"\[value input.width]"} {"\[value input.height]"}}
+  xjustify right
+  yjustify bottom
+  transforms {{0 2}
+    }
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale {{parent.fsize*0.55}}
+  center {512 214.5}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 429}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 512 214.5 0 0 1 1 0 0 0 0}
+    }
+  name production
+  xpos 628
+  ypos 276
+ }
+ Dot {
+  name Dot5
+  xpos 662
+  ypos 492
+ }
+push $N2d516400
+ Text2 {
+  font_size_toolbar 30
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "\[value parent.lefttext]_v\[python (\"%03d\"%\[expr \{int(\[value parent.ver])\}])]"
+  old_message {{72 52 50 95 118 50 95 115 104 111 116 50 57 48 95 102 120 95 118 48 48 49}
+    }
+  old_expression_markers {{0 16 19 21}
+    }
+  box {10 7 1920 39}
+  transforms {{0 2}
+    }
+  font_size_values {{0 30 1 30 2 30 3 30 4 30 5 30 6 30 7 30 8 30 9 30 10 30 11 30 12 30 13 30 14 30 15 30 16 30 17 30 18 30 19 30 20 30 21 30}
+    }
+  cursor_position 75
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale 2.2
+  font_size 30
+  center {512 214.5}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 429}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 512 214.5 0 0 1 1 0 0 0 0}
+    }
+  name shot
+  xpos 533
+  ypos 276
+ }
+ Transform {
+  translate {{center.x*-1} {"\[value input.height]-center.y"}}
+  scale {{0.7*parent.fsize}}
+  center {-5 80}
+  name Transform3
+  xpos 533
+  ypos 386
+ }
+push 0
+push $N2d516400
+ Text2 {
+  font_size_toolbar 20
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "Range:\nFrame:\nFPS:"
+  old_message {{82 97 110 103 101 58 10 70 114 97 109 101 58 10 70 80 83 58}
+    }
+  box {-135 9 35 79}
+  xjustify right
+  transforms {{0 2}
+    }
+  font_size_values {{0 20 1 20 2 20 3 20 4 20 5 20 6 20 7 20 8 20 9 20 10 20 11 20 12 20 13 20 14 20 15 20 16 20 17 20 0 19.5 1 19.5 2 19.5 3 19.5 4 19.5 5 19.5}
+    }
+  kern_values {{6 0}
+    }
+  cursor_position 6
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale 2
+  font_size 20
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 429}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 512 214.5 0 0 1 1 0 0 0 0}
+    }
+  name frame
+  xpos 69
+  ypos 186
+ }
+push $N2d516400
+ Dot {
+  name Dot15
+  xpos 458
+  ypos 190
+ }
+set N7804bc00 [stack 0]
+ Text2 {
+  font_size_toolbar 20
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "\[python nuke.activeViewer().node().frameRange()]\n\[frame] \n\[python \{int(nuke.Root()\['fps'].getValue())\}]"
+  old_message {{49 48 49 54 45 49 48 54 48 10 49 48 52 48 32 10 50 53}
+    }
+  old_expression_markers {{0 8 10 13 16 17}
+    }
+  box {35.5 7.5 265.5 79}
+  transforms {{0 2}
+    }
+  font_size_values {{0 20 1 20 2 20 3 20 4 20 5 20 6 20 0 20 0 20 0 20 7 20 8 20 9 20 10 20 11 20 12 20 13 20 14 20 15 20 16 20 17 20 0 19.5}
+    }
+  cursor_position 57
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale 2
+  font_size 20
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 429}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 512 214.5 0 0 1 1 0 0 0 0}
+    }
+  name FPS_visablerange
+  xpos 331
+  ypos 369
+ }
+push $N7804bc00
+ Text2 {
+  font_size_toolbar 20
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "\[python nuke.activeViewer().node().playbackRange()]\n\[frame]\n\[python \{int(nuke.Root()\['fps'].getValue())\}]"
+  old_message {{49 48 49 54 45 49 48 54 48 10 49 48 52 50 10 50 53}
+    }
+  old_expression_markers {{0 8 10 13 15 16}
+    }
+  box {35.5 7.5 265.5 79}
+  transforms {{0 2}
+    }
+  font_size_values {{0 20 1 20 2 20 3 20 4 20 5 20 6 20 7 20 8 20 0 20 0 20 0 20 9 20 10 20 11 20 12 20 13 20 14 20 15 20 16 20 0 19.5}
+    }
+  cursor_position 8
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale 2
+  font_size 20
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 429}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 512 214.5 0 0 1 1 0 0 0 0}
+    }
+  name FPS_playrange
+  xpos 320
+  ypos 278
+ }
+push $N7804bc00
+ Text2 {
+  font_size_toolbar 20
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "\[value input.first_frame]-\[value input.last_frame]\n\[frame]\n\[python \{int(nuke.Root()\['fps'].getValue())\}]"
+  old_message {{49 48 49 54 45 49 48 54 48 10 49 48 52 50 10 50 53}
+    }
+  old_expression_markers {{0 3 5 8 10 13 15 16}
+    }
+  box {35.5 7.5 265.5 79}
+  transforms {{0 2}
+    }
+  font_size_values {{0 20 1 20 2 20 3 20 0 20 0 20 0 20 4 20 5 20 6 20 7 20 8 20 5 20 9 20 10 20 11 20 12 20 13 20 14 20 15 20 16 20 0 19.5}
+    }
+  cursor_position 104
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale 2
+  font_size 20
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 429}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 512 214.5 0 0 1 1 0 0 0 0}
+    }
+  name FPS_inputrange
+  xpos 190
+  ypos 185
+ }
+ Switch {
+  inputs 2
+  which {{"parent.framerange == 1"}}
+  name Switch6
+  xpos 190
+  ypos 278
+ }
+ Switch {
+  inputs 2
+  which {{parent.framerange==2}}
+  name Switch7
+  xpos 190
+  ypos 369
+ }
+ Merge2 {
+  inputs 2
+  name Merge4
+  xpos 69
+  ypos 369
+ }
+ Transform {
+  translate {{"\[value input.width]-center.x"} {"\[value input.height]-center.y"}}
+  scale {{parent.fsize}}
+  center {250 100}
+  name Transform2
+  xpos 69
+  ypos 487
+ }
+push $N2d516400
+ Text2 {
+  font_size_toolbar 30
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "\[date %Y]-\[date %m]-\[date %d]"
+  old_message {{50 48 50 49 45 49 49 45 49 57}
+    }
+  old_expression_markers {{0 3 5 6 8 9}
+    }
+  box {16 12.5 939 47.5}
+  yjustify bottom
+  transforms {{0 2}
+    }
+  font_size_values {{0 30 1 30 2 30 3 30 4 30 5 30 6 30 7 30 8 30 9 30 0 19.5}
+    }
+  font {{ Utopia : Bold : UtopiaBold.pfa : 0 }}
+  global_font_scale 3
+  font_size 30
+  center {512 214.5}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 429}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 512 214.5 0 0 1 1 0 0 0 0}
+    }
+  name date
+  xpos 434
+  ypos 277
+ }
+ Transform {
+  translate {5 5}
+  scale {{parent.fsize*0.5}}
+  name Transform5
+  xpos 434
+  ypos 344
+ }
+ Merge2 {
+  inputs 5+1
+  name Merge5
+  xpos 434
+  ypos 487
+ }
+ Merge2 {
+  inputs 2
+  name Merge6
+  xpos 434
+  ypos 566
+ }
+ Grade {
+  name color
+  xpos 434
+  ypos 610
+ }
+set N2e922400 [stack 0]
+ Merge2 {
+  inputs 2
+  mix {{parent.opacity}}
+  name Merge1
+  xpos 816
+  ypos 610
+ }
+ Dot {
+  name Dot6
+  xpos 850
+  ypos 684
+ }
+push $N2e922400
+ Switch {
+  inputs 2
+  which {{parent.jwatermark x1002 0}}
+  name Switch1
+  xpos 434
+  ypos 680
+ }
+ Merge2 {
+  inputs 2
+  bbox A
+  name Merge3
+  xpos 434
+  ypos 772
+ }
+ Dot {
+  name Dot13
+  xpos 468
+  ypos 859
+ }
+ Switch {
+  inputs 2
+  which {{parent.fitmethon}}
+  name Switch5
+  xpos 1066
+  ypos 855
+ }
+push $N62064c00
+ Dot {
+  name Dot3
+  xpos 41
+  ypos -87
+ }
+ Dot {
+  name Dot1
+  xpos 41
+  ypos 995
+ }
+ Merge2 {
+  inputs 2
+  mix {{parent.globalopacity}}
+  name Merge2
+  xpos 1066
+  ypos 990
+ }
+ Output {
+  name Output1
+  xpos 1066
+  ypos 1090
+ }
+end_group

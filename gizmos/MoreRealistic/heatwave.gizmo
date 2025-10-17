@@ -1,0 +1,196 @@
+Gizmo {
+ inputs 2
+ tile_color 0xff4fc8ff
+ lock_connections true
+ addUserKnob {20 heatwave l "Heat Wave"}
+ addUserKnob {26 distortionheat l "<b>Dist / Heat"}
+ addUserKnob {7 distortion_amount l "Distortion Amount" R 0 100}
+ addUserKnob {7 HeatBlurAmount l "Heat Blur Amount" R 0 50}
+ addUserKnob {7 DistortionScale l "Distortion Scale" R 0 200}
+ DistortionScale 15
+ addUserKnob {7 HeatBlurScale l "Heat Blur Scale" R 0 100}
+ HeatBlurScale 30
+ addUserKnob {6 velocityoff l "Velocity Off" t "Check this if you don't want any motion from the velocity." +STARTLINE}
+ addUserKnob {7 Vel l "Distortion Velocity"}
+ Vel 0.15
+ addUserKnob {26 windtitle l <b>Wind}
+ addUserKnob {7 windx l "Wind Direction X" R -10 10}
+ addUserKnob {7 windy l "Wind Direction Y" R -10 10}
+}
+ Input {
+  inputs 0
+  name Mask
+  xpos 341
+  ypos 61
+  number 1
+ }
+ Dot {
+  name Dot4
+  xpos 375
+  ypos 194
+ }
+set Necde5c00 [stack 0]
+ Dot {
+  name Dot1
+  xpos 375
+  ypos 254
+ }
+set Necde5800 [stack 0]
+ Dot {
+  name Dot3
+  xpos 375
+  ypos 321
+ }
+set Necde5400 [stack 0]
+ Dot {
+  name Dot5
+  xpos 375
+  ypos 386
+ }
+push 0
+ Noise {
+  inputs 1+1
+  size {{parent.HeatBlurScale+20}}
+  lacunarity 1
+  gain 0.694
+  gamma 0.227
+  translate {{"(( 1 / 10000 )+parent.windx)*( (frame-0) % 10000)"} {"(( 1 / 10000 )+parent.windy)*( (frame-0) % 10000)"}}
+  center {960 540}
+  name Noise4
+  xpos 237
+  ypos 383
+ }
+ Dot {
+  name Dot6
+  xpos 105
+  ypos 386
+ }
+push $Necde5400
+push 0
+ Noise {
+  inputs 1+1
+  size {{parent.HeatBlurScale+20}}
+  zoffset {{"(( 1 / 30 )-parent.Vel)*( (frame-0) % 10000)"}}
+  lacunarity 1
+  gain 0.694
+  gamma 0.227
+  translate {{"(( 1 / 100 )+parent.windx)*( (frame-0) % 10000)"} {"(( 1 / 100 )+parent.windy)*( (frame-0) % 10000)"}}
+  center {960 540}
+  name Noise2
+  xpos 228
+  ypos 318
+ }
+ Switch {
+  inputs 2
+  which {{parent.velocityoff}}
+  name Switch2
+  xpos 71
+  ypos 318
+ }
+set Nedcdbc00 [stack 0]
+ Dot {
+  name Dot7
+  xpos 63
+  ypos 344
+ }
+ Blur {
+  size 38.4
+  name Blur2
+  xpos 29
+  ypos 418
+ }
+push $Nedcdbc00
+push $Necde5800
+push 0
+ Noise {
+  inputs 1+1
+  size {{parent.DistortionScale+6}}
+  zoffset -0.2986666667
+  lacunarity 1.335
+  gain 0.333
+  gamma 0.34
+  translate {{"(( 1 / 10000 )+parent.windx)*( (frame-0) % 10000)"} {"(( 1 / 10000 )+parent.windy)*( (frame-0) % 10000)"}}
+  center {960 540}
+  name Noise3
+  xpos 232
+  ypos 251
+ }
+ Dot {
+  name Dot2
+  xpos 101
+  ypos 254
+ }
+push $Necde5c00
+push 0
+ Noise {
+  inputs 1+1
+  size {{parent.DistortionScale+6}}
+  zoffset {{"(( 1 / 30 )-parent.Vel)*( (frame) % 10000)"}}
+  lacunarity 1.335
+  gain 0.333
+  gamma 0.34
+  translate {{"(( 1 / 100 )+parent.windx)*( (frame) % 10000)"} {"(( 1 / 100 )+parent.windy)*( (frame) % 10000)"}}
+  center {960 540}
+  name Noise1
+  xpos 234
+  ypos 191
+ }
+ Switch {
+  inputs 2
+  which {{parent.velocityoff}}
+  name Switch1
+  xpos 67
+  ypos 191
+ }
+ Input {
+  inputs 0
+  name Source
+  xpos -91
+  ypos 76
+ }
+add_layer {idistort idistort.x idistort.y}
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 idistort.x
+  from1 rgba.alpha
+  to1 idistort.y
+  name Copy1
+  xpos -91
+  ypos 182
+ }
+ Blur {
+  inputs 1+1
+  size {{parent.HeatBlurAmount}}
+  name Blur1
+  xpos -91
+  ypos 313
+ }
+ ColorCorrect {
+  inputs 1+1
+  gamma 0.995
+  gain 0.96
+  name ColorCorrect1
+  xpos -91
+  ypos 422
+ }
+ IDistort {
+  uv idistort
+  uv_scale {{parent.distortion_amount 0}}
+  blur_scale 3
+  name IDistort1
+  xpos -91
+  ypos 472
+ }
+ Remove {
+  channels idistort
+  name Remove
+  xpos -91
+  ypos 536
+ }
+ Output {
+  name Output1
+  xpos -91
+  ypos 597
+ }
+end_group

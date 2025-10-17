@@ -1,0 +1,144 @@
+Group {
+ inputs 0
+ name SceneDepthCalculator
+ tile_color 0xd6ff32ff
+ selected true
+ addUserKnob {20 General}
+ addUserKnob {26 title_cam_1 l <b>camera</b>}
+ addUserKnob {22 set_link_cam l "link to selected camera" T "goStore = nuke.toNode('store')\ngoStore\['fn'].execute()\n\nknobLS = \['world_matrix_cam']\nsetLink( knobLS )" +STARTLINE}
+ addUserKnob {22 remove_link_cam l "remove linked camera expression" -STARTLINE T "nuke.thisGroup()\['world_matrix_cam'].clearAnimated()"}
+ addUserKnob {20 title_cam l "world matrix" n 1}
+ title_cam 0
+ addUserKnob {41 world_matrix_cam l "" -STARTLINE T camData.matrix}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 title_target_1 l <b>target</b>}
+ addUserKnob {22 set_link_tgt l "link to selected target" T "goStore = nuke.toNode('store')\ngoStore\['fn'].execute()\n\nknobLS = \['world_matrix_tgt']\nsetLink( knobLS )" +STARTLINE}
+ addUserKnob {22 remove_link_tgt l "remove linked target expression" -STARTLINE T "nuke.thisGroup()\['world_matrix_tgt'].clearAnimated()"}
+ addUserKnob {20 title_target l "world matrix" n 1}
+ title_target 0
+ addUserKnob {41 world_matrix_tgt l "" -STARTLINE T axData.matrix}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {41 depth T math.depth}
+ addUserKnob {41 lock l lock/unlock -STARTLINE T math.lock}
+ addUserKnob {7 offset R -100 100}
+ addUserKnob {7 result l "<font color=yellow><b>result</b></font>"}
+ result {{"invert_depth ? 1/(depth+offset) : (depth+offset)"}}
+ addUserKnob {6 invert_depth l 1/z -STARTLINE}
+ addUserKnob {20 t_VERSION l Version}
+ addUserKnob {26 l_VERSION l Version T 2.0}
+ addUserKnob {26 l_DATE l "Date Modified" T 2021-02-25}
+ addUserKnob {22 btn_CHANGELOG l Changelog T "log = \"2.0<br>-&nbsp;changed&nbsp;camera&nbsp;&&nbsp;target&nbsp;to&nbsp;use&nbsp;world&nbsp;matrix&nbsp;instead<br>-&nbsp;instant&nbsp;live&nbsp;result&nbsp;of&nbsp;depth&nbsp;value<br>-&nbsp;re-work&nbsp;the&nbsp;interface\"\nnuke.message( log )" +STARTLINE}
+ addUserKnob {26 l_DEV l "Developed by" T "<a href='https://facebook.com/MJTLab'><font color='orange'>Mark Joey Tang</font></a>"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0xaaaaaa00
+  label bin
+  note_font_size 42
+  xpos -474
+  ypos 425
+  bdwidth 192
+  bdheight 166
+ }
+ Group {
+  inputs 0
+  name iMatrix44
+  tile_color 0x337f4cff
+  xpos -246
+  ypos 562
+  addUserKnob {20 tab_general l General}
+  addUserKnob {1 knob_path}
+  knob_path camData.world_matrix
+  addUserKnob {26 ""}
+  addUserKnob {41 id T assignID.matrix}
+  addUserKnob {26 ""}
+  addUserKnob {20 grp_math l math n 1}
+  grp_math 0
+  addUserKnob {7 m l determinant}
+  m {{"\[value \[value knob_path].\[value id.0]] * \n(\n\[value \[value knob_path].\[value id.5]] * \n(( \[value \[value knob_path].\[value id.10]] * \[value \[value knob_path].\[value id.15]] )\n-\n( \[value \[value knob_path].\[value id.11]] * \[value \[value knob_path].\[value id.14]] ))\n-\n\[value \[value knob_path].\[value id.6]] * \n(( \[value \[value knob_path].\[value id.9]] * \[value \[value knob_path].\[value id.15]] )\n-\n( \[value \[value knob_path].\[value id.11]] * \[value \[value knob_path].\[value id.13]] ))\n+\n\[value \[value knob_path].\[value id.7]] * \n(( \[value \[value knob_path].\[value id.9]] * \[value \[value knob_path].\[value id.14]] )\n-\n( \[value \[value knob_path].\[value id.10]] * \[value \[value knob_path].\[value id.13]] ))\n)\n\n-\n\n\[value \[value knob_path].\[value id.1]] * \n(\n\[value \[value knob_path].\[value id.4]] * \n(( \[value \[value knob_path].\[value id.10]] * \[value \[value knob_path].\[value id.15]] )\n-\n( \[value \[value knob_path].\[value id.11]] * \[value \[value knob_path].\[value id.14]] ))\n-\n\[value \[value knob_path].\[value id.6]] * \n(( \[value \[value knob_path].\[value id.8]] * \[value \[value knob_path].\[value id.15]] )\n-\n( \[value \[value knob_path].\[value id.11]] * \[value \[value knob_path].\[value id.12]] ))\n+\n\[value \[value knob_path].\[value id.7]] * \n(( \[value \[value knob_path].\[value id.8]] * \[value \[value knob_path].\[value id.14]] )\n-\n( \[value \[value knob_path].\[value id.10]] * \[value \[value knob_path].\[value id.12]] ))\n)\n\n+\n\n\[value \[value knob_path].\[value id.2]] * \n(\n\[value \[value knob_path].\[value id.4]] * \n(( \[value \[value knob_path].\[value id.9]] * \[value \[value knob_path].\[value id.15]] )\n-\n( \[value \[value knob_path].\[value id.11]] * \[value \[value knob_path].\[value id.13]] ))\n-\n\[value \[value knob_path].\[value id.5]] * \n(( \[value \[value knob_path].\[value id.8]] * \[value \[value knob_path].\[value id.15]] )\n-\n( \[value \[value knob_path].\[value id.11]] * \[value \[value knob_path].\[value id.12]] ))\n+\n\[value \[value knob_path].\[value id.7]] * \n(( \[value \[value knob_path].\[value id.8]] * \[value \[value knob_path].\[value id.13]] )\n-\n( \[value \[value knob_path].\[value id.9]] * \[value \[value knob_path].\[value id.12]] ))\n)\n\n-\n\n\[value \[value knob_path].\[value id.3]] * \n(\n\[value \[value knob_path].\[value id.4]] * \n(( \[value \[value knob_path].\[value id.9]] * \[value \[value knob_path].\[value id.14]] )\n-\n( \[value \[value knob_path].\[value id.10]] * \[value \[value knob_path].\[value id.13]] ))\n-\n\[value \[value knob_path].\[value id.5]] * \n(( \[value \[value knob_path].\[value id.8]] * \[value \[value knob_path].\[value id.14]] )\n-\n( \[value \[value knob_path].\[value id.10]] * \[value \[value knob_path].\[value id.12]] ))\n+\n\[value \[value knob_path].\[value id.6]] * \n(( \[value \[value knob_path].\[value id.8]] * \[value \[value knob_path].\[value id.13]] )\n-\n( \[value \[value knob_path].\[value id.9]] * \[value \[value knob_path].\[value id.12]] ))\n)"}}
+  addUserKnob {41 a l cofactor T co.matrix}
+  addUserKnob {20 endGroup n -1}
+  addUserKnob {26 ""}
+  addUserKnob {41 iMatrix T result.matrix}
+  addUserKnob {20 t_VERSION l Version}
+  addUserKnob {26 l_VERSION l Version T 1.1}
+  addUserKnob {26 l_DATE l "Date Modified" T 2021-02-24}
+  addUserKnob {22 btn_CHANGELOG l Changelog T "log = \"live&nbsp;inverse&nbsp;matrix<br>iMatrix33<br>iMatrix44\"\nnuke.message( log )" +STARTLINE}
+  addUserKnob {26 l_DEV l "Developed by" T "<a href='https://youtube.com/c/MJTLab'><font color='orange'>Mark Joey Tang</font></a>"}
+ }
+  Matrix {
+   inputs 0
+   matrix {
+       {0 1 2 3}
+       {4 5 6 7}
+       {8 9 10 11}
+       {12 13 14 15}
+     }
+   name assignID
+   xpos -150
+   ypos -255
+  }
+  Matrix {
+   inputs 0
+   matrix {
+       {{"pow(-1,0+0) * (\n+\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.10]]*\[value \[value knob_path].\[value id.15]]\n+\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.11]]*\[value \[value knob_path].\[value id.13]]\n+\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.9]]*\[value \[value knob_path].\[value id.14]]\n-\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.10]]*\[value \[value knob_path].\[value id.13]]\n-\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.9]]*\[value \[value knob_path].\[value id.15]]\n-\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.11]]*\[value \[value knob_path].\[value id.14]]\n)"} {"pow(-1,0+1) * (\n+\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.10]]*\[value \[value knob_path].\[value id.15]]\n+\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.11]]*\[value \[value knob_path].\[value id.12]]\n+\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.8]]*\[value \[value knob_path].\[value id.13]]\n-\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.10]]*\[value \[value knob_path].\[value id.12]]\n-\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.8]]*\[value \[value knob_path].\[value id.15]]\n-\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.11]]*\[value \[value knob_path].\[value id.14]]\n)"} {"pow(-1,0+2) * (\n+\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.9]]*\[value \[value knob_path].\[value id.15]]\n+\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.11]]*\[value \[value knob_path].\[value id.12]]\n+\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.8]]*\[value \[value knob_path].\[value id.13]]\n-\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.9]]*\[value \[value knob_path].\[value id.12]]\n-\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.8]]*\[value \[value knob_path].\[value id.15]]\n-\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.11]]*\[value \[value knob_path].\[value id.14]]\n)"} {"pow(-1,0+3) * (\n+\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.9]]*\[value \[value knob_path].\[value id.14]]\n+\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.10]]*\[value \[value knob_path].\[value id.12]]\n+\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.8]]*\[value \[value knob_path].\[value id.13]]\n-\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.9]]*\[value \[value knob_path].\[value id.12]]\n-\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.8]]*\[value \[value knob_path].\[value id.14]]\n-\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.10]]*\[value \[value knob_path].\[value id.13]]\n)"}}
+       {{"pow(-1,1+0) * (\n+\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.10]]*\[value \[value knob_path].\[value id.15]]\n+\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.11]]*\[value \[value knob_path].\[value id.13]]\n+\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.9]]*\[value \[value knob_path].\[value id.14]]\n-\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.10]]*\[value \[value knob_path].\[value id.13]]\n-\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.9]]*\[value \[value knob_path].\[value id.15]]\n-\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.11]]*\[value \[value knob_path].\[value id.14]]\n)"} {"pow(-1,1+1) * (\n+\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.10]]*\[value \[value knob_path].\[value id.15]]\n+\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.11]]*\[value \[value knob_path].\[value id.12]]\n+\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.8]]*\[value \[value knob_path].\[value id.13]]\n-\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.10]]*\[value \[value knob_path].\[value id.12]]\n-\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.8]]*\[value \[value knob_path].\[value id.15]]\n-\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.11]]*\[value \[value knob_path].\[value id.14]]\n)"} {"pow(-1,1+2) * (\n+\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.9]]*\[value \[value knob_path].\[value id.15]]\n+\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.11]]*\[value \[value knob_path].\[value id.12]]\n+\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.8]]*\[value \[value knob_path].\[value id.13]]\n-\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.9]]*\[value \[value knob_path].\[value id.12]]\n-\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.8]]*\[value \[value knob_path].\[value id.15]]\n-\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.11]]*\[value \[value knob_path].\[value id.14]]\n)"} {"pow(-1,1+3) * (\n+\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.9]]*\[value \[value knob_path].\[value id.14]]\n+\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.10]]*\[value \[value knob_path].\[value id.12]]\n+\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.8]]*\[value \[value knob_path].\[value id.13]]\n-\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.9]]*\[value \[value knob_path].\[value id.12]]\n-\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.8]]*\[value \[value knob_path].\[value id.14]]\n-\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.10]]*\[value \[value knob_path].\[value id.13]]\n)"}}
+       {{"pow(-1,2+0) * (\n+\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.15]]\n+\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.13]]\n+\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.14]]\n-\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.13]]\n-\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.15]]\n-\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.11]]*\[value \[value knob_path].\[value id.14]]\n)"} {"pow(-1,2+1) * (\n+\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.15]]\n+\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.12]]\n+\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.13]]\n-\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.12]]\n-\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.15]]\n-\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.14]]\n)"} {"pow(-1,2+2) * (\n+\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.15]]\n+\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.12]]\n+\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.13]]\n-\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.12]]\n-\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.15]]\n-\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.14]]\n)"} {"pow(-1,2+3) * (\n+\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.14]]\n+\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.12]]\n+\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.13]]\n-\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.12]]\n-\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.14]]\n-\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.13]]\n)"}}
+       {{"pow(-1,3+0) * (\n+\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.11]]\n+\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.9]]\n+\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.10]]\n-\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.9]]\n-\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.11]]\n-\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.10]]\n)"} {"pow(-1,3+1) * (\n+\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.11]]\n+\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.8]]\n+\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.10]]\n-\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.8]]\n-\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.11]]\n-\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.10]]\n)"} {"pow(-1,3+2) * (\n+\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.11]]\n+\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.8]]\n+\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.9]]\n-\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.8]]\n-\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.11]]\n-\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.9]]\n)"} {"pow(-1,3+3) * (\n+\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.10]]\n+\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.8]]\n+\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.9]]\n-\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.8]]\n-\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.10]]\n-\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.9]]\n)"}}
+     }
+   name co
+   xpos -44
+   ypos -255
+  }
+  Matrix {
+   inputs 0
+   matrix {
+       {{"a.0==0 || m==0 ? 0 : a.0/m"} {"a.4==0 || m==0 ? 0 : a.4/m"} {"a.8==0 || m==0 ? 0 : a.8/m"} {"a.12==0 || m==0 ? 0 : a.12/m"}}
+       {{"a.1==0 || m==0 ? 0 : a.1/m"} {"a.5==0 || m==0 ? 0 : a.5/m"} {"a.9==0 || m==0 ? 0 : a.9/m"} {"a.13==0 || m==0 ? 0 : a.13/m"}}
+       {{"a.2==0 || m==0 ? 0 : a.2/m"} {"a.6==0 || m==0 ? 0 : a.6/m"} {"a.10==0 || m==0 ? 0 : a.10/m"} {"a.14==0 || m==0 ? 0 : a.14/m"}}
+       {{"a.3==0 || m==0 ? 0 : a.3/m"} {"a.7==0 || m==0 ? 0 : a.7/m"} {"a.11==0 || m==0 ? 0 : a.11/m"} {"a.15==0 || m==0 ? 0 : a.15/m"}}
+     }
+   name result
+   xpos 56
+   ypos -254
+  }
+ end_group
+ NoOp {
+  inputs 0
+  name store
+  xpos -411
+  ypos 512
+  addUserKnob {20 User}
+  addUserKnob {22 fn T "def getLevel() :\n\t### level define ###\n\tif len(nuke.thisNode().fullName().split('.')) == 1 :\n\t\t  ggLevel = nuke.root()\n\telse :\n\t\t  nodePath = nuke.thisNode().fullName().split('.')\n\t\t  nodePath.pop()\n\t\t  ggLevel = nuke.toNode('.'.join(nodePath))\n\treturn ggLevel\n\n##########\n\ndef setLink( _knobLS ) :\n\troot = getLevel()\n\tthisGRP = nuke.thisGroup()\n\n\tmainKnobs = _knobLS\n\tdefaultKnobs = \{\n\t\t\t\t'world matrix' : 'world_matrix',\n\t\t\t\t\}\n\tselNodeKnobs = \[]\n\tmissingKnob = \[]\n\n\ttry :\n\t\twith root :\n\t\t\tselNode = nuke.selectedNode()\n\n\t\tfor knob in selNode.knobs() :\n\t\t\tselNodeKnobs.append( knob )\n\n\t\tselNodeKnobs.sort()\n\n\t\tfor key,value in defaultKnobs.items() :\n\t\t\tif value not in selNodeKnobs :\n\t\t\t\tmissingKnob.append( key )\n\n\t\tif not len(missingKnob) :\n\t\t\twith root :\n\t\t\t\tfor knob in mainKnobs :\n\t\t\t\t\tthisGRP\[knob].clearAnimated()\n\t\t\t\t\t\n\t\t\t\tCAMnode = selNode.name()\n\t\t\t\tthisGRP\[mainKnobs\[0]].setExpression('\{0\}.world_matrix'.format(CAMnode))\n\t\telse :\n\t\t\tp = nuke.Panel('Select knobs :')\n\t\t\tp.addBooleanCheckBox( '<b>Unable to find the default knobs. Please use the pulldown menu below to define the knob manually.</b>' , False)\n\t\t\tfor rk in missingKnob :\n\t\t\t\tp.addEnumerationPulldown( rk, ' '.join( selNodeKnobs ) )\n\n\t\t\tif p.show() :\n\t\t\t\ttry :\n\t\t\t\t\tfor key,value in defaultKnobs.items() :\n\t\t\t\t\t\tif p.value( key ) != None :\n\t\t\t\t\t\t\tdefaultKnobs\[key] = p.value( key )\n\t\t\t\texcept :\n\t\t\t\t\tpass\n\n\t\t\t\twith root :\n\t\t\t\t\tfor knob in mainKnobs :\n\t\t\t\t\t\tthisGRP\[knob].clearAnimated()\n\t\t\t\t\t\n\t\t\t\t\tCAMnode = selNode.name()\n\t\t\t\t\tthisGRP\[mainKnobs\[0]].setExpression('\{0\}.\{1\}'.format(CAMnode, defaultKnobs\['world matrix']))\n\texcept :\n\t\tnuke.message('no node selected.')" +STARTLINE}
+ }
+ NoOp {
+  inputs 0
+  name math
+  xpos -126
+  ypos 564
+  addUserKnob {20 User}
+  addUserKnob {22 lock l lock/unlock T "nuke.thisNode()\['depth'].setEnabled( not nuke.thisNode()\['depth'].enabled() )" +STARTLINE}
+  addUserKnob {7 depth +DISABLED R 0 100}
+  depth {{"-( axData.matrix.3 * iMatrix44.iMatrix.8 + axData.matrix.7 * iMatrix44.iMatrix.9 + axData.matrix.11 * iMatrix44.iMatrix.10 + iMatrix44.iMatrix.11 )"}}
+ }
+ Camera {
+  inputs 0
+  display off
+  selectable false
+  useMatrix true
+  name camData
+  xpos -237
+  ypos 446
+ }
+ Axis {
+  inputs 0
+  display off
+  selectable false
+  useMatrix true
+  name axData
+  xpos -113
+  ypos 447
+ }
+end_group

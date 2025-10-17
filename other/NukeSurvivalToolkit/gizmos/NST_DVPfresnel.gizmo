@@ -1,0 +1,245 @@
+Group {
+ name DVPfresnel
+ onCreate "\nthisGRP = nuke.thisGroup()\nfor knob in thisGRP.knobs() :\n    try :\n        if thisGRP\[knob].label()\[:19] == 'panel dropped state' :\n            thisGRP.removeKnob( nuke.thisNode()\[knob] )\n    except :\n        pass\n"
+ tile_color 0x7f65ff
+ label "<font color=cyan>Deep Output</font>"
+ addUserKnob {20 tab_general l General}
+ addUserKnob {41 multiply T menu01.multiply}
+ addUserKnob {7 exp_in l "exponential in" t "Ease out falloff from the core by exponential math." R 0.1 10}
+ exp_in 1
+ addUserKnob {7 exp_out l out t "Ease in falloff from the edge by exponential math." -STARTLINE R 0.1 10}
+ exp_out 1
+ addUserKnob {20 t_VERSION l Version}
+ addUserKnob {26 l_VERSION l <b>Version</b> T 4.0}
+ addUserKnob {26 l_DATE l "<b>Date Modified</b>" T 2021-02-13}
+ addUserKnob {22 btn_CHANGELOG l <b>Changlelog</b> T "log = \"Deep2VPosition&nbsp;(Deep2VP)<br>-&nbsp;added&nbsp;camera&nbsp;setting&nbsp;to&nbsp;metadata<br>-&nbsp;remove&nbsp;bake&nbsp;and&nbsp;copy&nbsp;buttons<br>-&nbsp;rename&nbsp;to&nbsp;Deep2VP<br>-&nbsp;generate/select/import&nbsp;deepNormal&nbsp;in&nbsp;this&nbsp;node<br>-&nbsp;added&nbsp;generate&nbsp;normal&nbsp;in&nbsp;deep,&nbsp;still&nbsp;keep&nbsp;the&nbsp;previous&nbsp;one.<br><br>DVPort&nbsp;(DVPortal)<br>-&nbsp;renamed&nbsp;to&nbsp;DVPortal<br><br>DVPmatte<br>-&nbsp;removed&nbsp;'option'&nbsp;knob,&nbsp;2D&nbsp;matte&nbsp;can&nbsp;use&nbsp;'open&nbsp;matte'&nbsp;instead<br>-&nbsp;open&nbsp;matte&nbsp;can&nbsp;choose&nbsp;show&nbsp;matte&nbsp;or&nbsp;color<br><br>DVPattern<br>-&nbsp;internal&nbsp;setup&nbsp;same&nbsp;as&nbsp;DVPmatte<br>-&nbsp;added&nbsp;rotation&nbsp;knob<br>-&nbsp;support&nbsp;'open&nbsp;matte'<br><br>DVProjection<br>-&nbsp;remove&nbsp;bake&nbsp;and&nbsp;copy&nbsp;buttons<br>-&nbsp;remove&nbsp;all&nbsp;metadata&nbsp;created&nbsp;from&nbsp;Deep2VP<br><br>DVPsetLight<br>-&nbsp;added&nbsp;shader&nbsp;setting&nbsp;and&nbsp;input&nbsp;shader<br>-&nbsp;not&nbsp;required&nbsp;link&nbsp;camera&nbsp;anymore<br>-&nbsp;removed&nbsp;deepNormal&nbsp;setup,&nbsp;moved&nbsp;to&nbsp;Deep2VP&nbsp;node<br><br>DVPscene<br>-&nbsp;added&nbsp;multiple&nbsp;output&nbsp;options<br>-&nbsp;remove&nbsp;all&nbsp;metadata&nbsp;created&nbsp;from&nbsp;DVP's&nbsp;lighting&nbsp;system<br><br>DVPrelight<br>-&nbsp;added&nbsp;specular&nbsp;setup<br>-&nbsp;added&nbsp;toon&nbsp;shade&nbsp;setup<br>-&nbsp;fix&nbsp;pointcloud&nbsp;preview&nbsp;with&nbsp;effects<br><br>DVPrelightPT<br>-&nbsp;split&nbsp;up&nbsp;point&nbsp;light&nbsp;from&nbsp;DVPrelight<br>-&nbsp;fix&nbsp;point&nbsp;light&nbsp;duplicated&nbsp;algorithm<br><br>DVPfresnel<br>-&nbsp;not&nbsp;required&nbsp;link&nbsp;camera&nbsp;anymore<br>-&nbsp;fix&nbsp;unpremult&nbsp;process,&nbsp;the&nbsp;result&nbsp;was&nbsp;too&nbsp;dark<br><br>DVPToImage<br>-&nbsp;remove&nbsp;all&nbsp;metadata&nbsp;created&nbsp;from&nbsp;Deep2VP<br>-&nbsp;same&nbsp;as&nbsp;Deep2VP&nbsp;node&nbsp;color<br><br>new&nbsp;nodes&nbsp;:<br>DVPColorCorrect<br><br>added&nbsp;shaders&nbsp;:<br>DVP&nbsp;Shader<br>DVP&nbsp;Toon&nbsp;Shader\"\nnuke.message( log )" +STARTLINE}
+ addUserKnob {26 l_DEV l "<b>Developed by</b>" T "<a href='https://youtube.com/c/MJTLab'><font color='orange'>Mark Joey Tang</font></a>"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x7f7f7fff
+  label bin
+  note_font_size 42
+  xpos -608
+  ypos -200
+  bdwidth 411
+  bdheight 282
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0xff
+  label "dont touch"
+  note_font_size 42
+  xpos -611
+  ypos -435
+  bdwidth 416
+  bdheight 199
+ }
+ NoOp {
+  inputs 0
+  name menu01
+  knobChanged "\nthisN = nuke.thisNode()\nfor knob in thisN.knobs() :\n    try :\n        if knob.split('_')\[1] == 'panelDropped' :\n            thisN.removeKnob( thisN\[knob] )\n    except :\n        pass\n"
+  xpos -524
+  ypos -342
+  addUserKnob {20 User}
+  addUserKnob {18 multiply t "Constant to multiply result by" R 0 4}
+  multiply 1
+  addUserKnob {6 multiply_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Group {
+  inputs 0
+  name inverseMatrix_cam
+  tile_color 0x337f4cff
+  xpos -540
+  ypos 9
+  addUserKnob {20 User}
+  addUserKnob {1 knob_path}
+  knob_path cam_data.world_matrix
+  addUserKnob {26 ""}
+  addUserKnob {41 id T id_assign.matrix}
+  addUserKnob {26 ""}
+  addUserKnob {7 determinant}
+  determinant {{"\[value \[value knob_path].\[value id.0]] * ((\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.8]]) - (\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.7]])) - \[value \[value knob_path].\[value id.1]] * ((\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.8]]) - (\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.6]])) + \[value \[value knob_path].\[value id.2]] * ((\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.7]])-(\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.6]]))"}}
+  addUserKnob {26 ""}
+  addUserKnob {41 cofactor T mtx_cofactor.matrix}
+  addUserKnob {26 ""}
+  addUserKnob {41 invMatrix T matrix_output.matrix}
+ }
+  Matrix {
+   inputs 0
+   matrix {
+       {0 1 2}
+       {4 5 6}
+       {8 9 10}
+     }
+   name id_assign
+   xpos -12
+   ypos 33
+  }
+  Matrix {
+   inputs 0
+   matrix {
+       {{"(\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.8]]) - (\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.7]])"} {"(\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.2]]) - (\[value \[value knob_path].\[value id.8]]*\[value \[value knob_path].\[value id.1]])"} {"(\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.5]]) - (\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.4]])"}}
+       {{"(\[value \[value knob_path].\[value id.5]]*\[value \[value knob_path].\[value id.6]]) - (\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.8]])"} {"(\[value \[value knob_path].\[value id.8]]*\[value \[value knob_path].\[value id.0]]) - (\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.2]])"} {"(\[value \[value knob_path].\[value id.2]]*\[value \[value knob_path].\[value id.3]]) - (\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.5]])"}}
+       {{"(\[value \[value knob_path].\[value id.3]]*\[value \[value knob_path].\[value id.7]]) - (\[value \[value knob_path].\[value id.4]]*\[value \[value knob_path].\[value id.6]])"} {"(\[value \[value knob_path].\[value id.6]]*\[value \[value knob_path].\[value id.1]]) - (\[value \[value knob_path].\[value id.7]]*\[value \[value knob_path].\[value id.0]])"} {"(\[value \[value knob_path].\[value id.0]]*\[value \[value knob_path].\[value id.4]]) - (\[value \[value knob_path].\[value id.1]]*\[value \[value knob_path].\[value id.3]])"}}
+     }
+   name mtx_cofactor
+   xpos 86
+   ypos 32
+  }
+  Matrix {
+   inputs 0
+   matrix {
+       {{"cofactor.0 == 0 || determinant == 0 ? 0 : cofactor.0/determinant"} {"cofactor.1 == 0 || determinant == 0 ? 0 : cofactor.1/determinant"} {"cofactor.2 == 0 || determinant == 0 ? 0 : cofactor.2/determinant"}}
+       {{"cofactor.3 == 0 || determinant == 0 ? 0 : cofactor.3/determinant"} {"cofactor.4 == 0 || determinant == 0 ? 0 : cofactor.4/determinant"} {"cofactor.5 == 0 || determinant == 0 ? 0 : cofactor.5/determinant"}}
+       {{"cofactor.6 == 0 || determinant == 0 ? 0 : cofactor.6/determinant"} {"cofactor.7 == 0 || determinant == 0 ? 0 : cofactor.7/determinant"} {"cofactor.8 == 0 || determinant == 0 ? 0 : cofactor.8/determinant"}}
+     }
+   name matrix_output
+   xpos 186
+   ypos 33
+  }
+ end_group
+ Camera {
+  inputs 0
+  display off
+  selectable false
+  rot_order XYZ
+  useMatrix true
+  matrix {
+      {{getCam.cmr01.x} {getCam.cmr01.y} {getCam.cmr01.z} 0}
+      {{getCam.cmr02.x} {getCam.cmr02.y} {getCam.cmr02.z} 0}
+      {{getCam.cmr03.x} {getCam.cmr03.y} {getCam.cmr03.z} 0}
+      {0 0 0 1}
+    }
+  name cam_data
+  xpos -529
+  ypos -97
+ }
+ Input {
+  inputs 0
+  name deep
+  xpos -4
+  ypos -235
+ }
+ DeepExpression {
+  chans1 deep
+  name spacer
+  xpos -4
+  ypos -155
+ }
+ Dot {
+  name Dot2
+  xpos 30
+  ypos -75
+ }
+set N4e88c00 [stack 0]
+add_layer {deepNormal deepNormal.red deepNormal.green deepNormal.blue deepNormal.alpha}
+ DeepExpression {
+  temp_name0 uMult
+  temp_expr0 "abs( (x+0.5)/input.width-0.5 ) *2"
+  temp_name1 vMult
+  temp_expr1 "abs( (y+0.5)/input.height-0.5 ) *2"
+  temp_name2 hHalfAOV
+  temp_expr2 "degrees( atan( ( ( \[value getCam.aspect] ) * abs( deep.front ) /2 ) / abs( deep.front ) ) )"
+  temp_name3 vHalfAOV
+  temp_expr3 "degrees( atan( ( ( \[value getCam.aspect] ) * (input.height/input.width) * abs( deep.front ) /2 ) / abs( deep.front ) ) )"
+  chans0 {-deepNormal.red -deepNormal.green -deepNormal.blue deepNormal.alpha}
+  chans1 none
+  deepNormal.alpha "clamp( x<input.width/2 && y<input.height/2 ? \[value cx]*-cos(radians(vHalfAOV*vMult))*sin(radians(-hHalfAOV*uMult)) + \[value cy]*sin(radians(vHalfAOV*vMult)) + \[value cz]*cos(radians(vHalfAOV*vMult))*cos(radians(-hHalfAOV*uMult)) : x>input.width/2 && y>input.height/2 ? \[value cx]*-cos(radians(-vHalfAOV*vMult))*sin(radians(hHalfAOV*uMult)) + \[value cy]*sin(radians(-vHalfAOV*vMult)) + \[value cz]*cos(radians(-vHalfAOV*vMult))*cos(radians(hHalfAOV*uMult)) : x<input.width/2 && y>input.height/2 ? \[value cx]*-cos(radians(-vHalfAOV*vMult))*sin(radians(-hHalfAOV*uMult)) + \[value cy]*sin(radians(-vHalfAOV*vMult)) + \[value cz]*cos(radians(-vHalfAOV*vMult))*cos(radians(-hHalfAOV*uMult)) : \[value cx]*-cos(radians(vHalfAOV*vMult))*sin(radians(hHalfAOV*uMult)) + \[value cy]*sin(radians(vHalfAOV*vMult)) + \[value cz]*cos(radians(vHalfAOV*vMult))*cos(radians(hHalfAOV*uMult)) )"
+  name DeepExpression3
+  label "screen space"
+  xpos -4
+  ypos -1
+  addUserKnob {20 User}
+  addUserKnob {1 cx}
+  cx "(deepNormal.red*\[value inverseMatrix_cam.invMatrix.0] + deepNormal.green*\[value inverseMatrix_cam.invMatrix.1] + deepNormal.blue*\[value inverseMatrix_cam.invMatrix.2])"
+  addUserKnob {1 cy}
+  cy "(deepNormal.red*\[value inverseMatrix_cam.invMatrix.3] + deepNormal.green*\[value inverseMatrix_cam.invMatrix.4] + deepNormal.blue*\[value inverseMatrix_cam.invMatrix.5])"
+  addUserKnob {1 cz}
+  cz "(deepNormal.red*\[value inverseMatrix_cam.invMatrix.6] + deepNormal.green*\[value inverseMatrix_cam.invMatrix.7] + deepNormal.blue*\[value inverseMatrix_cam.invMatrix.8])"
+ }
+ DeepExpression {
+  chans0 {-deepNormal.red -deepNormal.green -deepNormal.blue deepNormal.alpha}
+  chans1 none
+  deepNormal.alpha "1- deepNormal.alpha"
+  name DeepExpression7
+  label invert
+  xpos -4
+  ypos 79
+ }
+ DeepExpression {
+  chans0 {-deepNormal.red -deepNormal.green -deepNormal.blue deepNormal.alpha}
+  chans1 none
+  deepNormal.alpha "pow( 1 - pow( 1 - deepNormal.alpha , \[value parent.exp_in] ) , \[value parent.exp_out] ) )"
+  name DeepExpression1
+  label exponential
+  xpos -4
+  ypos 159
+ }
+ Dot {
+  name Dot1
+  xpos 30
+  ypos 301
+ }
+set Na337800 [stack 0]
+ DeepExpression {
+  temp_name0 celShade
+  temp_expr0 "clamp(deepNormal.alpha) ** \[value toonRatio] * (\[value toonLayers]+1)"
+  chans0 {-deepNormal.red -deepNormal.green -deepNormal.blue deepNormal.alpha}
+  chans1 none
+  deepNormal.alpha "( (int(celShade)-1)/\[value toonLayers]) + (clamp( (celShade%1) * (1/(1-clamp(\[value toonSharpness]))) ) * (1/\[value toonLayers]) )"
+  name DeepExpression40
+  label "toon shade"
+  xpos 128
+  ypos 360
+  addUserKnob {20 User}
+  addUserKnob {3 toonLayers}
+  toonLayers {{"\[metadata sLayers]+0 <= 1 ? 1 : \[metadata sLayers]+0"}}
+  addUserKnob {7 toonSharpness}
+  toonSharpness {{"\[metadata sSharpness]+0"}}
+  addUserKnob {7 toonRatio}
+  toonRatio {{"\[metadata sRatio]+0"}}
+ }
+push $Na337800
+ Switch {
+  inputs 2
+  which {{"\[metadata DVPshader]+0==2 ? 1 : 0"}}
+  name Switch1
+  xpos -4
+  ypos 417
+ }
+ DeepExpression {
+  chans0 {rgba.red rgba.green rgba.blue none}
+  chans1 {-deepNormal.red -deepNormal.green -deepNormal.blue deepNormal.alpha}
+  rgba.red "red + deepNormal.alpha * \[value parent.multiply.r]"
+  rgba.green "green + deepNormal.alpha * \[value parent.multiply.g]"
+  rgba.blue "blue + deepNormal.alpha * \[value parent.multiply.b]"
+  deepNormal.alpha 0
+  name DeepExpression2
+  label "apply color"
+  xpos -4
+  ypos 497
+ }
+ Output {
+  name Output1
+  xpos -4
+  ypos 577
+ }
+push $N4e88c00
+ NoOp {
+  name getCam
+  xpos -374
+  ypos -78
+  addUserKnob {20 User}
+  addUserKnob {13 cmr01}
+  cmr01 {{"\[lrange \[split \[metadata DVPcamMTX] \" \"] 0 0]+0"} {"\[lrange \[split \[metadata DVPcamMTX] \" \"] 1 1]+0"} {"\[lrange \[split \[metadata DVPcamMTX] \" \"] 2 2]+0"}}
+  addUserKnob {13 cmr02}
+  cmr02 {{"\[lrange \[split \[metadata DVPcamMTX] \" \"] 4 4]+0"} {"\[lrange \[split \[metadata DVPcamMTX] \" \"] 5 5]+0"} {"\[lrange \[split \[metadata DVPcamMTX] \" \"] 6 6]+0"}}
+  addUserKnob {13 cmr03}
+  cmr03 {{"\[lrange \[split \[metadata DVPcamMTX] \" \"] 8 8]+0"} {"\[lrange \[split \[metadata DVPcamMTX] \" \"] 9 9]+0"} {"\[lrange \[split \[metadata DVPcamMTX] \" \"] 10 10]+0"}}
+  addUserKnob {7 aspect}
+  aspect {{"\[metadata DVPcamAspect]+0"}}
+ }
+end_group

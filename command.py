@@ -13,7 +13,6 @@ from python.Channel import autoComper, PreCompForArnold, RenderLayer
 from python.ToolSet import ReadAfterRender
 from python.cryptomatte import cryptomatte_utilities
 
-
 base_dir = os.path.dirname(__file__)
 if nuke.NUKE_VERSION_MAJOR < 13:
     from python.mamoworld.mochaImportPlus import loadMochaImport
@@ -31,6 +30,7 @@ else:
     from python.mamoworld2.mochaImportPlus.mochaimport import mochaimport
 
 from python.packproject import nuke2pack
+from python.W_hotbox import W_hotboxManager, W_hotbox
 
 
 def run_pack():
@@ -320,3 +320,11 @@ def run_createAcesMovWriteNode():
     :return:
     """
     ToolSet.create_acescg_mov_write_node.main()
+
+
+def run_fixLocateFilesPaths():
+    """
+    run create_acescg_mov_write_node script
+    :return:
+    """
+    ToolSet.bvfx_findPath.main()

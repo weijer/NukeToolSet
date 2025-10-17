@@ -1,0 +1,127 @@
+#! E:/nuke12.1/Nuke12.1v1/nuke-12.1.1.dll -nx
+
+Group {
+ name Normal_Light
+ addUserKnob {20 User}
+ addUserKnob {41 in l "Normal channel" T Shuffle1.in}
+ addUserKnob {7 r l Right R -1 1}
+ r 0.085
+ addUserKnob {7 g l Bottom R -1 1}
+ g -0.545
+ addUserKnob {7 b l Back R -1 1}
+ b 0.85
+}
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.r x1 0.01} {parent.g} {parent.b} 0}
+  name Constant1
+  xpos -311
+  ypos -148
+ }
+ Dot {
+  name Dot2
+  xpos -173
+  ypos -121
+ }
+set Ne60a6c00 [stack 0]
+ Input {
+  inputs 0
+  name Input1
+  xpos 91
+  ypos -333
+ }
+ Dot {
+  name Dot1
+  xpos 125
+  ypos -293
+ }
+ Shuffle {
+  name Shuffle1
+  selected true
+  xpos 91
+  ypos -261
+ }
+ Dot {
+  name Dot3
+  xpos 125
+  ypos -219
+ }
+set Ne60c6c00 [stack 0]
+ ChannelMerge {
+  inputs 2
+  A rgba.red
+  operation multiply
+  B rgba.red
+  name ChannelMerge2
+  xpos -64
+  ypos -236
+ }
+ Dot {
+  name Dot6
+  xpos 94
+  ypos -166
+ }
+push $Ne60a6c00
+push $Ne60c6c00
+ Dot {
+  name Dot4
+  xpos 125
+  ypos -121
+ }
+set Ne60d6800 [stack 0]
+ ChannelMerge {
+  inputs 2
+  A rgba.green
+  operation multiply
+  B rgba.green
+  name ChannelMerge1
+  xpos -65
+  ypos -138
+ }
+ Dot {
+  name Dot7
+  xpos 94
+  ypos -64
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge2
+  xpos 60
+  ypos 21
+ }
+push $Ne60a6c00
+push $Ne60d6800
+ Dot {
+  name Dot5
+  xpos 125
+  ypos -36
+ }
+ ChannelMerge {
+  inputs 2
+  A rgba.blue
+  operation multiply
+  B rgba.blue
+  name ChannelMerge3
+  xpos -65
+  ypos -53
+ }
+ Dot {
+  name Dot8
+  xpos -31
+  ypos 103
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge3
+  xpos 60
+  ypos 99
+ }
+ Output {
+  name Output1
+  xpos 60
+  ypos 199
+ }
+end_group

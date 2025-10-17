@@ -1,0 +1,154 @@
+#! D:/NUKE/Nuke10.5v1/nuke-10.5.1.dll -nx
+
+Group {
+ name Green_SPill_Depression
+ inputs 2
+ addUserKnob {20 User}
+ addUserKnob {6 Enable +STARTLINE}
+ Enable true
+ addUserKnob {6 EnableMask l "Enable Mask" +STARTLINE}
+ EnableMask true
+}
+ Input {
+  inputs 0
+  name source
+  xpos 169
+  ypos -945
+ }
+ Dot {
+  name Dot75
+  xpos 203
+  ypos -877
+ }
+set N7f50f800 [stack 0]
+ Dot {
+  name Dot2
+  xpos 327
+  ypos -877
+ }
+ Shuffle {
+  alpha white
+  name Shuffle1
+  xpos 293
+  ypos -560
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos 421
+  ypos -474
+  number 1
+ }
+ Switch {
+  inputs 2
+  which {{!parent.EnableMask}}
+  name Switch2
+  xpos 293
+  ypos -474
+ }
+push $N7f50f800
+push $N7f50f800
+ OFXuk.co.thefoundry.keylight.keylight_v201 {
+  show "Final Result"
+  unPreMultiply false
+  screenColour {0 1 0}
+  screenGain 1
+  screenBalance 0.5
+  alphaBias {0.5 0.5 0.5}
+  despillBias {0.5 0.5 0.5}
+  gangBiases true
+  preBlur 0
+  "Screen Matte" 0
+  screenClipMin 0
+  screenClipMax 1
+  screenClipRollback 0
+  screenGrowShrink 0
+  screenSoftness 0
+  screenDespotBlack 0
+  screenDespotWhite 0
+  screenReplaceMethod "Soft Colour"
+  screenReplaceColour {0.5 0.5 0.5}
+  Tuning 0
+  midPoint 0.5
+  lowGain 1
+  midGain 1
+  highGain 1
+  "Inside Mask" 0
+  sourceAlphaHandling Ignore
+  insideReplaceMethod "Soft Colour"
+  insideReplaceColour {0.5 0.5 0.5}
+  Crops 0
+  SourceXMethod Colour
+  SourceYMethod Colour
+  SourceEdgeColour 0
+  SourceCropL 0
+  SourceCropR 1
+  SourceCropB 0
+  SourceCropT 1
+  balanceSet false
+  insideComponent None
+  outsideComponent None
+  cacheBreaker true
+  name Keylight16
+  xpos 59
+  ypos -770
+ }
+set N7f50f400 [stack 0]
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge72
+  xpos 169
+  ypos -770
+ }
+ ColorCorrect {
+  saturation 0
+  name ColorCorrect2
+  xpos 169
+  ypos -615
+ }
+push $N7f50f400
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge73
+  xpos 59
+  ypos -615
+ }
+push $N7f50f800
+ Dot {
+  name Dot76
+  xpos -62
+  ypos -877
+ }
+ Dot {
+  name Dot1
+  xpos -62
+  ypos -539
+ }
+set Nb235f800 [stack 0]
+ Switch {
+  inputs 2
+  which {{parent.Enable}}
+  name Switch1
+  xpos 59
+  ypos -543
+ }
+push $Nb235f800
+ Dot {
+  name Dot77
+  xpos -62
+  ypos -470
+ }
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 59
+  ypos -480
+ }
+ Output {
+  name Output1
+  xpos 59
+  ypos -373
+ }
+end_group

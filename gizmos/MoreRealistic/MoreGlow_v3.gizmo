@@ -1,0 +1,745 @@
+set cut_paste_input [stack 0]
+push $cut_paste_input
+Group {
+ name MoreGlow
+ tile_color 0xcc451bff
+ addUserKnob {20 User}
+ addUserKnob {20 Glow n 1}
+ addUserKnob {41 mode l "Source Mode" T MoreGlow.mode}
+ addUserKnob {41 operation T MoreGlow.operation}
+ addUserKnob {41 restoreAlpha l "Restore alpha" T MoreGlow.restoreAlpha}
+ addUserKnob {41 Subtract l "Subtract matte" -STARTLINE T MoreGlow.Subtract}
+ addUserKnob {41 Mask l mask -STARTLINE T MoreGlow.Mask}
+ addUserKnob {41 glowOnly l "glow only" -STARTLINE T MoreGlow.glowOnly}
+ addUserKnob {41 Amount l "Fall off" T MoreGlow.Amount}
+ addUserKnob {7 startAmount l "Start amount" R 0 100}
+ addUserKnob {7 size l Size R 0 100}
+ size 81.5
+ addUserKnob {41 mix l Intensity T MoreGlow.mix}
+ addUserKnob {41 range l Threshold T MoreGlow.range}
+ addUserKnob {20 Flicker_1 l Flicker n 1}
+ addUserKnob {41 Flick l "Flick on" -STARTLINE T MoreGlow.Flick}
+ addUserKnob {26 a l "   " -STARTLINE T ""}
+ addUserKnob {41 type -STARTLINE T MoreGlow.type}
+ addUserKnob {26 Flicktext l "" -STARTLINE T "      "}
+ addUserKnob {41 frequency l Frequency T MoreGlow.frequency}
+ addUserKnob {41 factor l Factor T MoreGlow.factor}
+ addUserKnob {41 randomSeed l "Random seed" T MoreGlow.randomSeed}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {26 titletext_br l "" +STARTLINE T " "}
+ addUserKnob {26 titletext l "" +STARTLINE T "              \t\t\t\t\t\t"}
+ addUserKnob {26 title l "" -STARTLINE T "Designed by MORE REALISTIC"}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 GradeGroup l Grade}
+ addUserKnob {20 GradeGroup_1 l Grade n 1}
+ addUserKnob {41 channels T MoreGlow.channels}
+ addUserKnob {41 Grade1_blackpoint l blackpoint T MoreGlow.Grade1_blackpoint}
+ addUserKnob {41 Grade1_blackpoint_panelDropped l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_blackpoint_panelDropped}
+ addUserKnob {41 Grade1_blackpoint_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_blackpoint_panelDropped_1}
+ addUserKnob {41 Grade1_blackpoint_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_blackpoint_panelDropped_1_1}
+ addUserKnob {41 Grade1_blackpoint_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_blackpoint_panelDropped_1_1_1}
+ addUserKnob {41 Grade1_blackpoint_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_blackpoint_panelDropped_1_1_1_1}
+ addUserKnob {41 Grade1_blackpoint_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_blackpoint_panelDropped_1_1_1_1_1}
+ addUserKnob {41 Grade1_blackpoint_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_blackpoint_panelDropped_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_whitepoint l whitepoint T MoreGlow.Grade1_whitepoint}
+ addUserKnob {41 Grade1_whitepoint_panelDropped l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_whitepoint_panelDropped}
+ addUserKnob {41 Grade1_whitepoint_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_whitepoint_panelDropped_1}
+ addUserKnob {41 Grade1_whitepoint_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_whitepoint_panelDropped_1_1}
+ addUserKnob {41 Grade1_whitepoint_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_whitepoint_panelDropped_1_1_1}
+ addUserKnob {41 Grade1_whitepoint_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_whitepoint_panelDropped_1_1_1_1}
+ addUserKnob {41 Grade1_whitepoint_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_whitepoint_panelDropped_1_1_1_1_1}
+ addUserKnob {41 Grade1_whitepoint_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_whitepoint_panelDropped_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_white l gain T MoreGlow.Grade1_white}
+ addUserKnob {41 Grade1_white_panelDropped l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_white_panelDropped}
+ addUserKnob {41 Grade1_white_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_white_panelDropped_1}
+ addUserKnob {41 Grade1_white_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_white_panelDropped_1_1}
+ addUserKnob {41 Grade1_white_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_white_panelDropped_1_1_1}
+ addUserKnob {41 Grade1_white_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_white_panelDropped_1_1_1_1}
+ addUserKnob {41 Grade1_white_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_white_panelDropped_1_1_1_1_1}
+ addUserKnob {41 Grade1_white_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_white_panelDropped_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_white_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_white_panelDropped_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_white_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_white_panelDropped_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_black l lift T MoreGlow.Grade1_black}
+ addUserKnob {41 Grade1_black_panelDropped l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_black_panelDropped}
+ addUserKnob {41 Grade1_black_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_black_panelDropped_1}
+ addUserKnob {41 Grade1_black_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_black_panelDropped_1_1}
+ addUserKnob {41 Grade1_black_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_black_panelDropped_1_1_1}
+ addUserKnob {41 Grade1_black_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_black_panelDropped_1_1_1_1}
+ addUserKnob {41 Grade1_black_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_black_panelDropped_1_1_1_1_1}
+ addUserKnob {41 Grade1_black_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_black_panelDropped_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_black_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_black_panelDropped_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_black_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_black_panelDropped_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_multiply l multiply T MoreGlow.Grade1_multiply}
+ addUserKnob {41 Grade1_multiply_panelDropped l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_multiply_panelDropped}
+ addUserKnob {41 Grade1_multiply_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_multiply_panelDropped_1}
+ addUserKnob {41 Grade1_multiply_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_multiply_panelDropped_1_1}
+ addUserKnob {41 Grade1_multiply_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_multiply_panelDropped_1_1_1}
+ addUserKnob {41 Grade1_multiply_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_multiply_panelDropped_1_1_1_1}
+ addUserKnob {41 Grade1_multiply_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_multiply_panelDropped_1_1_1_1_1}
+ addUserKnob {41 Grade1_multiply_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_multiply_panelDropped_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_multiply_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_multiply_panelDropped_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_add l offset T MoreGlow.Grade1_add}
+ addUserKnob {41 Grade1_add_panelDropped l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_add_panelDropped}
+ addUserKnob {41 Grade1_add_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_add_panelDropped_1}
+ addUserKnob {41 Grade1_add_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_add_panelDropped_1_1}
+ addUserKnob {41 Grade1_add_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_add_panelDropped_1_1_1}
+ addUserKnob {41 Grade1_add_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_add_panelDropped_1_1_1_1}
+ addUserKnob {41 Grade1_add_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_add_panelDropped_1_1_1_1_1}
+ addUserKnob {41 Grade1_add_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_add_panelDropped_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_add_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_add_panelDropped_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_add_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_add_panelDropped_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_gamma l gamma T MoreGlow.Grade1_gamma}
+ addUserKnob {41 Grade1_gamma_panelDropped l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_gamma_panelDropped}
+ addUserKnob {41 Grade1_gamma_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_gamma_panelDropped_1}
+ addUserKnob {41 Grade1_gamma_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_gamma_panelDropped_1_1}
+ addUserKnob {41 Grade1_gamma_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_gamma_panelDropped_1_1_1}
+ addUserKnob {41 Grade1_gamma_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_gamma_panelDropped_1_1_1_1}
+ addUserKnob {41 Grade1_gamma_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_gamma_panelDropped_1_1_1_1_1}
+ addUserKnob {41 Grade1_gamma_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_gamma_panelDropped_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_gamma_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_gamma_panelDropped_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN T MoreGlow.Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1}
+ addUserKnob {41 unpremult l "(un)premult by" T MoreGlow.unpremult}
+ addUserKnob {41 Grade1_white_clamp l "white clamp" T MoreGlow.Grade1_white_clamp}
+ addUserKnob {41 Grade1_black_clamp l "black clamp" -STARTLINE T MoreGlow.Grade1_black_clamp}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+}
+ Input {
+  inputs 0
+  name Mask
+  xpos 807
+  ypos -320
+  number 2
+ }
+ Input {
+  inputs 0
+  name Matte
+  xpos 944
+  ypos -276
+  number 1
+ }
+ Input {
+  inputs 0
+  name Image
+  xpos 999
+  ypos -214
+ }
+ Group {
+  inputs 3
+  name MoreGlow
+  tile_color 0xcc451bff
+  xpos 807
+  ypos -214
+  addUserKnob {20 User l Parameters}
+  addUserKnob {20 Glow n 1}
+  addUserKnob {4 mode l "Source Mode" t "Global: Making a global glow for the image, in this mode, parameter 'Threshold' will not work. This will create a very soft glow for the hole image\n\nLight source: This mode will make glowing effect specifically for the light source of the image (bright part) like the specular of matal, light etc.\nIn this mode, Threshold can be used to limit the glow source." M {Global "Light source" "" "" "" "" ""}}
+  mode "Light source"
+  addUserKnob {41 operation T Merge9.operation}
+  addUserKnob {6 restoreAlpha l "Restore alpha" t "Restore the original alpha to the final image. Sometimes you will get black shadows around the glowing area, turn this on will solve the problem. In specially, if you don't have alpha channel in original plate, it will trun into completely white" +STARTLINE}
+  restoreAlpha true
+  addUserKnob {6 Subtract l "Subtract matte" t "Use the alpha channel from input 'Matte' to hold out the image. Glow effect will flow from the edge of the alpha(if you are holding out the light source)" -STARTLINE}
+  addUserKnob {6 Mask l mask t "This mask can only glow the area of light source which you want" -STARTLINE}
+  addUserKnob {6 glowOnly l "glow only" -STARTLINE}
+  addUserKnob {7 Amount l "Fall off" t "This value will change the amount of blur node, the value is limited in 1-8, 5 by default" R 1 8}
+  Amount 8
+  addUserKnob {7 Starter l "Start amount" t "The amount of blur that you want for the beginning" R 0 100}
+  Starter {{parent.startAmount/2048*root.width}}
+  addUserKnob {7 Step l Size t "The intersection amount between each two blur nodes" R 0 100}
+  Step {{parent.size/2048*root.width}}
+  addUserKnob {7 mix l Intensity t "To adjust your mix value of each blur node with fall of (by using index)"}
+  mix 0.32
+  addUserKnob {41 range l Threshold t "This will change the threshold specifically for the light source mode" T Keyer1.range}
+  addUserKnob {20 Flicker_1 l Flicker n 1}
+  addUserKnob {6 Flick l "Flick on" t "Trun on the flicker" -STARTLINE}
+  addUserKnob {26 a l "   " -STARTLINE T ""}
+  addUserKnob {4 type t "The type of vibration" -STARTLINE M {sin random ""}}
+  addUserKnob {26 Flicktext l "" -STARTLINE T "      "}
+  addUserKnob {7 frequency l Frequency t "This value will change the frequency of the viberation" R 0.1 3}
+  frequency 1
+  addUserKnob {7 factor l Factor t "This value determins the range of your vibration, for example, if you set it to 0.5, then it viberation from 0.5 to 1, if you set it to 1, there will be no viberation any more"}
+  addUserKnob {7 randomSeed l "Random seed"}
+  addUserKnob {20 endGroup_2 l endGroup n -1}
+  addUserKnob {26 titletext_br l "" +STARTLINE T " "}
+  addUserKnob {26 titletext l "" +STARTLINE T "              \t\t\t\t\t\t"}
+  addUserKnob {26 title l "" -STARTLINE T "Designed by MORE REALISTIC"}
+  addUserKnob {20 Gradetab l Grade}
+  addUserKnob {20 GradeGroup l Grade n 1}
+  addUserKnob {41 channels T Grade1.channels}
+  addUserKnob {19 Grade1_blackpoint l blackpoint R -1 1}
+  Grade1_blackpoint {0 0 0 0}
+  addUserKnob {6 Grade1_blackpoint_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_blackpoint_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_blackpoint_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_blackpoint_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_blackpoint_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_blackpoint_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_blackpoint_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_blackpoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 Grade1_whitepoint l whitepoint R 0 4}
+  Grade1_whitepoint 1
+  addUserKnob {6 Grade1_whitepoint_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_whitepoint_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_whitepoint_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_whitepoint_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_whitepoint_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_whitepoint_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_whitepoint_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_whitepoint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 Grade1_white l gain R 0 4}
+  Grade1_white 1
+  addUserKnob {6 Grade1_white_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_white_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_white_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_white_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_white_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_white_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_white_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_white_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_white_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_white_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 Grade1_black l lift R -1 1}
+  Grade1_black {0 0 0 0}
+  addUserKnob {6 Grade1_black_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_black_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_black_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_black_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_black_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_black_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_black_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_black_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_black_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_black_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 Grade1_multiply l multiply R 0 4}
+  Grade1_multiply 1
+  addUserKnob {6 Grade1_multiply_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_multiply_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_multiply_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_multiply_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_multiply_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_multiply_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_multiply_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_multiply_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_multiply_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 Grade1_add l offset R -1 1}
+  Grade1_add {0 0 0 0}
+  addUserKnob {6 Grade1_add_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_add_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_add_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_add_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_add_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_add_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_add_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_add_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_add_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_add_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 Grade1_gamma l gamma R 0.2 5}
+  Grade1_gamma 1
+  addUserKnob {6 Grade1_gamma_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_gamma_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_gamma_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_gamma_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_gamma_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_gamma_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_gamma_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_gamma_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Grade1_gamma_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {41 unpremult l "(un)premult by" T Grade1.unpremult}
+  addUserKnob {6 Grade1_white_clamp l "white clamp" +STARTLINE}
+  addUserKnob {6 Grade1_black_clamp l "black clamp" -STARTLINE}
+  addUserKnob {20 endGroup_1 l endGroup n -1}
+  addUserKnob {20 endGroup n -1}
+ }
+  Input {
+   inputs 0
+   name Matte
+   xpos -63
+   ypos -1876
+   number 1
+  }
+  Dot {
+   name Dot5
+   xpos -29
+   ypos -1741
+  }
+  Input {
+   inputs 0
+   name Image
+   xpos 111
+   ypos -1903
+  }
+  Crop {
+   box {0 0 {input.width} {input.height}}
+   name Crop2
+   xpos 111
+   ypos -1823
+  }
+  Multiply {
+   inputs 1+1
+   value 0
+   name Multiply3
+   xpos 111
+   ypos -1751
+   disable {{!parent.Subtract}}
+  }
+  Expression {
+   expr0 r<0?0:r
+   expr1 g<0?0:g
+   expr2 b<0?0:b
+   name Expression2
+   xpos 111
+   ypos -1643
+  }
+set Nae628400 [stack 0]
+  Dot {
+   name Dot7
+   xpos 1245
+   ypos -1639
+  }
+set Nae628800 [stack 0]
+  Dot {
+   name Dot8
+   xpos 1736
+   ypos -1639
+  }
+  Expression {
+   temp_name0 flag
+   temp_expr0 "\[python \"len(\\\[n for n in nuke.channels(nuke.thisNode().input(0)) if n.find(\\\".a\\\") != -1])\"]"
+   expr3 flag>0?a:1
+   name Expression1
+   xpos 1702
+   ypos -205
+  }
+  Dot {
+   name Dot10
+   xpos 1736
+   ypos 462
+  }
+  Input {
+   inputs 0
+   name Mask
+   xpos -63
+   ypos -1300
+   number 2
+  }
+  Dot {
+   name Dot11
+   xpos -29
+   ypos -1165
+  }
+push $Nae628400
+  Dot {
+   name Dot3
+   xpos 145
+   ypos -1608
+  }
+set Nae64c000 [stack 0]
+  Dot {
+   name Dot6
+   xpos -20
+   ypos -1608
+  }
+set Nae64c400 [stack 0]
+  Keyer {
+   operation "luminance key"
+   range {0.436661953 0.800080806 1 1}
+   name Keyer1
+   xpos -216
+   ypos -1618
+  }
+push $Nae64c400
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy1
+   xpos -216
+   ypos -1547
+  }
+  Premult {
+   name Premult1
+   xpos -216
+   ypos -1449
+  }
+push $Nae64c000
+  Switch {
+   inputs 2
+   which {{parent.mode}}
+   name Switch3
+   xpos 111
+   ypos -1449
+  }
+  Merge2 {
+   inputs 2
+   operation mask
+   bbox A
+   mix {{parent.Mask}}
+   name Merge10
+   xpos 111
+   ypos -1168
+  }
+  Dot {
+   name Dot1
+   xpos 145
+   ypos -997
+  }
+set Nae64dc00 [stack 0]
+  Multiply {
+   value {{(sin(frame*parent.frequency*(1-random(parent.randomSeed))+random(parent.randomSeed))*0.5+0.5)*(1-parent.factor)+parent.factor}}
+   name Multiply2
+   xpos 205
+   ypos -799
+  }
+push $Nae64dc00
+  Multiply {
+   value {{(random(frame*2*parent.frequency+parent.randomSeed*10))*(1-parent.factor)+parent.factor}}
+   name Multiply1
+   xpos 29
+   ypos -798
+  }
+  Switch {
+   inputs 2
+   which {{!type}}
+   name Switch1
+   xpos 111
+   ypos -670
+  }
+push $Nae64dc00
+  Dot {
+   name Dot2
+   xpos -112
+   ypos -997
+  }
+  Switch {
+   inputs 2
+   which {{parent.Flick}}
+   name Switch2
+   xpos -146
+   ypos -670
+  }
+  Dot {
+   name Dot9
+   xpos -112
+   ypos -628
+  }
+  Dot {
+   name Dot4
+   xpos -112
+   ypos -547
+  }
+  Blur {
+   channels rgb
+   size {{parent.Starter}}
+   name Blur2
+   xpos -146
+   ypos -457
+  }
+set N874b9c00 [stack 0]
+push $N874b9c00
+  Merge2 {
+   inputs 2
+   operation plus
+   mix 0.5
+   name Merge1
+   xpos -36
+   ypos -457
+  }
+set N874e2000 [stack 0]
+  Blur {
+   channels rgb
+   size {{parent.Starter+parent.Step}}
+   name Blur3
+   xpos -36
+   ypos -424
+  }
+push $N874e2000
+  Merge2 {
+   inputs 2
+   operation plus
+   mix {{0.5-1*0.02}}
+   name Merge2
+   xpos 74
+   ypos -424
+  }
+set N874e2800 [stack 0]
+  Blur {
+   channels rgb
+   size {{parent.Starter+(parent.Step*1)}}
+   name Blur4
+   xpos 74
+   ypos -398
+  }
+push $N874e2800
+  Merge2 {
+   inputs 2
+   operation plus
+   mix {{0.5-2*0.03}}
+   name Merge3
+   xpos 184
+   ypos -398
+  }
+set N874e3000 [stack 0]
+  Blur {
+   channels rgb
+   size {{parent.Starter+(parent.Step*2)}}
+   name Blur5
+   xpos 184
+   ypos -372
+  }
+push $N874e3000
+  Merge2 {
+   inputs 2
+   operation plus
+   mix {{0.5-3*0.03}}
+   name Merge4
+   xpos 294
+   ypos -372
+  }
+set N874e3800 [stack 0]
+  Blur {
+   channels rgb
+   size {{parent.Starter+(parent.Step*3)}}
+   name Blur6
+   xpos 294
+   ypos -346
+  }
+push $N874e3800
+  Merge2 {
+   inputs 2
+   operation plus
+   mix {{0.5-4*0.03}}
+   name Merge5
+   xpos 404
+   ypos -346
+  }
+set N87520000 [stack 0]
+  Blur {
+   channels rgb
+   size {{parent.Starter+(parent.Step*5)}}
+   name Blur7
+   xpos 404
+   ypos -320
+  }
+push $N87520000
+  Merge2 {
+   inputs 2
+   operation plus
+   mix {{0.5-5*0.03}}
+   name Merge6
+   xpos 514
+   ypos -320
+  }
+set N87520800 [stack 0]
+  Blur {
+   channels rgb
+   size {{parent.Starter+(parent.Step*8)}}
+   name Blur8
+   xpos 514
+   ypos -294
+  }
+push $N87520800
+  Merge2 {
+   inputs 2
+   operation plus
+   mix {{0.5-6*0.03}}
+   name Merge7
+   xpos 624
+   ypos -294
+  }
+set N87521000 [stack 0]
+  Blur {
+   channels rgb
+   size {{parent.Starter+(parent.Step*13)}}
+   name Blur9
+   xpos 624
+   ypos -270
+  }
+push $N87521000
+  Merge2 {
+   inputs 2
+   operation plus
+   mix {{0.5-7*0.03}}
+   name Merge8
+   xpos 733
+   ypos -262
+  }
+push $N87521000
+push $N87520800
+push $N87520000
+push $N874e3800
+push $N874e3000
+push $N874e2800
+push $N874e2000
+  Switch {
+   inputs 8
+   which {{parent.Amount-1}}
+   name Switch4
+   xpos -36
+   ypos 202
+   hide_input true
+  }
+  Grade {
+   blackpoint {{parent.Grade1_blackpoint.r} {parent.Grade1_blackpoint.g} {parent.Grade1_blackpoint.b} {parent.Grade1_blackpoint.a}}
+   whitepoint {{parent.Grade1_whitepoint.r} {parent.Grade1_whitepoint.g} {parent.Grade1_whitepoint.b} {parent.Grade1_whitepoint.a}}
+   black {{parent.Grade1_black.r} {parent.Grade1_black.g} {parent.Grade1_black.b} {parent.Grade1_black.a}}
+   white {{parent.Grade1_white.r} {parent.Grade1_white.g} {parent.Grade1_white.b} {parent.Grade1_white.a}}
+   multiply {{parent.Grade1_multiply.r} {parent.Grade1_multiply.g} {parent.Grade1_multiply.b} {parent.Grade1_multiply.a}}
+   add {{parent.Grade1_add.r} {parent.Grade1_add.g} {parent.Grade1_add.b} {parent.Grade1_add.a}}
+   gamma {{parent.Grade1_gamma.r} {parent.Grade1_gamma.g} {parent.Grade1_gamma.b} {parent.Grade1_gamma.a}}
+   black_clamp {{parent.Grade1_black_clamp}}
+   white_clamp {{parent.Grade1_white_clamp}}
+   name Grade1
+   xpos 347
+   ypos 202
+  }
+  Multiply {
+   channels rgba
+   value {{parent.mix}}
+   name Multiply6
+   xpos 769
+   ypos 202
+  }
+set N8755a400 [stack 0]
+push $N8755a400
+push $Nae628800
+  Merge2 {
+   inputs 2
+   operation plus
+   name Merge9
+   xpos 1211
+   ypos 202
+  }
+  Switch {
+   inputs 2
+   which {{parent.glowOnly}}
+   name Switch5
+   xpos 1211
+   ypos 361
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy2
+   xpos 1211
+   ypos 452
+   disable {{!parent.restoreAlpha}}
+  }
+  Log2Lin {
+   operation lin2log
+   name Log2Lin1
+   xpos 1211
+   ypos 666
+  }
+  Reformat {
+   type "to box"
+   box_width {{input.width}}
+   box_height {{input.height}}
+   box_fixed true
+   name Reformat1
+   xpos 1211
+   ypos 743
+  }
+  Log2Lin {
+   name Log2Lin2
+   xpos 1211
+   ypos 802
+  }
+  Output {
+   name Output1
+   xpos 1211
+   ypos 891
+  }
+ end_group
+ Output {
+  name Output1
+  xpos 807
+  ypos -78
+ }
+end_group

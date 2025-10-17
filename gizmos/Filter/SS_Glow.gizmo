@@ -1,0 +1,429 @@
+#! C:/Program Files/Nuke13.2v1/nuke-13.2.1.dll -nx
+version 13.2 v1
+Gizmo {
+ inputs 2
+ tile_color 0xf20000ff
+ addUserKnob {20 User}
+ addUserKnob {6 solo_show l "Solo Show" t 单独显示这高光 +STARTLINE}
+ addUserKnob {41 range T Keyer11.range}
+ addUserKnob {26 high_light_range l "high light range" -STARTLINE T 高光控制范围}
+ addUserKnob {26 ""}
+ addUserKnob {26 main_control l "@b;Main Control" -STARTLINE T 高亮部分的控制}
+ addUserKnob {41 saturation T Saturation7.saturation}
+ addUserKnob {41 size l "Erode size" T Erode1.size}
+ addUserKnob {41 glow_size l "Glow Size" t 辉光的强度 T Blur11.size}
+ addUserKnob {41 mix T Merge37.mix}
+ addUserKnob {41 glow_intensity l "Global Glow Intensity" T Grade1.white}
+ addUserKnob {6 effect_only l "Effect Only" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 final_control l "@b;Final Control" T 最终调节，一般不建议调节。}
+ addUserKnob {41 b_control l "B Control" T control1.b_control}
+ addUserKnob {41 s_control l "S Control" T control1.s_control}
+ addUserKnob {26 crop_control l "@b;Crop Control" T 有时候屏幕边界有闪烁的像素时，需要加个Crop，裁切下。}
+ addUserKnob {6 crop l Crop +STARTLINE}
+ crop true
+ addUserKnob {7 crop_expand l "Crop Expand" R 0 40}
+ crop_expand 20
+}
+ NoOp {
+  inputs 0
+  name control1
+  xpos -153
+  ypos 23
+  addUserKnob {20 User}
+  addUserKnob {7 b_control l "B Control" R 0 10}
+  b_control 3
+  addUserKnob {7 s_control l "S Control" R 0 10}
+  s_control 2
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -389
+  ypos -74
+  number 1
+ }
+ Input {
+  inputs 0
+  name image
+  xpos -580
+  ypos -269
+ }
+ Dot {
+  name Dot71
+  xpos -546
+  ypos -157
+ }
+set N2b5c6c00 [stack 0]
+ Dot {
+  name Dot58
+  xpos -881
+  ypos -157
+ }
+ Keyer {
+  operation "luminance key"
+  range {0.06602950539 0.298299856 1 1}
+  name Keyer11
+  tile_color 0xff0000ff
+  xpos -915
+  ypos -124
+ }
+set N2b5c6400 [stack 0]
+ Dot {
+  name Dot3
+  xpos -684
+  ypos -114
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge1
+  xpos -718
+  ypos -74
+  disable {{"!\[exists parent.input1]"}}
+ }
+ Dot {
+  name Dot4
+  xpos -684
+  ypos -35
+ }
+push $N2b5c6400
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -915
+  ypos -45
+ }
+ Premult {
+  name Premult4
+  xpos -915
+  ypos -4
+ }
+ Crop {
+  box {{-parent.crop_expand} {box.x} {"width + abs(box.x)"} {"height + abs(box.y)"}}
+  name Crop2
+  xpos -915
+  ypos 59
+  disable {{!parent.crop}}
+ }
+set N2b5c4c00 [stack 0]
+ Viewer {
+  frame_range 1-100
+  fps 25
+  name Viewer1
+  xpos -805
+  ypos 256
+ }
+push $N2b5c4c00
+ Dot {
+  name Dot59
+  xpos -881
+  ypos 119
+ }
+set N2b57a000 [stack 0]
+ Dot {
+  name Dot60
+  xpos -1101
+  ypos 119
+ }
+set N2b579c00 [stack 0]
+ Dot {
+  name Dot61
+  xpos -1211
+  ypos 119
+ }
+set N2b579800 [stack 0]
+ Dot {
+  name Dot62
+  xpos -1321
+  ypos 119
+ }
+set N2b579400 [stack 0]
+ Dot {
+  name Dot63
+  xpos -1453
+  ypos 119
+ }
+set N2b579000 [stack 0]
+ Dot {
+  name Dot64
+  xpos -1619
+  ypos 119
+ }
+ Saturation {
+  saturation {{parent.Saturation3.saturation*parent.control1.s_control}}
+  name Saturation2
+  xpos -1653
+  ypos 158
+ }
+ Blur {
+  size {{parent.Blur7.size*parent.control1.b_control}}
+  name Blur6
+  xpos -1653
+  ypos 225
+ }
+ Clamp {
+  maximum_enable false
+  name Clamp2
+  xpos -1653
+  ypos 279
+ }
+ Dot {
+  name Dot65
+  xpos -1619
+  ypos 623
+ }
+push $N2b579000
+ Saturation {
+  saturation {{parent.Saturation4.saturation*parent.control1.s_control}}
+  name Saturation3
+  xpos -1487
+  ypos 159
+ }
+ Blur {
+  size {{parent.Blur8.size*parent.control1.b_control}}
+  name Blur7
+  xpos -1487
+  ypos 227
+ }
+ Clamp {
+  maximum_enable false
+  name Clamp3
+  xpos -1487
+  ypos 265
+ }
+ Dot {
+  name Dot66
+  xpos -1453
+  ypos 564
+ }
+push $N2b579400
+ Saturation {
+  saturation {{parent.Saturation5.saturation*2}}
+  name Saturation4
+  xpos -1355
+  ypos 160
+ }
+ Blur {
+  size {{parent.Blur9.size*parent.control1.b_control}}
+  name Blur8
+  xpos -1355
+  ypos 232
+ }
+ Clamp {
+  maximum_enable false
+  name Clamp4
+  xpos -1355
+  ypos 270
+ }
+ Dot {
+  name Dot67
+  xpos -1321
+  ypos 531
+ }
+push $N2b579800
+ Saturation {
+  saturation {{parent.Saturation6.saturation*parent.control1.s_control}}
+  name Saturation5
+  xpos -1245
+  ypos 159
+ }
+ Blur {
+  size {{parent.Blur10.size*parent.control1.b_control}}
+  name Blur9
+  xpos -1245
+  ypos 235
+ }
+ Clamp {
+  maximum_enable false
+  name Clamp5
+  xpos -1245
+  ypos 273
+ }
+ Dot {
+  name Dot68
+  xpos -1211
+  ypos 479
+ }
+push $N2b579c00
+ Saturation {
+  saturation {{parent.Saturation7.saturation*parent.control1.s_control}}
+  name Saturation6
+  xpos -1135
+  ypos 158
+ }
+ Blur {
+  size {{parent.Blur11.size*parent.control1.b_control}}
+  name Blur10
+  xpos -1135
+  ypos 239
+ }
+ Clamp {
+  maximum_enable false
+  name Clamp6
+  xpos -1135
+  ypos 277
+ }
+ Dot {
+  name Dot69
+  xpos -1101
+  ypos 407
+ }
+push $N2b57a000
+ Saturation {
+  saturation 0.36
+  name Saturation7
+  tile_color 0xff0000ff
+  xpos -915
+  ypos 157
+ }
+ Saturation {
+  saturation 0
+  name Saturation8
+  xpos -915
+  ypos 183
+ }
+ Erode {
+  channels all
+  size 0.43
+  name Erode1
+  xpos -915
+  ypos 218
+ }
+ Blur {
+  size 0.5
+  name Blur11
+  tile_color 0xff0000ff
+  xpos -915
+  ypos 256
+ }
+ Clamp {
+  maximum_enable false
+  name Clamp7
+  xpos -915
+  ypos 301
+ }
+ Grade {
+  name Grade14
+  xpos -915
+  ypos 345
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge32
+  xpos -915
+  ypos 403
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge33
+  xpos -915
+  ypos 475
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge34
+  xpos -915
+  ypos 527
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge35
+  xpos -915
+  ypos 560
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge36
+  xpos -915
+  ypos 619
+ }
+ EXPTool {
+  mode Stops
+  red -3.2
+  green -3.2
+  blue -3.2
+  name Exposure1
+  tile_color 0xff0000ff
+  xpos -915
+  ypos 713
+ }
+ Shuffle {
+  alpha black
+  name Shuffle15
+  xpos -915
+  ypos 739
+ }
+ Dot {
+  name Dot70
+  xpos -881
+  ypos 838
+ }
+ Grade {
+  white 1.56
+  name Grade1
+  xpos -737
+  ypos 834
+ }
+set N2b43b400 [stack 0]
+ Dot {
+  name Dot5
+  xpos -703
+  ypos 1000
+ }
+push $N2b57a000
+ Dot {
+  name Dot1
+  xpos -10
+  ypos 119
+ }
+ Dot {
+  name Dot2
+  xpos -10
+  ypos 922
+ }
+push $N2b43b400
+push $N2b5c6c00
+ Merge2 {
+  inputs 2
+  operation plus
+  mix 0.375
+  name Merge37
+  xpos -580
+  ypos 834
+ }
+ Switch {
+  inputs 2
+  which {{parent.solo_show}}
+  name view
+  xpos -580
+  ypos 918
+ }
+ Switch {
+  inputs 2
+  which {{parent.effect_only}}
+  name Switch1
+  xpos -580
+  ypos 996
+ }
+ Crop {
+  box {{-parent.crop_expand} {box.x} {"width + abs(box.x)"} {"height + abs(box.y)"}}
+  name Crop1
+  selected true
+  xpos -580
+  ypos 1075
+  disable {{!parent.crop}}
+ }
+ Output {
+  name Output1
+  xpos -580
+  ypos 1195
+ }
+end_group
