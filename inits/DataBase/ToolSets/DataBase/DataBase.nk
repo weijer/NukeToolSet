@@ -1,0 +1,24 @@
+set cut_paste_input [stack 0]
+
+Group {
+ inputs 0
+ name DataBase
+ tile_color 0x55bfffff
+
+
+ addUserKnob {20 User}
+ addUserKnob {26 sign l "how to use:" T "1. Choose one of parameter type you wanna create, \n    and click the button to create knob\n2. Right click on any knob, choose DataBase-update\n3. Right click on the knob you wanna link, \n    choose DataBase - parameter name to finish the link\n4. Be sure to not easily click clean\n\t\t\t\t\tcreated by Wang Chenxu 2024"}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 deviderText l " " T "                           "}
+ addUserKnob {22 FloatButton l "0.1 0.2 0.3" t "Create a slider control" -STARTLINE T "import createKnobs\ncreateKnobs.create_float_knob()"}
+ addUserKnob {26 text l " " -STARTLINE T " "}
+ addUserKnob {22 IntButton l "1 2 3" t "create an integer control" -STARTLINE T "import createKnobs\ncreateKnobs.create_int_knob()"}
+ addUserKnob {26 text_1 l " " -STARTLINE T " "}
+ addUserKnob {22 ColorButton l "R G B" t "create a color control" -STARTLINE T "import createKnobs\ncreateKnobs.create_color_knob()"}
+ addUserKnob {26 text_2 l " " -STARTLINE T " "}
+ addUserKnob {22 clean t "remove all" -STARTLINE T "import createKnobs\ncreateKnobs.clean_all()"}
+ addUserKnob {26 text_3 l " " -STARTLINE T " "}
+ addUserKnob {1 knobNameSet l "knob name set" +DISABLED +INVISIBLE}
+ addUserKnob {26 ""}
+}
+end_group
