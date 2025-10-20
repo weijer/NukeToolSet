@@ -828,6 +828,13 @@ nuke_config = {
                     "icon": "",
                     "type": "gizmo"
                 },
+                {
+                    "name": "Lighting/SS_RelightSimple",
+                    "command": "SS_RelightSimple",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "gizmo"
+                },
                 # Lighting icon
                 {
                     "name": "Lighting",
