@@ -106,6 +106,13 @@ nuke_config = {
                     "type": "python"
                 },
                 {
+                    "name": "Channel/autoSplitLgtEXR",
+                    "command": "command.run_autoSplitLgtEXR()",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "python"
+                },
+                {
                     "name": "Channel/RenderLayer",
                     "command": "command.run_RenderLayer()",
                     "shortcut": "",

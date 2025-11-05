@@ -9,7 +9,7 @@ import python.CreatePointCloud.CreatedPointCloud as CreatedPointCloud
 import python.NukeFXSExporter.NukeFXSExporter as NukeFXSExporter
 import python.ToolSet as ToolSet
 import python.pw_multiScriptEditor as ScriptEditor
-from python.Channel import autoComper, PreCompForArnold, RenderLayer
+from python.Channel import autoComper, PreCompForArnold, RenderLayer, autoSplitLgtEXR
 from python.ToolSet import ReadAfterRender
 from python.cryptomatte import cryptomatte_utilities
 
@@ -96,6 +96,14 @@ def run_preCompForArnold():
     :return:
     """
     PreCompForArnold.preCompForArnold()
+
+
+def run_autoSplitLgtEXR():
+    """
+    run autoSplitLgtEXR script
+    :return:
+    """
+    autoSplitLgtEXR.main()
 
 
 def run_RenderLayer():
