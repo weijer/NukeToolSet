@@ -29,8 +29,14 @@ def is_read_node():
     # 获取该节点下游连接的所有节点
     downstream_nodes = read_node.dependent()
 
-    if len(downstream_nodes) > 0:
-        raise ValueError("错误：下游已存在节点！")
+    if len(downstream_nodes) > 1:
+        raise ValueError("错误：下游已存在多个节点！")
+
+    if len(downstream_nodes) == 1:
+        has_viewer = any(node.Class() == "Viewer" for node in downstream_nodes)
+
+        if not has_viewer:
+            raise ValueError("错误：下游已存在非viewer节点！")
 
     return read_node
 
