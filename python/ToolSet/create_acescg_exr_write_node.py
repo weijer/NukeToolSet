@@ -7,6 +7,6 @@ def main():
     write_node["channels"].setValue("rgb")
     write_node["colorspace"].setValue("compositing_linear")
     write_node["file_type"].setValue("exr")
-    write_node["datatype"].setValue("32 bit float")
-    write_node["compression"].setValue("PIZ Wavelet (32 scanlines)")
+    write_node["datatype"].setValue("16 bit half")
+    write_node["compression"].setValue("Zip (1 scanline)")
     write_node["create_directories"].setValue(True)
