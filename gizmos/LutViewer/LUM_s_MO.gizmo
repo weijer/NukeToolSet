@@ -1,0 +1,813 @@
+#! C:/Program Files/Nuke13.2v1/nuke-13.2.1.dll -nx
+version 13.2 v1
+Gizmo {
+ addUserKnob {20 user t jjh}
+ addUserKnob {26 headline l "" +STARTLINE T "<font size=\"6\">LUM Studio</font><font size=\"4\">v1.4</font> \n"}
+ addUserKnob {26 "" +STARTLINE}
+ knobChanged "node = nuke.thisNode()\nx = node.allKnobs()\nfor i in x:\n    if isinstance(i,nuke.PyScript_Knob):\n        i.setVisible(False)\n"
+ addUserKnob {26 t l "" +STARTLINE T "作者：十文-黄裕元\nEmail:spades.ten@hotmail.com\nhttps://flowus.cn/dimensions/fcc931f7-07c7-44d9-9e29-44a200c5cf00\nQQ:271312636\nIns ligones_10"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -421
+  ypos -509
+ }
+ Colorspace {
+  colorspace_out sRGB
+  name Colorspace1
+  xpos -421
+  ypos -469
+ }
+ Dot {
+  name Dot1
+  selected true
+  xpos -387
+  ypos -201
+ }
+ Remove {
+  operation keep
+  channels rgb
+  name Remove1
+  xpos -421
+  ypos -133
+ }
+ Dot {
+  name Dot2
+  xpos -387
+  ypos -74
+ }
+set N2a3f0800 [stack 0]
+ Dot {
+  name Dot7
+  xpos -261
+  ypos -74
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  replace true
+  message "Luminosity Mode"
+  old_message {{76 117 109 105 110 111 115 105 116 121 32 77 111 100 101}
+    }
+  box {-362 -48.5 362 48.5}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 15
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{Input1.width/2*0.0005}}
+  scale {1 1}
+  cursor_initialised true
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  name Text13
+  xpos -295
+  ypos 369
+ }
+ Transform {
+  translate {{Input1.width/2} {Input1.height*0.05+parent.Text13.box.t*2}}
+  name Transform3
+  xpos -295
+  ypos 419
+ }
+ Dot {
+  name Dot26
+  xpos -261
+  ypos 892
+ }
+push $N2a3f0800
+ Dot {
+  name Dot3
+  xpos -1263
+  ypos -74
+ }
+ Reformat {
+  type "to box"
+  box_width {{Input1.width}}
+  box_height {{Input1.height}}
+  box_fixed true
+  name Reformat1
+  xpos -1297
+  ypos -6
+ }
+ Dot {
+  name Dot4
+  xpos -1262
+  ypos 37
+ }
+set N568b6400 [stack 0]
+ Expression {
+  expr0 "y / height"
+  expr1 "y / height"
+  expr2 "y / height"
+  name Expression1
+  xpos -1297
+  ypos 78
+ }
+ Posterize {
+  channels rgb
+  Colors 256
+  name Posterize1
+  xpos -1297
+  ypos 166
+ }
+ Crop {
+  box {0 0 {Input1.height*0.03} {Input1.height}}
+  name Crop1
+  xpos -1297
+  ypos 217
+ }
+ Transform {
+  translate {{Input1.height*0.08} 0}
+  center {0 {Input1.height/2}}
+  name Transform1
+  xpos -1297
+  ypos 251
+ }
+ OCIOFileTransform {
+  file ~/.nuke/OCIOConfigs/aces_1.0.3/luts/TN_Srgb_SDR_sRGB_STU.vf
+  version 7
+  working_space linear
+  name Text2
+  tile_color 0xbbbbbbff
+  xpos -1297
+  ypos 359
+ }
+ OCIOFileTransform {
+  file ~/.nuke/OCIOConfigs/aces_1.0.3/luts/TN_space.vf
+  working_space linear
+  name Text3
+  tile_color 0xbbbbbbff
+  xpos -1297
+  ypos 409
+ }
+ Colorspace {
+  colorspace_out sRGB
+  name Text4
+  tile_color 0xbbbbbbff
+  xpos -1297
+  ypos 447
+  disable true
+ }
+ Dot {
+  name Dot22
+  xpos -1263
+  ypos 719
+ }
+push $N568b6400
+ Dot {
+  name Dot5
+  xpos -1109
+  ypos 37
+ }
+set N56853c00 [stack 0]
+ Dot {
+  name Dot6
+  xpos -535
+  ypos 37
+ }
+ Group {
+  name Group1
+  xpos -569
+  ypos 489
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos -421
+   ypos -486
+  }
+  Dot {
+   name Dot11
+   xpos -387
+   ypos -446
+  }
+set N56853000 [stack 0]
+  Dot {
+   name Dot12
+   xpos -277
+   ypos -446
+  }
+set N56852c00 [stack 0]
+  Dot {
+   name Dot13
+   xpos -182
+   ypos -446
+  }
+set N56852800 [stack 0]
+  Dot {
+   name Dot21
+   xpos -77
+   ypos -446
+  }
+set N56852400 [stack 0]
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   cliptype none
+   replace true
+   message "---- 30"
+   old_message {{45 45 45 45 32 51 48}
+     }
+   box {{Input1.height*0.03} -12.59375 300 12.59375}
+   yjustify center
+   transforms {{0 2}
+     }
+   cursor_position 7
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{Input1.width*0.0001+0.05}}
+   scale {1 1}
+   center {960 540}
+   cursor_initialised true
+   autofit_bbox false
+   group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+   animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+     }
+   name Text4
+   xpos -111
+   ypos -396
+  }
+  Transform {
+   translate {0 {Input1.height*0.3}}
+   name Transform24
+   xpos -111
+   ypos -311
+  }
+push $N56853000
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   cliptype none
+   replace true
+   message "---- 0.0"
+   old_message {{45 45 45 45 32 48 46 48}
+     }
+   box {{Input1.height*0.03} -12.59375 300 12.59375}
+   yjustify center
+   transforms {{0 2}
+     }
+   cursor_position 8
+   font {{ Arial : Bold : arialbd.ttf : 0 }}
+   global_font_scale {{Input1.width*0.0001+0.05}}
+   scale {1 1}
+   center {960 540}
+   cursor_initialised true
+   autofit_bbox false
+   group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+   animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+     }
+   name Text1
+   xpos -421
+   ypos -400
+  }
+  Dot {
+   name Dot8
+   xpos -387
+   ypos -67
+  }
+push $N56852c00
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   cliptype none
+   replace true
+   message "---- 10"
+   old_message {{45 45 45 45 32 49 48}
+     }
+   box {{Input1.height*0.03} -12.59375 300 12.59375}
+   yjustify center
+   transforms {{0 2}
+     }
+   cursor_position 7
+   font {{ Arial : Bold : arialbd.ttf : 0 }}
+   global_font_scale {{Input1.width*0.0001+0.05}}
+   scale {1 1}
+   center {960 540}
+   cursor_initialised true
+   autofit_bbox false
+   group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+   animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+     }
+   name Text2
+   xpos -311
+   ypos -398
+  }
+  Transform {
+   translate {0 {Input1.height*0.1}}
+   name Transform14
+   xpos -311
+   ypos -312
+  }
+  Merge2 {
+   inputs 2
+   name Merge12
+   xpos -311
+   ypos -71
+  }
+push $N56852800
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   cliptype none
+   replace true
+   message "---- 20"
+   old_message {{45 45 45 45 32 50 48}
+     }
+   box {{Input1.height*0.03} -12.59375 300 12.59375}
+   yjustify center
+   transforms {{0 2}
+     }
+   cursor_position 7
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{Input1.width*0.0001+0.05}}
+   scale {1 1}
+   center {960 540}
+   cursor_initialised true
+   autofit_bbox false
+   group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+   animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+     }
+   name Text3
+   xpos -216
+   ypos -398
+  }
+  Transform {
+   translate {0 {Input1.height*0.2}}
+   name Transform16
+   xpos -216
+   ypos -312
+  }
+  Merge2 {
+   inputs 2
+   name Merge13
+   xpos -216
+   ypos -71
+  }
+  Merge2 {
+   inputs 2
+   name Merge22
+   xpos -106
+   ypos -71
+  }
+push $N56852400
+  Dot {
+   name Dot14
+   xpos 33
+   ypos -446
+  }
+set N567bf000 [stack 0]
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   cliptype none
+   replace true
+   message "---- 40"
+   old_message {{45 45 45 45 32 52 48}
+     }
+   box {{Input1.height*0.03} -12.59375 300 12.59375}
+   yjustify center
+   transforms {{0 2}
+     }
+   cursor_position 7
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{Input1.width*0.0001+0.05}}
+   scale {1 1}
+   center {960 540}
+   cursor_initialised true
+   autofit_bbox false
+   group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+   animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+     }
+   name Text5
+   xpos 1
+   ypos -396
+  }
+  Transform {
+   translate {0 {Input1.height*0.4}}
+   name Transform17
+   xpos -1
+   ypos -310
+  }
+  Merge2 {
+   inputs 2
+   name Merge14
+   xpos -1
+   ypos -71
+  }
+push $N567bf000
+  Dot {
+   name Dot15
+   xpos 131
+   ypos -446
+  }
+set N567be000 [stack 0]
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   cliptype none
+   replace true
+   message "---- 50"
+   old_message {{45 45 45 45 32 53 48}
+     }
+   box {{Input1.height*0.03} -12.59375 300 12.59375}
+   yjustify center
+   transforms {{0 2}
+     }
+   cursor_position 7
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{Input1.width*0.0001+0.05}}
+   scale {1 1}
+   center {960 540}
+   cursor_initialised true
+   autofit_bbox false
+   group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+   animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+     }
+   name Text6
+   xpos 97
+   ypos -393
+  }
+  Transform {
+   translate {0 {Input1.height*0.5}}
+   name Transform18
+   xpos 97
+   ypos -307
+  }
+  Merge2 {
+   inputs 2
+   name Merge15
+   xpos 97
+   ypos -71
+  }
+push $N567be000
+  Dot {
+   name Dot16
+   xpos 225
+   ypos -446
+  }
+set N567bd000 [stack 0]
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   cliptype none
+   replace true
+   message "---- 60"
+   old_message {{45 45 45 45 32 54 48}
+     }
+   box {{Input1.height*0.03} -12.59375 300 12.59375}
+   yjustify center
+   transforms {{0 2}
+     }
+   cursor_position 7
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{Input1.width*0.0001+0.05}}
+   scale {1 1}
+   center {960 540}
+   cursor_initialised true
+   autofit_bbox false
+   group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+   animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+     }
+   name Text7
+   xpos 191
+   ypos -392
+  }
+  Transform {
+   translate {0 {Input1.height*0.6}}
+   name Transform19
+   xpos 191
+   ypos -305
+  }
+  Merge2 {
+   inputs 2
+   name Merge16
+   xpos 191
+   ypos -71
+  }
+push $N567bd000
+  Dot {
+   name Dot17
+   xpos 326
+   ypos -446
+  }
+set N5673bc00 [stack 0]
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   cliptype none
+   replace true
+   message "---- 70"
+   old_message {{45 45 45 45 32 55 48}
+     }
+   box {{Input1.height*0.03} -12.59375 300 12.59375}
+   yjustify center
+   transforms {{0 2}
+     }
+   cursor_position 7
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{Input1.width*0.0001+0.05}}
+   scale {1 1}
+   center {960 540}
+   cursor_initialised true
+   autofit_bbox false
+   group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+   animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+     }
+   name Text8
+   xpos 292
+   ypos -392
+  }
+  Transform {
+   translate {0 {Input1.height*0.7}}
+   name Transform15
+   xpos 292
+   ypos -302
+  }
+  Merge2 {
+   inputs 2
+   name Merge17
+   xpos 292
+   ypos -71
+  }
+push $N5673bc00
+  Dot {
+   name Dot18
+   xpos 418
+   ypos -446
+  }
+set N5673ac00 [stack 0]
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   cliptype none
+   replace true
+   message "---- 80"
+   old_message {{45 45 45 45 32 56 48}
+     }
+   box {{Input1.height*0.03} -12.59375 300 12.59375}
+   yjustify center
+   transforms {{0 2}
+     }
+   cursor_position 7
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{Input1.width*0.0001+0.05}}
+   scale {1 1}
+   center {960 540}
+   cursor_initialised true
+   autofit_bbox false
+   group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+   animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+     }
+   name Text9
+   xpos 384
+   ypos -390
+  }
+  Transform {
+   translate {0 {Input1.height*0.8}}
+   name Transform20
+   xpos 384
+   ypos -305
+  }
+  Merge2 {
+   inputs 2
+   name Merge18
+   xpos 384
+   ypos -71
+  }
+push $N5673ac00
+  Dot {
+   name Dot19
+   xpos 510
+   ypos -446
+  }
+set N56739c00 [stack 0]
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   cliptype none
+   replace true
+   message "---- 90"
+   old_message {{45 45 45 45 32 57 48}
+     }
+   box {{Input1.height*0.03} -12.59375 300 12.59375}
+   yjustify center
+   transforms {{0 2}
+     }
+   cursor_position 7
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{Input1.width*0.0001+0.05}}
+   scale {1 1}
+   center {960 540}
+   cursor_initialised true
+   autofit_bbox false
+   group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+   animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+     }
+   name Text10
+   xpos 476
+   ypos -389
+  }
+  Transform {
+   translate {0 {Input1.height*0.9}}
+   name Transform21
+   xpos 476
+   ypos -304
+  }
+  Merge2 {
+   inputs 2
+   name Merge19
+   xpos 476
+   ypos -71
+  }
+push $N56739c00
+  Dot {
+   name Dot20
+   xpos 608
+   ypos -446
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   cliptype none
+   replace true
+   message "---- 100"
+   old_message {{45 45 45 45 32 49 48 48}
+     }
+   box {{Input1.height*0.03} -12.59375 300 12.59375}
+   yjustify center
+   transforms {{0 2}
+     }
+   cursor_position 8
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{Input1.width*0.0001+0.05}}
+   scale {1 1}
+   center {960 540}
+   cursor_initialised true
+   autofit_bbox false
+   group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+   animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+     }
+   name Text11
+   xpos 574
+   ypos -386
+  }
+  Transform {
+   translate {0 {Input1.height*1}}
+   name Transform22
+   xpos 574
+   ypos -303
+  }
+  Merge2 {
+   inputs 2
+   name Merge20
+   xpos 574
+   ypos -71
+  }
+  Transform {
+   translate {{Input1.height*0.03-Input1.height*0.03+Input1.height*0.08} 0}
+   center {0 {Input1.height/2}}
+   name Transform23
+   xpos 574
+   ypos 39
+  }
+  Output {
+   name Output1
+   xpos 574
+   ypos 139
+  }
+ end_group
+ Dot {
+  name Dot9
+  xpos -535
+  ypos 602
+ }
+push $N56853c00
+ Expression {
+  expr0 .4
+  expr1 .4
+  expr2 .4
+  expr3 0.6
+  name Expression2
+  xpos -1143
+  ypos 81
+ }
+ Crop {
+  box {0 0 {Input1.height*0.15} {Input1.height}}
+  name Crop2
+  xpos -1143
+  ypos 207
+ }
+ Transform {
+  scale 1.04
+  center {{Input1.height*0.15/2} {Input1.height/2}}
+  name Transform2
+  xpos -1143
+  ypos 280
+ }
+ Transform {
+  translate {{Input1.height*0.05} 0}
+  center {0 {Input1.height/2}}
+  name Transform10
+  xpos -1143
+  ypos 370
+ }
+ Dot {
+  name Dot10
+  xpos -1109
+  ypos 602
+ }
+ Merge2 {
+  inputs 2
+  name Merge21
+  xpos -839
+  ypos 598
+ }
+ Dot {
+  name Dot28
+  xpos -805
+  ypos 658
+ }
+ Merge2 {
+  inputs 2
+  operation matte
+  name Merge23
+  xpos -839
+  ypos 715
+ }
+ Transform {
+  scale 0.85
+  center {{Input1.height*0.05/2} {Input1.height/2}}
+  name Transform26
+  xpos -839
+  ypos 776
+ }
+ Dot {
+  name Dot23
+  xpos -805
+  ypos 851
+ }
+push $N2a3f0800
+ OCIOFileTransform {
+  file ~/.nuke/OCIOConfigs/aces_1.0.3/luts/TN_Srgb_SDR_sRGB_STU.vf
+  version 6
+  working_space linear
+  name Text5
+  tile_color 0xbbbbbbff
+  xpos -421
+  ypos 395
+ }
+ OCIOFileTransform {
+  file ~/.nuke/OCIOConfigs/aces_1.0.3/luts/TN_space.vf
+  working_space linear
+  name Text6
+  tile_color 0xbbbbbbff
+  xpos -421
+  ypos 485
+ }
+ Merge2 {
+  inputs 2
+  name Merge24
+  xpos -421
+  ypos 847
+ }
+ Merge2 {
+  inputs 2
+  operation matte
+  name Merge1
+  xpos -421
+  ypos 888
+ }
+ Remove {
+  operation keep
+  channels rgb
+  name Remove2
+  xpos -421
+  ypos 937
+ }
+ Dot {
+  name Dot13
+  xpos -387
+  ypos 1000
+ }
+ Output {
+  name Output1
+  xpos -421
+  ypos 1136
+ }
+end_group

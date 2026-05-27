@@ -1279,6 +1279,52 @@ nuke_config = {
                     "shortcut": "",
                     "icon": "icon_toolbar_release.png",
                     "type": "python"
+                },
+                #
+                # Viewer Process lut gizmo
+                #
+                #
+                {
+                    "name": "LUM Horizontal sRGB",
+                    "command": "LUM_s_H",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "lut_gizmo"
+                },
+                {
+                    "name": "LUM Vertical sRGB",
+                    "command": "LUM_s_V",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "lut_gizmo"
+                },
+                {
+                    "name": "LUM MonitorOut sRGB",
+                    "command": "LUM_s_MO",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "lut_gizmo"
+                },
+                {
+                    "name": "LUM Horizontal sRGB(ACES)",
+                    "command": "LUM_sA_H",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "lut_gizmo"
+                },
+                {
+                    "name": "LUM Vertical sRGB(ACES)",
+                    "command": "LUM_sA_V",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "lut_gizmo"
+                },
+                {
+                    "name": "LUM MonitorOut sRGB(ACES)",
+                    "command": "LUM_sA_MO",
+                    "shortcut": "",
+                    "icon": "",
+                    "type": "lut_gizmo"
                 }
             ]
         }

@@ -52,6 +52,7 @@ class NukeMenu(object):
         self.gizmos_ToolSet_dir = self.replace_path(os.path.join(base_dir, "gizmos/ToolSet"))
         self.gizmos_3D_Tangent_dir = self.replace_path(os.path.join(base_dir, "gizmos/3D/Tangent_Space_Normals"))
         self.gizmos_MoreRealistic_dir = self.replace_path(os.path.join(base_dir, "gizmos/MoreRealistic"))
+        self.gizmos_LutViewer_dir = self.replace_path(os.path.join(base_dir, "gizmos/LutViewer"))
         nuke.pluginAddPath(self.gizmos_image_dir)
         nuke.pluginAddPath(self.gizmos_Filter_dir)
         nuke.pluginAddPath(self.gizmos_channel_dir)
@@ -61,6 +62,7 @@ class NukeMenu(object):
         nuke.pluginAddPath(self.gizmos_ToolSet_dir)
         nuke.pluginAddPath(self.gizmos_3D_Tangent_dir)
         nuke.pluginAddPath(self.gizmos_MoreRealistic_dir)
+        nuke.pluginAddPath(self.gizmos_LutViewer_dir)
 
         """
         add Cryptomatte gizmo path
@@ -107,6 +109,8 @@ class NukeMenu(object):
             menu.addCommand(name, "nuke.createNode(\"%s\")" % command, icon=icon_name)
         elif type == "toolbar":
             menu.addCommand(name, icon=icon_name)
+        elif type == "lut_gizmo":
+            nuke.ViewerProcess.register(name, nuke.Node, (command, ""))
 
     def add_bar_tools(self):
         """
