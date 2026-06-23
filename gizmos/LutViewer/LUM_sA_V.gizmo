@@ -132,7 +132,7 @@ set N18de0800 [stack 0]
   ypos 251
  }
  OCIOFileTransform {
-  file ~/.nuke/OCIOConfigs/aces_1.0.3/luts/TN_Srgb_SDR_sRGB_STU.vf
+  file C:/Teamones/resources/plugins/NukeToolSet/luts/TN_Srgb_SDR_sRGB_STU.vf
   version 7
   working_space data
   name Text2
@@ -141,7 +141,7 @@ set N18de0800 [stack 0]
   ypos 359
  }
  OCIOFileTransform {
-  file ~/.nuke/OCIOConfigs/aces_1.0.3/luts/TN_space.vf
+  file C:/Teamones/resources/plugins/NukeToolSet/luts/TN_space.vf
   working_space data
   name Text3
   tile_color 0xbbbbbbff
@@ -766,7 +766,7 @@ push $N18d7e000
  }
 push $N18de2800
  OCIOFileTransform {
-  file ~/.nuke/OCIOConfigs/aces_1.0.3/luts/TN_Srgb_SDR_sRGB_STU.vf
+  file C:/Teamones/resources/plugins/NukeToolSet/luts/TN_Srgb_SDR_sRGB_STU.vf
   version 6
   working_space data
   name Text5
@@ -775,7 +775,7 @@ push $N18de2800
   ypos 395
  }
  OCIOFileTransform {
-  file ~/.nuke/OCIOConfigs/aces_1.0.3/luts/TN_space.vf
+  file C:/Teamones/resources/plugins/NukeToolSet/luts/TN_space.vf
   working_space data
   name Text6
   tile_color 0xbbbbbbff

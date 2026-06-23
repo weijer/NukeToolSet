@@ -129,7 +129,7 @@ set Nfb8d1000 [stack 0]
   ypos 251
  }
  OCIOFileTransform {
-  file C:/Teamones/dcc/rez_package/ocio/aces_1.0.3/luts/TN_Srgb_SDR_sRGB_STU.vf
+  file C:/Teamones/resources/plugins/NukeToolSet/luts/TN_Srgb_SDR_sRGB_STU.vf
   version 8
   working_space linear
   name Text2
@@ -139,7 +139,7 @@ set Nfb8d1000 [stack 0]
   ypos 359
  }
  OCIOFileTransform {
-  file C:/Teamones/dcc/rez_package/ocio/aces_1.0.3/luts/TN_space.vf
+  file C:/Teamones/resources/plugins/NukeToolSet/luts/TN_space.vf
   working_space linear
   name Text3
   tile_color 0xbbbbbbff
@@ -764,7 +764,7 @@ push $Nfb86e800
  }
 push $Nfb8d3000
  OCIOFileTransform {
-  file C:/Teamones/dcc/rez_package/ocio/aces_1.0.3/luts/TN_Srgb_SDR_sRGB_STU.vf
+  file C:/Teamones/resources/plugins/NukeToolSet/luts/TN_Srgb_SDR_sRGB_STU.vf
   version 6
   working_space linear
   name Text5
@@ -773,7 +773,7 @@ push $Nfb8d3000
   ypos 395
  }
  OCIOFileTransform {
-  file C:/Teamones/dcc/rez_package/ocio/aces_1.0.3/luts/TN_space.vf
+  file C:/Teamones/resources/plugins/NukeToolSet/luts/TN_space.vf
   working_space linear
   name Text6
   tile_color 0xbbbbbbff
